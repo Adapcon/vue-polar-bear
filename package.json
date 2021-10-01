@@ -1,7 +1,7 @@
 {
   "name": "vue-polar-bear",
-  "version": "0.0.7",
-  "author": "alanneves",
+  "version": "0.0.8",
+  "author": "adapcon",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name vue-polar-bear src/main.js"
