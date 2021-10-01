@@ -1,0 +1,53 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbCnpjInput from './CnpjInput.vue';
+import { colors } from '@pb/utils/constants';
+
+<Meta
+  title="Components/Inputs/PbCnpjInput"
+  component={PbCnpjInput}
+  argTypes={{
+    value: {
+      type: 'number',
+      defaultValue: null,
+    },
+    required: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    color: {
+      control: {
+        type: 'select',
+        options: [ ...colors ],
+      },
+      defaultValue: 'primary',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbCnpjInput },
+  template: `
+    <PbCnpjInput
+      v-model="value"
+      :color="color"
+      :required="required"
+    />
+  `,
+});
+
+# **PbCnpjInput**
+### The `PbCnpjInput` component is used as input for get official company register document.
+
+### Purpose and Use Case
+Its main purpose is to group input and validation together with a component.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

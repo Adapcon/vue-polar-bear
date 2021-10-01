@@ -1,0 +1,133 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbRow from './Row.vue';
+import PbCol from './Col.vue';
+import PbButton from '@pb/Buttons/Button/Button.vue';
+
+<Meta
+  title="Components/Data Visualization/PbGrid"
+  component={PbRow}
+  argTypes={{
+    showBorders: { type: 'boolean', defaultValue: false },
+    noPadding: { type: 'boolean', defaultValue: false },
+    alignActions: { control: { type: 'select', options: ['flex-start', 'center', 'flex-end']}, defaultValue: 'center' },
+    cols: { type: 'number', defaultValue: 12 },
+    sizeCols: { type: 'number', defaultValue: 0 },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbRow, PbCol },
+  template: `
+    <PbRow
+      :showBorders="showBorders"
+      :no-padding="noPadding"
+      :align-actions="alignActions"
+      :cols="cols"
+    >
+      <PbCol :size="sizeCols" :no-padding="noPadding">
+        COLUMN 1
+      </PbCol>
+      <PbCol :size="sizeCols" :no-padding="noPadding">
+        COLUMN 2
+      </PbCol>
+    </PbRow>`,
+});
+
+export const TemplateAccordion = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbRow, PbCol, PbButton },
+  template: `
+    <PbRow
+      :showBorders="showBorders"
+      :cols="cols"
+      :no-padding="noPadding"
+      :align-actions="alignActions"
+    >
+      <PbCol :size="sizeCols" :no-padding="noPadding">
+        COLUMN 1
+      </PbCol>
+      <PbCol :size="sizeCols" :no-padding="noPadding">
+        COLUMN 2
+      </PbCol>
+      <template #children>
+        <PbRow
+          :showBorders="showBorders"
+          :cols="cols"
+          :no-padding="noPadding"
+          :align-actions="alignActions"
+        >
+          <PbCol :size="sizeCols" :no-padding="noPadding">
+            COLUMN CHILDREN 1
+          </PbCol>
+          <PbCol :size="sizeCols" :no-padding="noPadding">
+            COLUMN CHILDREN 2
+          </PbCol>
+          <template #actions>
+            <PbButton
+              color="primary"
+              icon="fas fa-pen"
+            />
+          </template>
+        </PbRow>
+      </template>
+    </PbRow>`,
+});
+
+# **PbGrid component**
+### The `PbGrid` component can be used to make grid layouts in different contexts.
+
+### Purpose and Use case
+
+The component uses the flex grid for its construction, with 12 columns by default, however, it is possible to use up to 24 columns.
+It is possible to make a layout with five breakpoints responsive:
+
+|  Breakpoints  |  Min Width  |  Max Width  |
+|---------------|-------------|-------------|
+|  xs           |  0px        |  576px      |
+|  sm           |  577px      |  767px      |
+|  md           |  768px      |  991px      |
+|  lg           |  992px      |  1199px     |
+|  xl           |  1200px     |  5000px     |
+
+For ease of using the component beyond breakpoints is possible passed a `size` prop, it will be used at breakpoints if not found in one of the five.
+If it is necessary to hide a column in a breakpoint it is possible to pass the value 0 to the prop that it will automatically hide column.
+
+### Slots:
+
+**Children:** If sent this slot is rendered in accordion and `actions` slots with a button to active accordion.
+
+**Actions:** This slot can be used for actions in the grid.
+
+## Examples
+
+### Default
+
+This example rendered a grid with two cols of size six:
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      sizeCols: 6,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Accordion
+
+Each row has the possibility of having a child slot, if sent they will be rendered in the accordion.
+
+<Canvas>
+  <Story
+    name="Accordion"
+    args={{
+      sizeCols: 6,
+      showBorders: true,
+    }}
+  >
+    {TemplateAccordion.bind({})}
+  </Story>
+</Canvas>

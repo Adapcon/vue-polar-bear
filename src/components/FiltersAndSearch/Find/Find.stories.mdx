@@ -1,0 +1,72 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbFind from './Find.vue';
+
+<Meta
+  title="Components/Filters and Search/PbFind"
+  component={PbFind}
+  argTypes={{
+    currentRange: {
+      type: 'number',
+      defaultValue: 1,
+    },
+    range: {
+      type: 'number',
+      defaultValue: 7,
+    },
+    value: {
+      type: 'string',
+      defaultValue: '',
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    }
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbFind },
+  methods: {
+    nextSet() {
+      if (this.currentRange >= this.range) return;
+      this.currentRange += 1;
+    },
+    previousSet() {
+      if (this.currentRange <= 1) return;
+      this.currentRange -= 1;
+    }
+  },
+  template: `
+    <div style="width: 300px;">
+      <PbFind
+        v-model="value"
+        :range="range"
+        :current-range="currentRange"
+        :disabled="disabled"
+        @update:nextSet="nextSet"
+        @update:previousSet="previousSet"
+      />
+    </div>
+  `,
+});
+
+# **PbFind**
+### The `PbFind` component can be used to find contents in a list just like *ctrl+f* does
+
+### Purpose and Use Case
+
+This component is similar to the pb-search-input, it is used to find elements, with the *ctrl+f* style, that is, without filtering the list,
+but marking the matching result. it also has an option to filter by range, for example, you have a list of 100 positions and you
+define that it will filter 10 by 10 of the total length of the list, so every time that you click the button to increase from **1 of 10**
+to **2 of 10** it will show the next 10 results of the list.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

@@ -1,0 +1,97 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbMultiSelect from './MultiSelect.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Notifications and Modals/PbMultiSelect"
+  component={ PbMultiSelect }
+  argTypes={{
+    label: {
+      type: 'string',
+      defaultValue: 'Selecionar Refrigerante',
+    },
+    allowSearch: {
+      type: 'boolean',
+      defaultValue: true,
+    },
+    displaySize: {
+      type: 'number',
+      defaultValue: 5,
+    },
+    color: {
+      control: { type: 'select', options: [...colors] },
+      defaultValue: 'primary',
+    },
+    isMobile: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    options: {
+      type: 'Array',
+      defaultValue: ['Coca-Cola', 'Coca-Cola Zero', 'Pepsi', 'Guaraná Antarctica', 'Guaraná Kuat', 'Fanta', 'Fanta Uva', 'Sprite', 'Schweppes Citrus', 'Água da Serra Laranjinha'],
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbMultiSelect },
+  template: `
+    <PbMultiSelect
+      :label="label"
+      :allow-search="allowSearch"
+      :display-size="displaySize"
+      :color="color"
+      :isMobile="isMobile"
+      :options="options"
+    />
+  `
+});
+
+# **PbMultiSelect component**
+### The `PbMultiSelect` is a list of options that can be selected
+
+### Purpose and Use case
+
+This component can be used to select options of a list. The user can select more than one option, there is no restriction.
+You also can specify:
+- The number of items that will be displayed in the component per time
+- The visibility of the search button
+
+## Configuration
+
+### Properties
+
+| Property                    | Type        | Default     | Description                                                                                   |
+|:----------------------------|:------------|:------------|:----------------------------------------------------------------------------------------------|
+| label                       | String      | Selecionar  | Button label that manage the options collapse                                                 |
+| allowSearch                 | Boolean     | True        | Shows the search button                                                                       |
+| displaySize                 | Number      | 5           | Number of options that must be displayed at one time in the component                         |
+| options                     | Array       |             | Options list                                                                                  |
+| selectedOptions             | Array       |             | Selected options list. Must be used with sync modifier, to receive the update event data      |
+| color                       | String      | primary     | Button label color and CheckBox button color                                                  |
+| isMobile                    | Boolean     | false       | Sets the Collapse modal style for the mobile device                                           |
+
+### Events
+
+| Event                       | Type        | Emitter           | Description                                                                                   |
+|:----------------------------|:------------|:------------------|:----------------------------------------------------------------------------------------------|
+| update:selected-options     | Array       | Select option     | Emits the updated selected options list                                                       |
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    { Template.bind({}) }
+  </Story>
+</Canvas>
+
+### Don't allow Search
+
+<Canvas>
+  <Story name="DontAllowSearch" args={{ allowSearch: false }}>
+    { Template.bind({}) }
+  </Story>
+</Canvas>

@@ -1,0 +1,62 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbCollapseMenu from './CollapseMenu.vue';
+
+<Meta
+  title="Components/Menus and Toolbars/PbCollapseMenu"
+  component={ PbCollapseMenu }
+  argTypes={{
+    options: {
+      type: 'array',
+      defaultValue: [
+        {
+          title: 'Overview',
+          subOptions: [
+            'Fluxo A', 'Fluxo B', 'Fluxo C', 'Fluxo D', 'Fluxo A', 'Fluxo B', 'Fluxo C', 'Fluxo D', 'Fluxo A', 'Fluxo B', 'Fluxo C', 'Fluxo D',
+          ],
+        },
+        {
+          title: 'Etapas',
+          subOptions: [
+            'Fluxo A', 'Fluxo B', 'Fluxo C', 'Fluxo D', 'Fluxo A', 'Fluxo B', 'Fluxo C', 'Fluxo D',
+          ],
+        },
+      ]
+    },
+    selectedOption: {
+      type: 'object',
+      defaultValue: {
+        option: 0,
+        subOption: 1,
+      }
+    }
+  }}
+/>
+
+# **PbCollapseMenu component**
+### The `PbCollapseMenu` component was created to render an animated collapse menu.
+
+### Purpose and Use case
+
+The component receives an array of objects with data to be used in the menu.
+
+## Examples
+
+### Default
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbCollapseMenu },
+  template: `
+  {{selectedOption}}
+  <PbCollapseMenu
+    :options="options"
+    :value="selectedOption"
+  />
+  `,
+});
+
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>

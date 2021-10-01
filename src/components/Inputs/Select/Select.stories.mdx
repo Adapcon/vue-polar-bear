@@ -1,0 +1,88 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbSelect from './Select.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Inputs/PbSelect"
+  component={PbSelect}
+  argTypes={{
+    buttonLabel: { type: 'string', defaultValue: 'Selecionar' },
+    optionsIcon: { type: 'string', defaultValue: 'fas fa-plus-circle fa-xs' },
+    disabled: { type: 'boolean', defaultValue: false },
+    keepOpenAfterSelect: { type: 'boolean', defaultValue: false },
+    allowSearch: { type: 'boolean', defaultValue: false },
+    color: {
+      control: { type: 'select', options: [...colors] },
+      defaultValue: 'secondary',
+    },
+    selectStyle: {
+      control: { type: 'select', options: ['background', 'outline', 'regular'] },
+      defaultValue: 'background',
+    },
+    options: {
+      type: 'array',
+      defaultValue: [
+        { title: 'Opção 1', value: 'option1' },
+        { title: 'Opção 2', value: 'option2' },
+        { title: 'Opção 3', value: 'option3' },
+        { title: 'Opção 4', value: 'option4' },
+        { title: 'Opção 5', value: 'option5' },
+        { title: 'Opção 6', value: 'option6' },
+        { title: 'Opção 7', value: 'option7' },
+        { title: 'Opção 8', value: 'option8' },
+        { title: 'Opção 9', value: 'option9' },
+        { title: 'Opção 10', value: 'option10' },
+        { title: 'Opção 11', value: 'option11' },
+        { title: 'Opção 12', value: 'option12' },
+      ]
+    }
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbSelect },
+  template: `
+    <div style="
+      width: 100%;
+      margin: 20px 0 220px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center"
+    >
+      <PbSelect
+        :select-style="selectStyle"
+        :optionsIcon="optionsIcon"
+        :disabled="disabled"
+        :keepOpenAfterSelect="keepOpenAfterSelect"
+        :buttonLabel="buttonLabel"
+        :color="color"
+        :options="options"
+        :allowSearch="allowSearch"
+        style="max-width: 300px;"
+      />
+    </div>
+  `
+});
+
+# **PbSelect**
+#
+
+### The `PbSelect` component can be used as an option selector.
+
+It was created to make it possible to select one or more options in a form context.
+All the logic should be created from outside if the items should disappear when selected (in case of multiple selects)
+or if the label should change (in case of single selection), for example.
+
+When using it for multiple selections, try to combine with PbChips to display the selected options.
+The `allowSearch` prop gives to the user the possibility of search between the options.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

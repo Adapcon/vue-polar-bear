@@ -1,0 +1,103 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbInfiniteScroll from './InfiniteScroll.vue';
+
+<Meta
+  title="Components/Miscellaneous/PbInfiniteScroll"
+  component={PbInfiniteScroll}
+  argTypes={{
+    margin: { type: 'string', defaultValue: '0px' },
+    enterIntersection: { action: 'enter-iIntersection' },
+    leaveIntersection: { action: 'leave-intersection' },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbInfiniteScroll },
+  data() {
+    return {
+      items: [],
+      isLoading: false,
+    };
+  },
+  mounted() {
+    this.addItems();
+  },
+  methods: {
+    addItems() {
+      if (this.items.length >= 60 || this.isLoading) return;
+      this.isLoading = true;
+      setTimeout(() => {
+        this.items.push(
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+          { name: 'Infinite Scroll' },
+        );
+        this.isLoading = false;
+      }, 1500);
+    },
+  },
+  template: `
+    <div>
+      <PbInfiniteScroll
+        @enter-intersection="addItems"
+        @enter-intersection="enterIntersection"
+        @leave-intersection="leaveIntersection"
+        :margin="margin"
+      >
+        <div>
+          <div v-for="(item, index) in items" style="margin: 2em 0">
+            <p>{{ item.name }}</p>
+            <p>{{ item.age }}</p>
+            <hr style="margin: 0;">
+          </div>
+        </div>
+      </PbInfiniteScroll>
+      <div v-show="isLoading" slot="observer" style="display: flex; justify-content: center;">
+        <h1>Carregando...</h1>
+      </div>
+    </div>
+  `,
+});
+
+# **PbInfiniteScroll component**
+### The `PbInfiniteScroll` component can be used to create an infinite scroll effect in a list of contents.
+
+### Purpose and Use case
+
+The component uses Intersection Observer API, (see more <https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API>)
+to watch for changes in the intersection of a target element and then emit and event.
+
+It is a good solution for using lazy-loading image logics and infinite scroll for a list of contents. You don't want to load all of
+your contents in the client page, so you search for a reduced list of items and when the target reaches the intersection element also
+called **root element**, it will emit an event that can be watched in order to search for more items to the list and so on.
+
+### Watchout:
+
+Every time the element reaches the target, an event is triggered to call the method you implemented.
+It's important to have a loading state to the function called by the event since the use of this component is to lazy load content.
+There will be requests to get the new data, and while the request is in progress it's good to have a loading state to prevent a second
+or third call of the method.
+## Examples
+
+### Default
+
+This example shows how infinite scroll works
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

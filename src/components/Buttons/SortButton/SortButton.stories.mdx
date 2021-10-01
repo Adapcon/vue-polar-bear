@@ -1,0 +1,66 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+
+import PbSortButton from './SortButton.vue';
+
+<Meta
+  title="Components/Buttons/PbSortButton"
+  component={PbSortButton}
+  argTypes={{
+    label: {
+      type: 'string',
+      defaultValue: 'Label',
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    input: {
+      action: 'input',
+    }
+  }}
+/>
+
+export const Template = ( arg, { argTypes }) => ({
+  components: { PbSortButton },
+  props: Object.keys(argTypes),
+  data() {
+    return {
+      sort: '',
+    };
+  },
+  template: `
+    <PbSortButton
+      :disabled="disabled"
+      v-model="sort"
+      @input="input"
+    >
+      {{ label }}
+    </PbSortButton>
+  `,
+});
+
+# **PbSortButton Component**
+### The `PbSortButton` component is used to sort.
+
+### Purpose and Use case
+
+The SortButton component can be used in cases when it's necessary to let the user sort a table.
+The SortButton component uses the PbButton component together with the logic needed to return the sort.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto">
+    { Template.bind() }
+  </Story>
+</Canvas>
+
+### Disabled
+
+<Canvas>
+  <Story name="Disabled" height="auto" args={{ disabled: true }}>
+    { Template.bind() }
+  </Story>
+</Canvas>

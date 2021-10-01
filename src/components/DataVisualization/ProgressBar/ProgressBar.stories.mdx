@@ -1,0 +1,91 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbProgressBar from './ProgressBar.vue';
+import { colors } from '@pb/utils/constants';
+
+<Meta
+  title="Components/Data Visualization/PbProgressBar"
+  component={PbProgressBar}
+  argTypes={{
+      color: {
+        control: {
+          type: 'select',
+          options: [ ...colors ],
+        },
+        defaultValue: 'secondary',
+      },
+      labelColor: {
+        control: {
+          type: 'select',
+          options: [ ...colors ],
+        },
+        defaultValue: 'secondary',
+      },
+      backgroundColor: {
+        control: {
+          type: 'select',
+          options: [ ...colors ],
+        },
+        defaultValue: 'gray-10',
+      },
+      progress: {
+        control: {
+          type: 'range',
+          min: 0,
+          max: 100
+        },
+        defaultValue: 10,
+      },
+      checkpoints: {
+        type: 'array',
+        defaultValue: [
+          {
+            label: 'Titulos',
+            size: 33.33,
+          },
+          {
+            label: 'Autorizacao',
+            size: 33.33,
+          },
+          {
+            label: 'Confirmação',
+            size: 33.33,
+          }
+        ]
+      }
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbProgressBar },
+  template: `
+    <div>
+      <PbProgressBar
+        :color="color"
+        :background-color="backgroundColor"
+        :label-color="labelColor"
+        :progress="progress"
+        :checkpoints="checkpoints"
+      />
+    </div>
+  `,
+});
+
+# **PbProgressBar**
+### The `PbProgressBar` component can be used to display a progress bar.
+
+### Purpose and Use Case
+
+The `PbProgressBar` component displays a colored progress bar.
+The bar can contain labels to help the user know which step he is on.
+This component should be used to inform the user of their progress in certain actions.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

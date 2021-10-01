@@ -1,0 +1,50 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbDateInput from './DateInput.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Inputs/PbDateInput"
+  component={ PbDateInput }
+  argTypes={{
+    value: {
+      type: 'string',
+      defaultValue: '',
+    },
+    color: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'muted',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbDateInput },
+  template: `
+    <PbDateInput
+      style="width: 165px;"
+      :value="value"
+      :color="color"
+    />
+  `,
+});
+
+# **PbDateInput component**
+### The `PbDateInput` was created to capture date through user input.
+
+### Purpose and Use case
+
+The `PbDateInput` component is used to capture date input from the user.
+
+The component has an `on-validate` property similar to the vue properties validator.
+It is used to perform the validations of the date.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>

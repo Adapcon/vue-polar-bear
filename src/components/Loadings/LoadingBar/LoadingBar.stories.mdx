@@ -1,0 +1,50 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import { colors } from '@pb/utils/constants';
+import PbLoadingBar from './LoadingBar.vue';
+
+<Meta
+  title="Components/Loadings/PbLoadingBar"
+  component={PbLoadingBar}
+  argTypes={{
+    color: {
+      control: {
+       type: 'select',
+       options: colors,
+      },
+      defaultValue: 'primary',
+    },
+    bold: {
+      type: 'boolean',
+      defaultValue: false,
+    }
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbLoadingBar },
+  template: `
+    <PbLoadingBar
+      :color="color"
+      :bold="bold"
+    />
+  `
+});
+
+# **PbLoadingBar Component**
+### The `PbLoadingBar` component is used to inform the user of something that is in progress.
+
+### Purpose and Use case
+
+This component is used to give feedback to user that the page or component is loading.
+It is highly recommended to page loadings or components with large width such as tables.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

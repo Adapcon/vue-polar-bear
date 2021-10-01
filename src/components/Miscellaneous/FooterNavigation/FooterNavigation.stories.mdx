@@ -1,0 +1,47 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+
+import PbFooterNavigation from './FooterNavigation.vue';
+
+<Meta
+  title="Components/Miscellaneous/PbFooterNavigation"
+  component={PbFooterNavigation}
+  argTypes={{
+    views: {
+      type: 'array',
+      defaultValue: ['view1', 'view2', 'view3', 'view4']
+    },
+    finalButtonLabel: {
+      type: 'string',
+      defaultValue: 'Fechar',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbFooterNavigation },
+  template: `
+    <PbFooterNavigation
+      :views="views"
+      :finalButtonLabel="finalButtonLabel"
+    />
+  `,
+});
+
+# **PbFooterNavigation Component**
+### The `PbFooterNavigation` component is used to navigate between pages.
+
+### Purpose and Use case
+
+The footer navigation component receives an array of steps, that is, the screen views.
+Having the possibility to change the button label.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>

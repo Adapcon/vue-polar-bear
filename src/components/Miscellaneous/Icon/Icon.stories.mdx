@@ -1,0 +1,172 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+
+import PbIcon from './Icon.js';
+import { list } from './list.js';
+const sizeOptions = ['fa-xs', 'fa-sm', 'fa-lg', 'fa-2x', 'fa-3x', 'fa-4x', 'fa-5x', 'fa-6x', 'fa-7x', 'fa-8x', 'fa-9x', 'fa-10x'];
+const rotations = ['fa-rotate-90', 'fa-rotate-180', 'fa-rotate-270'];
+const iconList = list();
+
+<Meta
+  title="Components/Miscellaneous/PbIcon"
+  component={PbIcon}
+  argTypes={{
+    icon: {
+      control: {
+        type: 'select',
+        options: [...iconList],
+      },
+      defaultValue: iconList[0],
+    },
+    rotation: {
+      control: {
+        type: 'select',
+        options: ['', ...rotations],
+      },
+      defaultValue: '',
+    },
+    size: {
+      control: {
+        type: 'select',
+        options: [ '', ...sizeOptions ],
+      },
+      defaultValue: '',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbIcon },
+  template: `
+    <div
+      style="
+        position: relative;
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+        left: 50%;
+        transform: translate(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      "
+    >
+      <PbIcon
+        :icon="icon"
+        :class="[rotation, size]"
+        style="
+          margin-bottom: 10px;
+        "
+      />
+      <small style="color: #ccc">
+        {{ icon }}
+      </small>
+    </div>
+  `,
+});
+
+# **Pb-Icon Component**
+The `PbIcon` component is used to render icons from our library.
+
+#### **Purpose and Use case**
+It's purpose is to render svg icons that has been imported into our
+library and could be used in any case where one of this icons are required.
+
+## Single Icon
+Usually you're going to use an icon isolated. For this you should call 'PbIcon' component and pass to it
+a prop called `icon`. This prop will accept any icon that has been previously added to our library
+(check all avaiable icons in the **All Icons** section).
+
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## **Other Props**
+Additionally to icon titles, you can concatenate other values into icon prop or as a component class:
+
+### Sizing
+| Value          | Behavior
+|----------------|-------------------------------------------------
+| fa-xs          | Change the icon size to .75em
+| fa-sm          | Change the icon size to .875em
+| fa-lg          | Change the icon size to 1.33em
+| fa-2x          | Change the icon size to 2em
+| fa-3x          | Change the icon size to 3em
+|  ...           |
+| fa-9x          | Change the icon size to 9em
+| fa-10x         | Change the icon size to 10em
+
+### Rotation
+| Value               | Behavior
+|---------------------|-------------------------------------------------
+| fa-rotate-90        | Rotate 90deg clockwise
+| fa-rotate-180       | Rotate 180deg clockwise
+| fa-rotate-270       | Rotate 270deg clockwise
+| fa-flip-horizontal  | mirrors icon horizontally
+| fa-flip-vertical    | mirrors icon vertically
+| fa-flip-both        | mirrors icon both vertically and horizontally
+
+### Animation
+| Value          | Behavior
+|----------------|-------------------------------------------------
+| fa-spin        | Icon will rotate infinitely
+| fa-pulse       | Icon will rotate infinitely by eight steps
+
+
+## All Icons
+Here you can check all icons that has been imported to our library.
+Beyond the icon itself, you can see the **icon title** that should be passed into `icon` prop of the component.
+P.S.: The icon prefix (fas, far or fab) are required to the icon be rendered correctly.
+<Canvas>
+  <Story name="All Icons">
+    {{
+      components: { PbIcon },
+      data() {
+        return {
+          hoveredItem: null,
+        }
+      },
+      methods: {
+        renderIcons() {
+          return list();
+        },
+      },
+      template: `
+        <div
+          style="
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+          "
+        >
+          <div
+            v-for="icon of renderIcons()"
+            style="
+              width: 150px;
+              height: 80px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              margin: 6px;
+              background: #f6f6f6;
+              border-radius: 4px;
+            "
+          >
+            <PbIcon
+              :icon="icon"
+              class="fa-lg"
+              style="
+                margin-bottom: 4px;
+              "
+            />
+            <small style="color: #ccc; font-size: 10px">
+              {{ icon }}
+            </small>
+          </div>
+        </div>
+      `,
+    }}
+  </Story>
+</Canvas>

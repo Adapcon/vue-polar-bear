@@ -1,0 +1,117 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbNumberInput from './NumberInput.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Inputs/PbNumberInput"
+  component={ PbNumberInput }
+  argTypes={{
+    value: {
+      type: 'number',
+      defaultValue: undefined,
+    },
+    inputTimeout: {
+      type: 'number',
+      defaultValue: 0,
+    },
+    placeholder: {
+      type: 'string',
+      defaultValue: 'Placeholder',
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    color: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'muted',
+    },
+    validator: {
+      type: 'function',
+      defaultValue: null,
+    },
+    focus: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    textCenter: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+  }}
+/>
+
+# **PbNumberInput component**
+### The `PbNumberInput` was created to capture numbers through user input.
+
+### Purpose and Use case
+
+The `PbNumberInput` component is used to capture numbers input from the user.
+It uses v-model, similar to a regular input.
+
+The component has a `validator` property similar to the vue properties validator.
+This property must contain all validations, if it is valid, return `true`
+and if validation fails, it should return `false`.
+This will cause all changes to the `value` to be validated and if an error
+occurs visually modify the component.
+
+it is also possible to control the focus of the component, through the `focus`
+property which when set to `true` will be called a function to activate the
+focus inside the input.
+
+## Examples
+
+### Default
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbNumberInput },
+  template: `
+    <div>
+      <PbNumberInput
+        v-model="value"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :validator="validator"
+        :color="color"
+        :focus="focus"
+        :textCenter="textCenter"
+        :inputTimeout="inputTimeout"
+      />
+    </div>
+  `,
+})
+
+### Default
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Input Error
+<Canvas>
+  <Story
+    name="Error"
+    height="auto"
+    args={{
+      value: 0,
+      validator: () => false,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Focused Input
+<Canvas>
+  <Story
+    name="Focused"
+    height="auto"
+    args={{
+      focus: true,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

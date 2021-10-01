@@ -1,0 +1,95 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbCard from './Card.vue';
+
+<Meta
+  title="Components/Data Visualization/PbCard"
+  component={PbCard}
+  argTypes={{
+      title: {
+        control: {
+          type: 'text'
+        },
+        defaultValue: 'I really am a pretty big title'
+      },
+      subtitle: {
+        control: {
+          type: 'text'
+        },
+        defaultValue: 'Large Default subtitle'
+      },
+      backgroundImage: 'text',
+      footerOverlayBackground: 'boolean',
+      width: {
+        control: {
+          type: 'text'
+        },
+        defaultValue: '175px'
+      },
+      height: {
+        control: {
+          type: 'text'
+        },
+        defaultValue: '205px'
+      },
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbCard },
+  template: `
+    <div>
+      <PbCard
+        :title="title"
+        :subtitle="subtitle"
+        :backgroundImage="backgroundImage"
+        :footerOverlayBackground="footerOverlayBackground"
+        :width="width"
+        :height="height"
+      >
+        <template #background>
+          Content Background
+        </template>
+        <template #expansive-footer>
+          <span style="color: var(--color-white) !important;">
+            Content Expansive Footer
+          </span>
+        </template>
+      </PbCard>
+    </div>
+  `,
+});
+
+# **PbCard**
+### The `PbCard` componente provide a flexible and extensible content container.
+
+### Purpose and Use Case
+
+A `PbCard` is an expansive content container.
+Having the possibility to change your background.
+
+Its `title` and `subtitle` are attached to the expanding footer,
+if they exceed the natural size of the card, an ellipse will be added (...)
+and when expanded, both will appear in full.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story
+    name="With Background Image"
+    args={{
+      backgroundImage: 'https://adapcon-pro-staging-microservice-file-public.s3.sa-east-1.amazonaws.com/stage-simplificamais/store/images/000087a0268f141f2a69fdbd4ce13a4b-1-20210504172244656_1000x1000.jpg',
+      footerOverlayBackground: true,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

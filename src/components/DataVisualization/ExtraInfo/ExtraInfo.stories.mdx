@@ -1,0 +1,77 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbExtraInfo from './ExtraInfo.vue';
+import { colors } from '@pb/utils/constants';
+
+<Meta
+  title="Components/Data Visualization/PbExtraInfo"
+  component={PbExtraInfo}
+  argTypes={{
+    iconColor: {
+      control: {
+        type: 'select',
+        options: [ ...colors],
+      },
+      defaultValue: 'secondary',
+    },
+    bordered: {
+      type: 'boolean',
+      defaultValue: true,
+    },
+    initialState: {
+      control: {
+        type: 'select',
+        options: ['open', 'closed'],
+      },
+      defaultValue: 'open',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbExtraInfo },
+  template: `
+    <div>
+      <PbExtraInfo
+        :iconColor="iconColor"
+        :bordered="bordered"
+        :initial-state="initialState"
+      >
+        <h1 class="pb">Linus Torvalds</h1>
+        <template #extra>
+          <small class="pb">
+            Torvalds nasceu em Helsínquia, na Finlândia. É filho dos jornalistas Anna e Nils Torvalds, e neto do estatístico Leo Törnqvist e do poeta Ole Torvalds.
+            Seus pais eram radicais do campus da Universidade de Helsínquia, na década de 1960.
+            Sua família pertence à minoria de língua sueca (5,5 % da população da Finlândia).
+            Seu interesse por computadores começou com um Commodore VIC-20. Nessa época, ele fica conhecido por ter escrito um clone do Pac-Man chamado Cool Man
+          </small>
+        </template>
+      </PbExtraInfo>
+    </div>
+  `,
+});
+
+# **PbExtraInfo**
+### The `PbExtraInfo` component can be used to show content used as detail
+
+### Purpose and Use Case
+
+The `PbExtraInfo` component show more information about an element when it is clicked.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Start Closed
+
+<Canvas>
+  <Story name="Start Closed" args={{ initialState: false }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

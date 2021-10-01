@@ -1,0 +1,83 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbDoubleCheck from './DoubleCheck.vue';
+import { colors } from '@pb/utils/constants.js';
+import { list } from '@pb/Miscellaneous/Icon/list.js';
+
+<Meta
+  title="Components/Buttons/PbDoubleCheck"
+  component={PbDoubleCheck}
+  argTypes={{
+    color: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'primary',
+    },
+    iconColor: {
+      control: { type: 'select', options: [ '', ...colors ] },
+      defaultValue: '',
+    },
+    icon: {
+      control: { type: 'select', options: [ ...list() ] },
+      defaultValue: 'fas fa-trash',
+    },
+    textColor: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'white',
+    },
+    confirmText: {
+      type: 'string',
+      defaultValue: 'Remove?'
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    }
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbDoubleCheck },
+  template: `
+    <div style="width: 120px; margin: auto; display: flex;">
+      <PbDoubleCheck
+        :color="color"
+        :confirm-text="confirmText"
+        :text-color="textColor"
+        :icon="icon"
+        :icon-color="iconColor"
+        :disabled="disabled"
+      />
+    </div>
+  `,
+});
+
+# **PbDoubleCheck**
+### The `PbDoubleCheck` component can be used to confirm actions
+
+### Purpose and Use Case
+
+The double check component can be used in several places to be used as a confirmation of a certain action.
+When the first click is made, the component will render a div containing the `confirmText`.
+The confirmation div rendered by the component must overlap content on the left.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Distinct Icon Color" args={{ iconColor: 'info' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Distinct Text Color" args={{ textColor: 'info' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

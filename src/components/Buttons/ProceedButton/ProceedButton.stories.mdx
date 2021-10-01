@@ -1,0 +1,43 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbProceedButton from './ProceedButton.vue';
+
+<Meta
+  title="Components/Buttons/PbProceedButton"
+  component={PbProceedButton}
+  argTypes={{
+    title: 'text',
+    disabled: 'boolean',
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbProceedButton },
+  template: `
+    <div>
+      <PbProceedButton
+        :title="title"
+        :disabled="disabled"
+      />
+    </div>
+  `,
+});
+
+# **PbProceedButton**
+### The `PbProceedButton` component can be used to give the idea of ​​continuity.
+
+### Purpose and Use Case
+
+The `PbProceedButton` component displays a button to continue the flow.
+The concept of the component is to serve as a simple choice to continue some flow.
+The button contains only the title and a fixed icon.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

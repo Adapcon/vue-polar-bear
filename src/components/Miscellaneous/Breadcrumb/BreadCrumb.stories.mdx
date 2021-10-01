@@ -1,0 +1,91 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import { action } from '@storybook/addon-actions';
+import PbBreadcrumb from './Breadcrumb.vue';
+
+<Meta
+  title="Components/Miscellaneous/PbBreadcrumb"
+  component={ PbBreadcrumb }
+  argTypes={{
+    paths: {
+      type: 'array',
+      defaultValue: [
+        {
+          label: 'home',
+          path: '/dashboard'
+        },
+        {
+          label: 'devolution',
+          path: '/dashboard/devolution'
+        },
+        {
+          label: 'analytics',
+          path: '/dashboard/devolution/analytics'
+        },
+      ]
+    },
+    reduced: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    clickPath: {
+      action: 'update:clickPath',
+    },
+    backPath: {
+      action: 'update:backPath',
+    },
+  }}
+/>
+
+# **Breadcrumb component**
+
+### The `breadcrumbs` component indicates the actual page location, it is a navigational helper for pages. The separator is added automatically.
+
+### Example
+
+export const Template = (arg, { argTypes }) => ({
+  components: { PbBreadcrumb },
+  props: Object.keys(argTypes),
+  template: `
+    <PbBreadcrumb
+      :paths="paths"
+      :reduced="reduced"
+      @update:clickPath="clickPath"
+      @update:backPath="backPath"
+    />
+  `,
+});
+
+<Canvas>
+  <Story name="Default" height="auto">
+    { Template.bind({}) }
+  </Story>
+</Canvas>
+
+### Code
+
+In order to the breadcrumb works, an array of objects has to be passed to the paths property of the component.
+
+Paths property:
+```
+[
+  {
+    label:'home',
+    path:'/dashboard'
+  },
+  {
+    label:'devolution',
+    path:'/dashboard/devolution'
+  },
+  {
+    label:'analytics',
+    path:'/dashboard/devolution/analytics'
+  }
+]
+```
+
+Component:
+```
+<PbBreadcrumb
+  :paths="paths"
+/>
+```

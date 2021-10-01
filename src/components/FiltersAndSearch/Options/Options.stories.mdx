@@ -1,0 +1,113 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+
+import PbOptions from './Options.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Filters and Search/PbOptions"
+  component={PbOptions}
+  argTypes={{
+    options: {
+      type: 'array',
+      defaultValue: ['OPTION','OPTION2', 'OPTION3'],
+    },
+    buttonStyle: {
+      control: {
+        type: 'select',
+        options: ['regular', 'background', 'outline'],
+      },
+      defaultValue: 'regular',
+    },
+    color: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'primary',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbOptions },
+  data() {
+    return {
+      state: {
+        selected: '',
+      },
+    };
+  },
+  template: `
+    <PbOptions
+      v-model="state.selected"
+      :options="options"
+      :button-style="buttonStyle"
+      :color="color"
+    />
+  `,
+});
+
+export const TemplatePreSelected = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbOptions },
+  data() {
+    return {
+      state: {
+        selected: 'OPTION2',
+      },
+    };
+  },
+  template: `
+    <PbOptions
+      v-model="state.selected"
+      :options="options"
+      :button-style="buttonStyle"
+      :color="color"
+    />
+  `,
+});
+
+# **PbOptions component**
+### The `PbOptions` component can be used as a simple selector of options.
+
+### Purpose and Use case
+
+The options component was designed to provide an input of choice in a simple way.
+It is worth noting that the default for this component is that the selected option appears
+with the **primary** color of the application.
+
+## Examples
+
+### Default
+
+The default example brings three options but nothing selected.
+
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Pre-selected
+
+One possibility is to bring a pre-selected option.
+To do this it is necessary to define your variable passed to `v-model`
+
+<Canvas>
+  <Story name="PreSelected" height="auto">
+    {TemplatePreSelected.bind({})}
+  </Story>
+</Canvas>
+
+## Code
+
+It is an output component, that's why it's necessary to introduce a `v-model`.
+This `v-model` will always return the **selected option**.
+
+In order to use it's necessary to pass an array of string.
+
+```
+[
+  'OPTION',
+  'OPTION2',
+  'OPTION3'
+]
+```

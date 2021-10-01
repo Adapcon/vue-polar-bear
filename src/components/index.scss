@@ -1,0 +1,480 @@
+@import './variables.scss';
+@import './icons.scss';
+@import './animations.scss';
+
+:root {
+  --color-primary: #3a79cc;
+  --color-secondary: #103972;
+  --color-active: #0011ff;
+  --color-success: #417617;
+  --color-danger: #AC4545;
+  --color-warning: #DD8218;
+  --color-info: #18a0fb;
+  --color-muted: #aaa;
+  --color-white: #fff;
+  --color-gray: #f8f8f8;
+  --color-gray-10: #ccc;
+  --color-gray-20: #aaa;
+  --color-gray-40: #888;
+  --color-gray-60: #555;
+  --color-gray-80: #333;
+  --color-gray-90: #222;
+  --color-background-dark: #484F59;
+}
+
+/* roboto-300 - latin */
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/static/fonts/roboto-v16-latin-300.eot');
+  /* IE9 Compat Modes */
+  src: local('Roboto Light'), local('Roboto-Light'), url('/static/fonts/roboto-v16-latin-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('/static/fonts/roboto-v16-latin-300.woff2') format('woff2'), /* Super Modern Browsers */
+  url('/static/fonts/roboto-v16-latin-300.woff') format('woff'), /* Modern Browsers */
+  url('/static/fonts/roboto-v16-latin-300.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('/static/fonts/roboto-v16-latin-300.svg#Roboto') format('svg');
+  /* Legacy iOS */
+}
+
+
+/* roboto-regular - latin */
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/roboto-v16-latin-regular.eot');
+  /* IE9 Compat Modes */
+  src: local('Roboto'), local('Roboto-Regular'), url('/static/fonts/roboto-v16-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('/static/fonts/roboto-v16-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+  url('/static/fonts/roboto-v16-latin-regular.woff') format('woff'), /* Modern Browsers */
+  url('/static/fonts/roboto-v16-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('/static/fonts/roboto-v16-latin-regular.svg#Roboto') format('svg');
+  /* Legacy iOS */
+}
+
+
+/* roboto-500 - latin */
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/static/fonts/roboto-v16-latin-500.eot');
+  /* IE9 Compat Modes */
+  src: local('Roboto Medium'), local('Roboto-Medium'), url('/static/fonts/roboto-v16-latin-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('/static/fonts/roboto-v16-latin-500.woff2') format('woff2'), /* Super Modern Browsers */
+  url('/static/fonts/roboto-v16-latin-500.woff') format('woff'), /* Modern Browsers */
+  url('/static/fonts/roboto-v16-latin-500.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('/static/fonts/roboto-v16-latin-500.svg#Roboto') format('svg');
+  /* Legacy iOS */
+}
+
+/* roboto-700 - latin */
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/fonts/roboto-v20-latin-700.eot'); /* IE9 Compat Modes */
+  src: local('Roboto Bold'), local('Roboto-Bold'),
+       url('/static/fonts/roboto-v20-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/roboto-v20-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/roboto-v20-latin-700.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/roboto-v20-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/roboto-v20-latin-700.svg#Roboto') format('svg'); /* Legacy iOS */
+}
+
+/* roboto-900 - latin */
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 900;
+  src: url('/static/fonts/roboto-v20-latin-900.eot'); /* IE9 Compat Modes */
+  src: local('Roboto Black'), local('Roboto-Black'),
+       url('/static/fonts/roboto-v20-latin-900.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/roboto-v20-latin-900.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/roboto-v20-latin-900.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/roboto-v20-latin-900.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/roboto-v20-latin-900.svg#Roboto') format('svg'); /* Legacy iOS */
+}
+
+/* nunito-regular - latin */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/nunito-v14-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Nunito Regular'), local('Nunito-Regular'),
+       url('/static/fonts/nunito-v14-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/nunito-v14-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/nunito-v14-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/nunito-v14-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/nunito-v14-latin-regular.svg#Nunito') format('svg'); /* Legacy iOS */
+}
+/* nunito-600 - latin */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/static/fonts/nunito-v14-latin-600.eot'); /* IE9 Compat Modes */
+  src: local('Nunito SemiBold'), local('Nunito-SemiBold'),
+       url('/static/fonts/nunito-v14-latin-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/nunito-v14-latin-600.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/nunito-v14-latin-600.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/nunito-v14-latin-600.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/nunito-v14-latin-600.svg#Nunito') format('svg'); /* Legacy iOS */
+}
+/* nunito-700 - latin */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/fonts/nunito-v14-latin-700.eot'); /* IE9 Compat Modes */
+  src: local('Nunito Bold'), local('Nunito-Bold'),
+       url('/static/fonts/nunito-v14-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/nunito-v14-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/nunito-v14-latin-700.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/nunito-v14-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/nunito-v14-latin-700.svg#Nunito') format('svg'); /* Legacy iOS */
+}
+
+.layer-underlay {
+  z-index: map-get($layers, underlay);
+}
+
+.layer-base {
+  z-index: map-get($layers, base);
+}
+
+.layer-menu {
+  z-index: map-get($layers, menu);
+}
+
+.layer-overlay {
+  z-index: map-get($layers, overlay);
+}
+
+.layer-header-overlay {
+  z-index: map-get($layers, headerOverlay);
+}
+
+.layer-modal {
+  z-index: map-get($layers, modal);
+}
+
+.layer-always-on-top {
+  z-index: map-get($layers, alwaysOnTop);
+}
+
+.fullscreen {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  box-sizing: border-box;
+  object-fit: contain;
+  z-index: 36;
+}
+
+.cursor-disabled {
+  cursor: not-allowed !important;
+}
+
+.disable-select {
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.bg-color-primary {
+  background: var(--color-primary) !important;
+}
+
+.bg-color-secondary {
+  background: var(--color-secondary) !important;
+}
+
+.bg-color-success {
+  background: var(--color-success) !important;
+}
+
+.bg-color-danger {
+  background: var(--color-danger) !important;
+}
+
+.bg-color-warning {
+  background: var(--color-warning) !important;
+}
+
+.bg-color-info {
+  background: var(--color-info) !important;
+}
+
+@mixin pb-scroll-base {
+  &::-webkit-scrollbar { width: 2px; height: 2px }
+  &::-webkit-scrollbar-track { background: none }
+}
+
+.pb-scroll-secondary {
+ @include pb-scroll-base;
+ &::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+    &:hover { background: var(--color-secondary) }
+  }
+
+  &-thick {
+    &::-webkit-scrollbar { width: 6px }
+  }
+}
+
+.pb-scroll-primary {
+ @include pb-scroll-base;
+ &::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    &:hover { background: var(--color-primary) }
+  }
+
+  &-thick {
+    &::-webkit-scrollbar { width: 6px }
+  }
+}
+
+.pb-scroll-white {
+ @include pb-scroll-base;
+ &::-webkit-scrollbar-thumb {
+    background: var(--color-white);
+    &:hover { background: var(--color-white) }
+  }
+}
+
+// PB Typography
+@mixin pb-font-light { font-weight: 300 !important; }
+@mixin pb-font-regular { font-weight: 400 !important; }
+@mixin pb-font-semi { font-weight: 600 !important; }
+@mixin pb-font-bold { font-weight: 700 !important; }
+@mixin pb-base-typo {
+  display: block !important;
+  margin: 0 !important;
+  font-family: 'Nunito', Arial, Helvetica, sans-serif !important;
+}
+@mixin pb-base-typo-title {
+  display: block !important;
+  margin: 0 !important;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif !important;
+}
+
+textarea.pb {
+  @include pb-base-typo;
+  border-radius: 0 10px 10px 10px;
+  color: var(--color-secondary);
+  padding: 10px;
+  width: 100%;
+  border: none;
+  outline: 0;
+  resize: none;
+}
+
+textarea.pb::-webkit-input-placeholder {
+  color: var(--color-secondary);
+}
+
+input.pb {
+  @include pb-base-typo;
+  @include pb-font-regular;
+  font-size: 16px !important;
+  height: 40px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  padding: 0 12px;
+  margin: 0;
+}
+
+h1.pb {
+  @include pb-base-typo-title;
+  @include pb-font-bold;
+  font-size: 40px !important;
+  line-height: 100% !important;
+  letter-spacing: 0.01em;
+}
+
+h2.pb {
+  @include pb-base-typo-title;
+  @include pb-font-bold;
+  font-size: 32px !important;
+  line-height: 110% !important;
+}
+
+h3.pb {
+  @include pb-base-typo-title;
+  @include pb-font-bold;
+  font-size: 24px !important;
+  line-height: 120% !important;
+
+  &-light {
+    @extend .pb;
+    @include pb-font-light;
+  }
+}
+
+h4.pb {
+  @include pb-base-typo-title;
+  @include pb-font-bold;
+  font-size: 20px !important;
+  line-height: 130% !important;
+
+  &-light {
+    @extend .pb;
+    @include pb-font-light;
+  }
+}
+
+h5.pb {
+  @include pb-base-typo-title;
+  @include pb-font-bold;
+  font-size: 17px !important;
+  line-height: 140% !important;
+
+  &-light {
+    @extend .pb;
+    @include pb-font-light;
+  }
+}
+
+h6.pb {
+  @include pb-base-typo-title;
+  @include pb-font-bold;
+  font-size: 15px !important;
+  line-height: 140% !important;
+
+  &-light {
+    @extend .pb;
+    @include pb-font-light;
+  }
+}
+
+p.pb {
+  @include pb-base-typo;
+  @include pb-font-regular;
+  font-size: 16px !important;
+  line-height: 22px !important;
+
+  &-strong {
+    @extend .pb;
+    @include pb-font-bold;
+  }
+
+  &-light {
+    @extend .pb;
+    @include pb-font-light;
+  }
+
+  &-sm {
+    @extend .pb;
+    font-size: 12px !important;
+    line-height: 16px !important;
+
+    &-strong {
+      @extend .pb-sm;
+      @include pb-font-bold;
+    }
+
+    &-light {
+      @extend .pb-sm;
+      @include pb-font-light;
+    }
+  }
+
+  &-md {
+    @extend .pb;
+    font-size: 14px !important;
+    line-height: 19px !important;
+
+    &-strong {
+      @extend .pb-md;
+      @include pb-font-bold;
+    }
+
+    &-light {
+      @extend .pb-md;
+      @include pb-font-light;
+    }
+  }
+}
+
+p.hover-bold:hover {
+  @include pb-font-bold;
+}
+
+small.pb {
+  @include pb-base-typo-title;
+  @include pb-font-bold;
+  font-size: 11px !important;
+  line-height: 13px !important;
+  letter-spacing: 0.1em;
+
+  &-light {
+    @extend .pb;
+    @include pb-font-regular;
+  }
+
+  &-sm {
+    @extend .pb;
+    font-size: 8px !important;
+    line-height: 9px !important;
+
+    &-light {
+      @extend .pb-sm;
+      @include pb-font-regular;
+    }
+  }
+
+  &-md {
+    @extend .pb;
+    font-size: 10px !important;
+    line-height: 12px !important;
+
+    &-light {
+      @extend .pb-md;
+      @include pb-font-regular;
+    }
+  }
+}
+
+b.pb {
+  @include pb-base-typo;
+  @include pb-font-bold;
+  display: inline !important;
+}
+ul.pb {
+  @include pb-base-typo;
+  font-size: 16px !important;
+  line-height: 140% !important;
+  list-style: none !important;
+
+  li {
+    line-height: 35px !important;
+  }
+
+  li::marker {
+    color: var(--color-gray-60) !important
+  }
+}
+ol.pb {
+  @include pb-base-typo;
+  font-size: 16px !important;
+  line-height: 140% !important;
+  li::marker {
+    color: var(--color-gray-60) !important
+  }
+}
+
+

@@ -1,0 +1,56 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbBadge from './Badge.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+ title="Components/Miscellaneous/PbBadge"
+ component={PbBadge}
+ argTypes={{
+   size: {
+     control: { type: 'select', options: ['pb-sm', 'pb-md', 'pb-lg'] },
+     defaultValue: 'pb-sm',
+   },
+  title: {
+    type: 'string',
+    defaultValue: 'Title',
+  },
+  backgroundColor: {
+    control: { type: 'select', options: [ ...colors ] },
+    defaultValue: 'primary',
+  },
+  color: {
+    control: { type: 'select', options: [ ...colors ] },
+    defaultValue: 'white',
+  },
+ }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbBadge },
+  template: `
+    <PbBadge
+      :size="size"
+      :title="title"
+      :background-color="backgroundColor"
+      :color="color"
+    />
+  `
+});
+
+# **PbBadge**
+### The `PbBadge` component can be used to highlight an important element in the screen that the user should be aware of
+
+### Purpose and Use case
+
+This component was created to highlight the relevant text for the user on the screen.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

@@ -1,0 +1,114 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbQuantitySelector from './QuantitySelector.vue';
+import { colors } from '@pb/utils/constants'
+
+<Meta
+ title="Components/Inputs/PbQuantitySelector"
+ component={PbQuantitySelector}
+ argTypes={{
+   value: {
+     type: 'number',
+     defaultValue: 0,
+   },
+   min: {
+     type: 'number',
+     defaultValue: 0,
+   },
+   max: {
+     type: 'number',
+     defaultValue: 100,
+   },
+   fractions: {
+     type: 'number',
+     defaultValue: 0,
+   },
+   step: {
+     type: 'number',
+     defaultValue: 1,
+   },
+   quantitySelectorStyle: {
+     control: {
+       type: 'select',
+       options: [
+         'regular',
+         'outline'
+       ]
+     }
+   },
+   suffix: {
+     type: 'string',
+     defaultValue: '',
+   },
+   placeholder: {
+     type: 'string',
+     defaultValue: 'Placeholder',
+   },
+   disabled: {
+     type: 'boolean',
+     defaultValue: false,
+   },
+   isLoading: {
+     type: 'boolean',
+     defaultValue: false,
+   },
+   status: {
+     control: {
+       type: 'select',
+       options: ['', 'success', 'error']
+     },
+     defaultValue: '',
+   },
+   color: {
+     control: {
+       type: 'select',
+       options: [...colors]
+     },
+     defaultValue: 'white',
+   },
+ }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbQuantitySelector },
+  template: `
+    <PbQuantitySelector
+      v-model="value"
+      :max="max"
+      :min="min"
+      :step="step"
+      :fractions="fractions"
+      :quantity-selector-style="quantitySelectorStyle"
+      :suffix="suffix"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :is-loading="isLoading"
+      :status="status"
+      :color="color"
+    />
+  `
+});
+
+# **PbQuantitySelector**
+### The `PbQuantitySelector` component can be used to manipulate quantities.
+
+### Purpose and Use case
+
+This component can be used when it's necessary to manipulate quantities in a simply and quickly way.
+It has two buttons, one to add and another to subtract, making the user experience simple and easy.
+
+
+This component returns feedback when errors occur.
+The errors are based on `min` and `max` property, and in case the user inputs a value that's not a number.
+
+There are two main styles for this component that can be attributed through the `quantitySelectorStyle` prop: `regular` and `outline`.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

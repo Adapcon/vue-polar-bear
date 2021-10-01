@@ -1,0 +1,62 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+
+<Meta title="CSS/ScrollBar" />
+
+# **PbScrollBar**
+#
+If you need a narrower scroll bar to your element or page you can use three CSS classes specifically for this purpose.
+
+
+### **Primary Color ScrollBar**
+Use the `pb-scroll-primary` class on your element to achieve this result.
+
+<Canvas>
+  <div
+    class="pb-scroll-primary"
+    Style="width: 100%; height: 200px; overflow: auto;"
+  >
+    <div Style="height: 400px">
+      <p class="pb">
+        The scroll bar is on the right side of this box, check it out by scrolling me...
+      </p>
+    </div>
+  </div>
+</Canvas>
+
+---
+
+### **Secondary Color ScrollBar**
+Use the `pb-scroll-secondary` class on your element to achieve this result.
+
+<Canvas>
+  <div
+    class="pb-scroll-secondary"
+    Style="width: 100%; height: 200px; overflow: auto;"
+  >
+    <div Style="height: 400px">
+      <p class="pb">
+        The scroll bar is on the right side of this box, check it out by scrolling me...
+      </p>
+    </div>
+  </div>
+</Canvas>
+
+---
+
+### **White Color ScrollBar**
+Use the `pb-scroll-white` class on your element to achieve this result.
+
+<Canvas>
+  <div Style="width: 100%; padding: 10px; background: var(--color-primary);">
+    <div
+      class="pb-scroll-white"
+      Style="width: 100%; height: 200px; overflow: auto;"
+    >
+      <div Style="height: 400px">
+        <p class="pb" Style="color: var(--color-white)">
+          The scroll bar is on the right side of this box, check it out by scrolling me...
+        </p>
+      </div>
+    </div>
+  </div>
+</Canvas>

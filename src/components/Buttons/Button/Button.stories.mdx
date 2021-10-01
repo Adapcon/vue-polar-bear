@@ -1,0 +1,166 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+
+import PbButton from './Button.vue';
+import { list } from '@pb/Miscellaneous/Icon/list.js';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Buttons/PbButton"
+  component={PbButton}
+  argTypes={{
+    label: {
+      type: 'string',
+      defaultValue: 'Button',
+    },
+    color: {
+      control: { type: 'select', options: [...colors] },
+      defaultValue: 'primary',
+    },
+    buttonStyle: {
+      control: {
+        type: 'select',
+        options: ['regular', 'background', 'outline'],
+      },
+      defaultValue: 'regular',
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    loading: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    icon: {
+      control: { type: 'select', options: [...list()] },
+      defaultValue: 'fas fa-pen',
+    },
+    iconPosition: {
+      control: {
+        type: 'select',
+        options: ['left', 'right'],
+      },
+      defaultValue: 'left',
+    },
+    notificationBadge: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    notificationBadgePosition: {
+      control: {
+        type: 'select',
+        options: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+      },
+      defaultValue: 'top-right',
+    },
+    notificationBadgeValue: {
+      type: 'string',
+      defaultValue: '',
+    },
+    notificationBadgeColor: {
+      type: 'string',
+      control: 'color',
+      defaultValue: '#FF7614',
+    },
+    onClick: {
+      action: 'click',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbButton },
+  template: `
+    <PbButton
+      :icon="icon"
+      :icon-position="iconPosition"
+      :color="color"
+      :button-style="buttonStyle"
+      :disabled="disabled"
+      :loading="loading"
+      :notification-badge="notificationBadge"
+      :notification-badge-position="notificationBadgePosition"
+      :notification-badge-value="notificationBadgeValue"
+      :notification-badge-color="notificationBadgeColor"
+      @click.native="onClick"
+    >
+      <span v-if="label">{{ label }}</span>
+    </PbButton>
+  `,
+});
+
+# **PbButton Component**
+### The `PbButton` component is used to perform actions in places as forms, dialogs, and more. Its styles can't be customized because we want to keep the default design in all views.
+
+### Purpose and Use case
+
+The button component can be used in several places, it replaces the standard html button stylizing in an harmonious way.
+It also accepts fontawesome icons as pre-establish by the team, so you need to pass the complete name of the icon, with its prefix:
+`fas`, `far`, `fab`, etc and the icon prefix name `fas-`, for example: **fas fa-pen**
+You can find the available icons on the pb-icon documentation, here at storybook.
+And in the `<PbIcon>` storybook
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Background Color
+
+It is possible to use a background color on the button, for this we use the `color` property.
+This property accepts our standard colors (primary, secondary, success, danger, warning, and info).
+In this example we use the primary color:
+
+<Canvas>
+  <Story name="Background" height="auto" args={{ buttonStyle: 'background' }} >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Notification Badge
+
+At certain times it is necessary to inform some type of notification to the user,
+the button accepts the `notificationBadge` property for these cases.
+It is possible to use other properties combined with this to obtain some customization.
+One possibility is to change the position of the badge with the property `notificationBadgePosition`
+which in this example is aligned to the top right.
+It is also possible to put some information inside this badge, for example, the number of notifications,
+for this we use the property `notificationBadgeValue` which in this example has the value 1.
+
+<Canvas>
+  <Story
+    name="Notification Badge"
+    height="auto"
+    args={{
+      buttonStyle: 'background',
+      notificationBadge: true,
+      notificationBadgeValue: 5,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Only Icon
+
+We also have the possibility to add only the icon on the button.
+
+<Canvas>
+  <Story
+    name="Icon Only"
+    height="auto"
+    args={{
+      label: '',
+      buttonStyle: 'background',
+      icon: 'fas fa-calculator',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

@@ -1,0 +1,103 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import { colors } from '@pb/utils/constants';
+import PbUpload from './Upload.vue';
+
+<Meta
+  title="Components/Miscellaneous/PbUpload"
+  component={PbUpload}
+  argTypes={{
+    primaryColor: {
+      control: {
+        type: 'select',
+        options: [ ...colors ],
+      },
+      defaultValue: 'gray-40',
+    },
+    secondaryColor: {
+      control: {
+        type: 'select',
+        options: [ ...colors ],
+      },
+      defaultValue: 'white',
+    },
+    showDragZoneLabel: {
+      type: 'boolean',
+      defaultValue: true,
+    },
+    round: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    accept: {
+      type: 'string',
+      defaultValue: '*',
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    isLoading: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+  }}
+/>
+
+# **PbUpload Component**
+### The `PbUpload` component is supposed to be used to upload files.
+When the user clicks to select a file or drop one inside the component will emit a `change` event with the corresponding files.
+You can pass children elements to the component through his default slot, which can act as an error display, a list of files, etc.
+
+## Examples
+
+### Default
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbUpload },
+  data() {
+    return {
+      state: {
+        loading: false,
+      },
+    };
+  },
+  methods: {
+    changeHandler() {
+      this.state.loading = true;
+      setTimeout(() => { this.state.loading = false; }, 3000);
+    },
+  },
+  template: `
+    <div style="width: 100%; height: 380px; max-height: 100%; position: relative">
+      <div
+        style="
+          width: 80%;
+          max-width: 720px;
+          height: 320px;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        "
+      >
+        <PbUpload
+          :primary-color="primaryColor"
+          :secondary-color="secondaryColor"
+          :show-drag-zone-label="showDragZoneLabel"
+          :round="round"
+          :accept="accept"
+          :disabled="state.loading || disabled"
+          :is-loading="state.loading || isLoading"
+          @change="changeHandler"
+        />
+      </div>
+    </div>
+  `,
+})
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

@@ -1,0 +1,71 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbEmailInput from './EmailInput.vue';
+import { colors } from '@pb/utils/constants';
+
+<Meta
+  title="Components/Inputs/PbEmailInput"
+  component={PbEmailInput}
+  argTypes={{
+    value: {
+      type: 'string',
+      defaultValue: null,
+    },
+    placeholder: {
+      type: 'string',
+      defaultValue: 'e-mail',
+    },
+    required: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    color: {
+      control: {
+        type: 'select',
+        options: [ ...colors ],
+      },
+      defaultValue: 'primary',
+    },
+    inputStyle: {
+      control: {
+        type: 'select',
+        options: ['regular', 'outline'],
+      },
+      defaultValue: 'outline',
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbEmailInput },
+  template: `
+    <PbEmailInput
+      v-model="value"
+      :placeholder="placeholder"
+      :required="required"
+      :color="color"
+      :inputStyle="inputStyle"
+      :disabled="disabled"
+    />
+  `,
+});
+
+# **PbEmailInput**
+### The `PbEmailInput` component is used as input for Emails.
+
+### Purpose and Use Case
+Its main purpose is to group input and validation together with a component.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

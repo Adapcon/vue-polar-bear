@@ -1,0 +1,45 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbCollapseIcon from './CollapseIcon.vue';
+
+<Meta
+  title="Components/Miscellaneous/PbCollapseIcon"
+  component={PbCollapseIcon}
+  argTypes={{
+    isIconUp: { type: 'boolean', defaultValue: false },
+    color: { defaultValue: 'var(--color-secondary)' },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbCollapseIcon },
+  template: `
+    <div style="position: relative; width: 100%; margin: 40px 0; display: flex; justify-content: center">
+      <PbCollapseIcon
+        :is-icon-up="isIconUp"
+        :color="color"
+      />
+    </div>
+  `
+});
+
+# **PbCollapseIcon**
+### This component was created to render an animated collapse icon.
+
+Can be used on accordions, inputs, etc.
+
+## Examples
+
+### Default (Icon Down)
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Icon Up
+<Canvas>
+  <Story name="IconUp" args={{ isIconUp: true }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

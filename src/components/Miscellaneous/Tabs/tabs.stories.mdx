@@ -1,0 +1,63 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbTabs from './Tabs.vue';
+import { colors } from '@pb/utils/constants';
+
+<Meta
+  title="Components/Miscellaneous/PbTabs"
+  component={PbTabs}
+  argTypes={{
+  tabs: {
+    type: 'object',
+    defaultValue: {
+        general: 'Geral',
+        prices: 'Preços',
+        photos: 'Fotos',
+        features: 'Características',
+    },
+  },
+  selectedTab: {
+    type: 'string',
+    defaultValue: 'general',
+  },
+  hideBorder: {
+    type: 'boolean',
+    defaultValue: false,
+  },
+  color: {
+    control: {
+      type: 'select',
+      options: [ ...colors ],
+    },
+    defaultValue: 'primary',
+  },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbTabs },
+  template: `
+    <PbTabs
+      :tabs="tabs"
+      :selected-tab.sync="selectedTab"
+      :color=color
+      :hideBorder=hideBorder
+    />
+  `
+});
+
+# **PbTabs**
+### The `PbTabs` component can be used to hide content behind items that, when selected, show the corresponding hidden content.
+
+### Purpose and Use case
+The purpose of this component is to be the main component, in other words, the header of the tabs.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

@@ -1,0 +1,84 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbAlert from './Alert.vue';
+import PbButton from '@pb/Buttons/Button/Button.vue';
+
+<Meta
+  title="Components/Notifications and Modals/PbAlert"
+  component={PbAlert}
+  argTypes={{
+    type: {
+      control: { type: 'select', options: ['warning', 'info', 'error', 'success'] },
+      defaultValue: 'warning',
+    },
+    text: {
+      type: 'string',
+      defaultValue: 'Verifique os campos, e tente novamente',
+    },
+    title: {
+      type: 'string',
+      defaultValue: 'Atenção',
+    },
+    buttonText: {
+      type: 'string',
+      defaultValue: 'OK',
+    },
+    maxWidth: {
+      type: 'string',
+      defaultValue: '600px',
+    },
+    buttonColor: {
+      control: { type: 'select', options: ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'muted'] },
+      defaultValue: 'warning',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbAlert, PbButton },
+  data() {
+      return {
+        state: {
+          show: false,
+        }
+      }
+    },
+    methods: {
+      openAlert() {
+        this.state.show = true;
+      }
+    },
+  template: `
+    <div>
+      <PbButton @click.native="openAlert">Open Alert</PbButton>
+      <PbAlert
+        :type="type"
+        :text="text"
+        :title="title"
+        :show="state.show"
+        :button-text="buttonText"
+        :max-width="maxWidth"
+        :button-color="buttonColor"
+        @close="() => state.show = false"
+      />
+    </div>
+  `,
+});
+
+# **PbAlert**
+### The `PbAlert` it's a simple component that can be used to display notifications.
+
+### Purpose and Use Case
+
+This component can be used when you need to notify the user simply and quickly.
+Currently, it has three main styles, warning, error and success, and accepts a text to complement the message.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

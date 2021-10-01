@@ -1,0 +1,226 @@
+<template>
+  <button
+    :class="buttonClasses"
+    :style="buttonColor"
+    :disabled="disabled || loading"
+  >
+    <div class="pb-button-container" :style="`flex-direction: ${iconPosition === 'right' ? 'row-reverse' : 'row'};`">
+      <PbIcon
+        v-if="icon"
+        class="pb-button-icon"
+        style="transition: all .3s ease"
+        :style="iconMargin"
+        :icon="buttonIcon"
+      />
+      <p
+        v-if="label"
+        class="pb"
+        :style="!icon && loading ? 'animation: opacity-blink 2s infinite;' : ''"
+      >
+        {{ label }}
+      </p>
+      <slot />
+      <abbr
+        v-if="hasNotificationBadge"
+        class="pb-button-notification-badge pb-button-text-color-white"
+        :class="{
+          'pb-button-notification-badge-top-left': notificationBadgePosition === 'top-left',
+          'pb-button-notification-badge-bottom-left': notificationBadgePosition === 'bottom-left',
+          'pb-button-notification-badge-bottom-right': notificationBadgePosition === 'bottom-right',
+        }"
+        :style="{ 'background-color': notificationBadgeColor }"
+      >
+        {{ notificationBadgeValue }}
+      </abbr>
+    </div>
+  </button>
+</template>
+
+<script>
+import PbIcon from '@pb/Miscellaneous/Icon/Icon';
+import { validateColor } from '@pb/utils/validator';
+
+export default {
+  name: 'PbButton',
+  components: {
+    PbIcon,
+  },
+  props: {
+    // Regular Props
+    color: {
+      type: String,
+      default: 'primary',
+      validator: color => validateColor(color),
+    },
+
+    buttonStyle: {
+      type: String,
+      default: 'regular',
+      validator: style => [
+        'regular',
+        'outline',
+        'background',
+      ].includes(style),
+    },
+
+    label: { type: String, default: '' },
+
+    disabled: { type: Boolean, default: false },
+
+    loading: { type: Boolean, default: false },
+
+    // Icon Props
+    icon: { type: String, default: '' },
+    iconPosition: {
+      type: String,
+      default: 'left',
+      validator: position => [
+        'left',
+        'right',
+      ].includes(position),
+    },
+
+    // Notification Badge Props
+    notificationBadge: { type: Boolean, default: false },
+    notificationBadgePosition: {
+      type: String,
+      default: 'top-right',
+      validator: position => [
+        'top-left',
+        'top-right',
+        'bottom-left',
+        'bottom-right',
+      ].includes(position),
+    },
+    notificationBadgeValue: { type: [String, Number], default: '' },
+    notificationBadgeColor: { type: String, default: '#ff7614' },
+
+  },
+  computed: {
+    buttonIcon() {
+      if (this.loading)
+        return 'fas fa-spinner fa-spin';
+      return this.icon;
+    },
+
+    hasNotificationBadge() {
+      return this.notificationBadge
+        || this.notificationBadgeValue;
+    },
+
+    buttonClasses() {
+      return {
+        'pb-button': true,
+        'pb-button-style-regular': this.buttonStyle === 'regular',
+        'pb-button-style-outline': this.buttonStyle === 'outline',
+        'pb-button-style-background': this.buttonStyle === 'background',
+        'pb-button-icon-only': this.isIconOnly,
+      };
+    },
+
+    buttonColor() {
+      const colorVar = this.color
+        ? `var(--color-${this.color})`
+        : 'var(--color-primary)';
+
+      switch (this.buttonStyle) {
+        case 'outline':
+          return `border-color: ${colorVar}; color: ${colorVar}`;
+        case 'background':
+          return `background-color: ${colorVar}; color: ${this.color === 'white' ? 'var(--color-primary)' : 'white'};`;
+        default:
+          return `color: ${colorVar}`;
+      }
+    },
+
+    iconMargin() {
+      if (this.isIconOnly) return '';
+
+      const iconMargin = '10px';
+      return this.iconPosition === 'left'
+        ? `margin-right: ${iconMargin}`
+        : `margin-left: ${iconMargin}`;
+    },
+
+    isIconOnly() {
+      return !this.$slots.default && !this.label && this.icon;
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.pb-button {
+  height: 40px;
+  border-radius: 20px;
+  padding: 6px 20px;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-transform: unset !important;
+  border: none;
+  background: none;
+  outline: none;
+  user-select: none;
+  transition: all 0.3s ease;
+  margin: 5px;
+  white-space: nowrap;
+  position: relative;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &.pb-button-style-regular {
+    padding: 0 !important;
+    height: auto;
+    &:hover {
+      color: var(--color-primary) !important;
+    }
+  }
+  &.pb-button-style-outline {
+    border: 1px solid;
+  }
+  &.pb-button-icon-only {
+    padding: 0;
+    width: 40px;
+  }
+
+  .pb-button-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pb-button-notification-badge {
+    position: absolute;
+    top: -2px;
+    right: -6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    overflow: hidden;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pb-button-notification-badge-top-left {
+    top: -2px;
+    left: -6px;
+  }
+  .pb-button-notification-badge-bottom-left {
+    top: inherit;
+    bottom: -2px;
+    left: -6px;
+  }
+  .pb-button-notification-badge-bottom-right {
+    top: inherit;
+    bottom: -2px;
+    right: -6px;
+  }
+}
+
+</style>

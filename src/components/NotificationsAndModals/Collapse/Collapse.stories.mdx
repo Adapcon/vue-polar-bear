@@ -1,0 +1,103 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbCollapse from './Collapse.vue';
+import PbButton from '@pb/Buttons/Button/Button.vue';
+import { colors } from '@pb/utils/constants';
+import { list } from '@pb/Miscellaneous/Icon/list.js';
+
+<Meta
+  title="Components/Notifications and Modals/PbCollapse"
+  component={PbCollapse}
+  argTypes={{
+    show: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    buttonLabel: {
+      type: 'string',
+      defaultValue: 'Label',
+    },
+    buttonColor: {
+      control: {
+        type: 'select',
+        options: [ ...colors],
+      },
+      defaultValue: 'primary',
+    },
+    buttonIcon: {
+      control: {
+        type: 'select',
+        options: ['', ...list()],
+      },
+      defaultValue: '',
+    },
+    collapseTitle: {
+      type: 'string',
+      defaultValue: 'Title',
+    },
+    position: {
+      control: {
+        type: 'select',
+        options: [ 'top-right', 'top-left', 'bottom-right', 'bottom-left'],
+      },
+      defaultValue: 'bottom-right',
+    },
+    isMobile: {
+      type: 'boolean',
+      defaultValue: false,
+    }
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbCollapse, PbButton },
+  template: `
+    <div style="width: 100%; margin: 40px 0; display: flex; justify-content: center">
+      <PbCollapse
+        :show.sync="show"
+        :buttonLabel="buttonLabel"
+        :buttonColor="buttonColor"
+        :buttonIcon="buttonIcon"
+        :collapseTitle="collapseTitle"
+        :position="position"
+        :isMobile="isMobile"
+      >
+        <div style="margin-top: 15px;">
+          Collapse Content <br/>
+          Collapse Content <br/>
+        </div>
+        <template #actions>
+          <PbButton
+            label="Close"
+            color="gray-10"
+            @click.native="() => show = !show"
+          />
+          <PbButton
+            label="Save"
+            @click.native="() => show = !show"
+          />
+        </template>
+      </PbCollapse>
+    </div>
+  `
+});
+
+# **PbCollapse**
+### This component was created to render a content defined.
+
+The `Pb Collapse` component when activated will show its content next to the activation button.
+If the `isMobile` property is enabled, it will be created in the form of a modal.
+
+The component has a `show` property that will determine whether the collapse is active or not,
+you can update this property both inside and outside the component, if you need to
+to change it from the outside, it is ideal to use this support with `.sync` in this way both
+the exterior and interior of the property will remain in the same state.
+
+## Examples
+
+### Default
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

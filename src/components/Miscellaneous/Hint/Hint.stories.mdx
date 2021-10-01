@@ -1,0 +1,87 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbHint from './Hint.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Miscellaneous/PbHint"
+  component={PbHint}
+  argTypes={{
+    position: {
+      control: {
+        type: 'radio',
+        options: [ 'top-right', 'top-left', 'bottom-right', 'bottom-left'],
+      },
+      defaultValue: 'bottom-right',
+    },
+    color: {
+      control: {
+        type: 'select',
+        options: [ ...colors ],
+      },
+    },
+    hintText: {
+      type: 'string',
+      defaultValue: 'Hint Text',
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    }
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbHint },
+  template: `
+    <PbHint
+      :position="position"
+      :color="color"
+      :hint-text="hintText"
+      :disabled="disabled"
+    >
+      Hover me
+    </PbHint>
+  `,
+});
+
+export const TemplateSlot = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbHint },
+  template: `
+    <PbHint
+      :position="position"
+      :color="color"
+    >
+      Hover me, I have a Slot
+      <template #hint-body>
+        <h1 class="pb">Hello</h1>
+      </template>
+    </PbHint>
+  `,
+});
+
+# **PbHint component**
+### The `PbHint` component is useful for transmitting small information quickly to users.
+
+### Purpose and Use case
+
+The component purpose is to transmit information to users.
+It is possible to use this component in different contexts for example when we need to specify what a particular button is doing.
+The component itself is in charge of controlling the display of the hint when hovering the elements, so the implementation is easy and quick.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto" parameters={{ layout: 'centered' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Slot" height="auto" parameters={{ layout: 'centered' }}>
+    {TemplateSlot.bind({})}
+  </Story>
+</Canvas>

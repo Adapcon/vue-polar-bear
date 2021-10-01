@@ -1,0 +1,51 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbSortIcon from './SortIcon.vue';
+import { colors } from '@pb/utils/constants';
+
+<Meta
+  title="Components/Miscellaneous/PbSortIcon"
+  component={PbSortIcon}
+  argTypes={{
+    sort: 'text',
+    color: {
+      control: {
+        type: 'select',
+        options: [ ...colors],
+      },
+      defaultValue: 'primary',
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbSortIcon },
+  template: `
+    <PbSortIcon
+      :disabled="disabled"
+      :color="color"
+      v-model="sort"
+    />
+  `
+});
+
+# **PbSortIcon Component**
+### The `PbSortIcon` component is used to sort.
+
+### Purpose and Use case
+
+The SortIcon component can be used in cases when it's necessary to let the user sort a table.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

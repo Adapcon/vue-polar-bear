@@ -1,0 +1,69 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+
+import PbRanking from './Ranking.vue';
+
+<Meta
+  title="Components/Data Visualization/PbRanking"
+  component={PbRanking}
+  argTypes={{
+    showIndex: {
+      type: 'boolean',
+      defaultValue: true,
+    },
+    data: {
+      type: 'array',
+      defaultValue: [
+        { title: 'Peeling no tecido',  value: '230 itens' },
+        { title: 'Furado', value: '123 itens' },
+        { title: 'Cor migrou', value: '100 itens' },
+        { title: 'Fio puxado', description: 'Options description', value: '98 itens' },
+        { title: 'Estampa', description: 'Options description', value: '42 itens' },
+        { title: 'Modelagem', description: 'Options description', value: '13 itens' },
+        { title: 'Desbotado', description: 'Options description', value: '9 itens' },
+        { title: 'Manchado', description: 'Options description', value: '5 itens' },
+      ],
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbRanking },
+  template: `
+    <PbRanking
+      :show-index="showIndex"
+      :data="data"
+    />
+  `,
+});
+
+# **PbRanking component**
+
+### the `PbRanking` can be used as a simple list for displaying ranked informations.
+
+
+### Use cases
+
+You can use this component to display informations as a rank, in order. Most of the time for statistics and measurable values.
+
+### Example:
+
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Code
+The following structure is necessary in order to show the informations:
+```
+[
+  {
+    title: 'Some title',
+    description: 'Some description' (optional),
+    value: 'Some value' (optional)
+  }
+]
+```
+
+> **OBS:** This component does not has the responsibility of ordering the contents that is being pass as arguments

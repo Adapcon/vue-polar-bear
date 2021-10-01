@@ -1,0 +1,71 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbModal from './Modal.vue';
+import PbButton from '@pb/Buttons/Button/Button.vue';
+
+<Meta
+  title="Components/Notifications and Modals/PbModal"
+  component={PbModal}
+  argTypes={{
+      title: {
+        type: 'string',
+        defaultValue: 'Test Title',
+      },
+  }}
+/>
+
+
+# **PbModal**
+### The `PbModal` it's a simple component that can be used to display a modal.
+
+### Purpose and Use Case
+
+This component can be used when you want to confirm some action or if you want to edit something and save it.
+It accepts *title* to show in the header.
+The component is able to render anything in the default slot, if you want to pass more information to it.
+
+There are two events available to it, *@confirm* and *@cancel*
+
+## Examples
+
+### Default
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbModal, PbButton },
+  data() {
+      return {
+        state: {
+          show: false,
+        }
+      }
+    },
+    methods: {
+      openModal() {
+        this.state.show = true;
+      }
+    },
+  template: `
+    <div>
+      <PbButton @click.native="openModal" button-color="primary" button-style="background">Open Modal</PbButton>
+      <PbModal
+        :title="title"
+        :show="state.show"
+        @cancel="() => state.show = false"
+        @confirm="() => state.show = false"
+      >
+        <ul>
+          <li>Custom slot List</li>
+          <li>Custom slot List</li>
+          <li>Custom slot List</li>
+          <li>Custom slot List</li>
+        </ul>
+      </PbModal>
+    </div>
+  `,
+})
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

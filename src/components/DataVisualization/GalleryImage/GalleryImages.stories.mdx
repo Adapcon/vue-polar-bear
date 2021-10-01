@@ -1,0 +1,152 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbGalleryImage from './GalleryImage.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Data Visualization/PbGalleryImage"
+  component={PbGalleryImage}
+  argTypes={{
+    imagesArray: {
+      type: 'array',
+      defaultValue: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR86C-QiQM4Ohd7PRt_hgXYmd6bFJnP3S-0ng&usqp=CAU",
+        "https://images-americanas.b2w.io/produtos/01/00/img/3445649/1/3445649152G1.jpg",
+        "https://images-americanas.b2w.io/produtos/01/00/img/1403302/3/1403302345G1.jpg",
+        "https://images-americanas.b2w.io/produtos/01/00/img/3205194/4/3205194401G1.jpg",
+      ]
+    },
+    color: {
+      control: { type: 'select', options: [...colors] },
+      defaultValue: 'primary',
+    },
+    colorSecondary: {
+      control: { type: 'select', options: [...colors] },
+      defaultValue: 'secondary',
+    },
+    width: {
+      type: 'string',
+      defaultValue: '50px'
+    },
+    height: {
+      type: 'string',
+      defaultValue: '50px'
+    },
+    size: {
+      type: 'string',
+      defaultValue: '100px'
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbGalleryImage },
+  methods: {
+    toggleImage(toggleStatus) {
+      console.log(toggleStatus);
+    },
+  },
+  template: `
+    <div style="display: flex">
+      <PbGalleryImage
+        :images="imagesArray"
+        :color="color"
+        :width='width'
+        :height='height'
+        :size="size"
+        @toggleImages="toggleImage"
+      />
+    </div>
+  `
+});
+
+export const TemplateWidthHeight = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbGalleryImage },
+  template: `
+    <div>
+      <PbGalleryImage
+        :images="imagesArray"
+        :color="color"
+        :width="width"
+        :height="height"
+      />
+    </div>
+  `
+});
+
+export const TemplateColor = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbGalleryImage },
+  template: `
+    <div>
+      <PbGalleryImage
+        :images="imagesArray"
+        :color="colorSecondary"
+        :size="size"
+      />
+    </div>
+  `
+});
+
+# **PbGalleryImage**
+### The `PbGalleryImage` component can be used to display an image gallery.
+
+### Purpose and Use Case
+
+This component was created to display a preview gallery, where images can be easily seen.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Size
+
+#### Use size with 50px, `:size="50px"`, this way, width and height will be set to the same size.
+
+<Canvas>
+  <Story name="size">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Width and Height
+
+#### Use :width or :height to define the size customized, `:width="100px"` and `:height="100px"`
+
+<Canvas>
+  <Story name="widthHeight">
+    {TemplateWidthHeight.bind({})}
+  </Story>
+</Canvas>
+
+### color
+
+#### Use :color to define a colors to icon. in the example down is used `:color="secondary"`, but Color default is `:color="primary"`.
+
+<Canvas>
+  <Story name="color">
+    {TemplateColor.bind({})}
+  </Story>
+</Canvas>
+
+## Code
+
+You can pass an array of images via `:images=""`, pass sizes with the parameters, `:width=""`, `:height=""`, `:size=""`, colors to the icon with `:color=""`,
+and the status of the transition, if it is true or false, `@toggleImages=""`
+
+```
+:images=""
+:width=""
+:height=""
+:size=""
+:color=""
+@toggleImages=""
+
+```

@@ -1,0 +1,107 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbDropdown from './Dropdown.vue';
+import PbButton from '@pb/Buttons/Button/Button.vue';
+import PbCollapseIcon from '@pb/Miscellaneous/CollapseIcon/CollapseIcon.vue';
+
+<Meta
+  title="Components/Menus and Toolbars/PbDropdown"
+  component={PbDropdown}
+  argTypes={{
+    color: {
+      type: 'string',
+      defaultValue: 'gray',
+    },
+    text: {
+      type: 'string',
+      defaultValue: '',
+    },
+    side: {
+      control: {
+        type: 'select',
+        options: ['right', 'left']
+      },
+      defaultValue: 'right',
+    },
+    hideCollapseIcon: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    withBoxShadow: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    hideHeaderSlot: {
+      type: 'boolean',
+      defaultValue: false,
+    }
+  }}
+/>
+
+
+# **PbDropdown**
+### The `PbDropdown` is a simple dropdown component capable of rendering content inside a floating box.
+
+### Purpose and Use Case
+
+This component can be used to show more options inside a button or any kind of element you wish.
+It accepts two slots, one named *header* for any kind of element that will be render at the first time
+and it will have the action to activate the dropdown, and the *default* one that is all the dropdown content.
+
+If a *header* slot is not passed, the component will try to render the text comming from the prop.
+
+## Examples
+
+### Default
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbDropdown, PbCollapseIcon, PbButton },
+  data() {
+    return {
+      state: {
+        showDropdown: false,
+      }
+    }
+  },
+  methods: {
+    openDropdown() {
+      this.state.showDropdown = true;
+    }
+  },
+  template: `
+    <div style="display: flex; justify-content: center; margin: 20px;">
+      <PbDropdown
+        :color="color"
+        :text="text"
+        :side="side"
+        :hideCollapseIcon="hideCollapseIcon"
+        :withBoxShadow="withBoxShadow"
+      >
+        <template v-if="!hideHeaderSlot" #header>
+          <div style="display: flex; align-items: center;">
+            <div style="display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; border-radius: 100px; background-color: var(--color-primary); margin: 0 10px;">
+              <p class="pb" style="color: white">
+                A
+              </p>
+            </div>
+            <div class="user-name">
+              <p class="pb">Adapcon</p>
+            </div>
+          </div>
+        </template>
+        <div style="margin: 20px; display: flex; justify-content: center; flex-direction: column;">
+          <PbButton button-style="background" color="primary" label="Edit user" />
+          <PbButton button-style="background" color="primary" label="Add Company" />
+          <PbButton button-style="background" color="primary" label="Invite user" />
+          <PbButton button-style="background" color="primary" label="Sign out" />
+        </div>
+      </PbDropdown>
+    </div>
+  `,
+})
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

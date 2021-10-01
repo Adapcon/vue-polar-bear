@@ -1,0 +1,94 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbChips from './Chips.vue';
+
+<Meta
+ title="Components/Data Visualization/PbChips"
+ component={PbChips}
+ argTypes={{
+  chipsStyle: {
+    control: {
+      type: 'select',
+      options: ['background', 'outline'],
+    },
+    defaultValue: 'outline',
+  },
+  showClearButton: {
+    type: 'boolean',
+    defaultValue: true,
+  },
+  clearButtonStyle: {
+    control: {
+      type: 'select',
+      options: ['background', 'outline']
+    },
+    defaultValue: 'background',
+  },
+  color: {
+    control: {
+      type: 'select',
+      options: ['primary', 'secondary', 'white']
+    },
+    defaultValue: 'secondary',
+  },
+  chips: {
+    type: 'array',
+    defaultValue: [
+      {
+        title: 'Chip 1',
+      },
+      {
+        title: 'Chip 2',
+      },
+      {
+        title: 'Chip 3',
+      },
+      {
+        title: 'Chip 4',
+      },
+      {
+        title: 'Chip 5',
+      },
+    ]
+  }
+ }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbChips },
+  template: `
+    <PbChips
+      :chips.sync="chips"
+      :chipsStyle="chipsStyle"
+      :showClearButton="showClearButton"
+      :clearButtonStyle="clearButtonStyle"
+      :color="color"
+    />
+  `
+});
+
+# **PbChips**
+### The `PbChips` component can be used to display selected options as chips.
+
+### Purpose and Use case
+
+This component was created to show a group of selected options, making it possible to remove unnecessary options one by one or all at once.
+
+You can choose color and style for the chips and if you want to show the button/chip that removes all chips at once.
+To use it you can just pass an array of strings at the `chips` property.
+
+Remember to add the `.sync` modifier to the chip property, so the list options will auto-update every time user removes an item.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

@@ -1,0 +1,62 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import { colors } from '@pb/utils/constants';
+import PbPulseLoading from './PulseLoading.vue';
+
+<Meta
+  title="Components/Loadings/PbPulseLoading"
+  component={PbPulseLoading}
+  argTypes={{
+    borderWidth: {
+      control: {
+        type: 'range',
+        min: 0,
+        max: 30,
+      },
+      defaultValue: 20,
+    },
+    color: {
+      control: {
+        type: 'select',
+        options: [ ...colors ],
+      },
+      defaultValue: 'gray-80',
+    },
+    size: {
+      type: 'string',
+      defaultValue: '80px',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbPulseLoading },
+  template: `
+    <div
+      style="width: 100%;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;"
+    >
+      <PbPulseLoading
+        :color="color"
+        :size="size"
+        :borderWidth="borderWidth"
+      />
+    </div>
+  `,
+});
+
+# **PbPulseLoading Component**
+### The `PbPulseLoading` component is used to inform the user of something that is loading.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

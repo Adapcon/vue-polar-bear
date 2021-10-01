@@ -1,0 +1,150 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbFilterList from './FilterList.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Filters and Search/PbFilterList"
+  component={ PbFilterList }
+  argTypes={{
+    title: {
+      type: 'string',
+      defaultValue: 'Refrigerante',
+    },
+    displaySize: {
+      type: 'number',
+      defaultValue: 5,
+    },
+    collapsed: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    allowSearch: {
+      type: 'boolean',
+      defaultValue: true,
+    },
+    color: {
+      control: { type: 'select', options: [...colors] },
+      defaultValue: 'primary',
+    },
+    options: {
+      type: 'array',
+      defaultValue: [
+        {
+          title: 'Coca-Cola',
+        },
+        {
+          title: 'Coca-Cola Zero',
+        },
+        {
+          title: 'Pepsi',
+        },
+        {
+          title: 'Guaraná Antarctica',
+        },
+        {
+          title: 'Guaraná Kuat',
+        },
+        {
+          title: 'Fanta',
+        },
+        {
+          title: 'Fanta Uva',
+        },
+        {
+          title: 'Sprite',
+        },
+        {
+          title: 'Schweppes Citrus',
+        },
+        {
+          title: 'Água da Serra Laranjinha',
+        },
+      ],
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbFilterList },
+  template: `
+    <PbFilterList
+      :title="title"
+      :options="options"
+      :color="color"
+      :display-size="displaySize"
+      :collapsed="collapsed"
+      :allow-search="allowSearch"
+    />
+  `,
+});
+
+export const TemplateExternalControl = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  data() {
+    return {
+      state: {
+        collapsed: false,
+      },
+    }
+  },
+  components: { PbFilterList },
+  template: `
+    <PbFilterList
+      :title="title"
+      :options="options"
+      :display-size="displaySize"
+      :collapsed="state.collapsed"
+      :allow-search="allowSearch"
+      @click="$set(state, 'collapsed', true)"
+      @collapsed="(value) => $set(state, 'collapsed', value)"
+    />
+  `,
+});
+
+# **PbFilterList component**
+### The `PbFilterList` is a list of options
+
+### Purpose and Use case
+
+This component can be used to filter options in a list. The user can select more than one filter, there is no restriction.
+You also can specify:
+- The number of items that will be displayed in the component per time
+- The visibility of the search button
+- How the component should be rendered: collapsed or not
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    { Template.bind({}) }
+  </Story>
+</Canvas>
+
+### Open collapsed
+
+<Canvas>
+  <Story name="OpenCollapsed" args={{ collapsed: true }}>
+    { Template.bind({}) }
+  </Story>
+</Canvas>
+
+
+### Don't allow Search
+
+<Canvas>
+  <Story name="DontAllowSearch" args={{ allowSearch: false }}>
+    { Template.bind({}) }
+  </Story>
+</Canvas>
+
+### External collapse control
+Click on an option and collapse the options
+
+<Canvas>
+  <Story name="ExternalControl">
+    { TemplateExternalControl.bind({}) }
+  </Story>
+</Canvas>

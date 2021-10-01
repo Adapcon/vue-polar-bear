@@ -1,0 +1,122 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbConfirm from './Confirm.vue';
+import PbButton from '@pb/Buttons/Button/Button.vue';
+import { colors } from '@pb/utils/constants';
+
+<Meta
+  title="Components/Notifications and Modals/PbConfirm"
+  component={PbConfirm}
+  argTypes={{
+      title: {
+        type: 'string',
+        defaultValue: 'Please confirm if you agree',
+      },
+      icon: {
+        type: 'string',
+        defaultValue: 'fas fa-exclamation-circle',
+      },
+      iconColor: {
+        control: {
+          type: 'select',
+          options: [ ...colors],
+        },
+        defaultValue: 'info',
+      },
+      cancelButtonColor: {
+        control: {
+          type: 'select',
+          options: [ ...colors],
+        },
+        defaultValue: 'secondary',
+      },
+      confirmButtonColor: {
+        control: {
+          type: 'select',
+          options: [ ...colors],
+        },
+        defaultValue: 'secondary',
+      },
+      text: {
+        type: 'string',
+        defaultValue: 'By confirm this, you agree with the terms and conditions',
+      },
+      confirmButtonText: {
+        type: 'string',
+        defaultValue: 'Confirmar',
+      },
+      cancelButtonText: {
+        type: 'string',
+        defaultValue: 'Sair',
+      },
+      disableActions: {
+        type: 'boolean',
+        defaultValue: false,
+      },
+  }}
+/>
+
+
+# **PbConfirm**
+### The `PbConfirm` it's a simple component that can be used to display notifications.
+
+### Purpose and Use Case
+
+This component can be used when you want to confirm some action.
+It accepts *title* and *text* props to create your one confirmation info.
+You can also tell the buttons names by adding *confirmButtonText* and *cancelButtonText*.
+The component is able to render anything in the default slot, if you want to pass more information to it.
+
+There are two events available to it, *@confirm* and *@cancel*
+
+## Examples
+
+### Default
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbConfirm, PbButton },
+  data() {
+      return {
+        state: {
+          show: false,
+        }
+      }
+    },
+    methods: {
+      openConfirm() {
+        this.state.show = true;
+      }
+    },
+  template: `
+    <div>
+      <PbButton @click.native="openConfirm" button-color="primary" button-style="background">Open Confirm</PbButton>
+      <PbConfirm
+        :title="title"
+        :text="text"
+        :show="state.show"
+        :confirm-button-text="confirmButtonText"
+        :confirm-button-color="confirmButtonColor"
+        :cancel-button-text="cancelButtonText"
+        :cancel-button-color="cancelButtonColor"
+        :icon="icon"
+        :icon-color="iconColor"
+        :disable-actions="disableActions"
+        @cancel="() => state.show = false"
+        @confirm="() => state.show = false"
+      >
+        <ul>
+          <li>Custom slot List</li>
+          <li>Custom slot List</li>
+          <li>Custom slot List</li>
+          <li>Custom slot List</li>
+        </ul>
+      </PbConfirm>
+    </div>
+  `,
+})
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

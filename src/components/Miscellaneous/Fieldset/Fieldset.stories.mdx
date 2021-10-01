@@ -1,0 +1,56 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbFieldset from './Fieldset.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Miscellaneous/PbFieldset"
+  component={ PbFieldset }
+  argTypes={{
+    title: {
+      type: 'string',
+      defaultValue: 'Title'
+    },
+    color: {
+      control: {
+        type: 'select',
+        options: [ ...colors ],
+      },
+      defaultValue: 'muted',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbFieldset },
+  template: `
+    <PbFieldset
+      :title="title"
+      :color="color"
+    >
+      <input style="border: 1px solid #AAAAAA; box-sizing: border-box; border-radius: 70px;" />
+    </PbFieldset>
+  `,
+});
+
+# **PbFieldset component**
+### The `PbFieldset` component is a grouper of elements.
+
+### Purpose and Use case
+
+Its main purpose is to group one or more elements together with a label.
+The PbFieldset component can be useful in several contexts, such as adding a label to an input,
+It is also possible to use to group certain elements, as in a form for example.
+
+## Examples
+
+### Default
+
+The component works in a simple way, having a prop and a slot.
+All the elements that must be grouped can be passed through the slot.
+
+<Canvas>
+  <Story name="Default" height="auto">
+    { Template.bind({}) }
+  </Story>
+</Canvas>

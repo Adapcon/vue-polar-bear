@@ -1,0 +1,148 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+
+import PbServerTable from './ServerTable.vue';
+
+<Meta
+  title="Components/Data Visualization/PbServerTable"
+  component={PbServerTable}
+  argTypes={{
+    columns: {
+      type: 'array',
+      defaultValue: ['id', 'name'],
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbServerTable },
+  data() {
+    return {
+      state: {
+        options: {
+          perPage: 10,
+          requestAdapter(data) {
+            return data;
+          },
+          responseAdapter(data) {
+            return {
+              data,
+              count: 50,
+            };
+          },
+          texts: {
+            loading: '',
+          },
+          sortable: [],
+          requestFunction: data => new Promise((resolve, reject) => {
+            setTimeout(() => {
+              try {
+                resolve(this.axios(data));
+              } catch (error) {
+                reject(error);
+                throw error;
+              }
+            }, 1500);
+          }),
+          filterable: true,
+          sendInitialRequest: true,
+        },
+        aux: [
+          { name: 'Sophia	Arth', id: 0 },
+          { name: 'Helena	Bern', id: 1 },
+          { name: 'Laura	Dav', id: 2 },
+          { name: 'Márcio Meier', id: 3 },
+          { name: 'Manuela	Thé', id: 4 },
+          { name: 'Júlia	Pedr', id: 5 },
+          { name: 'Heloísa	Gabr', id: 6 },
+          { name: 'Carolina Trindade', id: 7 },
+          { name: 'Maria Luiza', id: 8 },
+          { name: 'Lorena	Luca', id: 9 },
+          { name: 'Lívia	Benjam', id: 10 },
+          { name: 'Maria Eduard', id: 11 },
+          { name: 'Beatriz	Rafa', id: 12 },
+          { name: 'Maria Clara', id: 13 },
+          { name: 'Ricardo Baehr', id: 14 },
+          { name: 'Eloá	Enzo', id: 15  },
+          { name: 'Lara	João',id: 16  },
+          { name: 'Maria Júlia',id: 17 },
+          { name: 'Isadora	Gust',id: 18 },
+          { name: 'Mariana	Muri',id: 19  },
+          { name: 'Emanuelly	Pe',id: 20 },
+          { name: 'Ana Júlia',id: 21 },
+          { name: 'Ana Luiza',id: 22 },
+          { name: 'Ana Clara',id: 23 },
+          { name: 'Melissa	João',id: 24 },
+          { name: 'Sergio Flores',id: 25 },
+          { name: 'Maria Alice',id: 26 },
+          { name: 'Isabelly	Da',id: 27 },
+          { name: 'Lavínia	Anth',id: 28 },
+          { name: 'Elisa	Brya',id: 29 },
+          { name: 'Denis Correia',id: 30 },
+          { name: 'Rafaela	João',id: 31 },
+          { name: 'Felipe Effting ',id: 32 },
+          { name: 'Liz	Joã',id: 33 },
+          { name: 'Marina	Cau',id: 34 },
+          { name: 'Nicole	Antô',id: 35 },
+          { name: 'Maitê	Vicent',id: 36 },
+          { name: 'Isis	Cale',id: 37 },
+          { name: 'Alícia	Gae',id: 38 },
+          { name: 'Luna	Bent',id: 39 },
+          { name: 'Douglas Blank',id: 40 },
+          { name: 'Letícia	Viní',id: 41 },
+          { name: 'Maria João',id: 42 },
+          { name: 'Gabriela',id: 43 },
+          { name: 'Ana Laura',id: 44 },
+          { name: 'Catarina',id: 45 },
+          { name: 'Clara	João',id: 46 },
+          { name: 'Ana Beatriz	',id: 47 },
+          { name: 'Vitória	Fran',id: 48 },
+          { name: 'Felipe Dallagnolo',id: 49 },
+        ]
+      }
+    }
+  },
+  methods: {
+    axios(param) {
+      let arr = [];
+      if (param.query) {
+        arr = this.state.aux.filter((item) => item.name.includes(param.query));
+      } else {
+        const count = param.limit;
+        for (let i = 1; i <= count; i++) {
+          const index = Math.floor(Math.random() * 50);
+          arr.push(this.addColumnsData(this.columns, this.state.aux[index], i));
+        }
+      }
+      return arr;
+    },
+    addColumnsData(columns, data, index) {
+      return columns.reduce((acc, column) => {
+        acc[column] = data[column] || `${column} ${index}`;
+        return acc;
+      }, {});
+    },
+  },
+  template: `
+    <div style="max-width: 80%">
+      <PbServerTable
+        :columns="columns"
+        :options="state.options"
+      />
+    </div>
+  `,
+});
+
+# **PbServerTable Component**
+### The `PbServerTable` can be used, to show data to the user, with paginated requests.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+

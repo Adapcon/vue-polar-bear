@@ -1,0 +1,84 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbExtraActions from './ExtraActions.vue';
+import PbButton from '@pb/Buttons/Button/Button.vue';
+
+<Meta
+  title="Components/Menus and Toolbars/PbExtraActions"
+  component={PbExtraActions}
+  argTypes={{
+    initialState: {
+      control: {
+        type: 'select',
+        options: ['open', 'closed'],
+      },
+      defaultValue: 'closed',
+    },
+    doAnimation: {
+      type: 'boolean',
+      defaultValue: true,
+    },
+  }}
+/>
+
+# **Pb-Extra-Actions Component**
+PbExtraActions is a component that renders extra action buttons on the screen.
+
+#### **Purpose and Use case**
+This component was developed to make it possible to render extra action
+buttons in other components in order to make interfaces cleaner.
+It works similarly to a toolbar, with a initial state defined by the prop `initialState` (with 'closed' as default).
+When triggered it animates in a left-to-right direction all the content passed through the slot.
+
+export const Template = (args, { argTypes }) => ({
+  components: { PbExtraActions, PbButton },
+  props: Object.keys(argTypes),
+  template: `
+    <div style="width: 100%;">
+      <div style="
+        width: 320px;
+        height: 80px;
+        margin: 0 auto;
+        background: #f7f7f7;
+        border-radius: 40px 10px 10px 40px"
+      >
+        <PbExtraActions
+          :animate="doAnimation"
+          :initial-state="initialState"
+        >
+          <div style="margin-right: 10px">
+            <PbButton
+              icon="fas fa-calculator"
+              color="warning"
+              buttonStyle="background"
+            />
+          </div>
+          <div style="margin-right: 10px">
+            <PbButton
+              icon="fas fa-check"
+              color="success"
+              buttonStyle="background"
+            />
+          </div>
+          <div>
+            <PbButton
+              icon="fas fa-trash"
+              color="danger"
+              buttonStyle="background"
+            />
+          </div>
+        </PbExtraActions>
+      </div>
+    </div>
+  `,
+});
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## `Animation Disclaimer`
+To make animations work properly, every Vue component should be wrapped by a regular Html tag.
+Also, if you face issues like the content taking too long to render, try to unable animations.
+This might occur when long processes are added to the javascript task queue.

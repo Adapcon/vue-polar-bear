@@ -1,0 +1,29 @@
+$layers: (
+  underlay: -1,
+  base: 10,
+  menu: 20,
+  overlay: 30,
+  headerOverlay: 35,
+  modal: 40,
+  alwaysOnTop: 50,
+);
+
+$colors: (
+  "primary",
+  "secondary",
+  "active",
+  "success",
+  "danger",
+  "warning",
+  "info",
+  "muted",
+  "white",
+  "gray",
+  "gray-10",
+  "gray-20",
+  "gray-40",
+  "gray-60",
+  "gray-80",
+  "gray-90",
+  'background-dark',
+);

@@ -1,0 +1,134 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbSummaryDisplayItem from './SummaryDisplayItem.vue';
+
+<Meta
+  title="Components/Data Visualization/PbSummaryDisplayItem"
+  component={ PbSummaryDisplayItem }
+  argTypes={{
+    title: { type: 'string', defaultValue: '34' },
+    caption: { type: 'string', defaultValue: 'Solicitations' },
+    description: { type: 'string', defaultValue: 'At open devolution solicitations' },
+    clickable: { type: 'boolean', defaultValue: false },
+    active: { type: 'boolean', defaultValue: false },
+    small: { type: 'boolean', defaultValue: false },
+    horizontal: { type: 'boolean', defaultValue: false },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbSummaryDisplayItem },
+  template: `
+    <div style="width: 300px; margin: 10px;">
+      <PbSummaryDisplayItem
+        :title="title"
+        :caption="caption"
+        :description="description"
+        :clickable="clickable"
+        :active="active"
+        :small="small"
+        :horizontal="horizontal"
+      />
+    </div>
+  `
+});
+
+export const ListTemplate = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbSummaryDisplayItem },
+  template: `
+  <div
+    style="display: flex; flex-wrap: wrap;"
+    :style="horizontal ? '' : 'flex-direction: column;'"
+  >
+    <PbSummaryDisplayItem
+      v-for="index in 3"
+      :key="index"
+      :title="title"
+      :caption="caption"
+      :description="description"
+      :clickable="clickable"
+      :active="active"
+      :small="small"
+      :horizontal="horizontal"
+      style="margin: 10px 10px;"
+    />
+  </div>
+  `
+});
+
+# **PbSummaryDisplayItem component**
+#
+
+### The `PbSummaryDisplayItem` can be used to show some kind of information that can be measurable like volumes or quantities.
+
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Clickable
+<Canvas>
+  <Story name="Clickable" args={{ clickable: true }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Clickable and Active
+<Canvas>
+  <Story name="Clickable and Active" args={{ clickable: true, active: true }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Small
+<Canvas>
+  <Story name="Small" args={{ small: true }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Titleless
+<Canvas>
+  <Story name="Titleless" args={{ title: '' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Captionless
+<Canvas>
+  <Story name="Captionless" args={{ caption: '' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Horizontal
+<Canvas>
+  <Story name="Horizontal" args={{ horizontal: true, clickable: true }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Vertical List
+<Canvas>
+  <Story name="Vertical List" args={{ clickable: true }}>
+    {ListTemplate.bind({})}
+  </Story>
+</Canvas>
+
+### Horizontal List
+<Canvas>
+  <Story name="Horizontal List" args={{ horizontal: true, clickable: true }}>
+    {ListTemplate.bind({})}
+  </Story>
+</Canvas>

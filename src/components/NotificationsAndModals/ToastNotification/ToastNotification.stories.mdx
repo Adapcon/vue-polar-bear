@@ -1,0 +1,89 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbButton from '@pb/Buttons/Button/Button.vue';
+import { colors } from '@pb/utils/constants';
+import PbToastNotification from './ToastNotification.vue';
+
+<Meta
+  title="Components/Notifications and Modals/PbToastNotification"
+  component={PbToastNotification}
+  argTypes={{
+    duration: {
+      control: {
+        type: 'range',
+        min: 0,
+        max: 10000,
+        step: 1000,
+      },
+      defaultValue: 3000,
+    },
+    backgroundColor: {
+      control: {
+        type: 'select',
+        options: [ ...colors ],
+      },
+      defaultValue: 'primary',
+    },
+    textColor: {
+      control: {
+        type: 'select',
+        options: [ ...colors ],
+      },
+      defaultValue: 'white',
+    },
+    message: {
+      type: 'string',
+      defaultValue: 'This is the Toast Notification',
+    }
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbToastNotification, PbButton },
+  methods: {
+    showToast() {
+      this.$refs.toast.toggle()
+    },
+  },
+  template: `
+    <div style="
+      width: 100%;
+      height: 320px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end"
+    >
+      <PbButton
+        label="Click Me to Show The Toast"
+        buttonStyle="background"
+        color="secondary"
+        @click.native="showToast"
+      >
+      <PbToastNotification
+        ref="toast"
+        :message="message"
+        :duration="duration"
+        :text-color="textColor"
+        :background-color="backgroundColor"
+      />
+    </div>
+  `,
+});
+
+# **PbToastNotification**
+### The `PbToastNotification` component can be used to display quick and easy notification messages.
+
+### Purpose and Use Case
+The `PbTestNotification` component displays an animated toast with a simple message.
+You can control through props the duration of the toast on screen, the message shown and the colors.
+To show the component just call its `toggle()` method.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

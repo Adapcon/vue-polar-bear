@@ -1,0 +1,107 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import { action } from '@storybook/addon-actions';
+
+import PbSearchInput from './SearchInput.vue';
+
+<Meta
+  title="Components/Filters and Search/PbSearchInput"
+  component={ PbSearchInput }
+  argTypes={{
+    placeholder: {
+      type: 'string',
+      defaultValue: '',
+    },
+    showIcon: {
+      type: 'boolean',
+      defaultValue: true,
+    },
+    suggestions: {
+      type: 'array',
+      defaultValue: [],
+    },
+    darkBackground: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    hasError: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+  }}
+/>
+
+export const Template = (arg, { argTypes }) => ({
+  components: { PbSearchInput },
+  props: Object.keys(argTypes),
+  data() {
+    return {
+      state: {
+        searchValue: ''
+      }
+    }
+  },
+  methods: {
+    search1: action('search'),
+    selectedSuggestion1: action('selectedSuggestion'),
+  },
+  template: `
+    <PbSearchInput
+      v-model="state.searchValue"
+      :show-icon="showIcon"
+      :placeholder="placeholder"
+      :suggestions="suggestions"
+      :darkBackground="darkBackground"
+      :hasError="hasError"
+      style="width: 30%"
+      @search="search1"
+      @selectedSuggestion="selectedSuggestion1"
+    />
+  `,
+});
+
+# **PbSearchInput component**
+### The `PbSearchInput` component is used when we need a text input for searches.
+
+### Purpose and Use case
+
+The purpose of the component is to provide a quick search input.
+The component is ready to render suggestions when receiving the `suggestion` prop.
+It's also possible to hide the search icon easily.
+When selecting a suggestion the component will be changed the value and emit a `selectedSuggestion` event.
+The `search` event emits when clicking the search icon.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto">
+    { Template.bind({}) }
+  </Story>
+</Canvas>
+
+### Suggestions
+
+It is possible to send an array of suggestions to the component, for each object of this array
+we can have two types `suggestion` or` history` according to the type the component will render a different icon.
+
+<Canvas>
+  <Story
+    name="Suggestions"
+    height="auto"
+    args={{
+      suggestions: [
+        {
+          type: 'suggestion',
+          value: 'Node JS',
+        },
+        {
+          type: 'history',
+          value: 'Vue',
+        },
+      ]
+    }}
+  >
+    { Template.bind({})}
+  </Story>
+</Canvas>

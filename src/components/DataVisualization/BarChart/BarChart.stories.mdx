@@ -1,0 +1,85 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbBarChart from './BarChart.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Data Visualization/PbBarChart"
+  component={PbBarChart}
+  argTypes={{
+    showValue: { type: 'boolean', defaultValue: true },
+    highestBarSize: { type: 'number', defaultValue: 400 },
+    chartAxis: {
+      control: { type: 'select', options: [ 'vertical', 'horizontal' ] },
+      defaultValue: 'horizontal',
+    },
+    barsColor: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'gray-10',
+    },
+    titleColor: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'gray-20',
+    },
+    iconColor: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'secondary',
+    },
+    valueColor: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'gray-20',
+    },
+    chartData: {
+      defaultValue: [
+        { icon: 'fas fa-tags', title: 'Abertura da solicitação', value: 5 },
+        { icon: 'fas fa-handshake', title: 'Avaliação da solicitação', value: 10 },
+        { icon: 'fas fa-file-alt', title: 'Emissão da Nota Fiscal', value: 19 },
+        { icon: 'fas fa-thumbs-up', title: 'Aprovação da Nota Fiscal', value: 8 },
+        { icon: 'fas fa-truck', title: 'Envio da Mercadoria', value: 30 },
+        { icon: 'fas fa-map-marker', title: 'Recebimento da mercadoria', value: 21 },
+        { icon: 'fas fa-check-circle', title: 'Verificação da Mercadoria', value: 7 },
+        { icon: 'fas fa-usd-circle', title: 'Financeiro', value: 16 },
+        { icon: 'fas fa-comments', title: 'Relacionamento', value: 9 },
+      ],
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbBarChart },
+  template: `
+    <div
+      style="padding: 60px; display: flex;"
+      :style="chartAxis === 'vertical' ? 'width: 920px' : 'height: 600px'"
+    >
+      <PbBarChart
+        :showValue="showValue"
+        :highestBarSize="highestBarSize"
+        :chartAxis="chartAxis"
+        :barsColor="barsColor"
+        :titleColor="titleColor"
+        :iconColor="iconColor"
+        :valueColor="valueColor"
+        :chartData="chartData"
+      />
+    </div>
+  `
+});
+
+# **PbBarChart**
+#
+
+### The `PbBarChart` component can be used to display data in a chart visualization.
+
+It was created to display data as a bar chart, both horizontally and vertically.
+Optionally it can exhibit a title and icon for each bar.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
