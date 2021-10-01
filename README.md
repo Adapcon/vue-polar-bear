@@ -1,4 +1,4 @@
-# polarbear
+# vue-polar-bear
 
 ## Project setup
 ```
