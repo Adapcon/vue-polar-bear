@@ -1,13 +1,13 @@
 {
-  "name": "@adapcon/polar-bear",
-  "version": "0.0.6",
+  "name": "vue-polar-bear",
+  "version": "0.0.7",
   "author": "alanneves",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name @adapcon/polar-bear src/main.js"
+    "build": "vue-cli-service build --target lib --name vue-polar-bear src/main.js"
   },
   "files": ["dist/*"],
-  "main": "./dist/@adapcon/polar-bear.common.js",
+  "main": "./dist/vue-polar-bear.common.js",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
