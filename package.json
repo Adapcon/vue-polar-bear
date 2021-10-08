@@ -1,6 +1,6 @@
 {
   "name": "vue-polar-bear",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "author": "adapcon",
   "scripts": {
     "serve": "vue-cli-service serve",
