@@ -13,8 +13,13 @@ jobs:
         with:
           node-version: 14
       - run: npm install
-      - run: npm run build
-      - run: npm test
-      - uses: JS-DevTools/npm-publish@v1
+      - run: npm run build:storybook
+      - uses: Reggionick/s3-deploy@v3.1.1
         with:
-          token: ${{ secrets.NPM_TOKEN }}
+            folder: /.storybook-dist/
+            bucket: vue-pb-www
+            bucket-region: us-east-1
+            dist-id: E14BL0PIUW6TO4
+            invalidation: /*
+            delete-removed: true
+            private: true
