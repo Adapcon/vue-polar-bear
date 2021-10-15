@@ -16,7 +16,7 @@ jobs:
       - run: npm run build:storybook
       - uses: Reggionick/s3-deploy@v3.1.1
         with:
-            folder: /.storybook-dist/
+            folder: .storybook-dist
             bucket: vue-pb-www
             bucket-region: us-east-1
             dist-id: E14BL0PIUW6TO4
