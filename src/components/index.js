@@ -49,7 +49,7 @@ export { default as PbDateInput } from './Inputs/DateInput/DateInput.vue';
 export { default as PbTextInput } from './Inputs/TextInput/TextInput.vue';
 export { default as PbNumberInput } from './Inputs/NumberInput/NumberInput.vue';
 export { default as PbToggleSwitch } from './Inputs/ToggleSwitch/ToggleSwitch.vue';
-export { default as PbThreeStateCheckbox } from './Inputs/ThreeStateCheckbox/PbThreeStateCheckbox.vue';
+export { default as PbThreeStateCheckbox } from './Inputs/ThreeStateCheckbox/ThreeStateCheckbox.vue';
 
 // ? Menus and Toolbars
 export { default as PbDropdown } from './MenusAndToolbars/Dropdown/Dropdown.vue';
