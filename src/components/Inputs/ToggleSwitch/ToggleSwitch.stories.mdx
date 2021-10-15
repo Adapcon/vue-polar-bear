@@ -1,0 +1,79 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbToggleSwitch from './ToggleSwitch.vue';
+
+<Meta
+ title="Components/Inputs/PbToggleSwitch"
+ component={PbToggleSwitch}
+ argTypes={{
+  value: {
+    type: 'boolean',
+    defaultValue: false,
+  },
+ }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbToggleSwitch },
+  template: `
+    <PbToggleSwitch
+      v-model="value"
+    />
+  `
+});
+
+export const TemplateSlot = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbToggleSwitch },
+  template: `
+    <PbToggleSwitch
+      v-model="value"
+    >
+      <template #description>
+        <p class="pb">
+          Um texto
+          <a href="" @click.stop>
+            Um link
+          </a>
+        </p>
+      </template>
+    </PbToggleSwitch>
+  `
+});
+
+# **PbToggleSwitch**
+### The `PbToggleSwitch` component can be used to select or Toggle one option.
+
+### Purpose and Use case
+
+It is a simple Toggle Switch field that can be used to provide a way to select one option like confirm terms and conditions.
+
+The component works with v-model to emit the checked value.
+
+## Configuration
+
+### Properties
+
+| Property                | Type                 | Default | Description
+|:------------------------|:---------------------|:--------|:-------------------------------
+| selection               | Boolean              | false   | default value of the Toggle
+
+### Events
+
+| Event                       | Description
+|:----------------------------|:---------------------------------------------------------------------
+| updateSelection             | change value of toggle.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
