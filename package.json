@@ -3,8 +3,8 @@
   "version": "0.0.10",
   "author": "adapcon",
   "scripts": {
-    "storybook": "start-storybook --quiet -p 6006 -s ./static",
-    "build:storybook": "build-storybook -c .storybook -o .storybook-dist --static-dir ./static",
+    "storybook": "start-storybook --quiet -p 6006 -s ./src/static",
+    "build:storybook": "build-storybook -c .storybook -o .storybook-dist --static-dir ./src/static",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name vue-polar-bear src/main.js"
   },
