@@ -4,6 +4,7 @@ export { default as PbConfirm } from './NotificationsAndModals/Confirm/Confirm.v
 export { default as PbToastNotification } from './NotificationsAndModals/ToastNotification/ToastNotification.vue';
 export { default as PbCollapse } from './NotificationsAndModals/Collapse/Collapse.vue';
 export { default as PbMultiSelect } from './NotificationsAndModals/MultiSelect/MultiSelect.vue';
+export { default as PbModal } from './NotificationsAndModals/Modal/Modal.vue';
 
 // ? Miscellaneous
 export { default as PbBadge } from './Miscellaneous/Badge/Badge.vue';
