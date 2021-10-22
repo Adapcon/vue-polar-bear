@@ -1,6 +1,6 @@
 {
   "name": "vue-polar-bear",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "author": "adapcon",
   "scripts": {
     "storybook": "start-storybook --quiet -p 6006 -s ./src/static",
@@ -9,7 +9,8 @@
     "build": "vue-cli-service build --target lib --name vue-polar-bear src/main.js"
   },
   "files": [
-    "dist/*"
+    "dist/*",
+    "src/components/utils/*"
   ],
   "main": "./dist/vue-polar-bear.common.js",
   "dependencies": {
@@ -18,6 +19,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "core-js": "3.18.3",
+    "jquery": "^3.6.0",
     "path": "^0.12.7",
     "vue": "^2.6.11",
     "vue-tables-2": "^2.3.3",
