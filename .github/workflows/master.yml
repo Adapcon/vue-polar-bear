@@ -15,11 +15,14 @@ jobs:
       - run: npm install
       - run: npm run build:storybook
       - uses: Reggionick/s3-deploy@v3.1.1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         with:
-            folder: .storybook-dist
-            bucket: vue-pb-www
-            bucket-region: us-east-1
-            dist-id: E14BL0PIUW6TO4
-            invalidation: /*
-            delete-removed: true
-            private: true
+          folder: .storybook-dist
+          bucket: vue-pb-www
+          bucket-region: us-east-1
+          dist-id: E14BL0PIUW6TO4
+          invalidation: /*
+          delete-removed: true
+          private: true
