@@ -33,7 +33,7 @@
 <script>
 import PbIcon from '@pb/Miscellaneous/Icon/Icon';
 import { validateColor } from '@pb/utils/validator';
-import { isUndefined } from '@/utils/inspect';
+import { isUndefined } from '@pb/utils/inspect';
 
 export default {
 // SUGG: We can see some dynamics to increase the size of the component in the mobile
