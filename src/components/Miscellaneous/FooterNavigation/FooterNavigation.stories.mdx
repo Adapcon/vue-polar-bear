@@ -14,6 +14,18 @@ import PbFooterNavigation from './FooterNavigation.vue';
       type: 'string',
       defaultValue: 'Fechar',
     },
+    finalButtonDisabled: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    showFirstBackButton: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    firstBackButtonLabel: {
+      type: 'string',
+      defaultValue: 'Cancelar',
+    },
   }}
 />
 
@@ -24,6 +36,9 @@ export const Template = (args, { argTypes }) => ({
     <PbFooterNavigation
       :views="views"
       :finalButtonLabel="finalButtonLabel"
+      :finalButtonDisabled="finalButtonDisabled"
+      :showFirstBackButton="showFirstBackButton"
+      :firstBackButtonLabel="firstBackButtonLabel"
     />
   `,
 });
@@ -36,12 +51,39 @@ export const Template = (args, { argTypes }) => ({
 The footer navigation component receives an array of steps, that is, the screen views.
 Having the possibility to change the button label.
 
+## Configuration
+
+### Properties
+
+| Property                    | Type        | Default     | Description                                                                                   |
+|:----------------------------|:------------|:------------|:----------------------------------------------------------------------------------------------|
+| views                       | Array       |             | List of views                                                                                 |
+| finalButtonLabel            | String      | Fechar      | Title of the final button                                                                     |
+| finalButtonDisabled         | Boolean     | false       | Disable the final button                                                                      |
+| showFirstBackButton         | Boolean     | false       | Shows the first back button, when the component is initialized                                |
+| firstBackButtonLabel        | String      | Cancelar    | Title of the first button                                                                     |
+
+### Events
+
+| Event                       | Type        | Emitter                            | Description                                                                                   |
+|:----------------------------|:------------|:-----------------------------------|:----------------------------------------------------------------------------------------------|
+| changeView                  | String      | Click to next or previous view     | Emits the view to change                                                                      |
+
+
 ## Examples
 
 ### Default
 
 <Canvas>
   <Story name="Default" height="auto">
-    {Template.bind({})}
+    { Template.bind({}) }
+  </Story>
+</Canvas>
+
+### With first back button
+
+<Canvas>
+  <Story name="WithFirstBackButton" height="auto" args={{ showFirstBackButton: true }}>
+    { Template.bind({}) }
   </Story>
 </Canvas>

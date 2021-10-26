@@ -113,6 +113,7 @@ export default {
       setTimeout(() => {
         element.style.height = height;
       });
+      this.$emit('enteredOption', this.state.navigationOption);
     },
 
     afterEnter(el) {
@@ -128,6 +129,7 @@ export default {
       setTimeout(() => {
         element.style.height = 0;
       });
+      this.$emit('leavedOption', this.state.navigationOption);
     },
   },
 };

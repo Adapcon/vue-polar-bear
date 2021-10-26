@@ -17,8 +17,8 @@
       :disabled="disabled"
       class="pb-quantity-selector-input"
       @click.stop
-      @blur="(val) => changeQuantity(val.target.value, false)"
-      @keypress.enter="(val) => changeQuantity(val.target.value, false)"
+      @blur="(val) => changeQuantity(val.target.value, false, true)"
+      @keypress.enter="(val) => changeQuantity(val.target.value, false, true)"
     >
     <PbIcon
       class="pb-quantity-selector-icon"
@@ -33,7 +33,7 @@
 <script>
 import PbIcon from '@pb/Miscellaneous/Icon/Icon';
 import { validateColor } from '@pb/utils/validator';
-import { isUndefined } from '@pb/utils/inspect';
+import { isUndefined } from '@/utils/inspect';
 
 export default {
 // SUGG: We can see some dynamics to increase the size of the component in the mobile
@@ -48,7 +48,7 @@ export default {
     disabled: { type: Boolean, default: false },
     max: { type: Number, default: undefined },
     canBeEmpty: { type: Boolean, default: false },
-    min: { type: Number, default: undefined },
+    min: { type: Number, default: 0 },
     isLoading: { type: Boolean, default: false },
     fractions: { type: Number, default: 0 },
     step: { type: Number, default: 1 },
@@ -137,7 +137,6 @@ export default {
         : Math.min(oldValue - this.step);
 
       const isNewNumberValid = this.isNumberValidByStep(value) && this.isNumberValidByMin(value);
-
       if (isNewNumberValid)
         return value;
 
@@ -152,17 +151,41 @@ export default {
       return Math.ceil(number / multiple) * multiple;
     },
 
-    changeQuantity(val, useTimeout = true) {
+    changeQuantity(val, useTimeout = true, isManually = false) {
       if (this.disabled) return;
 
       if (this.state.changeQuantity)
         clearTimeout(this.state.changeQuantity);
 
-      const numberValue = typeof val === 'string' ? Number(val.replace(this.suffix, '')) : val;
+      let numberValue = typeof val === 'string' ? Number(val.replace(this.suffix, '')) : val;
 
-      return this.isValidNumber(numberValue)
-        ? this.emitQuantity(numberValue, useTimeout ? 600 : 0)
+      numberValue = Number.isNaN(numberValue) ? 0 : numberValue;
+
+      const isValid = this.isValidNumber(numberValue);
+
+      if (isValid)
+        return this.emitQuantity(numberValue, useTimeout ? 600 : 0);
+
+      return isManually
+        ? this.errorHandlerByManuallyInput(numberValue)
         : this.errorHandler();
+    },
+
+    errorHandlerByManuallyInput(value) {
+      if (value === 0)
+        return this.emitQuantity(0);
+
+      let valueToBeRounded = value;
+
+      if (value < this.min)
+        valueToBeRounded = this.min;
+      else if (value > this.max)
+        valueToBeRounded = this.max;
+
+      const roundedValue = this.round(valueToBeRounded, this.step, value === this.max ? 'minus' : 'plus');
+
+      this.emitQuantity(roundedValue);
+      this.errorHandler();
     },
 
     errorHandler() {
@@ -187,20 +210,14 @@ export default {
         return this.$emit('input', this.state.value);
       }, timeout);
     },
-    roundValue(val) {
-      const roundFactor = 1 / +this.step;
 
-      return Math.round(
-        (Number(val) + Number.EPSILON) * roundFactor,
-      ) / roundFactor;
-    },
     isValidNumber(number) {
       if ((number === 0 && this.state.value !== 0) && this.canBeEmpty)
         return true;
 
       if (this.multiple && !this.isNumberValidByStep(number)) return false;
-      if (!isUndefined(this.max) && number > this.max && (this.state.value >= this.max)) return false;
-      if (!isUndefined(this.min) && number < this.min && (this.state.value <= this.min)) return false;
+      if (!isUndefined(this.max) && number > this.max) return false;
+      if (!isUndefined(this.min) && number < this.min) return false;
       if (typeof number !== 'number' || Number.isNaN(number)) return false;
 
       return true;

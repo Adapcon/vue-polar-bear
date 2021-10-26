@@ -3,6 +3,14 @@
     <div class="liveshop-footer-navigation-actions">
       <div class="step" style="margin-left: 30px;">
         <div
+          v-if="showFirstBackButton && numberOfCurrentView === 0"
+          class="action-arrow"
+          @click="setView('previous')"
+        >
+          <p class="pb">{{ firstBackButtonLabel }}</p>
+        </div>
+
+        <div
           v-if="numberOfCurrentView !== 0"
           class="action-arrow"
           @click="setView('previous')"
@@ -11,7 +19,7 @@
             class="navigation-icon"
             icon="fas fa-arrow-up fa-rotate-270"
           />
-          <p class="pb">Anterior</p>
+          <p class="pb">Voltar</p>
         </div>
       </div>
 
@@ -22,7 +30,7 @@
           class="action-arrow"
           @click="setView('next')"
         >
-          <p class="pb">Próximo</p>
+          <p class="pb">Avançar</p>
           <PbIcon class="navigation-icon" icon="fas fa-arrow-up fa-rotate-90" />
         </div>
         <div
@@ -62,6 +70,8 @@ export default {
     },
     finalButtonLabel: { type: String, default: 'Fechar' },
     finalButtonDisabled: { type: Boolean, default: false },
+    showFirstBackButton: { type: Boolean, default: false },
+    firstBackButtonLabel: { type: String, default: 'Cancelar' },
   },
 
   data() {
@@ -91,7 +101,9 @@ export default {
           ? this.views[this.numberOfCurrentView + 1]
           : this.views[this.numberOfCurrentView];
       } else {
-        this.state.currentView = this.views[this.numberOfCurrentView - 1];
+        this.state.currentView = this.showFirstBackButton && this.numberOfCurrentView - 1 >= 0
+          ? this.views[this.numberOfCurrentView - 1]
+          : this.views[this.numberOfCurrentView];
       }
 
       this.$emit('changeView', this.state.currentView);

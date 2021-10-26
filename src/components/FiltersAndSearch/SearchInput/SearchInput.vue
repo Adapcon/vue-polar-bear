@@ -23,7 +23,7 @@
         }"
         @click="$emit('search')"
       >
-        <pb-icon icon="fas fa-search" />
+        <PbIcon icon="fas fa-search" />
       </div>
       <div
         v-if="valueInput.length"
@@ -33,7 +33,7 @@
         }"
         @click="clearInput"
       >
-        <pb-icon icon="fas fa-times" />
+        <PbIcon icon="fas fa-times" />
       </div>
     </div>
     <div
@@ -46,7 +46,7 @@
         class="pb-search-suggestions-item"
         @click="selectSuggestion(suggestion)"
       >
-        <pb-icon
+        <PbIcon
           class="pb-search-suggestions-item-icon"
           :icon="suggestion.type === 'history' ? 'fas fa-clock' : 'fas fa-search'"
         />

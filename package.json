@@ -1,6 +1,6 @@
 {
   "name": "vue-polar-bear",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "author": "adapcon",
   "scripts": {
     "storybook": "start-storybook --quiet -p 6006 -s ./src/static",
@@ -10,7 +10,8 @@
   },
   "files": [
     "dist/*",
-    "src/components/utils/*"
+    "src/components/utils/*",
+    "src/components/index.scss"
   ],
   "main": "./dist/vue-polar-bear.common.js",
   "dependencies": {
