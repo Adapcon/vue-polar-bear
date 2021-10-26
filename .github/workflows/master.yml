@@ -27,6 +27,6 @@ jobs:
           bucket: vue-pb-www
           bucket-region: us-east-1
           dist-id: E14BL0PIUW6TO4
-          invalidation: "*"
+          invalidation: /*
           delete-removed: true
           private: true
