@@ -13,6 +13,10 @@ jobs:
         with:
           node-version: 14
       - run: npm install
+      - run: npm run build
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
       - run: npm run build:storybook
       - uses: Reggionick/s3-deploy@v3.1.1
         env:
