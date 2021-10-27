@@ -1,0 +1,101 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbTextArea from './TextArea.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Inputs/PbTextArea"
+  component={ PbTextArea }
+  argTypes={{
+    value: {
+      type: 'string',
+      defaultValue: '',
+    },
+    placeholder: {
+      type: 'string',
+      defaultValue: 'Placeholder',
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    color: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'muted',
+    },
+    validator: {
+      type: 'function',
+      defaultValue: null,
+    },
+    focus: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+  }}
+/>
+
+# **PbTextArea component**
+### The `PbTextArea` was created to capture texts through user.
+
+### Purpose and Use case
+
+The `PbTextArea` component is used to capture text from the user.
+It uses v-model.
+
+The component has a `validator` property similar to the vue properties validator.
+This property must contain all validations, if it is valid, return `true`
+and if validation fails, it should return `false`.
+This will cause all changes to the `value` to be validated and if an error
+occurs visually modify the component.
+
+## Examples
+
+### Default
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbTextArea },
+  template: `
+    <PbTextArea
+      v-model="value"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :validator="validator"
+      :color="color"
+      :focus="focus"
+    />
+  `,
+})
+
+### Default
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Text Area Error
+<Canvas>
+  <Story
+    name="Error"
+    height="auto"
+    args={{
+      value: "Error",
+      validator: () => false,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Focused Text Area
+<Canvas>
+  <Story
+    name="Focused"
+    height="auto"
+    args={{
+      focus: true,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
