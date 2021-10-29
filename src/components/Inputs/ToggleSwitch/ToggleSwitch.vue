@@ -1,7 +1,7 @@
 <template>
   <section class="toggle-section-container">
     <label class="switch">
-      <input v-model="clickButtonSwitch" type="checkbox">
+      <input v-model="checked" type="checkbox">
       <span class="slider round" />
     </label>
   </section>
@@ -11,20 +11,17 @@
 export default {
   name: 'PbToggleSwitch',
 
-  prop: {
-    selection: {
-      type: Boolean,
-      default: false,
-    },
+  props: {
+    value: { type: Boolean, default: false },
   },
 
   computed: {
-    clickButtonSwitch: {
+    checked: {
       get() {
         return this.value;
       },
-      set(clickValue) {
-        this.$emit('update:selection', clickValue);
+      set(val) {
+        this.$emit('input', val);
       },
     },
   },
