@@ -1,67 +1,53 @@
 <template>
   <transition name="fade">
-    <div class="pb-modal-component layer-modal">
-      <div class="modal-container">
+    <div class="pb-modal-component layer-modal" @click="cancel">
+      <div class="modal-container" @click.stop>
         <div class="header">
-          <h4 class="pb">{{ title }}</h4>
-          <PbIcon
-            icon="fas fa-times fa-lg"
-            class="icon"
-            @click.native="cancel"
-          />
-        </div>
-        <div class="content">
-          <slot />
-        </div>
-        <div class="footer">
-          <div class="actions">
-            <p class="pb-md" @click="cancel">Cancelar</p>
-            <p class="pb-md-strong" @click="confirm">Salvar</p>
+          <div
+            class="icon-position"
+          >
+            <PbIcon
+              v-if="enabledButton"
+              icon="fas fa-times fa-lg"
+              class="icon"
+              @click.native="cancel"
+            />
           </div>
+          <slot name="body" />
         </div>
       </div>
     </div>
   </transition>
 </template>
-
 <script>
 import { PbIcon } from '@pb';
-
 export default {
   name: 'PbModal',
-
   components: {
     PbIcon,
   },
-
   props: {
-    title: { type: String, default: '', required: true },
+    enabledButton: { type: Boolean, default: true },
   },
-
   mounted() {
     this.toggleClassToRemoveScroll('add');
   },
-
   destroyed() {
     this.toggleClassToRemoveScroll('remove');
   },
-
   methods: {
     toggleClassToRemoveScroll(action) {
       document.body.classList[action]('modal-open');
     },
-
     cancel() {
       this.$emit('cancel');
     },
-
     confirm() {
       this.$emit('confirm');
     },
   },
 };
 </script>
-
 <style lang="scss" scoped>
 .pb-modal-component {
   position: fixed;
@@ -74,7 +60,6 @@ export default {
   align-items: center;
   transition: opacity 0.3s ease;
   color: var(--color-gray-20);
-
   .modal-container {
     display: flex;
     flex-direction: column;
@@ -86,57 +71,34 @@ export default {
     border-radius: 0px 20px 20px;
     transition: all 0.3s ease;
     margin: 0 auto;
-
     .header {
       padding: 15px 15px 20px 30px;
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--color-muted);
-
       h4 {
         padding-top: 25px;
         color: var(--color-gray-80) !important;
       }
-
+      .icon-position {
+        display: flex;
+        justify-content: flex-end;
+        padding: 5px;
+        }
       .icon {
         color: var(--color-gray-80);
         cursor: pointer;
       }
     }
-
     .content {
       padding: 0 30px;
     }
-
     .footer {
       display: flex;
-      justify-content: flex-end;
-      margin-bottom: 30px;
+      justify-content: space-between;
+      margin-bottom: 10px;
       padding-right: 30px;
-
-      .actions {
-        display: flex;
-        justify-content: space-around;
-        width: 120px;
-
-        p {
-          cursor: pointer;
-        }
-
-        p:nth-child(1) {
-          color: var(--color-muted);
-        }
-
-        p:nth-child(2) {
-          color: var(--color-success);
-        }
-      }
     }
-
     @media (max-width: 1100px) {
       width: 75%;
     }
-
     @media (max-width: 1000px) {
       width: 80%;
     }
