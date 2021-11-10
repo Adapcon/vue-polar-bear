@@ -63,6 +63,11 @@ export default {
       ].includes(style),
     },
 
+    isHovered: {
+      type: Boolean,
+      default: true,
+    },
+
     label: { type: String, default: '' },
 
     disabled: { type: Boolean, default: false },
@@ -111,7 +116,8 @@ export default {
     buttonClasses() {
       return {
         'pb-button': true,
-        'pb-button-style-regular': this.buttonStyle === 'regular',
+        'pb-button-style-regular': this.buttonStyle === 'regular' && this.isHovered,
+        'pb-button-style-regular-no-hover': this.buttonStyle === 'regular' && !this.isHovered,
         'pb-button-style-outline': this.buttonStyle === 'outline',
         'pb-button-style-background': this.buttonStyle === 'background',
         'pb-button-icon-only': this.isIconOnly,
@@ -177,6 +183,10 @@ export default {
     &:hover {
       color: var(--color-primary) !important;
     }
+  }
+  &.pb-button-style-regular-no-hover {
+    padding: 0 !important;
+    height: auto;
   }
   &.pb-button-style-outline {
     border: 1px solid;
