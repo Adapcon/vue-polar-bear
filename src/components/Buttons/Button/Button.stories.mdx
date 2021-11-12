@@ -23,9 +23,9 @@ import { colors } from '@pb/utils/constants.js';
       },
       defaultValue: 'regular',
     },
-    isHovered: {
+    disableHover: {
       type: 'boolean',
-      defaultValue: true,
+      defaultValue: false,
     },
     disabled: {
       type: 'boolean',
@@ -81,7 +81,7 @@ export const Template = (args, { argTypes }) => ({
       :icon-position="iconPosition"
       :color="color"
       :button-style="buttonStyle"
-      :is-hovered="isHovered"
+      :disable-hover="disableHover"
       :disabled="disabled"
       :loading="loading"
       :notification-badge="notificationBadge"

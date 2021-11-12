@@ -63,9 +63,9 @@ export default {
       ].includes(style),
     },
 
-    isHovered: {
+    disableHover: {
       type: Boolean,
-      default: true,
+      default: false,
     },
 
     label: { type: String, default: '' },
@@ -116,8 +116,8 @@ export default {
     buttonClasses() {
       return {
         'pb-button': true,
-        'pb-button-style-regular': this.buttonStyle === 'regular' && this.isHovered,
-        'pb-button-style-regular-no-hover': this.buttonStyle === 'regular' && !this.isHovered,
+        'pb-button-style-regular': this.buttonStyle === 'regular' && !this.disableHover,
+        'pb-button-style-regular-no-hover': this.buttonStyle === 'regular' && this.disableHover,
         'pb-button-style-outline': this.buttonStyle === 'outline',
         'pb-button-style-background': this.buttonStyle === 'background',
         'pb-button-icon-only': this.isIconOnly,
