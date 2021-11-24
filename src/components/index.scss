@@ -219,7 +219,7 @@
 }
 
 @mixin pb-scroll-base {
-  &::-webkit-scrollbar { width: 2px; height: 2px }
+  &::-webkit-scrollbar { width: 8px; height: 2px }
   &::-webkit-scrollbar-track { background: none }
 }
 
@@ -227,6 +227,7 @@
  @include pb-scroll-base;
  &::-webkit-scrollbar-thumb {
     background: var(--color-secondary);
+    border-radius: 10px;
     &:hover { background: var(--color-secondary) }
   }
 
@@ -239,6 +240,7 @@
  @include pb-scroll-base;
  &::-webkit-scrollbar-thumb {
     background: var(--color-primary);
+    border-radius: 10px;
     &:hover { background: var(--color-primary) }
   }
 
@@ -251,6 +253,7 @@
  @include pb-scroll-base;
  &::-webkit-scrollbar-thumb {
     background: var(--color-white);
+    border-radius: 10px;
     &:hover { background: var(--color-white) }
   }
 }
