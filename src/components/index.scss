@@ -219,7 +219,7 @@
 }
 
 @mixin pb-scroll-base {
-  &::-webkit-scrollbar { width: 8px; height: 2px }
+  &::-webkit-scrollbar { width: 3px; height: 2px }
   &::-webkit-scrollbar-track { background: none }
 }
 
@@ -254,6 +254,43 @@
  &::-webkit-scrollbar-thumb {
     background: var(--color-white);
     border-radius: 10px;
+    &:hover { background: var(--color-white) }
+  }
+}
+
+@mixin pb-scroll-base-large {
+  &::-webkit-scrollbar { width: 8px; height: 2px }
+  &::-webkit-scrollbar-track { background: none }
+}
+
+.pb-scroll-secondary-large {
+ @include pb-scroll-base-large;
+ &::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+    &:hover { background: var(--color-secondary) }
+  }
+
+  &-thick {
+    &::-webkit-scrollbar { width: 6px }
+  }
+}
+
+.pb-scroll-primary-large {
+ @include pb-scroll-base-large;
+ &::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    &:hover { background: var(--color-primary) }
+  }
+
+  &-thick {
+    &::-webkit-scrollbar { width: 6px }
+  }
+}
+
+.pb-scroll-white-large {
+ @include pb-scroll-base-large;
+ &::-webkit-scrollbar-thumb {
+    background: var(--color-white);
     &:hover { background: var(--color-white) }
   }
 }
