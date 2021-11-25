@@ -219,18 +219,21 @@
 }
 
 @mixin pb-scroll-base {
-  &::-webkit-scrollbar { width: 3px; height: 2px }
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 2px;
+    border-radius: 10px;
+  }
   &::-webkit-scrollbar-track {
     background: var(--color-gray);
     border-radius: 10px;
   }
 }
 
-.pb-scroll-secondary {
+.pb-scroll-primary {
  @include pb-scroll-base;
  &::-webkit-scrollbar-thumb {
-    background: var(--color-secondary);
-    border-radius: 10px;
+    background: var(--color-primary);
   }
 
   &-thick {
@@ -242,11 +245,10 @@
   }
 }
 
-.pb-scroll-primary {
+.pb-scroll-secondary {
  @include pb-scroll-base;
  &::-webkit-scrollbar-thumb {
-    background: var(--color-primary);
-    border-radius: 10px;
+    background: var(--color-secondary);
   }
 
   &-thick {
@@ -262,7 +264,6 @@
  @include pb-scroll-base;
  &::-webkit-scrollbar-thumb {
     background: var(--color-white);
-    border-radius: 10px;
   }
 
   &-thick {
