@@ -231,11 +231,14 @@
  &::-webkit-scrollbar-thumb {
     background: var(--color-secondary);
     border-radius: 10px;
-    &:hover { background: var(--color-secondary) }
   }
 
   &-thick {
     &::-webkit-scrollbar { width: 6px }
+  }
+
+  &-large {
+    &::-webkit-scrollbar { width: 8px }
   }
 }
 
@@ -244,11 +247,14 @@
  &::-webkit-scrollbar-thumb {
     background: var(--color-primary);
     border-radius: 10px;
-    &:hover { background: var(--color-primary) }
   }
 
   &-thick {
     &::-webkit-scrollbar { width: 6px }
+  }
+
+  &-large {
+    &::-webkit-scrollbar { width: 8px }
   }
 }
 
@@ -257,50 +263,14 @@
  &::-webkit-scrollbar-thumb {
     background: var(--color-white);
     border-radius: 10px;
-    &:hover { background: var(--color-white) }
-  }
-}
-
-@mixin pb-scroll-base-large {
-  &::-webkit-scrollbar { width: 8px; height: 2px }
-  &::-webkit-scrollbar-track {
-    background: var(--color-gray);
-    border-radius: 10px;
-  }
-}
-
-.pb-scroll-secondary-large {
- @include pb-scroll-base-large;
- &::-webkit-scrollbar-thumb {
-    background: var(--color-secondary);
-    border-radius: 10px;
-    &:hover { background: var(--color-secondary) }
   }
 
   &-thick {
     &::-webkit-scrollbar { width: 6px }
   }
-}
 
-.pb-scroll-primary-large {
- @include pb-scroll-base-large;
- &::-webkit-scrollbar-thumb {
-    background: var(--color-primary);
-    border-radius: 10px;
-    &:hover { background: var(--color-primary) }
-  }
-
-  &-thick {
-    &::-webkit-scrollbar { width: 6px }
-  }
-}
-
-.pb-scroll-white-large {
- @include pb-scroll-base-large;
- &::-webkit-scrollbar-thumb {
-    background: var(--color-white);
-    border-radius: 10px;
-    &:hover { background: var(--color-white) }
+  &-large {
+    &::-webkit-scrollbar { width: 8px }
   }
 }
 
