@@ -219,39 +219,63 @@
 }
 
 @mixin pb-scroll-base {
-  &::-webkit-scrollbar { width: 2px; height: 2px }
-  &::-webkit-scrollbar-track { background: none }
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 2px;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--color-gray);
+    border-radius: 10px;
+  }
 }
 
-.pb-scroll-secondary {
- @include pb-scroll-base;
- &::-webkit-scrollbar-thumb {
-    background: var(--color-secondary);
-    &:hover { background: var(--color-secondary) }
-  }
-
-  &-thick {
-    &::-webkit-scrollbar { width: 6px }
+@mixin pb-scroll-large {
+  @include pb-scroll-base;
+  &::-webkit-scrollbar {
+    width: 8px;
   }
 }
 
 .pb-scroll-primary {
- @include pb-scroll-base;
- &::-webkit-scrollbar-thumb {
+  @include pb-scroll-base;
+  &::-webkit-scrollbar-thumb {
     background: var(--color-primary);
-    &:hover { background: var(--color-primary) }
   }
 
-  &-thick {
-    &::-webkit-scrollbar { width: 6px }
+  &-large {
+    @include pb-scroll-large;
+    &::-webkit-scrollbar-thumb {
+      background: var(--color-primary);
+    }
+  }
+}
+
+.pb-scroll-secondary {
+  @include pb-scroll-base;
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+  }
+
+  &-large {
+    @include pb-scroll-large;
+    &::-webkit-scrollbar-thumb {
+      background: var(--color-secondary);
+    }
   }
 }
 
 .pb-scroll-white {
- @include pb-scroll-base;
- &::-webkit-scrollbar-thumb {
+  @include pb-scroll-base;
+  &::-webkit-scrollbar-thumb {
     background: var(--color-white);
-    &:hover { background: var(--color-white) }
+  }
+
+  &-large {
+    @include pb-scroll-large;
+    &::-webkit-scrollbar-thumb {
+      background: var(--color-white);
+    }
   }
 }
 
