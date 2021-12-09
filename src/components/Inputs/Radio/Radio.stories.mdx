@@ -1,0 +1,80 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbRadio from './Radio.vue';
+
+<Meta
+ title="Components/Inputs/PbRadio"
+ component={PbRadio}
+ argTypes={{
+  value: {
+    type: 'string',
+    defaultValue: '',
+  },
+  options: {
+    type: 'array',
+    defaultValue: [
+      {
+        label: 'Coca-Cola',
+        value: 'coca-cola',
+      },
+      {
+        label: 'Coca-Cola Zero',
+        value: 'coca-cola-zero',
+      },
+      {
+        label: 'Pepsi',
+        value: 'pepsi',
+      },
+      {
+        label: 'Guaraná Antarctica',
+        value: 'guarana-antartica',
+      },
+      {
+        label: 'Guaraná Kuat',
+        value: 'guarana-kuat',
+      }
+    ],
+  },
+ }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbRadio },
+  template: `
+    <PbRadio
+      v-model="value"
+      :options="options"
+    />
+  `
+});
+
+# **PbRadio**
+### The `PbRadio` component can be used to show a list of radio inputs.
+
+### Purpose and Use case
+
+It's a simple Radio input list that can be used to provide a way to select one option in a option list.
+
+The component works with v-model to emit the checked value.
+
+## Configuration
+
+### Properties
+
+| Property                | Type                 | Default | Description
+|:------------------------|:---------------------|:--------|:-------------------------------
+| options                 | Array                | []      | Options list
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
