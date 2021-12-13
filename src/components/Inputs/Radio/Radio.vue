@@ -1,16 +1,8 @@
 <template>
   <div class="pb-radio-container">
-    <div
-      v-for="option in options"
-      :key="option.value"
-      class="option"
-    >
+    <div v-for="option in options" :key="option.value" class="option">
       <label>
-        <input
-          v-model="selected"
-          type="radio"
-          :value="option.value"
-        >
+        <input v-model="selected" type="radio" :value="option.value" />
         <p class="pb">{{ option.label }}</p>
       </label>
       <div />
@@ -20,10 +12,10 @@
 
 <script>
 export default {
-  name: 'PbRadio',
+  name: "PbRadio",
 
   props: {
-    value: { type: String, default: '' },
+    value: { type: String, default: "" },
     options: { type: Array, default: () => [] },
   },
 
@@ -33,7 +25,7 @@ export default {
         return this.value;
       },
       set(val) {
-        this.$emit('input', val);
+        this.$emit("input", val);
       },
     },
   },
@@ -52,6 +44,7 @@ export default {
       display: flex;
 
       input[type="radio"] {
+        cursor: pointer;
         -webkit-appearance: none;
         width: 13px;
         height: 13px;
@@ -86,6 +79,7 @@ export default {
       }
 
       p {
+        cursor: pointer;
         margin-left: 5px !important;
         color: var(--color-gray-90) !important;
       }
