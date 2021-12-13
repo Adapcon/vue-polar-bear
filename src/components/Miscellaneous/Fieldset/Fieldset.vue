@@ -1,7 +1,13 @@
 <template>
   <div class="pb-fieldset-container">
-    <div class="pb-fieldset-title" :style="`color: var(--color-${color})`">
-      <small class="pb">{{ title }}</small>
+    <div
+      class="pb-fieldset-title"
+      :style="`color: var(--color-${color})`"
+    >
+      <small class="pb">{{ title }} <span
+        v-if="required"
+        style="color: var(--color-warning)"
+      >*</span></small>
     </div>
     <div class="pb-fieldset-slot">
       <slot />
@@ -20,6 +26,10 @@ export default {
       type: String,
       default: 'gray-20',
       validator: validateColor,
+    },
+    required: {
+      type: Boolean,
+      default: true,
     },
   },
 };
