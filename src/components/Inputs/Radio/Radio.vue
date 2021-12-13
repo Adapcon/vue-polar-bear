@@ -12,10 +12,10 @@
 
 <script>
 export default {
-  name: "PbRadio",
+  name: 'PbRadio',
 
   props: {
-    value: { type: String, default: "" },
+    value: { type: String, default: '' },
     options: { type: Array, default: () => [] },
   },
 
@@ -25,7 +25,7 @@ export default {
         return this.value;
       },
       set(val) {
-        this.$emit("input", val);
+        this.$emit('input', val);
       },
     },
   },
