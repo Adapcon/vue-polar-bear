@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import PbTableHeader from './tableHeader.vue';
-import PbTableBody from './tableHeader.vue';
+import PbTableHeader from './TableHeader.vue';
+import PbTableBody from './TableBody.vue';
 
 export default {
   name: 'DataTable',

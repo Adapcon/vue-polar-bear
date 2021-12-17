@@ -1,9 +1,9 @@
 <template>
   <div class="pb-data-table-container">
    <div class="row">
-      <PbSearchInput class="col-6"></PbSearchInput>
-      <PbDateInput class="col-2"></PbDateInput>
-      'Pb Sort?'
+      <PbSearchInput class="col-4"></PbSearchInput>
+      <PbDateInput class="col-3"></PbDateInput>
+      <div class="col-2"> 'Pb Sort?'</div>
    </div>
    <TableController></TableController>
   </div>
