@@ -92,7 +92,7 @@ export default {
     min-height: 100vh;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, .5);
+    background-color: var(--color-overlay);
     display: flex;
     justify-content: right;
   }
@@ -136,7 +136,7 @@ export default {
     .divider {
       height: 1px;
       width: 100%;
-      border: 1px solid #eee;
+      border: 1px solid var(--color-gray-5);
       margin: 0;
       box-sizing: border-box;
     }
