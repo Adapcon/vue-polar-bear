@@ -27,7 +27,7 @@
       </div>
     </div>
     <div v-if="!state.showSidebar" class="pb-col-12 pb-col-md-9">
-      <div class="pb-row" style="justify-content: center">
+      <div class="pb-row" style="justify-content: center;">
         <div class="tool-bar pb-col-11" v-if="!disableToolBar">
           <slot name="tool-bar" />
         </div>
