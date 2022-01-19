@@ -10,22 +10,25 @@
     <div
       v-if="state.showSheets"
       class="sheets layer-always-on-top fullscreen"
-      @click="state.showSheets = !state.showSheets"
+      @click="toggleSheets"
     >
-      <div class="grid-buttons-container-mobile" @click.stop>
-        <div 
-          v-for="(icon, label) in sheets" 
-          :key="label" 
+      <div
+        class="grid-buttons-container-mobile"
+        @click.stop
+      >
+        <div
+          v-for="(item, label) in sheets"
+          :key="label"
           style="padding: 16px;"
         >
           <PbButton
             color="gray-90"
             button-style="regular"
-            :disabled="icon.disable"
-            :icon="icon.icon"
+            :disabled="item.disable"
+            :icon="item.icon"
             @click.native="selectOption(label)"
           >
-            {{ icon.title }}
+            {{ item.title }}
           </PbButton>
         </div>
       </div>
@@ -36,45 +39,45 @@
 <script>
 import PbButton from '@pb/Buttons/Button/Button.vue';
 
-  export default {
-    name: "PbSheets",
+export default {
+  name: 'PbSheets',
 
-    props: {
-      sheets: { type: Object, default: () => ({}) },
-      enabledToggleButton: { type: Boolean, default: false },
-    },
+  components: {
+    PbButton,
+  },
 
-    components: {
-      PbButton,
-    },
+  props: {
+    sheets: { type: Object, default: () => ({}) },
+    enabledToggleButton: { type: Boolean, default: false },
+  },
 
-    data() {
-      return {
-        state: {
-          showSheets: false,
-        },
-      };
-    },
-
-    methods: {
-      toggleSheets() {
-        this.state.showSheets = !this.state.showSheets;
+  data() {
+    return {
+      state: {
+        showSheets: false,
       },
+    };
+  },
 
-      selectOption(label) {
-        this.$emit('option-selected', label)
-      },
+  methods: {
+    toggleSheets() {
+      this.state.showSheets = !this.state.showSheets;
     },
-  };
+
+    selectOption(label) {
+      this.$emit('option-selected', label);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 .sheets-container {
   .sheets {
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: flex-end;
-  position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: flex-end;
+    position: fixed;
 
     .grid-buttons-container-mobile {
       background-color: var(--color-white);
