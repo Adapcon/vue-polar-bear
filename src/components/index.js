@@ -68,3 +68,6 @@ export { default as PbFilterList } from './FiltersAndSearch/FilterList/FilterLis
 export { default as PbFind } from './FiltersAndSearch/Find/Find.vue';
 export { default as PbOptions } from './FiltersAndSearch/Options/Options.vue';
 export { default as PbSearchInput } from './FiltersAndSearch/SearchInput/SearchInput.vue';
+
+// ? Layouts
+export { default as PbLayoutGrid } from './Layout/LayoutGrid/LayoutGrid.vue';
