@@ -38,9 +38,11 @@ import PbIcon from '@pb/Miscellaneous/Icon/Icon';
 
 export default {
   name: 'PbDrawer',
+  
   components: {
     PbIcon,
   },
+  
   props: {
     /**
      * Defines the maximum width of the drawer for different device sizes.
@@ -58,12 +60,14 @@ export default {
       default: false,
     },
   },
+  
   emits: [
     /**
      * Event handler for closing the drawer.
      */
     'close',
   ],
+  
   computed: {
     drawerClass() {
       return {
@@ -73,6 +77,7 @@ export default {
       };
     },
   },
+  
   methods: {
     close() {
       this.$emit('close', this.visible);
