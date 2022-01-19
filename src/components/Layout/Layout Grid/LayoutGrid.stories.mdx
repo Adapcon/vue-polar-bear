@@ -9,14 +9,13 @@ import PbLayoutGrid from './LayoutGrid.vue';
         type: 'string',
         defaultValue: 'Title',
     },
-    enableToolBar: { 
+    disableToolBar: { 
         type: 'boolean', 
         defaultValue: false,
     },
     backFunction: {
-         type: 'function', 
-         defaultValue: () => () => {alert('Hello')},    
-    }
+      action: "backFunction",
+    },
   }}
 />
 
@@ -26,7 +25,10 @@ export const Template = (args, { argTypes }) => ({
   template: `
     <div style="width: 850px; background-color: white;">
         <PbLayoutGrid 
-            title="Page title"
+            :title="title"
+            :disableToolBar="disableToolBar"
+            :backFunction="backFunction"
+            ref="PbLayoutGrid"
         >
             <template #main>
                 <div style="background-color: rgba(173, 172, 250, 0.2); height: 100%;">
@@ -66,4 +68,15 @@ The component's purpose is to organize the screen layout.
     {Template.bind({})}
   </Story>
 </Canvas>
+
+
+<!-- TODO: Descobrir como deixar o canvas em mobile -->
+
+<!-- ### Mobile
+
+<Canvas>
+  <Story name="Mobile"  parameters={{ layout: 'centered' }} args={{ MobileAuxiliaryButtonMobile: true }}>
+    {Template.bind({})}
+  </Story>
+</Canvas> -->
 

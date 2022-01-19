@@ -8,11 +8,11 @@
               <PbButton
                 v-if="!state.isMobileCell"
                 color="primary"
-                buttonStyle="regular"
+                button-style="regular"
                 icon="fas fa-arrow-up fa-rotate-270"
                 @click.native="backFunction"
               />
-              <h2 style="margin: 0;">
+              <h2 class="pb">
                 {{ title }}
               </h2>
             </div>
@@ -27,16 +27,11 @@
       </div>
     </div>
     <div v-if="!state.showSidebar" class="pb-col-12 pb-col-md-9">
-      <div class="pb-row" style="justify-content: center;">
-        <div
-          class="tool-bar pb-col-11"
-          v-if="!enableToolBar"
-        >
+      <div class="pb-row" style="justify-content: center">
+        <div class="tool-bar pb-col-11" v-if="!disableToolBar">
           <slot name="tool-bar" />
         </div>
-        <div
-          class="main pb-col-11"
-        >
+        <div class="main pb-col-11">
           <slot name="main" />
         </div>
       </div>
@@ -45,17 +40,17 @@
 </template>
 
 <script>
-import PbButton from "@pb/Buttons/Button/Button";
+import PbButton from '@pb/Buttons/Button/Button';
 
 export default {
-  name: "PbLayoutGrid",
+  name: 'PbLayoutGrid',
   components: {
     PbButton,
   },
 
   props: {
     title: { type: [String, Number], default: "" },
-    enableToolBar: { type: Boolean, default: false },
+    disableToolBar: { type: Boolean, default: false },
     backFunction: { type: Function, default: () => () => {} },
   },
 
@@ -117,7 +112,7 @@ export default {
   }
 
   .main {
-    min-height: 512px; 
+    min-height: 512px;
     margin-top: 40px;
   }
 }
