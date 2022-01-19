@@ -44,6 +44,7 @@ import PbButton from '@pb/Buttons/Button/Button';
 
 export default {
   name: 'PbLayoutGrid',
+  
   components: {
     PbButton,
   },
