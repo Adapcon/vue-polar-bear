@@ -4,7 +4,7 @@
       <div class="sidebar pb-col-12">
         <div class="pb-row">
           <div class="pb-col-12 pb-col-md-10">
-            <div style="display: flex">
+            <div style="display: flex;">
               <PbButton
                 v-if="!state.isMobileCell"
                 color="primary"
@@ -49,7 +49,7 @@ export default {
   },
 
   props: {
-    title: { type: [String, Number], default: "" },
+    title: { type: [String, Number], default: '' },
     disableToolBar: { type: Boolean, default: false },
     backFunction: { type: Function, default: () => () => {} },
   },
