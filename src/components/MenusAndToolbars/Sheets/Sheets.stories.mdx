@@ -1,0 +1,62 @@
+import { Meta, Canvas, Story } from "@storybook/addon-docs/blocks";
+import PbSheets from "./Sheets.vue";
+
+<Meta
+  title="Components/Data Visualization/PbSheets"
+  component={PbSheets}
+  argTypes={{
+    enabledToggleButton: { type: "boolean", defaultValue: true },
+    sheets: {
+      type: "object",
+      defaultValue: {
+        Bloquear: {
+          icon: "fas fa-ban",
+          title: "Bloquear",
+          disable: true,
+        },
+        Confirmar: {
+          icon: "fas fa-check",
+          title: "Confirmar",
+          disable: false,
+        },
+        Configurar: {
+          icon: "fas fa-cog",
+          title: "Configurar",
+          disable: false,
+        },
+      },
+    },
+    optionSelected: {
+      action: "optionSelected",
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbSheets },
+  template: `
+    <PbSheets 
+      :sheets="sheets"
+      :enabledToggleButton="enabledToggleButton"
+      @option-selected="optionSelected"
+    />
+  `,
+});
+
+# **PbSheets Component**
+### The `PbSheets` component is used to display multiple buttons in just one.
+
+### Purpose and Use case
+
+has the proposal to display several buttons in just one. component has an overlay that overlays the entire screen. you can pass an object containing the name of the option and within that option the title of the button and its icon
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>

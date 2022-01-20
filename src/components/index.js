@@ -58,6 +58,7 @@ export { default as PbThreeStateCheckbox } from './Inputs/ThreeStateCheckbox/Thr
 export { default as PbDropdown } from './MenusAndToolbars/Dropdown/Dropdown.vue';
 export { default as PbExtraActions } from './MenusAndToolbars/ExtraActions/ExtraActions.vue';
 export { default as PbCollapseMenu } from './MenusAndToolbars/CollapseMenu/CollapseMenu.vue';
+export { default as PbSheets } from './MenusAndToolbars/Sheets/Sheets.vue';
 
 // ? Loadings
 export { default as PbLoadingBar } from './Loadings/LoadingBar/LoadingBar.vue';
