@@ -59,6 +59,7 @@ export { default as PbDropdown } from './MenusAndToolbars/Dropdown/Dropdown.vue'
 export { default as PbExtraActions } from './MenusAndToolbars/ExtraActions/ExtraActions.vue';
 export { default as PbCollapseMenu } from './MenusAndToolbars/CollapseMenu/CollapseMenu.vue';
 export { default as PbDrawer } from './MenusAndToolbars/Drawer/Drawer.vue';
+export { default as PbSheets } from './MenusAndToolbars/Sheets/Sheets.vue';
 
 // ? Loadings
 export { default as PbLoadingBar } from './Loadings/LoadingBar/LoadingBar.vue';
@@ -69,3 +70,6 @@ export { default as PbFilterList } from './FiltersAndSearch/FilterList/FilterLis
 export { default as PbFind } from './FiltersAndSearch/Find/Find.vue';
 export { default as PbOptions } from './FiltersAndSearch/Options/Options.vue';
 export { default as PbSearchInput } from './FiltersAndSearch/SearchInput/SearchInput.vue';
+
+// ? Layouts
+export { default as PbLayoutGrid } from './Layout/LayoutGrid/LayoutGrid.vue';
