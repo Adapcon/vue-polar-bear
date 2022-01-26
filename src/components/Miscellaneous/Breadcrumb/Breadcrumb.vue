@@ -8,12 +8,22 @@
     />
 
     <template v-if="!reduced">
-      <div v-for="(path, index) in paths" :key="`${path.label}-${index}`">
+      <div
+        v-for="(path, index) in paths"
+        :key="`${path.label}-${index}`"
+      >
         <div
           v-if="hasMultiplePaths"
           class="breadcrumb-wrapper"
         >
-          <PbIcon v-if="index" icon="fas fa-chevron-up fa-rotate-90" />
+          <PbIcon
+            v-if="index && !small"
+            icon="fas fa-chevron-up fa-rotate-90"
+          />
+          <PbIcon
+            v-if="index && small"
+            icon="fas fa-caret-up fa-rotate-90"
+          />
 
           <div
             class="row-path"
@@ -23,19 +33,39 @@
             }"
             @click="clickPath(path)"
           >
-            <p class="pb">
+            <p
+              v-if="!small"
+              class="pb"
+            >
               {{ getLabel(path) }}
             </p>
+            <small
+              v-if="small "
+              class="pb"
+            >
+              {{ getLabel(path) }}
+            </small>
           </div>
         </div>
       </div>
     </template>
 
     <template v-else>
-      <PbDropdown hide-collapse-icon side="left" :text="lastPathLabel">
+      <PbDropdown
+        hide-collapse-icon
+        side="left"
+        :text="lastPathLabel"
+      >
         <div class="dropdown-hidden-paths">
-          <div v-for="(path, index) of hiddenPaths" :key="`path-${index}`" class="path">
-            <PbIcon icon="fas fa-chevron-up fa-rotate-90" style="margin-right: 10px;" />
+          <div
+            v-for="(path, index) of hiddenPaths"
+            :key="`path-${index}`"
+            class="path"
+          >
+            <PbIcon
+              icon="fas fa-chevron-up fa-rotate-90"
+              style="margin-right: 10px;"
+            />
 
             <p class="pb">
               {{ path }}
@@ -62,6 +92,7 @@ export default {
   props: {
     paths: { type: Array, required: true },
     reduced: { type: Boolean, default: false },
+    small: { type: Boolean, default: false },
   },
 
   computed: {
