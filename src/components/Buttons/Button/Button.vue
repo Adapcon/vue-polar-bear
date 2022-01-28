@@ -171,6 +171,7 @@ export default {
   margin: 5px;
   white-space: nowrap;
   position: relative;
+  cursor: pointer;
 
   &:disabled {
     cursor: not-allowed;

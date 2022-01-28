@@ -1,0 +1,123 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs/blocks';
+import PbDrawer from './Drawer.vue';
+import PbButton from '@pb/Buttons/Button/Button.vue';
+import PbTextInput from '@pb/Inputs/TextInput/TextInput.vue';
+import PbSelect from '@pb/Inputs/Select/Select.vue';
+
+<Meta
+  title="Components/Menus and Toolbars/PbDrawer"
+  component={PbDrawer}
+  argTypes={{
+    widthMode: {
+      control: { type: 'radio' },
+      defaultValue: 'mobile',
+    },
+    visible: {
+      control: { type: 'boolean' },
+      defaultValue: false,
+    },
+    close: {
+      control: { type: Boolean },
+    }
+  }}
+/>
+
+# **PbDrawer**
+
+A panel overlaid on top of the current page that slides from the right side of
+the screen. Since the user can interact with the PbDrawer without leaving the
+current page, tasks can be achieved more efficiently within the same context.
+
+* Use a form to create or edit a set of information.
+* Processing subtasks. When subtasks are too heavy, and we still want to keep
+the subtasks in the context of the main task, PbDrawer comes very handy.
+* When the same form is needed in multiple places.
+
+It offers three different width modes (`desktop`, `tablet`
+and `mobile`) that can be used across different device sizes.
+
+Contents of the drawer can be customized
+using the `header`, `main` and `footer` slots.
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: {
+    PbDrawer,
+    PbButton,
+    PbTextInput,
+    PbSelect
+  },
+  template: `
+    <div style="padding: 20px;">
+    <PbButton @click.native="visible = true"
+              button-style="background"
+    >Open Drawer
+    </PbButton>
+    <PbDrawer :visible="visible" :width-mode="widthMode"
+              @close="visible = false"
+    >
+      <template #header>
+        <h3 class="pb">Novo Signatário</h3>
+      </template>
+      <template #main>
+        <div style="display: flex; flex-direction: column; gap: 20px">
+          <div>
+            <p class="pb">Nome</p>
+            <PbTextInput placeholder="Nome"></PbTextInput>
+          </div>
+          <div>
+            <p class="pb">Email</p>
+            <PbTextInput placeholder="Email"></PbTextInput>
+          </div>
+          <div>
+            <p class="pb">Papel</p>
+            <PbSelect
+                :options='[{"title":"Opção 1","value":"option1"},{"title":"Opção 2","value":"option2"}]'
+                color="primary"
+                selectStyle="background"
+                buttonLabel="Selecionar"
+                optionsIcon="fas fa-plus-circle fa-xs"
+            />
+          </div>
+        </div>
+      </template>
+      <template #footer>
+        <div style="display: flex; justify-content: right">
+          <PbButton button-style="background">Confirmar</PbButton>
+        </div>
+      </template>
+    </PbDrawer>
+    </div>
+  `,
+})
+
+
+<Canvas>
+  <Story name="Desktop" args={{
+    visible: true,
+    widthMode: 'desktop'
+  }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Tablet" args={{
+    visible: true,
+    widthMode: 'tablet'
+  }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Mobile" args={{
+    visible: true,
+    widthMode: 'mobile'
+  }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

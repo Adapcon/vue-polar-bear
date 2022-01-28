@@ -1,0 +1,82 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbLayoutGrid from './LayoutGrid.vue';
+
+<Meta
+  title="Components/Layout/PbLayoutGrid"
+  component={PbLayoutGrid}
+  argTypes={{
+    title: { 
+        type: 'string',
+        defaultValue: 'Title',
+    },
+    disableToolBar: { 
+        type: 'boolean', 
+        defaultValue: false,
+    },
+    backFunction: {
+      action: 'backFunction',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbLayoutGrid },
+  template: `
+    <div style="width: 850px; background-color: white;">
+        <PbLayoutGrid 
+            :title="title"
+            :disableToolBar="disableToolBar"
+            :backFunction="backFunction"
+            ref="PbLayoutGrid"
+        >
+            <template #main>
+                <div style="background-color: rgba(173, 172, 250, 0.2); height: 100%;">
+                    main
+                </div>   
+            </template>
+            <template #sidebar>
+                <div style="background-color: rgba(250, 78, 202, 0.2); height: 560px;">
+                    Sidebar
+                </div>   
+            </template>
+            <template #tool-bar>
+                <div style="background-color: rgba(155, 239, 88, 0.2); height: 100%;">
+                    Tool Bar
+                </div>   
+            </template>
+        </PbLayoutGrid>
+    </div>
+  `,
+});
+
+
+
+# **PbLayoutGrid component**
+### The `PbLayoutGrid` component used to format the screen with a grid with 3 slots.
+
+### Purpose and Use case
+
+The component's purpose is to organize the screen layout.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto" parameters={{ layout: 'centered' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+
+<!-- TODO: Descobrir como deixar o canvas em mobile -->
+
+<!-- ### Mobile
+
+<Canvas>
+  <Story name="Mobile"  parameters={{ layout: 'centered' }} args={{ MobileAuxiliaryButtonMobile: true }}>
+    {Template.bind({})}
+  </Story>
+</Canvas> -->
+
