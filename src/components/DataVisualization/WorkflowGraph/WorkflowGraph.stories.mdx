@@ -1,0 +1,48 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbWorkflowGraph from './WorkflowGraph.vue';
+
+<Meta
+  title="Components/Data Visualization/PbWorkflowGraph"
+  component={PbWorkflowGraph}
+  argTypes={{
+      cards: {
+        type: 'array',
+        defaultValue: [
+            {abacaxi:{title:'abacaxi',callWith:['acerola'], icon:'fas fa-check', color: 'success'}},
+            {acerola:{title:'acerola', callWith:['banana', 'abacate','caqui']}},
+            {caqui:{title: 'caqui',icon:'fas fa-times', color: 'danger'}, banana:{title:'banana',icon:'fas fa-times', color: 'danger'} , abacate:{title:'abacate',icon:'fas fa-times', color: 'danger'}},
+        ],
+      },
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbWorkflowGraph },
+  template: `
+    <div>
+      <PbWorkflowGraph :cards="cards">
+        <template #acerola>
+          Slot
+        </template>
+      </PbWorkflowGraph>
+    </div>
+  `,
+});
+
+# **PbWorkflowGraph Component**
+### `PbWorkflowGraph` can be used, to show the flow of an operation.
+
+### Purpose and Use Case
+
+The `PbWorkflowGraph` used for when you want to show a flow of operations. 
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
