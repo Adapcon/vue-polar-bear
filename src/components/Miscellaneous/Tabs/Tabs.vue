@@ -133,6 +133,10 @@ export default {
     },
     addInputValue(event, tab) {
       this.deleteTab(tab);
+
+      if (event.target.value === '')
+        return event.target.value = 'Tab';
+      
       this.addTabs(event.target.value);
     },
   },
