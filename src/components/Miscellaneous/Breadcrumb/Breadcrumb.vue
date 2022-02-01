@@ -40,7 +40,7 @@
               {{ getLabel(path) }}
             </p>
             <small
-              v-if="small "
+              v-if="small"
               class="pb"
             >
               {{ getLabel(path) }}
