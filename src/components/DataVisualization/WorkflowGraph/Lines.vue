@@ -1,5 +1,5 @@
 <template>
-  <section class="lines-content">
+  <section class="lines-container">
     <svg width="70px">
       <template
         v-for="(content, indexName) in cardObject"
