@@ -23,7 +23,7 @@
             <input
               v-if="state.editTab"
               class="input"
-              :style="{'backgroundColor': colorOpacity}"
+              :style="{'backgroundColor': colorOpacityPrimary}"
               :placeholder="label"
               @blur="event => {addInputValue(event, tab)}"
               @keyup.enter="event => {addInputValue(event, tab)}"
@@ -77,7 +77,6 @@ export default {
 
   props: {
     tabs: { type: Object, default: () => ({}) },
-    dynamicTabs: { type: Object, default: () => ({}) },
     selectedTab: { type: String, default: '' },
     color: {
       type: String,
@@ -92,7 +91,6 @@ export default {
     return {
       state: {
         editTab: false,
-        inputValue: 'Tab',
       },
     };
   },
@@ -114,29 +112,30 @@ export default {
       },
     },
 
-    colorOpacity() {
+    colorOpacityPrimary() {
       const color = window.getComputedStyle(document.documentElement).getPropertyValue('--color-primary');
       return `${color}30`;
     },
   },
 
   methods: {
-    addTabs(value = 'tab') {
+    addTabs(value = 'Tab') {
       const valueKey = value.replace(/-./g, x => x[1].toUpperCase());
-      this.$set(this.updateTabs, valueKey, value);
+      if (valueKey === '')
+        this.$set(this.updateTabs, valueKey, 'Tab');
+      else this.$set(this.updateTabs, valueKey, value);
+      
       this.$nextTick(() => {
         this.$emit('update:selected-tab', valueKey);
       });
     },
+
     deleteTab(tab) {
       this.$delete(this.updateTabs, tab);
     },
+
     addInputValue(event, tab) {
       this.deleteTab(tab);
-
-      if (event.target.value === '')
-        return event.target.value = 'Tab';
-      
       this.addTabs(event.target.value);
     },
   },
