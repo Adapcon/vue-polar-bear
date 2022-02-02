@@ -120,11 +120,10 @@ export default {
 
   methods: {
     addTabs(value = 'Tab') {
-      const valueKey = value.replace(/-./g, x => x[1].toUpperCase());
-      if (valueKey === '')
-        this.$set(this.updateTabs, valueKey, 'Tab');
-      else this.$set(this.updateTabs, valueKey, value);
-      
+      cosnt newTabName = value || 'new tab'
+      const valueKey = newTabName.replace(/-./g, x => x[1].toUpperCase());
+
+      this.$set(this.updateTabs, valueKey, newTabName);
       this.$nextTick(() => {
         this.$emit('update:selected-tab', valueKey);
       });
