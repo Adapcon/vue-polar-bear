@@ -55,22 +55,6 @@ export default {
       default: () => [],
     },
   },
-
-  emits: [
-    /**
-     * When a new entity need be created.
-     */
-    'createEntity',
-    /**
-     * When a new entity need be removed.
-     */
-    'removeEntity',
-    /**
-     * When a new entity need be updated.
-     */
-    'updateEntity',
-  ],
-
 };
 </script>
 

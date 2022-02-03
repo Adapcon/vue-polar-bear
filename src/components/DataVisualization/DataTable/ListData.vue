@@ -86,7 +86,7 @@ export default {
         const newHistoricPath = historicPath ? `${historicPath}.${key}` : key;
         if (Object.hasOwnProperty.call(entitySchema, key)) {
           const element = entitySchema[key];
-          
+            
           if (element.type !== 'object') {
             array.push({
               label: element.label,
@@ -98,7 +98,6 @@ export default {
         }
       }
       
-      console.log(array);
       return array;
     },
   },
