@@ -27,6 +27,10 @@ import { colors } from '@pb/utils/constants';
     type: 'boolean',
     defaultValue: false,
   },
+  verticalTabs: {
+    type: 'boolean',
+    defaultValue: false,
+  },
   color: {
     control: {
       type: 'select',
@@ -47,6 +51,7 @@ export const Template = (args, { argTypes }) => ({
       :color=color
       :hideBorder="hideBorder"
       :editableTab="editableTab"
+      :verticalTabs="verticalTabs"
     />
   `
 });
