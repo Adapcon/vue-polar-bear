@@ -1,12 +1,16 @@
 <template>
   <div
     class="tabs-header"
+    :class="{
+      'tabs-vertical': verticalTabs
+    }"
     :style="style"
   >
     <template v-for="(label, tab) in tabs">
       <div
         :key="tab"
         class="tab-content"
+        :style="verticalTabs ? `margin-bottom: ${selectedTab === tab ? 9 : 21}px !important;` : ''"
       >
         <p
           :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title' "
@@ -85,6 +89,7 @@ export default {
     },
     hideBorder: { type: Boolean, default: false },
     editableTab: { type: Boolean, default: false },
+    verticalTabs: { type: Boolean, default: false },
   },
 
   data() {
@@ -176,5 +181,10 @@ export default {
     display: flex;
     padding-bottom: 10px;
   }
+}
+
+.tabs-vertical {
+  flex-direction: column;
+  align-items: flex-start;
 }
 </style>
