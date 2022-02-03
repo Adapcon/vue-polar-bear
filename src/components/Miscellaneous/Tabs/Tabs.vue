@@ -120,7 +120,7 @@ export default {
 
   methods: {
     addTabs(value = 'Tab') {
-      cosnt newTabName = value || 'new tab'
+      const newTabName = value || 'new tab';
       const valueKey = newTabName.replace(/-./g, x => x[1].toUpperCase());
 
       this.$set(this.updateTabs, valueKey, newTabName);
