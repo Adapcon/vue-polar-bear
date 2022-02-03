@@ -44,7 +44,7 @@ export default {
     },
     entitySchema: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
     entities: {
       type: Array,
