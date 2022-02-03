@@ -27,6 +27,10 @@ import PbBreadcrumb from './Breadcrumb.vue';
       type: 'boolean',
       defaultValue: false,
     },
+    small: {
+      type: 'boolean',
+      defaultValue: false,
+    },
     clickPath: {
       action: 'update:clickPath',
     },
@@ -49,14 +53,29 @@ export const Template = (arg, { argTypes }) => ({
     <PbBreadcrumb
       :paths="paths"
       :reduced="reduced"
+      :small="small"
       @update:clickPath="clickPath"
       @update:backPath="backPath"
     />
   `,
 });
 
+### Default
+
 <Canvas>
   <Story name="Default" height="auto">
+    { Template.bind({}) }
+  </Story>
+</Canvas>
+
+### Small version
+
+<Canvas>
+  <Story name="Small" height="auto"
+    args={{
+      small:true
+    }}
+  >
     { Template.bind({}) }
   </Story>
 </Canvas>

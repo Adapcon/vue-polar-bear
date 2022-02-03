@@ -23,6 +23,14 @@ import { colors } from '@pb/utils/constants';
     type: 'boolean',
     defaultValue: false,
   },
+  editableTabs: {
+    type: 'boolean',
+    defaultValue: false,
+  },
+  verticalTabs: {
+    type: 'boolean',
+    defaultValue: false,
+  },
   color: {
     control: {
       type: 'select',
@@ -38,10 +46,12 @@ export const Template = (args, { argTypes }) => ({
   components: { PbTabs },
   template: `
     <PbTabs
-      :tabs="tabs"
+      :tabs.sync="tabs"
       :selected-tab.sync="selectedTab"
       :color=color
-      :hideBorder=hideBorder
+      :hideBorder="hideBorder"
+      :editableTab="editableTab"
+      :verticalTabs="verticalTabs"
     />
   `
 });
@@ -58,6 +68,18 @@ The purpose of this component is to be the main component, in other words, the h
 
 <Canvas>
   <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Editable
+
+<Canvas>
+  <Story name="Editable tabs"
+    args={{
+      editableTab: true
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
