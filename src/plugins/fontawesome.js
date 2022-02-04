@@ -121,6 +121,7 @@ import {
   faEnvelope as farEnvelope,
   faHandshake as farHandshake,
   faStar as farStar,
+  faSave as farSave,
 } from '@fortawesome/free-regular-svg-icons';
 
 /**
@@ -241,6 +242,7 @@ library.add(
   fasQuestionCircle,
   fasRss,
   fabSafari,
+  farSave,
   fasSearch,
   fasShare,
   fasShoppingBag,
