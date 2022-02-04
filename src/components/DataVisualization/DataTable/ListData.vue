@@ -7,7 +7,7 @@
       />
     </slot>
     <div
-      v-if="entities == ''"
+      v-if="entities.length === 0"
       class="no-content"
     >
       <p class="pb"> Sem registros.</p>
