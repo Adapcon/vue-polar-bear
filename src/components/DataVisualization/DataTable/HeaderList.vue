@@ -1,6 +1,6 @@
 <template>
   <section
-    v-if="showHeader"
+    v-if="settings.showHeader"
     class="header-list-container pb-row"
   >
     <div
@@ -13,7 +13,7 @@
           {{ item.label }}
         </small>
         <PbSortIcon
-          v-if="showSortIcon"
+          v-if="settings.showSortIcon"
           style="margin: 0 0 0 8px"
           color="var(--color-gray-90)"
         />
@@ -36,8 +36,7 @@ export default {
 
   props: {
     tableSchema: { type: Array, default: () => ([]) },
-    showHeader: { type: Boolean, default: false },
-    showSortIcon: { type: Boolean, default: false },
+    settings: { type: Object, default: () => ({}) },
   },
 };
 </script>

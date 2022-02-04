@@ -3,8 +3,7 @@
     <ListData
       :entities="entities"
       :entity-schema="entitySchema"
-      :show-header="showHeader"
-      :show-sort-icon="showSortIcon"
+      :settings="settings"
     >
       <template #actions>
         <slot name="actions" />
@@ -34,13 +33,9 @@ export default {
       type: String,
       default: '',
     },
-    showHeader: {
-      type: Boolean,
-      default: false,
-    },
-    showSortIcon: {
-      type: Boolean,
-      default: false,
+    settings: {
+      type: Object,
+      default: () => ({}),
     },
     entitySchema: {
       type: Object,
@@ -50,15 +45,10 @@ export default {
       type: Array,
       default: () => [],
     },
-    loadedEntities: {
-      type: Array,
-      default: () => [],
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.data-table-container {
-}
+.data-table-container {}
 </style>

@@ -3,8 +3,7 @@
     <slot name="HeaderList">
       <HeaderList
         :table-schema="state.tableSchema"
-        :show-header="showHeader"
-        :show-sort-icon="showSortIcon"
+        :settings="settings"
       />
     </slot>
     <div
@@ -16,44 +15,38 @@
     <div
       v-for="(entity, indexEntity) in entities"
       :key="indexEntity"
-      class="pb-row"
     >
-      <slot
+      <slots
         name="custom-row"
         :entity="entity"
       >
-        <div
-          v-for="(item, index) in state.tableSchema"
-          :key="index"
-          class="pb-col-2 "
+        <ListRow
+          :table-schema="state.tableSchema"
+          :entity="entity"
         >
-          <small
-            class="pb content"
-            :style="index === 0 ? 'padding: 8px 8px 13px 8px' : 'padding: 8px 8px 13px 0'"
-          >
-            {{ getEntityValuePath(entity, item.path) }}
-          </small>
-        </div>
-        <slot name="actions" />
-        <hr class="line">
-      </slot>
+          <template #actions>
+            <slot name="actions" />
+          </template>
+        </ListRow>
+      </slots>
     </div>
   </section>
 </template>
 
 <script>
 import HeaderList from './HeaderList.vue';
+import ListRow from './ListRow.vue';
 
 export default {
   name: 'ListData',
 
   components: {
     HeaderList,
+    ListRow,
   },
 
   props: {
-    showHeader: { type: Boolean, default: false },
-    showSortIcon: { type: Boolean, default: false },
+    settings: { type: Object, default: () => ({}) },
     entities: { type: Array, default: () => [] },
     entitySchema: { type: Object, default: () => ({}) },
   },
@@ -71,15 +64,6 @@ export default {
   },
 
   methods: {
-    getEntityValuePath(entity, path) {
-      const keys = path.split('.');
-      let value = entity;
-      keys.forEach(key => {
-        if (value[key]) value = value[key]; else value = '';
-      });
-      
-      return value;
-    },
     getTableSchema(entitySchema, historicPath = '', array = []) {
       // eslint-disable-next-line no-restricted-syntax
       for (const key in entitySchema) {
