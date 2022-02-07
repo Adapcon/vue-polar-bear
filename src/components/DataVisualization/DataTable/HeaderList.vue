@@ -1,6 +1,6 @@
 <template>
   <section
-    v-if="settings.showHeader"
+    v-if="!settings.hiddenHeader"
     class="header-list-container pb-row"
   >
     <div

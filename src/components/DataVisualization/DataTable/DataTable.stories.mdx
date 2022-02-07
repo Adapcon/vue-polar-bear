@@ -12,7 +12,7 @@ import PbButton from '../../Buttons/Button/Button.vue';
         },
         defaultValue: 'Documento nova loja',
       },
-      showHeader: {
+      hiddenHeader: {
         control: {
           type: 'boolean',
         },
@@ -86,7 +86,7 @@ export const Template = (args, { argTypes }) => ({
         :title="title"
         :entities="entities"
         :entitySchema="entitySchema"
-        :settings="{showSortIcon, showHeader}"
+        :settings="{showSortIcon}"
       >
         <template #actions>
           <PbButton
