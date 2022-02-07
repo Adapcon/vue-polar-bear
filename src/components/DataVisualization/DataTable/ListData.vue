@@ -16,7 +16,7 @@
       v-for="(entity, indexEntity) in entities"
       :key="indexEntity"
     >
-      <slots
+      <slot
         name="custom-row"
         :entity="entity"
       >
@@ -28,7 +28,7 @@
             <slot name="actions" />
           </template>
         </ListRow>
-      </slots>
+      </slot>
     </div>
   </section>
 </template>
