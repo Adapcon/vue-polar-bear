@@ -19,6 +19,14 @@ import { colors } from '@pb/utils/constants';
     type: 'string',
     defaultValue: 'general',
   },
+  icon: {
+    type: 'string',
+    defaultValue: 'fas fa-ban',
+  },
+  hasIcon: {
+    type: 'boolean',
+    defaultValue: false,
+  },
   hideBorder: {
     type: 'boolean',
     defaultValue: false,
@@ -38,6 +46,13 @@ import { colors } from '@pb/utils/constants';
     },
     defaultValue: 'primary',
   },
+  colorIcons: {
+    control: {
+      type: 'select',
+      options: [ ...colors ],
+    },
+    defaultValue: 'gray-20',
+  },
   }}
 />
 
@@ -49,9 +64,12 @@ export const Template = (args, { argTypes }) => ({
       :tabs.sync="tabs"
       :selected-tab.sync="selectedTab"
       :color=color
+      :colorIcons=colorIcons
       :hideBorder="hideBorder"
       :editableTab="editableTab"
       :verticalTabs="verticalTabs"
+      :hasIcon=hasIcon
+      :icon=icon
     />
   `
 });

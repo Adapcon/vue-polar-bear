@@ -12,7 +12,18 @@
         class="tab-content"
         :style="verticalTabs ? `margin-bottom: ${selectedTab === tab ? 9 : 21}px !important;` : ''"
       >
+        <div
+          v-if="selectedTab !== tab"
+          class="icon"
+        >
+          <PbIcon
+            v-if="hasIcon"
+            :icon="`${icon} fa-xs`"
+            :style="`color: var(--color-${colorIcons})`"
+          />
+        </div>
         <p
+          :style="`color: var(--color-${colorIcons})`"
           :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title' "
           @click="$emit('update:selected-tab', tab)"
         >
@@ -72,11 +83,13 @@
 <script>
 import { validateColor } from '@pb/utils/validator';
 import PbButton from '../../Buttons/Button/Button.vue';
+import PbIcon from '../../Miscellaneous/Icon/Icon';
 
 export default {
   name: 'PbTabs',
   components: {
     PbButton,
+    PbIcon,
   },
 
   props: {
@@ -87,7 +100,14 @@ export default {
       default: 'primary',
       validator: validateColor,
     },
+    colorIcons: {
+      type: String,
+      default: 'gray-20',
+      validator: validateColor,
+    },
+    icon: { type: String, default: '' },
     hideBorder: { type: Boolean, default: false },
+    hasIcon: { type: Boolean, default: false },
     editableTab: { type: Boolean, default: false },
     verticalTabs: { type: Boolean, default: false },
   },
@@ -155,6 +175,10 @@ export default {
 
   .tab-content {
     display: flex;
+
+    .icon {
+      padding: 1px 5px 0  0 ;
+    }
   }
 
   .tab-title {
