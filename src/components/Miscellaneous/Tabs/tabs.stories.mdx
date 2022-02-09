@@ -9,19 +9,15 @@ import { colors } from '@pb/utils/constants';
   tabs: {
     type: 'object',
     defaultValue: {
-        general: 'Geral',
-        prices: 'Preços',
-        photos: 'Fotos',
-        features: 'Características',
+        general: {label: 'Geral', icon: 'fas fa-ban', color: 'danger'},
+        prices: {label: 'Preços', icon: 'fas fa-ban', color: 'danger'},
+        photos: {label: 'Fotos', icon: 'fas fa-check', color: 'success'},
+        data: {label: 'Dados', icon: 'fas fa-check', color: 'success'},
     },
   },
   selectedTab: {
     type: 'string',
     defaultValue: 'general',
-  },
-  icon: {
-    type: 'string',
-    defaultValue: 'fas fa-ban',
   },
   hasIcon: {
     type: 'boolean',
@@ -46,13 +42,6 @@ import { colors } from '@pb/utils/constants';
     },
     defaultValue: 'primary',
   },
-  colorIcons: {
-    control: {
-      type: 'select',
-      options: [ ...colors ],
-    },
-    defaultValue: 'gray-20',
-  },
   }}
 />
 
@@ -64,12 +53,10 @@ export const Template = (args, { argTypes }) => ({
       :tabs.sync="tabs"
       :selected-tab.sync="selectedTab"
       :color=color
-      :colorIcons=colorIcons
       :hideBorder="hideBorder"
       :editableTab="editableTab"
       :verticalTabs="verticalTabs"
       :hasIcon=hasIcon
-      :icon=icon
     />
   `
 });

@@ -6,7 +6,7 @@
     }"
     :style="style"
   >
-    <template v-for="(label, tab) in tabs">
+    <template v-for="(tabSettings, tab) in formattedTabs">
       <div
         :key="tab"
         class="tab-content"
@@ -18,12 +18,12 @@
         >
           <PbIcon
             v-if="hasIcon"
-            :icon="`${icon} fa-xs`"
-            :style="`color: var(--color-${colorIcons})`"
+            :icon="`${tabSettings.icon} fa-xs`"
+            :style="`color: var(--color-${tabSettings.color})`"
           />
         </div>
         <p
-          :style="`color: var(--color-${colorIcons})`"
+          :style="`color: var(--color-${!hasIcon ? 'gray-20' : tabSettings.color})`"
           :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title' "
           @click="$emit('update:selected-tab', tab)"
         >
@@ -33,13 +33,13 @@
               class="pb"
               :style="`color: var(--color-${color})`"
             >
-              {{ label }}
+              {{ tabSettings.label }}
             </b>
             <input
               v-if="state.editTab"
               class="input"
               :style="{'backgroundColor': colorOpacityPrimary}"
-              :placeholder="label"
+              :placeholder="tabSettings.label"
               @blur="event => {addInputValue(event, tab)}"
               @keyup.enter="event => {addInputValue(event, tab)}"
             >
@@ -47,7 +47,7 @@
               :style="`margin: 10px 0 0 0; border: 1px solid var(--color-${color})`"
             >
           </template>
-          <template v-else>{{ label }}</template>
+          <template v-else>{{ tabSettings.label }}</template>
         </p>
         <div>
           <PbButton
@@ -94,15 +94,10 @@ export default {
 
   props: {
     tabs: { type: Object, default: () => ({}) },
-    selectedTab: { type: String, default: '' },
+    selectedTab: { type: [String, Number], default: '' },
     color: {
       type: String,
       default: 'primary',
-      validator: validateColor,
-    },
-    colorIcons: {
-      type: String,
-      default: 'gray-20',
       validator: validateColor,
     },
     icon: { type: String, default: '' },
@@ -140,6 +135,18 @@ export default {
     colorOpacityPrimary() {
       const color = window.getComputedStyle(document.documentElement).getPropertyValue('--color-primary');
       return `${color}30`;
+    },
+
+    formattedTabs() {
+      return Object.keys(this.tabs).reduce((newFormattedTabs, key) => {
+        const tab = this.tabs[key];
+
+        if (typeof tab === 'string')
+          newFormattedTabs[key] = { label: tab };
+          
+        newFormattedTabs[key] = tab;
+        return newFormattedTabs;
+      }, {});
     },
   },
 
