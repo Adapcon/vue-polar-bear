@@ -94,7 +94,7 @@ export default {
 
   props: {
     tabs: { type: Object, default: () => ({}) },
-    selectedTab: { type: [String, Number], default: '' },
+    selectedTab: { type: String, default: '' },
     color: {
       type: String,
       default: 'primary',
