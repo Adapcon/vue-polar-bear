@@ -102,7 +102,6 @@ export default {
     },
     icon: { type: String, default: '' },
     hideBorder: { type: Boolean, default: false },
-    hasIcon: { type: Boolean, default: false },
     editableTab: { type: Boolean, default: false },
     verticalTabs: { type: Boolean, default: false },
   },
