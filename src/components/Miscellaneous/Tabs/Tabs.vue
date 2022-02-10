@@ -17,13 +17,13 @@
           class="icon"
         >
           <PbIcon
-            v-if="hasIcon"
+            v-if="tabSettings.icon"
             :icon="`${tabSettings.icon} fa-xs`"
             :style="`color: var(--color-${tabSettings.color})`"
           />
         </div>
         <p
-          :style="`color: var(--color-${!hasIcon ? 'gray-20' : tabSettings.color})`"
+          :style="`color: var(--color-${!tabSettings.icon ? 'gray-20' : tabSettings.color})`"
           :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title' "
           @click="$emit('update:selected-tab', tab)"
         >
