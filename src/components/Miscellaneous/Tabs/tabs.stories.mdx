@@ -9,10 +9,10 @@ import { colors } from '@pb/utils/constants';
   tabs: {
     type: 'object',
     defaultValue: {
-        general: 'Geral',
-        prices: 'Preços',
-        photos: 'Fotos',
-        features: 'Características',
+        general: {label: 'Geral', icon: 'fas fa-ban', color: 'danger'},
+        prices: {label: 'Preços', color: 'danger'},
+        photos: {label: 'Fotos', icon: 'fas fa-check', color: 'success'},
+        data: {label: 'Dados', icon: 'fas fa-check', color: 'success'},
     },
   },
   selectedTab: {
