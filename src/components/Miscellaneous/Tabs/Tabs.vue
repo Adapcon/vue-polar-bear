@@ -6,13 +6,24 @@
     }"
     :style="style"
   >
-    <template v-for="(label, tab) in tabs">
+    <template v-for="(tabSettings, tab) in formattedTabs">
       <div
         :key="tab"
         class="tab-content"
         :style="verticalTabs ? `margin-bottom: ${selectedTab === tab ? 9 : 21}px !important;` : ''"
       >
+        <div
+          v-if="selectedTab !== tab"
+          class="icon"
+        >
+          <PbIcon
+            v-if="tabSettings.icon"
+            :icon="`${tabSettings.icon} fa-xs`"
+            :style="`color: var(--color-${tabSettings.color})`"
+          />
+        </div>
         <p
+          :style="`color: var(--color-${!tabSettings.icon ? 'gray-20' : tabSettings.color})`"
           :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title' "
           @click="$emit('update:selected-tab', tab)"
         >
@@ -22,13 +33,13 @@
               class="pb"
               :style="`color: var(--color-${color})`"
             >
-              {{ label }}
+              {{ tabSettings.label }}
             </b>
             <input
               v-if="state.editTab"
               class="input"
               :style="{'backgroundColor': colorOpacityPrimary}"
-              :placeholder="label"
+              :placeholder="tabSettings.label"
               @blur="event => {addInputValue(event, tab)}"
               @keyup.enter="event => {addInputValue(event, tab)}"
             >
@@ -36,7 +47,7 @@
               :style="`margin: 10px 0 0 0; border: 1px solid var(--color-${color})`"
             >
           </template>
-          <template v-else>{{ label }}</template>
+          <template v-else>{{ tabSettings.label }}</template>
         </p>
         <div>
           <PbButton
@@ -72,11 +83,13 @@
 <script>
 import { validateColor } from '@pb/utils/validator';
 import PbButton from '../../Buttons/Button/Button.vue';
+import PbIcon from '../../Miscellaneous/Icon/Icon';
 
 export default {
   name: 'PbTabs',
   components: {
     PbButton,
+    PbIcon,
   },
 
   props: {
@@ -121,6 +134,18 @@ export default {
       const color = window.getComputedStyle(document.documentElement).getPropertyValue('--color-primary');
       return `${color}30`;
     },
+
+    formattedTabs() {
+      return Object.keys(this.tabs).reduce((newFormattedTabs, key) => {
+        const tab = this.tabs[key];
+
+        if (typeof tab === 'string')
+          newFormattedTabs[key] = { label: tab };
+          
+        newFormattedTabs[key] = tab;
+        return newFormattedTabs;
+      }, {});
+    },
   },
 
   methods: {
@@ -155,6 +180,10 @@ export default {
 
   .tab-content {
     display: flex;
+
+    .icon {
+      padding: 1px 5px 0  0 ;
+    }
   }
 
   .tab-title {
