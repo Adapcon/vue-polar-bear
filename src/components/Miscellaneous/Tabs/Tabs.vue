@@ -100,7 +100,6 @@ export default {
       default: 'primary',
       validator: validateColor,
     },
-    icon: { type: String, default: '' },
     hideBorder: { type: Boolean, default: false },
     editableTab: { type: Boolean, default: false },
     verticalTabs: { type: Boolean, default: false },
