@@ -25,7 +25,7 @@
         </div>
         <p
           :style="`color: var(--color-${tabSettings.color});`"
-          :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title' "
+          :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title'"
           @click="$emit('update:selected-tab', tab)"
         >
           <template v-if="selectedTab === tab">
