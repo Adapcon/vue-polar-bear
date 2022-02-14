@@ -35,7 +35,7 @@
               :style="`color: var(--color-${color});`"
             />
             <b
-              v-if="!state.editTab "
+              v-if="!state.editTab"
               class="pb"
               :style="`color: var(--color-${color});`"
             >
