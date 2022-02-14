@@ -24,7 +24,7 @@
           />
         </div>
         <p
-          :style="`color: var(--color-${tabSettings.color})`"
+          :style="`color: var(--color-${tabSettings.color});`"
           :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title' "
           @click="$emit('update:selected-tab', tab)"
         >
@@ -32,12 +32,12 @@
             <PbIcon
               v-if="tabSettings.icon"
               :icon="`${tabSettings.icon} fa-xs`"
-              :style="`color: var(--color-${color})`"
+              :style="`color: var(--color-${color});`"
             />
             <b
               v-if="!state.editTab "
               class="pb"
-              :style="`color: var(--color-${color})`"
+              :style="`color: var(--color-${color});`"
             >
               {{ tabSettings.label }}
             </b>
