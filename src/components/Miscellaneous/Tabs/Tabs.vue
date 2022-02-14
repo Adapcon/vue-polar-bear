@@ -20,16 +20,22 @@
             v-if="tabSettings.icon"
             :icon="`${tabSettings.icon} fa-xs`"
             :style="`color: var(--color-${tabSettings.color})`"
+            @click="$emit('update:selected-tab', tab)"
           />
         </div>
         <p
-          :style="`color: var(--color-${!tabSettings.icon ? 'gray-20' : tabSettings.color})`"
+          :style="`color: var(--color-${tabSettings.color})`"
           :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title' "
           @click="$emit('update:selected-tab', tab)"
         >
           <template v-if="selectedTab === tab">
+            <PbIcon
+              v-if="tabSettings.icon"
+              :icon="`${tabSettings.icon} fa-xs`"
+              :style="`color: var(--color-${color})`"
+            />
             <b
-              v-if="!state.editTab"
+              v-if="!state.editTab "
               class="pb"
               :style="`color: var(--color-${color})`"
             >
@@ -138,11 +144,11 @@ export default {
     formattedTabs() {
       return Object.keys(this.tabs).reduce((newFormattedTabs, key) => {
         const tab = this.tabs[key];
+        newFormattedTabs[key] = tab;
 
         if (typeof tab === 'string')
           newFormattedTabs[key] = { label: tab };
           
-        newFormattedTabs[key] = tab;
         return newFormattedTabs;
       }, {});
     },
