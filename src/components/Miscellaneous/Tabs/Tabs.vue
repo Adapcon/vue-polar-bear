@@ -9,7 +9,7 @@
     <template v-for="(tabSettings, tab) in formattedTabs">
       <div
         :key="tab"
-        class="tab-content"
+        :class="tabSettings.disabled === true ? 'tab-content-disable' : 'tab-content'"
         :style="verticalTabs ? `margin-bottom: ${selectedTab === tab ? 9 : 21}px !important;` : ''"
       >
         <div
@@ -20,13 +20,13 @@
             v-if="tabSettings.icon"
             :icon="`${tabSettings.icon} fa-xs`"
             :style="`color: var(--color-${tabSettings.color})`"
-            @click="$emit('update:selected-tab', tab)"
+            @click="tabSettings.disabled ? '': $emit('update:selected-tab', tab)"
           />
         </div>
         <p
-          :style="`color: var(--color-${tabSettings.color});`"
+          :style="tabSettings.disabled ? 'cursor: not-allowed !important;' : `color: var(--color-${tabSettings.color});`"
           :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title'"
-          @click="$emit('update:selected-tab', tab)"
+          @click="tabSettings.disabled ? '': $emit('update:selected-tab', tab)"
         >
           <template v-if="selectedTab === tab">
             <PbIcon
@@ -188,6 +188,16 @@ export default {
     display: flex;
 
     .icon {
+      padding: 1px 5px 0  0 ;
+    }
+  }
+  .tab-content-disable {
+    cursor: not-allowed;
+    opacity: 0.5;
+    display: flex;
+
+    .icon {
+      cursor: not-allowed;
       padding: 1px 5px 0  0 ;
     }
   }
