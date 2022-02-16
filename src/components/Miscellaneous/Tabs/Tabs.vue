@@ -20,13 +20,13 @@
             v-if="tabSettings.icon"
             :icon="`${tabSettings.icon} fa-xs`"
             :style="`color: var(--color-${tabSettings.color})`"
-            @click="tabSettings.disabled ? '': $emit('update:selected-tab', tab)"
+            @click="tabSettings.disabled ? '' : $emit('update:selected-tab', tab)"
           />
         </div>
         <p
           :style="tabSettings.disabled ? 'cursor: not-allowed !important;' : `color: var(--color-${tabSettings.color});`"
           :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title'"
-          @click="tabSettings.disabled ? '': $emit('update:selected-tab', tab)"
+          @click="tabSettings.disabled ? '' : $emit('update:selected-tab', tab)"
         >
           <template v-if="selectedTab === tab">
             <PbIcon
@@ -191,6 +191,7 @@ export default {
       padding: 1px 5px 0  0 ;
     }
   }
+
   .tab-content-disable {
     cursor: not-allowed;
     opacity: 0.5;
