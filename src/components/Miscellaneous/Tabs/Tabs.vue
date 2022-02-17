@@ -74,7 +74,7 @@
         color="primary"
         button-style="regular"
         icon="fas fa-plus"
-        @click.native="addTabs()"
+        @click.native="addTabs"
       />
       <PbButton
         color="primary"
@@ -109,6 +109,7 @@ export default {
     hideBorder: { type: Boolean, default: false },
     editableTab: { type: Boolean, default: false },
     verticalTabs: { type: Boolean, default: false },
+    newTabSettings: { type: Function, default: () => ({ key: Date.now(), label: 'Nova aba' }) },
   },
 
   data() {
@@ -142,36 +143,39 @@ export default {
     },
 
     formattedTabs() {
-      return Object.keys(this.tabs).reduce((newFormattedTabs, key) => {
+      return Object.keys(this.tabs).reduce((acc, key) => {
+        const newFormattedTabs = acc;
+
         const tab = this.tabs[key];
         newFormattedTabs[key] = tab;
 
         if (typeof tab === 'string')
           newFormattedTabs[key] = { label: tab };
-          
+
         return newFormattedTabs;
       }, {});
     },
   },
 
   methods: {
-    addTabs(value = 'Tab') {
-      const newTabName = value || 'new tab';
-      const valueKey = newTabName.replace(/-./g, x => x[1].toUpperCase());
+    addTabs() {
+      const { key, label } = this.newTabSettings();
 
-      this.$set(this.updateTabs, valueKey, newTabName);
-      this.$nextTick(() => {
-        this.$emit('update:selected-tab', valueKey);
-      });
+      this.$set(this.updateTabs, key, label);
+      this.$emit('on-tab-created', key, label);
     },
 
     deleteTab(tab) {
       this.$delete(this.updateTabs, tab);
+      this.$emit('on-tab-delete', tab);
     },
 
     addInputValue(event, tab) {
-      this.deleteTab(tab);
-      this.addTabs(event.target.value);
+      const newTabName = event.target.value || 'Aba editada!';
+      const valueKey = tab;
+
+      this.$set(this.updateTabs, valueKey, newTabName);
+      this.$emit('on-tab-edited', valueKey, newTabName);
     },
   },
 };
