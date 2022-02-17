@@ -10,7 +10,7 @@
       v-if="entities.length === 0"
       class="no-content"
     >
-      <p class="pb"> Sem registros.</p>
+      <p class="pb"> {{ settings.emptyText }}</p>
     </div>
     <div
       v-for="(entity, indexEntity) in entities"
@@ -81,7 +81,6 @@ export default {
           }
         }
       }
-      
       return array;
     },
   },
