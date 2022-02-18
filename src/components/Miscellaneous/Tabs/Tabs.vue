@@ -79,7 +79,7 @@
       <PbButton
         color="primary"
         button-style="regular"
-        icon="fas fa-pen"
+        :icon="state.editTab === true ? 'fas fa-check' : 'fas fa-pen'"
         @click.native="state.editTab = !state.editTab"
       />
     </div>
