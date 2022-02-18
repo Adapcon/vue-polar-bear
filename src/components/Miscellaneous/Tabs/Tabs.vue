@@ -23,38 +23,88 @@
             @click="tabSettings.disabled ? '' : $emit('update:selected-tab', tab)"
           />
         </div>
-        <p
-          :style="tabSettings.disabled ? 'cursor: not-allowed !important;' : `color: var(--color-${tabSettings.color});`"
-          :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title'"
-          @click="tabSettings.disabled ? '' : $emit('update:selected-tab', tab)"
+        <div
+          v-if="abbreviatedText"
+          style="width: 100px;"
         >
-          <template v-if="selectedTab === tab">
-            <PbIcon
-              v-if="tabSettings.icon"
-              :icon="`${tabSettings.icon} fa-xs`"
-              :style="`color: var(--color-${color});`"
-            />
-            <b
-              v-if="!state.editTab"
-              class="pb"
-              :style="`color: var(--color-${color});`"
+          <PbHint
+            position="top-right"
+            :hint-text="tabSettings.label"
+            :disabled="false"
+          >
+            <p
+              :style="tabSettings.disabled ? 'cursor: not-allowed !important;' : `color: var(--color-${tabSettings.color});`"
+              :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title'"
+              @click="tabSettings.disabled ? '' : $emit('update:selected-tab', tab)"
             >
-              {{ tabSettings.label }}
-            </b>
-            <input
-              v-if="state.editTab"
-              class="input"
-              :style="{'backgroundColor': colorOpacityPrimary}"
-              :placeholder="tabSettings.label"
-              @blur="event => {addInputValue(event, tab)}"
-              @keyup.enter="event => {addInputValue(event, tab)}"
-            >
-            <hr
-              :style="`margin: 10px 0 0 0; border: 1px solid var(--color-${color})`"
-            >
-          </template>
-          <template v-else>{{ tabSettings.label }}</template>
-        </p>
+              <template v-if="selectedTab === tab">
+                <PbIcon
+                  v-if="tabSettings.icon"
+                  :icon="`${tabSettings.icon} fa-xs`"
+                  :style="`color: var(--color-${color});`"
+                />
+           
+                <b
+                  v-if="!state.editTab"
+                  class="pb"
+                  :style="`color: var(--color-${color});`"
+                >
+             
+                  {{ tabSettings.label }}
+                </b>
+                <input
+                  v-if="state.editTab"
+                  class="input"
+                  :style="{'backgroundColor': colorOpacityPrimary}"
+                  :placeholder="tabSettings.label"
+                  @blur="event => {addInputValue(event, tab)}"
+                  @keyup.enter="event => {addInputValue(event, tab)}"
+                >
+                <hr
+                  :style="`margin: 10px 0 0 0; border: 1px solid var(--color-${color})`"
+                >
+              </template>
+              <template v-else>
+                {{ tabSettings.label }}
+              </template>
+            </p>
+          </PbHint>
+        </div>
+
+        <div v-if="!abbreviatedText">
+          <p
+            :style="tabSettings.disabled ? 'cursor: not-allowed !important;' : `color: var(--color-${tabSettings.color});`"
+            :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title'"
+            @click="tabSettings.disabled ? '' : $emit('update:selected-tab', tab)"
+          >
+            <template v-if="selectedTab === tab">
+              <PbIcon
+                v-if="tabSettings.icon"
+                :icon="`${tabSettings.icon} fa-xs`"
+                :style="`color: var(--color-${color});`"
+              />
+              <b
+                v-if="!state.editTab"
+                class="pb"
+                :style="`color: var(--color-${color});`"
+              >
+                {{ tabSettings.label }}
+              </b>
+              <input
+                v-if="state.editTab"
+                class="input"
+                :style="{'backgroundColor': colorOpacityPrimary}"
+                :placeholder="tabSettings.label"
+                @blur="event => {addInputValue(event, tab)}"
+                @keyup.enter="event => {addInputValue(event, tab)}"
+              >
+              <hr
+                :style="`margin: 10px 0 0 0; border: 1px solid var(--color-${color})`"
+              >
+            </template>
+            <template v-else>{{ tabSettings.label }}</template>
+          </p>
+        </div>
         <div>
           <PbButton
             v-if="state.editTab"
@@ -79,7 +129,7 @@
       <PbButton
         color="primary"
         button-style="regular"
-        icon="fas fa-pen"
+        :icon="state.editTab === true ? 'fas fa-check' : 'fas fa-pen'"
         @click.native="state.editTab = !state.editTab"
       />
     </div>
@@ -90,12 +140,14 @@
 import { validateColor } from '@pb/utils/validator';
 import PbButton from '../../Buttons/Button/Button.vue';
 import PbIcon from '../../Miscellaneous/Icon/Icon';
+import PbHint from '../../Miscellaneous/Hint/Hint.vue';
 
 export default {
   name: 'PbTabs',
   components: {
     PbButton,
     PbIcon,
+    PbHint,
   },
 
   props: {
@@ -107,6 +159,7 @@ export default {
       validator: validateColor,
     },
     hideBorder: { type: Boolean, default: false },
+    abbreviatedText: { type: Boolean, default: false },
     editableTab: { type: Boolean, default: false },
     verticalTabs: { type: Boolean, default: false },
     newTabSettings: { type: Function, default: () => ({ key: Date.now(), label: 'Nova aba' }) },
@@ -211,6 +264,9 @@ export default {
     margin-right: 21px !important;
     user-select: none;
     cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .tab-title-editable {
