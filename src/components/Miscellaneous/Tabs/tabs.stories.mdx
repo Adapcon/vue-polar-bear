@@ -9,7 +9,7 @@ import { colors } from '@pb/utils/constants';
   tabs: {
     type: 'object',
     defaultValue: {
-        general: {label: 'Geral', icon: 'fas fa-ban', color: 'danger'},
+        general: {label: 'Pneumoultramicroscopicossilicovulcanoconiótico', icon: 'fas fa-ban', color: 'danger'},
         prices: 'Preços',
         photos: {label: 'Fotos', icon: 'fas fa-check'},
         data: {label: 'Dados', color: 'success'},
@@ -22,6 +22,10 @@ import { colors } from '@pb/utils/constants';
     defaultValue: 'general',
   },
   hideBorder: {
+    type: 'boolean',
+    defaultValue: false,
+  },
+  abbreviatedText: {
     type: 'boolean',
     defaultValue: false,
   },
@@ -54,6 +58,7 @@ export const Template = (args, { argTypes }) => ({
       :hideBorder="hideBorder"
       :editableTab="editableTab"
       :verticalTabs="verticalTabs"
+      :abbreviatedText="abbreviatedText"
     />
   `
 });
