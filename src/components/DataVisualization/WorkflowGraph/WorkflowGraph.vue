@@ -21,7 +21,10 @@
               }
             "
           >
-            <slot :name="indexName" />
+            <slot
+              :name="indexName"
+              :content="content"
+            />
           </Balloon>
         </div>
         <Lines
