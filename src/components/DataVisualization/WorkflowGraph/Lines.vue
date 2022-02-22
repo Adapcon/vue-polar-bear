@@ -6,8 +6,8 @@
       >
         <template v-if="content.callWith">
           <line
-            v-for="idName in content.callWith"
-            :key="idName"
+            v-for="(idName, index) in content.callWith"
+            :key="`${content.title}-${idName}-${index}`"
             x1="0"
             :y1="getY(indexName)"
             x2="70"
@@ -55,5 +55,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    
+
 </style>

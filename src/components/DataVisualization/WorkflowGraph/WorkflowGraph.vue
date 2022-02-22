@@ -7,9 +7,11 @@
       <div
         v-for="(cardObject, cardIndex) in cards"
         :key="cardIndex"
-        style="display: flex"
+        style="display: flex;"
       >
-        <div>
+        <div
+          style="width: max-content;"
+        >
           <Balloon
             v-for="(content, indexName) in cardObject"
             :key="indexName"
