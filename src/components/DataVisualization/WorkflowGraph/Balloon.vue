@@ -50,7 +50,6 @@ export default {
         .balloon {
             padding: 5px 20px;
             margin: 5px 0px;
-            height: 35px;
             border-radius: 10px;
             text-align: center;
             color: white;
@@ -66,9 +65,8 @@ export default {
         .balloon-default {
             border-radius: 10px;
             border: 1px solid var(--color-gray);
-             padding: 5px 20px;
+            padding: 5px 20px;
             margin: 5px 0px;
-            height: 35px;
             text-align: center;
             color: white;
         }
