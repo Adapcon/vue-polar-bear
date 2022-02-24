@@ -90,18 +90,18 @@ export default {
 
   methods: {
     handleDragStart(event, itemIndex) {
-      const dt = event.dataTransfer;
+      const { dataTransfer } = event;
       const itemElement = this.$refs.items[itemIndex];
       // the handle icon is responsible for listening to drag events, but
       // we will display the entire item element as the drag image instead
-      dt.setDragImage(
+      dataTransfer.setDragImage(
         itemElement,
         // center at the handle
         itemElement.clientWidth - 5,
         itemElement.clientHeight / 2,
       );
-      dt.effect = 'move';
-      dt.setData('application/item', itemIndex);
+      dataTransfer.effect = 'move';
+      dataTransfer.setData('application/item', itemIndex);
     },
 
     handleDrag(event) {
@@ -123,8 +123,8 @@ export default {
     },
 
     handleDrop(event) {
-      const dt = event.dataTransfer;
-      const draggedItem = Number(dt.getData('application/item'));
+      const { dataTransfer } = event;
+      const draggedItem = Number(dataTransfer.getData('application/item'));
       const newItems = [...this.data];
       newItems.splice(draggedItem, 1);
       newItems.splice(this.draggingIntoPosition, 0, this.data[draggedItem]);
