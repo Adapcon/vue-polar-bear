@@ -76,11 +76,10 @@ export default {
 
   emits: [
     /**
-     * Event for handling changes to the order of the list. Receives
-     * the newly-sorted array, the index of the currently dragged
-     * item, and the index of the new position as parameters.
+     * Event for handling changes to the order of
+     * the list. Receives the newly-sorted array,
       */
-    'change',
+    'update:data',
   ],
 
   data() {
@@ -129,7 +128,7 @@ export default {
       const newItems = [...this.data];
       newItems.splice(draggedItem, 1);
       newItems.splice(this.draggingIntoPosition, 0, this.data[draggedItem]);
-      this.$emit('change', newItems, draggedItem, this.draggingIntoPosition);
+      this.$emit('update:data', newItems);
     },
 
     handleDragEnd() {

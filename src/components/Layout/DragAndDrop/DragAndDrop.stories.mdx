@@ -13,25 +13,17 @@ Items in the list can be specified using the `data` prop, which is a
 plain array. The `item` slot will receive item from `data` and render
 it into the list. Additionally, `item` will also receive an `index` prop.
 
-Changes to the list made when a drop is performed can be listened
-to using the `change` event. The first parameter passed to the
-listener will be a newly-sorted array. The index of the currently
-item being dragged and the index of the position it is being dragged
-into will be passed as the second and third parameters, respectively.
+Changes to the list made when a drop is performed can be listened to using
+the `update:data` event. The newly-sorted array will be passed as a parameter.
 
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: {
     PbDragAndDrop,
   },
-  methods: {
-    handleChangeActions(actions) {
-      this.actions = actions // FIXME this mutates `args`
-    }
-  },
   template: `
     <div style="border: 1px dashed #7B61FF; border-radius: 5px; width: 300px;">
-      <PbDragAndDrop :data="actions" @change="handleChangeActions" :show-index="showIndex">
+      <PbDragAndDrop :data.sync="actions" :show-index="showIndex">
         <template #item="{ item }">
           <p class="pb" style="text-align: left; width: 100%">{{ item }}</p>
         </template>
@@ -44,7 +36,7 @@ export const Template = (args, { argTypes }) => ({
 
 <Canvas mdxSource={dedent`
   <template
-    <PbDragAndDrop :data="items" @change="handleChange">
+    <PbDragAndDrop :data.sync="items">
       <template #item="{ item }">
         <p class="pb">{{ item }}</p>
       </template>
@@ -63,7 +55,7 @@ This behaviour can be customized using the `show-index` prop:
 
 <Canvas mdxSource={dedent`
   <template>
-    <PbDragAndDrop :data="items" @change="handleChange">
+    <PbDragAndDrop :data.sync="items">
       <template #item="{ item }">
         <p class="pb">{{ item }}</p>
       </template>
