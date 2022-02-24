@@ -54,9 +54,9 @@
                 </b>
                 <input
                   v-if="state.editTab"
+                  v-focus
                   class="input"
                   :style="{'backgroundColor': colorOpacityPrimary}"
-                  :placeholder="tabSettings.label"
                   @blur="event => {addInputValue(event, tab)}"
                   @keyup.enter="event => {addInputValue(event, tab)}"
                 >
@@ -92,9 +92,10 @@
               </b>
               <input
                 v-if="state.editTab"
+                v-focus
+                :value="tabSettings.label"
                 class="input"
                 :style="{'backgroundColor': colorOpacityPrimary}"
-                :placeholder="tabSettings.label"
                 @blur="event => {addInputValue(event, tab)}"
                 @keyup.enter="event => {addInputValue(event, tab)}"
               >
@@ -110,7 +111,7 @@
             v-if="state.editTab"
             :color="selectedTab === tab ? 'primary' : 'gray-10'"
             button-style="regular"
-            icon="fas fa-times"
+            icon="fas fa-trash"
             @click.native="deleteTab(tab)"
           />
         </div>
@@ -124,13 +125,23 @@
         color="primary"
         button-style="regular"
         icon="fas fa-plus"
+        style="margin-right: 20px;"
         @click.native="addTabs"
       />
       <PbButton
+        v-if="hiddenEditButton"
         color="primary"
         button-style="regular"
         :icon="state.editTab === true ? 'fas fa-check' : 'fas fa-pen'"
-        @click.native="state.editTab = !state.editTab"
+        @click.native="checkEdit"
+      />
+      <PbButton
+        v-if="state.editTab && hiddenEditButton"
+        color="primary"
+        button-style="regular"
+        style="margin-left: 20px;"
+        icon="fas fa-times"
+        @click.native="closeEdit"
       />
     </div>
   </div>
@@ -150,6 +161,14 @@ export default {
     PbHint,
   },
 
+  directives: {
+    focus: {
+      inserted(input) {
+        input.focus();
+      },
+    },
+  },
+
   props: {
     tabs: { type: Object, default: () => ({}) },
     selectedTab: { type: String, default: '' },
@@ -162,17 +181,17 @@ export default {
     abbreviatedText: { type: Boolean, default: false },
     editableTab: { type: Boolean, default: false },
     verticalTabs: { type: Boolean, default: false },
-    newTabSettings: { type: Function, default: () => ({ key: Date.now(), label: 'Nova aba' }) },
+    newTabSettings: { type: Function, default: () => ({ key: `${Date.now()}`, label: 'Nova aba' }) },
   },
 
   data() {
     return {
       state: {
+        tabsValue: {},
         editTab: false,
       },
     };
   },
-
   computed: {
     style() {
       if (this.hideBorder) return;
@@ -208,14 +227,34 @@ export default {
         return newFormattedTabs;
       }, {});
     },
+
+    hiddenEditButton() {
+      return Object.keys(this.tabs).length > 0;
+    },
   },
 
   methods: {
+    checkEdit() {
+      this.state.tabsValue = this.formattedTabs;
+      this.state.editTab = !this.state.editTab;
+    },
+    closeEdit() {
+      Object.keys(this.state.tabsValue).forEach(a => {
+        this.addInputValue({ target: { value: this.state.tabsValue[a].label } }, a);
+      });
+      this.state.editTab = !this.state.editTab;
+    },
+
     addTabs() {
       const { key, label } = this.newTabSettings();
-
+      console.log('key', key);
+      console.log('label', label);
+      console.log('selectedTab', this.selectedTab);
       this.$set(this.updateTabs, key, label);
       this.$emit('on-tab-created', key, label);
+      this.$nextTick(() => {
+        this.$emit('update:selected-tab', key);
+      });
     },
 
     deleteTab(tab) {
@@ -224,7 +263,9 @@ export default {
     },
 
     addInputValue(event, tab) {
-      const newTabName = event.target.value || 'Aba editada!';
+      const newTabName = event.target.value;
+
+      if (!newTabName) return;
       const valueKey = tab;
 
       this.$set(this.updateTabs, valueKey, newTabName);
