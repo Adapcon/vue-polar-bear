@@ -55,6 +55,7 @@
                 <input
                   v-if="state.editTab"
                   v-focus
+                  :value="tabSettings.label"
                   class="input"
                   :style="{'backgroundColor': colorOpacityPrimary}"
                   @blur="event => {addInputValue(event, tab)}"
@@ -247,9 +248,6 @@ export default {
 
     addTabs() {
       const { key, label } = this.newTabSettings();
-      console.log('key', key);
-      console.log('label', label);
-      console.log('selectedTab', this.selectedTab);
       this.$set(this.updateTabs, key, label);
       this.$emit('on-tab-created', key, label);
       this.$nextTick(() => {
