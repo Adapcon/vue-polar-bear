@@ -9,7 +9,7 @@
                 v-if="!state.isMobileCell"
                 color="primary"
                 button-style="regular"
-                icon="fas fa-arrow-up fa-rotate-270"
+                :icon="`fas fa-${state.isMobileTablet ? 'bars': 'arrow-up fa-rotate-270'}`"
                 @click.native="backFunction"
               />
               <h2 class="pb">
@@ -17,7 +17,7 @@
               </h2>
             </div>
             <div
-              v-if="!state.isMobileTablet || state.showSidebar"
+              v-show="(!state.isMobileTablet && !state.isMobileCell) || showSideMenu"
               class="sidebar-content"
             >
               <slot name="sidebar" />
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <div v-if="!state.showSidebar" class="pb-col-12 pb-col-md-9">
+    <div v-show="!showSideMenu" class="pb-col-12 pb-col-md-9">
       <div class="pb-row" style="justify-content: center;">
         <div class="tool-bar pb-col-11" v-if="!disableToolBar">
           <slot name="tool-bar" />
@@ -52,6 +52,7 @@ export default {
     title: { type: [String, Number], default: '' },
     disableToolBar: { type: Boolean, default: false },
     backFunction: { type: Function, default: () => () => {} },
+    showSideMenu: { type: Boolean, default: false },
   },
 
   data() {
@@ -59,7 +60,6 @@ export default {
       state: {
         isMobileTablet: window.innerWidth <= 768,
         isMobileCell: window.innerWidth <= 375,
-        showSidebar: false,
       },
     };
   },
@@ -81,7 +81,7 @@ export default {
     },
 
     toggleSidebar() {
-      this.state.showSidebar = !this.state.showSidebar;
+      this.$emit('update:show-side-menu', !this.showSideMenu) ;
     },
   },
 };
