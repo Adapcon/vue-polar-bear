@@ -16,6 +16,10 @@ import PbLayoutGrid from './LayoutGrid.vue';
     backFunction: {
       action: 'backFunction',
     },
+    showSideMenu: { 
+        type: 'boolean', 
+        defaultValue: false,
+    },
   }}
 />
 
@@ -28,6 +32,7 @@ export const Template = (args, { argTypes }) => ({
             :title="title"
             :disableToolBar="disableToolBar"
             :backFunction="backFunction"
+            :showSideMenu="showSideMenu"
             ref="PbLayoutGrid"
         >
             <template #main>
