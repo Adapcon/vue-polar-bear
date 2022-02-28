@@ -1,0 +1,70 @@
+import PbDragAndDrop from './DragAndDrop';
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Story } from '@storybook/addon-docs';
+import dedent from 'ts-dedent'
+
+<Meta title="Components/Layout/Drag and Drop" component={PbDragAndDrop}/>
+
+# **PbDragAndDrop**
+
+An item list that can be reordered by the user.
+
+Items in the list can be specified using the `data` prop, which is a
+plain array. The `item` slot will receive item from `data` and render
+it into the list. Additionally, `item` will also receive an `index` prop.
+
+Changes to the list made when a drop is performed can be listened to using
+the `update:data` event. The newly-sorted array will be passed as a parameter.
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: {
+    PbDragAndDrop,
+  },
+  template: `
+    <div style="border: 1px dashed #7B61FF; border-radius: 5px; width: 300px;">
+      <PbDragAndDrop :data.sync="actions" :show-index="showIndex">
+        <template #item="{ item }">
+          <p class="pb" style="text-align: left; width: 100%">{{ item }}</p>
+        </template>
+      </PbDragAndDrop>
+    </div>
+  `,
+})
+
+## Default
+
+<Canvas mdxSource={dedent`
+  <template
+    <PbDragAndDrop :data.sync="items">
+      <template #item="{ item }">
+        <p class="pb">{{ item }}</p>
+      </template>
+    </PbDragAndDrop>
+  </template>
+`}>
+  <Story name="Default" args={{ actions: ['Item One', 'Item Two', 'Item Three'] }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Hide Indexes
+
+By default, the list will show an index at the left of each item.
+This behaviour can be customized using the `show-index` prop:
+
+<Canvas mdxSource={dedent`
+  <template>
+    <PbDragAndDrop :data.sync="items">
+      <template #item="{ item }">
+        <p class="pb">{{ item }}</p>
+      </template>
+    </PbDragAndDrop>
+  </template>
+`}>
+  <Story
+    name="Hide Indexes"
+    args={{actions: ['Item One', 'Item Two', 'Item Three'], showIndex: false }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

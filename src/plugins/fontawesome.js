@@ -110,6 +110,7 @@ import {
   faVideo as fasVideo,
   faWrench as fasWrench,
   faTh as FasTh,
+  faGripVertical as fasGripVertical,
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -283,6 +284,7 @@ library.add(
   fabTiktok,
   FasTh,
   fasPlus,
+  fasGripVertical,
 );
 
 // Replace any existing <i> tags with <svg> and set up a MutationObserver to
