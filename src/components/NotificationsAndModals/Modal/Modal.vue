@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div class="pb-modal-component layer-modal" @click="cancel">
-      <div class="modal-container" @click.stop>
+      <div :style="modalWidth" class="modal-container" @click.stop>
         <div class="header">
           <div
             class="icon-position"
@@ -21,6 +21,7 @@
 </template>
 <script>
 import { PbIcon } from '@pb';
+
 export default {
   name: 'PbModal',
   components: {
@@ -28,6 +29,12 @@ export default {
   },
   props: {
     enabledButton: { type: Boolean, default: true },
+    width: { type: String, default: '60%' },
+  },
+  computed: {
+    modalWidth() {
+      return `width: ${this.width};`;
+    },
   },
   mounted() {
     this.toggleClassToRemoveScroll('add');
@@ -65,7 +72,6 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     background: var(--color-white);
-    width: 60%;
     max-width: 95%;
     min-height: 350px;
     border-radius: 0px 20px 20px;
