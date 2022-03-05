@@ -42,12 +42,18 @@
           :ref="`form-${key}`"
           :value="{ key: objectKeyValue }"
 <<<<<<< HEAD
+<<<<<<< HEAD
           :entity-schema="getEntitySchema(key)"
 =======
+=======
+>>>>>>> 3e6eabd (feat(pb-form): create object-keys controller)
           :entity-schema="{ key: {
             ...entitySchema.contentObject,
             label: `${entitySchema.contentObject.label}: ${key}`
           } }"
+<<<<<<< HEAD
+>>>>>>> 3e6eabd (feat(pb-form): create object-keys controller)
+=======
 >>>>>>> 3e6eabd (feat(pb-form): create object-keys controller)
           :only-show="onlyShow || entitySchema.dynamic"
           @input.native="updateObjectKeys(key)"
@@ -110,6 +116,10 @@ export default {
     addKey() {
       if (!this.state.newKey) return;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+      console.log(this.objectKeysValue);
+>>>>>>> 3e6eabd (feat(pb-form): create object-keys controller)
 =======
       console.log(this.objectKeysValue);
 >>>>>>> 3e6eabd (feat(pb-form): create object-keys controller)
@@ -129,6 +139,7 @@ export default {
       this.$emit('input', this.objectKeysValue);
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     getEntitySchema(key) {
       return {
@@ -138,6 +149,8 @@ export default {
         } 
       }
     }
+=======
+>>>>>>> 3e6eabd (feat(pb-form): create object-keys controller)
 =======
 >>>>>>> 3e6eabd (feat(pb-form): create object-keys controller)
   },
