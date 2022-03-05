@@ -25,7 +25,11 @@ export default {
     onlyShow: { type: Boolean, default: false },
     value: {
       type: Object,
+<<<<<<< HEAD
       default: () => ({}),
+=======
+      default: () => {},
+>>>>>>> 95322c4 (feat(pb-form): create object controller)
     },
   },
 
