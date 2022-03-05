@@ -18,6 +18,7 @@ export { default as PbTabs } from './Miscellaneous/Tabs/Tabs.vue';
 export { default as PbUpload } from './Miscellaneous/Upload/Upload.vue';
 export { default as PbSortIcon } from './Miscellaneous/SortIcon/SortIcon.vue';
 export { default as PbFooterNavigation } from './Miscellaneous/FooterNavigation/FooterNavigation.vue';
+export { default as PbForm } from './Miscellaneous/Form/Form.vue';
 
 // ? Buttons
 export { default as PbButton } from './Buttons/Button/Button.vue';
