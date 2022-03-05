@@ -54,8 +54,8 @@ export default {
     },
     uploadFile: {
       type: Function,
-      default: O => {
-        throw new Error('uploadFile function is not defined', O);
+      default: parameters => {
+        throw new Error('uploadFile function is not defined', parameters);
       },
     },
   },
