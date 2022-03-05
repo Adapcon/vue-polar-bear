@@ -41,10 +41,7 @@
         <Form
           :ref="`form-${key}`"
           :value="{ key: objectKeyValue }"
-          :entity-schema="{ key: {
-            ...entitySchema.contentObject,
-            label: `${entitySchema.contentObject.label}: ${key}`
-          } }"
+          :entity-schema="getEntitySchema(key)"
           :only-show="onlyShow || entitySchema.dynamic"
           @input.native="updateObjectKeys(key)"
         />
@@ -120,6 +117,15 @@ export default {
       this.$delete(this.objectKeysValue, key);
       this.$emit('input', this.objectKeysValue);
     },
+
+    getEntitySchema(key) {
+      return {
+        key: {
+          ...this.entitySchema.contentObject,
+          label: `${this.entitySchema.contentObject.label}: ${key}`
+        } 
+      }
+    }
   },
 };
 </script>
