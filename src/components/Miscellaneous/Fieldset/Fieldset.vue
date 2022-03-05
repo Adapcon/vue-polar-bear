@@ -12,7 +12,7 @@
         color="info"
         :hint-text="info"
         position="top-right"
-      ><span style="color: var(--color-info)"> ?</span></PbHint></small>
+      ><span style="color: var(--color-info);"> ?</span></PbHint></small>
     </div>
     <div class="pb-fieldset-slot">
       <slot />
