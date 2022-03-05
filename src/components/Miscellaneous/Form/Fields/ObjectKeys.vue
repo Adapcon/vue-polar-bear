@@ -105,7 +105,6 @@ export default {
   methods: {
     addKey() {
       if (!this.state.newKey) return;
-      console.log(this.objectKeysValue);
       this.$set(this.objectKeysValue, this.state.newKey, this.entitySchema.contentObject.defaultValue);
       this.$emit('input', this.objectKeysValue);
       this.state.newKey = '';
