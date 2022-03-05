@@ -25,7 +25,7 @@ export default {
     onlyShow: { type: Boolean, default: false },
     value: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
   },
 
