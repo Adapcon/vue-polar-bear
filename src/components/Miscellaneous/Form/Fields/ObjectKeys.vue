@@ -5,7 +5,7 @@
     >
       <div style="display: flex;">
         <PbTextInput
-          v-if="entitySchema.keyType === 'text'"
+          v-if="entitySchema.keyType === 'string'"
           v-model="state.newKey"
           :placeholder="entitySchema.placeholder"
           :disabled="onlyShow || entitySchema.dynamic"
@@ -36,20 +36,35 @@
       <div
         v-for="(objectKeyValue, key) in objectKeysValue"
         :key="key"
-        class="object-content"
       >
+        <div
+          class="object-content"
+          @click="switchShowKey(key)"
+        >
+          <p class="pb">
+            {{ key }}
+          </p>
+          <div style="display: flex;">
+            <PbCollapseIcon
+              :is-icon-up="state.show[key]"
+            />
+            <PbDoubleCheck
+              :disabled="onlyShow || entitySchema.dynamic"
+              confirm-text="Apagar?"
+              icon="fas fa-trash"
+              style="margin-left: 20px;"
+              @confirmed="deleteKey(key)"
+            />
+          </div>
+        </div>
         <Form
+          v-show="state.show[key]"
           :ref="`form-${key}`"
-          :value="{ key: objectKeyValue }"
-          :entity-schema="getEntitySchema(key)"
+          :value="objectKeyValue"
+          :entity-schema="entitySchema.contentObject"
           :only-show="onlyShow || entitySchema.dynamic"
+          class="form-content"
           @input.native="updateObjectKeys(key)"
-        />
-        <PbDoubleCheck
-          :disabled="onlyShow || entitySchema.dynamic"
-          confirm-text="Apagar?"
-          icon="fas fa-trash"
-          @confirmed="deleteKey(key)"
         />
       </div>
     </TransitionGroup>
@@ -63,6 +78,7 @@ import PbButton from '../../../Buttons/Button/Button.vue';
 import PbTextInput from '../../../Inputs/TextInput/TextInput.vue';
 import PbNumberInput from '../../../Inputs/NumberInput/NumberInput.vue';
 import PbFieldset from '../../Fieldset/Fieldset.vue';
+import PbCollapseIcon from '../../CollapseIcon/CollapseIcon.vue';
 
 export default {
   name: 'ObjectKeysField',
@@ -74,6 +90,7 @@ export default {
     PbTextInput,
     PbNumberInput,
     PbFieldset,
+    PbCollapseIcon,
   },
 
   props: {
@@ -89,6 +106,7 @@ export default {
     return {
       state: {
         newKey: '',
+        show: {},
       },
     };
   },
@@ -102,14 +120,20 @@ export default {
   methods: {
     addKey() {
       if (!this.state.newKey) return;
-      this.$set(this.objectKeysValue, this.state.newKey, this.entitySchema.contentObject.defaultValue);
+      if (this.objectKeysValue[this.state.newKey]) {
+        this.switchShowKey(this.state.newKey, true);
+        this.state.newKey = '';
+        return;
+      }
+      this.$set(this.objectKeysValue, this.state.newKey, this.entitySchema.contentObject.defaultValue || {});
       this.$emit('input', this.objectKeysValue);
+      this.switchShowKey(this.state.newKey, true);
       this.state.newKey = '';
     },
 
     updateObjectKeys(key) {
       const objectKeysForm = this.$refs[`form-${key}`][0];
-      this.$set(this.objectKeysValue, key, objectKeysForm.formResponse.key);
+      this.$set(this.objectKeysValue, key, objectKeysForm.formResponse);
       this.$emit('input', this.objectKeysValue);
     },
 
@@ -122,10 +146,14 @@ export default {
       return {
         key: {
           ...this.entitySchema.contentObject,
-          label: `${this.entitySchema.contentObject.label}: ${key}`
-        } 
-      }
-    }
+          label: `${this.entitySchema.contentObject.label}: ${key}`,
+        },
+      };
+    },
+
+    switchShowKey(key, setState) {
+      this.$set(this.state.show, key, setState || !this.state.show[key]);
+    },
   },
 };
 </script>
@@ -139,7 +167,14 @@ export default {
   .object-content {
     display: flex;
     justify-content: space-between;
-    border: solid 1px var(--color-gray-90);
+    border-top: solid 1px var(--color-gray-90);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+  }
+
+  .form-content {
+    border-bottom: solid 1px var(--color-gray-90);
     border-radius: 10px;
     padding: 5px;
     margin: 5px;
