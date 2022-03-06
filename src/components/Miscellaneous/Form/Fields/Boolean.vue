@@ -23,8 +23,8 @@ export default {
     entitySchema: { type: Object, default: () => ({}) },
     onlyShow: { type: Boolean, default: false },
     value: {
-      type: String,
-      default: '',
+      type: Boolean,
+      default: undefined,
     },
   },
 

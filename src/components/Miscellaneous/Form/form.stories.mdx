@@ -7,14 +7,7 @@ import PbForm from './Form.vue';
   argTypes={{
     formResponse: {
       type: 'object',
-      defaultValue: {
-        file: {
-          url: "https://i.stack.imgur.com/A9Ped.png",
-          fileDetails: {
-            type: "image"
-          }
-        },
-      },
+      defaultValue: {},
     },
     onlyShow: {
       type: 'boolean',
@@ -23,130 +16,143 @@ import PbForm from './Form.vue';
     entitySchema: {
       type: 'object',
       defaultValue: {
-        html: {
-          type: 'html',
-          label: 'Exemplo de um campo html',
-          tip: 'Ainda não implementamos o componente certo',
-          dynamic: true,
-          placeholder: 'digite um html aqui!'
-        },
-        string: {
-          type: 'string',
-          label: 'Campo normal de string',
-          required: true,
-          position: 1,
-          defaultValue: 'Uhulll!',
-        },
-        number: {
-          type: 'number',
-          label: 'Exemple field number',
-          position: 3,
-        },
-        boolean: {
-          type: 'boolean',
-          label: 'Este form esta top???',
-          required: true,
-          position: 77,
-          tip: 'Só vale dizer que sim',
-          defaultValue: true,
-        },
-        text: {
-          type: 'text',
-          label: 'Texte aria kk .',
-          required: false,
-          position: 7,
-          tip: 'Tip of text field',
-          dynamic: false,
-          columnVisible: true,
-          occult: false,
-          defaultValue: '',
-        },
-        file: {
-          type: 'file',
-          label: 'Precisa passar a funcao upload',
-          filterFileTypes: ['.txt', '.pdf', 'se não passar o array ele não filtra os tipos de arquivo'],
-        },
-        datetime: {
-          type: 'datetime',
-          label: 'Exemple field datetime',
-          required: false,
-          position: 9,
-          tip: 'Tip of datetime field',
-          dynamic: false,
-          columnVisible: true,
-          occult: false,
-          defaultValue: 0,
-          onlyDate: false,
-        },
-        object: {
-          type: 'object',
-          label: 'Exemple field object',
-          required: false,
-          position: 3,
-          tip: 'Tip of object field',
-          dynamic: false,
-          columnVisible: true,
-          occult: false,
-          defaultValue: {},
-          contentObject: {
-            'exemple-object': {
-              type: 'boolean',
-              label: 'Exemple field text -object',
+        "entitySchema": {
+          "type": "object-keys",
+          "label": "Campo no formulário",
+          "keyType": "string",
+          "keyLabel": "Novo Campo",
+          "contentObject": {
+            "type": {
+              "type": "select",
+              "label": "Tipo do campo",
+              "required": true,
+              "enabledValue": [
+                "html",
+                "string",
+                "number",
+                "boolean",
+                "text",
+                "file",
+                "datetime",
+                "object",
+                "array",
+                "select",
+                "object-keys",
+                "custom-field"
+              ],
+              "labelValue": [
+                "Texto html",
+                "Texto normal",
+                "Numero",
+                "verdadeiro/falso (boolean)",
+                "Texto grande (4 linhas)",
+                "Arquivo",
+                "Data e hora",
+                "Entidade",
+                "Lista",
+                "Seleção",
+                "Entidade chaveada",
+                "Campo customizado"
+              ]
             },
-            'file': {
-              type: 'file',
-              label: 'Exemple field file -object',
+            "label": {
+                "type": "string",
+                "label": "Nome do campo"
             },
-          },
-        },
-        array: {
-          type: 'array',
-          label: 'Exemple field array',
-          required: false,
-          position: 999,
-          tip: 'Tip of array field',
-          dynamic: false,
-          columnVisible: true,
-          occult: false,
-          defaultValue: [],
-          contentArray: {
-            "type": "string",
-            "label": "Exemple field array string",
-          },
-        },
-        select: {
-          type: 'select',
-          label: 'Exemple field select',
-          required: false,
-          position: 1,
-          tip: 'Tip of select field',
-          dynamic: false,
-          columnVisible: true,
-          occult: false,
-          defaultValue: null,
-          enabledValue: ['true', 'false', 'undefined'],
-          labelValue: ['Verdadeiro', 'Falso', 'Nulo'],
-        },
-        'object-keys': {
-          type: 'object-keys',
-          label: 'Exemple field object-keys',
-          required: false,
-          position: 1,
-          tip: 'Tip of object-keys field',
-          dynamic: false,
-          columnVisible: true,
-          occult: false,
-          defaultValue: {},
-          keyType: 'text',
-          keyLabel: 'object-key',
-          contentObject: {
-            type: 'number',
-            label: 'Exemple field text -object',
-          },
-        },
-        'custom-field': {
-          type: 'custom-field',
-          slotName: 'custom-field',
+            "required": {
+                "type": "boolean",
+                "label": "Campo obrigatório?"
+            },
+            "position": {
+                "type": "number",
+                "label": "Posição do campo"
+            },
+            "tip": {
+                "type": "string",
+                "label": "Dica do campo"
+            },
+            "dynamic": {
+                "type": "boolean",
+                "label": "Campo é controlado via sistema?"
+            },
+            "columnVisible": {
+                "type": "boolean",
+                "label": "Campo é exibido nas consultas?"
+            },
+            "occult": {
+                "type": "boolean",
+                "label": "Campo não sera exibido?"
+            },
+            "placeholder": {
+              "type": "string",
+              "label": "Dica no campo"
+            },
+            "hasThreeState": {
+              "type": "boolean",
+              "label": "[verdadeiro/falso (boolean)] possui tres estados"
+            },
+            "filterFileTypes": {
+              "type": "array",
+              "label": "[Arquivo] tipos de arquivo",
+              "contentArray": {
+                "type": "string",
+                "label": "tipo do arquivo",
+                "tip": ".txt .pdf, usar o .(ponto)"
+              }
+            },
+            "onlyDate": {
+              "type": "boolean",
+              "label": "[Data e hora] exibir somente data"
+            },
+            "contentObject": {
+              "type": "object",
+              "label": "[Entidade] dados da entidade",
+              "contentObject": {},
+              "tip": "Utilizar gerador para preencher este campo"
+            },
+            "contentArray": {
+              "type": "object",
+              "label": "[Lista] dados da entidade",
+              "contentObject": {},
+              "tip": "Utilizar gerador para preencher este campo"
+            },
+            "enabledValue": {
+              "type": "array",
+              "label": "[Seleção] dados da seleção",
+              "contentArray": {
+                "type": "string",
+                "label": "Valor do select",
+              }
+            },
+            "labelValue": {
+              "type": "array",
+              "label": "[Seleção] displays da seleção",
+              "contentArray": {
+                "type": "string",
+                "label": "Valor do select",
+              }
+            },
+            "keyType": {
+              "type": "select",
+              "label": "[Entidade chaveada] tipo da chave",
+              "enabledValue": [
+                "string",
+                "number"
+              ],
+              "labelValue": [
+                "Texto",
+                "Numero",
+              ]
+            },
+            "keyLabel": {
+              "type": "string",
+              "label": "[Entidade chaveada] Nome da chave do objeto"
+            },
+            "slotName": {
+              "type": "string",
+              "label": "[Campo customizado] Nome do objeto do slot"
+            },
+          }
         }
       }
     },
@@ -217,161 +223,6 @@ Possibilities of types
 - custom-field: slot field
 - - slotName: name of slot to be used
 
-Full Possibilities
-```json
-{
-  "html": {
-    "type": "html",
-    "label": "Exemple field html",
-    "required": false,
-    "position": 1,
-    "tip": "Tip of html field",
-    "dynamic": false,
-    "columnVisible": true,
-    "occult": false,
-    "defaultValue": ""
-  },
-  "string": {
-    "type": "string",
-    "label": "Exemple field string",
-    "required": false,
-    "position": 2,
-    "tip": "Tip of string field",
-    "dynamic": false,
-    "columnVisible": true,
-    "occult": false,
-    "defaultValue": ""
-  },
-  "number": {
-    "type": "number",
-    "label": "Exemple field number",
-    "required": false,
-    "position": 3,
-    "tip": "Tip of number field",
-    "dynamic": false,
-    "columnVisible": true,
-    "occult": false,
-    "defaultValue": 0
-  },
-  "boolean": {
-    "type": "boolean",
-    "label": "Exemple field boolean",
-    "required": false,
-    "position": 0,
-    "tip": "Tip of boolean field",
-    "dynamic": false,
-    "columnVisible": true,
-    "occult": false,
-    "defaultValue": null,
-    "hasThreeState": true
-  },
-  "text": {
-    "type": "text",
-    "label": "Exemple field text",
-    "required": false,
-    "position": 1,
-    "tip": "Tip of text field",
-    "dynamic": false,
-    "columnVisible": true,
-    "occult": false,
-    "defaultValue": ""
-  },
-  "file": {
-    "type": "file",
-    "label": "Exemple field file",
-    "required": false,
-    "position": 1,
-    "tip": "Tip of file field",
-    "dynamic": false,
-    "columnVisible": true,
-    "occult": false,
-    "defaultValue": {},
-    "filterFileTypes": [
-      "txt",
-      "pdf",
-      "se não passar o array ele não filtra os tipos de arquivo"
-    ]
-  },
-  "datetime": {
-    "type": "datetime",
-    "label": "Exemple field datetime",
-    "required": false,
-    "position": 1,
-    "tip": "Tip of datetime field",
-    "dynamic": false,
-    "columnVisible": true,
-    "occult": false,
-    "defaultValue": 0,
-    "onlyDate": false
-  },
-  "object": {
-    "type": "object",
-    "label": "Exemple field object",
-    "required": false,
-    "position": 1,
-    "tip": "Tip of object field",
-    "dynamic": false,
-    "columnVisible": true,
-    "occult": false,
-    "defaultValue": {},
-    "contentObject": {
-      "exemple-object": {
-        "type": "text",
-        "label": "Exemple field text -object"
-      }
-    }
-  },
-  "array": {
-    "type": "array",
-    "label": "Exemple field array",
-    "required": false,
-    "position": 1,
-    "tip": "Tip of array field",
-    "dynamic": false,
-    "columnVisible": true,
-    "occult": false,
-    "defaultValue": [],
-    "contentArray": {
-      "type": "text",
-      "label": "Exemple field text -array"
-    }
-  },
-  "select": {
-    "type": "select",
-    "label": "Exemple field select",
-    "required": false,
-    "position": 1,
-    "tip": "Tip of select field",
-    "dynamic": false,
-    "columnVisible": true,
-    "occult": false,
-    "defaultValue": null,
-    "enabledValue": ["true", "false", "undefined"],
-    "labelValue": ["Verdadeiro", "Falso", "Nulo"]
-  },
-  "object-keys": {
-    "type": "object-keys",
-    "label": "Exemple field object-keys",
-    "required": false,
-    "position": 1,
-    "tip": "Tip of object-keys field",
-    "dynamic": false,
-    "columnVisible": true,
-    "occult": false,
-    "defaultValue": {},
-    "keyType": "text",
-    "keyLabel": "object-key",
-    "contentObject": {
-      "type": "text",
-      "label": "Exemple field text -object"
-    }
-  },
-  "custom-field": {
-    "type": "custom-field",
-    "slotName": "custom-field"
-  }
-}
-```
 
 ## Examples
 
