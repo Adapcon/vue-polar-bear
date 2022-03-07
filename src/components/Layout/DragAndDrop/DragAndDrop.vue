@@ -145,7 +145,6 @@ export default {
   gap: 20px;
   padding: 20px;
   box-sizing: border-box;
-  position: relative;
 
   .item {
     display: flex;
