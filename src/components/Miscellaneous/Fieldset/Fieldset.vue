@@ -4,10 +4,15 @@
       class="pb-fieldset-title"
       :style="`color: var(--color-${color})`"
     >
-      <small class="pb">{{ title }} <span
+      <small class="pb">{{ title }}<span
         v-if="required"
         style="color: var(--color-warning)"
-      >*</span></small>
+      > *</span><PbHint
+        v-if="info"
+        color="info"
+        :hint-text="info"
+        position="top-right"
+      ><span style="color: var(--color-info);"> ?</span></PbHint></small>
     </div>
     <div class="pb-fieldset-slot">
       <slot />
@@ -17,11 +22,18 @@
 
 <script>
 import { validateColor } from '@pb/utils/validator';
+import PbHint from '../Hint/Hint.vue';
 
 export default {
   name: 'PbFieldset',
+
+  components: {
+    PbHint,
+  },
+
   props: {
     title: { type: String, default: '' },
+    info: { type: String, default: '' },
     color: {
       type: String,
       default: 'gray-20',
