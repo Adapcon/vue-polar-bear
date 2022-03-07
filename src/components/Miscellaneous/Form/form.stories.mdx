@@ -1,0 +1,247 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbForm from './Form.vue';
+
+<Meta
+  title="Components/Miscellaneous/PbForm"
+  component={PbForm}
+  argTypes={{
+    formResponse: {
+      type: 'object',
+      defaultValue: {},
+    },
+    onlyShow: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    entitySchema: {
+      type: 'object',
+      defaultValue: {
+        "entitySchema": {
+          "type": "object-keys",
+          "label": "Campo no formulário",
+          "keyType": "string",
+          "keyLabel": "Novo Campo",
+          "contentObject": {
+            "type": {
+              "type": "select",
+              "label": "Tipo do campo",
+              "required": true,
+              "enabledValue": [
+                "html",
+                "string",
+                "number",
+                "boolean",
+                "text",
+                "file",
+                "datetime",
+                "object",
+                "array",
+                "select",
+                "object-keys",
+                "custom-field"
+              ],
+              "labelValue": [
+                "Texto html",
+                "Texto normal",
+                "Numero",
+                "verdadeiro/falso (boolean)",
+                "Texto grande (4 linhas)",
+                "Arquivo",
+                "Data e hora",
+                "Entidade",
+                "Lista",
+                "Seleção",
+                "Entidade chaveada",
+                "Campo customizado"
+              ]
+            },
+            "label": {
+                "type": "string",
+                "label": "Nome do campo"
+            },
+            "required": {
+                "type": "boolean",
+                "label": "Campo obrigatório?"
+            },
+            "position": {
+                "type": "number",
+                "label": "Posição do campo"
+            },
+            "tip": {
+                "type": "string",
+                "label": "Dica do campo"
+            },
+            "dynamic": {
+                "type": "boolean",
+                "label": "Campo é controlado via sistema?"
+            },
+            "columnVisible": {
+                "type": "boolean",
+                "label": "Campo é exibido nas consultas?"
+            },
+            "occult": {
+                "type": "boolean",
+                "label": "Campo não sera exibido?"
+            },
+            "placeholder": {
+              "type": "string",
+              "label": "Dica no campo"
+            },
+            "hasThreeState": {
+              "type": "boolean",
+              "label": "[verdadeiro/falso (boolean)] possui tres estados"
+            },
+            "filterFileTypes": {
+              "type": "array",
+              "label": "[Arquivo] tipos de arquivo",
+              "contentArray": {
+                "type": "string",
+                "label": "tipo do arquivo",
+                "tip": ".txt .pdf, usar o .(ponto)"
+              }
+            },
+            "onlyDate": {
+              "type": "boolean",
+              "label": "[Data e hora] exibir somente data"
+            },
+            "contentObject": {
+              "type": "object",
+              "label": "[Entidade] dados da entidade",
+              "contentObject": {},
+              "tip": "Utilizar gerador para preencher este campo"
+            },
+            "contentArray": {
+              "type": "object",
+              "label": "[Lista] dados da entidade",
+              "contentObject": {},
+              "tip": "Utilizar gerador para preencher este campo"
+            },
+            "enabledValue": {
+              "type": "array",
+              "label": "[Seleção] dados da seleção",
+              "contentArray": {
+                "type": "string",
+                "label": "Valor do select",
+              }
+            },
+            "labelValue": {
+              "type": "array",
+              "label": "[Seleção] displays da seleção",
+              "contentArray": {
+                "type": "string",
+                "label": "Valor do select",
+              }
+            },
+            "keyType": {
+              "type": "select",
+              "label": "[Entidade chaveada] tipo da chave",
+              "enabledValue": [
+                "string",
+                "number"
+              ],
+              "labelValue": [
+                "Texto",
+                "Numero",
+              ]
+            },
+            "keyLabel": {
+              "type": "string",
+              "label": "[Entidade chaveada] Nome da chave do objeto"
+            },
+            "slotName": {
+              "type": "string",
+              "label": "[Campo customizado] Nome do objeto do slot"
+            },
+          }
+        }
+      }
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbForm },
+  template: `
+    <section style="background-color: white; padding: 35px;">
+      <PbForm
+        :only-show="onlyShow"
+        :entity-schema="entitySchema"
+        v-model="formResponse"
+      />
+      From Response: {{formResponse}}
+    </section>
+  `
+});
+
+# **PbForm**
+### The `PbForm` component can be used to create a full form.
+
+### Purpose and Use case
+Create a screen to solicite a entity data.
+
+### Entity Schema
+
+`{myValueField: settingsField}`
+##### Possibilities of settingsField
+
+- label: Name showed to user
+- required: If field needs solicitation data
+- position: Position of field in form
+- tip: Tip to hint field
+- dynamic: If field was be only showed, without edition
+- columnVisible: If field was be show in dataTable
+- occult: If field do not showed to user
+- defaultValue: Default value to load field
+- validator: Function to valid prop
+- placeholder: To show in input
+- type: Type of field
+
+Possibilities of types
+
+- html: html field
+- string: text field
+- number: number field
+- boolean: switch
+- - hasThreeState: if enable undefined or null value
+- text: text area
+- file: upload field
+- - filterFileTypes: array of types file to accept
+- datetime: date piker
+- - onlyDate: if has only date in piker
+- object: object field
+- - contentObject: the settings of object content
+- array: array field
+- - contentArray: the settings of array content
+- select: options field
+- - enabledValue": values to select
+- - labelValue": values of user see
+- object-keys: object field with dynamic keys
+- - keyType: string | number
+- - keyLabel: label to show
+- - contentObject: the settings of object content
+- custom-field: slot field
+- - slotName: name of slot to be used
+
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Only Show
+
+<Canvas>
+  <Story name="Only show form"
+    args={{
+      onlyShow: true
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
