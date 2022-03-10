@@ -1,9 +1,19 @@
 <template>
   <div class="pb-checkbox-container">
-    <div class="checkbox-wrapper" @click="() => (checked = !checked)">
-      <div class="check-box" :style="`border: 1px solid var(--color-${color});`">
+    <div
+      class="checkbox-wrapper"
+      @click="() => (checked = !checked)"
+    >
+      <div
+        class="check-box"
+        :style="`border: 1px solid var(--color-${getColor(color)});`"
+      >
         <transition name="scale">
-          <div v-if="checked" class="checked" :style="`background-color: var(--color-${checkedColor});`">
+          <div
+            v-if="checked"
+            class="checked"
+            :style="`background-color: var(--color-${getColor(checkedColor)});`"
+          >
             <PbIcon
               icon="fa fa-check"
               :style="`color: var(--color-${checkedIconColor});`"
@@ -58,6 +68,7 @@ export default {
       default: 'white',
       validator: checkedColor => validateColor(checkedColor),
     },
+    disabled: { type: Boolean, default: false },
   },
   computed: {
     checked: {
@@ -65,8 +76,16 @@ export default {
         return this.value;
       },
       set(val) {
+        if (this.disabled) return;
+
         this.$emit('input', val);
       },
+    },
+  },
+
+  methods: {
+    getColor(color) {
+      return this.disabled ? 'muted' : color;
     },
   },
 };
