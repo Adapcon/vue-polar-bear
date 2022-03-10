@@ -85,8 +85,7 @@ export default {
 
   methods: {
     getColor(color) {
-      const disabledColor = 'muted';
-      return this.disabled ? disabledColor : color;
+      return this.disabled ? 'muted' : color;
     },
   },
 };
