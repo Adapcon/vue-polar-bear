@@ -23,6 +23,8 @@
         <ListRow
           :table-schema="state.tableSchema"
           :entity="entity"
+          :index-entity="indexEntity"
+          @delete-this="$emit('delete-entity', indexEntity, entity)"
         >
           <template #actions>
             <slot name="actions" />
@@ -58,7 +60,7 @@ export default {
       },
     };
   },
-  
+
   beforeMount() {
     this.state.tableSchema = this.getTableSchema(this.entitySchema);
   },
@@ -70,7 +72,7 @@ export default {
         const newHistoricPath = historicPath ? `${historicPath}.${key}` : key;
         if (Object.hasOwnProperty.call(entitySchema, key)) {
           const element = entitySchema[key];
-            
+
           if (element.type !== 'object') {
             array.push({
               label: element.label,

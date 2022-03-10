@@ -15,19 +15,38 @@
           {{ getEntityValuePath(entity, item.path) }}
         </small>
       </div>
-      <slot name="actions" />
+      <div class="pb-col-2">
+        <slot name="actions">
+          <div class="pb-row">
+            <PbButton
+              class="pb-col-6"
+              icon="fas fa-pen"
+              @click.native="openToEdit"
+            />
+            <PbButton
+              class="pb-col-6"
+              icon="fas fa-trash"
+              @click.native="$emit('delete-this')"
+            />
+          </div>
+        </slot>
+      </div>
       <hr class="line">
     </div>
   </section>
 </template>
 
 <script>
+import PbButton from '../../Buttons/Button/Button.vue';
+import { dataTableController } from './store';
+
 export default {
   name: 'ListRow',
-
+  components: { PbButton },
   props: {
     entity: { type: Object, default: () => ({}) },
     tableSchema: { type: Object, default: () => ({}) },
+    indexEntity: { type: Number, default: 0 },
   },
 
   methods: {
@@ -37,8 +56,14 @@ export default {
       keys.forEach(key => {
         if (value[key]) value = value[key]; else value = '';
       });
-      
+
       return value;
+    },
+
+    openToEdit() {
+      dataTableController.showEntityDrawer = true;
+      dataTableController.entitySelected = { ...this.entity };
+      dataTableController.indexEntity = this.indexEntity;
     },
   },
 
