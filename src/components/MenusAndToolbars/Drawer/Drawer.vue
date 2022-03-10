@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="visible"
-    class="drawer-container layer-always-on-top"
+    class="drawer-container layer-always-on-top fullscreen"
   >
     <div class="overlay">
       <div
