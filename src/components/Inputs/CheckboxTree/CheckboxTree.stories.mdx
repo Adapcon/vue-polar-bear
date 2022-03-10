@@ -1,0 +1,96 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbCheckboxTree from './CheckboxTreeController.vue';
+
+<Meta
+ title="Components/Inputs/PbCheckboxTree"
+ component={PbCheckboxTree}
+ argTypes={{
+  value: {
+    type: 'object',
+    defaultValue: {},
+  },
+  isColumn: {
+    type: 'boolean',
+    defaultValue: false,
+  },
+  disabled: {
+    type: 'boolean',
+    defaultValue: false,
+  },
+  fieldsSettings: {
+    type: 'object',
+    defaultValue: {
+      start: true,
+      type: 'object',
+      contentObject: {
+        itemKey1: {
+          type: 'object',
+          label: 'Item Chave 1',
+          contentObject: {
+            item1: {
+              type: 'string',
+              default: null,
+              required: true,
+              label: 'Item Filho 1'
+            },
+            item2: {
+              type: 'string',
+              default: null,
+              required: true,
+              label: 'Item Filho 2'
+            },
+            itemKey2: {
+              label: 'Item Chave 2',
+              type: 'object',
+              contentObject: {
+                item3: {
+                  type: 'string',
+                  default: null,
+                  required: true,
+                  label: 'Item Filho 3'
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+ }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbCheckboxTree },
+  template: `
+    <PbCheckboxTree
+      v-model="value"
+      :is-column="isColumn"
+      :disabled="disabled"
+      :fields-settings="fieldsSettings"
+    />
+  `
+});
+
+# **PbCheckboxTree**
+### The `PbCheckboxTree` component can be used to select or check options.
+
+### Purpose and Use case
+
+It is a tree of checkbox fields that can be used to provide a way to select one or more option like confirm terms and conditions
+
+The component works with v-model to emit the checked value.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
