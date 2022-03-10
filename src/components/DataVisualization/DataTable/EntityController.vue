@@ -17,7 +17,7 @@
         />
       </template>
       <template #footer>
-        <div style="display: flex; justify-content: right">
+        <div class="footer">
           <PbButton
             button-style="background"
             :label="dataTableController.indexEntity ? 'Salvar': 'Criar'"
@@ -79,6 +79,9 @@ export default {
 
 <style lang="scss" scoped>
 .entity-controller-container {
-
+  .footer {
+    display: flex;
+    justify-content: right;
+  }
 }
 </style>
