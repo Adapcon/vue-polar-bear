@@ -67,22 +67,22 @@ export default {
 
   methods: {
     getTableSchema(entitySchema, historicPath = '', array = []) {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const key in entitySchema) {
+      Object.keys(entitySchema).forEach(key => {
         const newHistoricPath = historicPath ? `${historicPath}.${key}` : key;
-        if (Object.hasOwnProperty.call(entitySchema, key)) {
-          const element = entitySchema[key];
+        const element = entitySchema[key];
 
-          if (element.type !== 'object') {
-            array.push({
-              label: element.label,
-              path: newHistoricPath,
-            });
-          } else {
-            array.push(...this.getTableSchema(element.contentObject, newHistoricPath));
-          }
+        if (!element.columnVisible) return;
+
+        if (element.type === 'object') {
+          array.push(...this.getTableSchema(element.contentObject, newHistoricPath));
+        } else {
+          array.push({
+            ...element,
+            field: key,
+            path: newHistoricPath,
+          });
         }
-      }
+      });
       return array;
     },
   },
