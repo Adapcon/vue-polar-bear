@@ -11,13 +11,11 @@
 </template>
 
 <script>
-import Form from '../Form.vue';
-
 export default {
   name: 'ObjectField',
 
   components: {
-    Form,
+    Form: () => import('../Form.vue'),
   },
 
   props: {

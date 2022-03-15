@@ -82,28 +82,41 @@
         :entity-schema="schema"
         :only-show="onlyShow"
       />
+      <br>
     </PbFieldset>
   </section>
 </template>
 
 <script>
+import HtmlField from './Fields/Html.vue';
+import FileField from './Fields/File.vue';
+import ArrayField from './Fields/Array.vue';
+import ObjectField from './Fields/Object.vue';
+import SelectField from './Fields/Select.vue';
+import ObjectKeysField from './Fields/ObjectKeys.vue';
+import StringField from './Fields/String.vue';
+import NumberField from './Fields/Number.vue';
+import TextField from './Fields/Text.vue';
+import DatetimeField from './Fields/Datetime.vue';
+import BooleanField from './Fields/Boolean.vue';
 import PbFieldset from '../Fieldset/Fieldset.vue';
 
 export default {
   name: 'PbForm',
+
   components: {
+    HtmlField,
+    FileField,
+    ArrayField,
+    ObjectField,
+    SelectField,
+    ObjectKeysField,
+    StringField,
+    NumberField,
+    TextField,
+    DatetimeField,
+    BooleanField,
     PbFieldset,
-    HtmlField: () => import('./Fields/Html.vue'),
-    FileField: () => import('./Fields/File.vue'),
-    ArrayField: () => import('./Fields/Array.vue'),
-    ObjectField: () => import('./Fields/Object.vue'),
-    SelectField: () => import('./Fields/Select.vue'),
-    ObjectKeysField: () => import('./Fields/ObjectKeys.vue'),
-    StringField: () => import('./Fields/String.vue'),
-    NumberField: () => import('./Fields/Number.vue'),
-    TextField: () => import('./Fields/Text.vue'),
-    DatetimeField: () => import('./Fields/Datetime.vue'),
-    BooleanField: () => import('./Fields/Boolean.vue'),
   },
 
   props: {
