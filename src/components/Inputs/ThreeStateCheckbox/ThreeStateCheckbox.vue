@@ -1,12 +1,20 @@
 <template>
   <div class="pb-checkbox-container">
     <div class="checkbox-wrapper">
-      <div class="check-box" :style="`border: 1px solid var(--color-primary);`" @click="toggleCheckbox">
+      <div
+        class="check-box"
+        :style="`border: 1px solid var(--color-${getColor(color)});`"
+        @click="toggleCheckbox"
+      >
         <transition name="scale">
-          <div v-if="checkboxState !== false" class="checked" :style="`background-color: var(--color-primary);`">
+          <div
+            v-if="checkboxState !== false"
+            class="checked"
+            :style="`background-color: var(--color-${getColor(color)});`"
+          >
             <PbIcon
               :icon="icon"
-              :style="`color: var(--color-white);`"
+              :style="`color: var(--color-${checkedIconColor});`"
               class="icon"
             />
           </div>
@@ -31,6 +39,7 @@
 import {
   PbIcon,
 } from '@pb';
+import { validateColor } from '@pb/utils/validator';
 
 export default {
   name: 'PbThreeStateCheckbox',
@@ -56,6 +65,17 @@ export default {
       type: String,
       default: '',
     },
+    color: {
+      type: String,
+      default: 'primary',
+      validator: color => validateColor(color),
+    },
+    checkedIconColor: {
+      type: String,
+      default: 'white',
+      validator: checkedColor => validateColor(checkedColor),
+    },
+    disabled: { type: Boolean, default: false },
   },
 
   computed: {
@@ -64,6 +84,8 @@ export default {
         return this.value;
       },
       set(newValue) {
+        if (this.disabled) return;
+
         this.$emit('input', newValue);
       },
     },
@@ -77,9 +99,15 @@ export default {
 
   methods: {
     toggleCheckbox() {
+      if (this.disabled) return;
+
       if (this.toggleIndeterminate && this.checkboxState === false)
         this.checkboxState = this.indeterminateValue;
       else this.checkboxState = !this.checkboxState;
+    },
+
+    getColor(color) {
+      return this.disabled ? 'muted' : color;
     },
   },
 };

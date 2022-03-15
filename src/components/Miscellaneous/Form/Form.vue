@@ -181,7 +181,7 @@ export default {
             { contentArray: formattedEntity.contentArray },
           ).contentArray;
         }
-        
+
         formattedSchema[key] = formattedEntity;
         return formattedSchema;
       }, {});

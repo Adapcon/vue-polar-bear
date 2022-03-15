@@ -23,6 +23,8 @@
         <ListRow
           :table-schema="state.tableSchema"
           :entity="entity"
+          :index-entity="indexEntity"
+          @delete-this="$emit('delete-entity', indexEntity, entity)"
         >
           <template #actions>
             <slot name="actions" />
@@ -58,29 +60,29 @@ export default {
       },
     };
   },
-  
+
   beforeMount() {
     this.state.tableSchema = this.getTableSchema(this.entitySchema);
   },
 
   methods: {
     getTableSchema(entitySchema, historicPath = '', array = []) {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const key in entitySchema) {
+      Object.keys(entitySchema).forEach(key => {
         const newHistoricPath = historicPath ? `${historicPath}.${key}` : key;
-        if (Object.hasOwnProperty.call(entitySchema, key)) {
-          const element = entitySchema[key];
-            
-          if (element.type !== 'object') {
-            array.push({
-              label: element.label,
-              path: newHistoricPath,
-            });
-          } else {
-            array.push(...this.getTableSchema(element.contentObject, newHistoricPath));
-          }
+        const element = entitySchema[key];
+
+        if (!element.columnVisible) return;
+
+        if (element.type === 'object') {
+          array.push(...this.getTableSchema(element.contentObject, newHistoricPath));
+        } else {
+          array.push({
+            ...element,
+            field: key,
+            path: newHistoricPath,
+          });
         }
-      }
+      });
       return array;
     },
   },

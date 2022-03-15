@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="visible"
-    class="drawer-container"
+    class="drawer-container layer-always-on-top fullscreen"
   >
     <div class="overlay">
       <div
@@ -88,7 +88,7 @@ export default {
 
 <style lang="scss" scoped>
 .drawer-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
 

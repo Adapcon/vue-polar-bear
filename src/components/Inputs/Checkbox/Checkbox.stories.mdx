@@ -30,6 +30,10 @@ import { colors } from '@pb/utils/constants.js';
     control: { type: 'select', options: [ ...colors ] },
     defaultValue: 'white',
   },
+  disabled: {
+    type: 'boolean',
+    defaultValue: false,
+  },
  }}
 />
 
@@ -44,6 +48,7 @@ export const Template = (args, { argTypes }) => ({
       :label-color="labelColor"
       :checked-color="checkedColor"
       :checked-icon-color="checkedIconColor"
+      :disabled="disabled"
     />
   `
 });
@@ -58,6 +63,7 @@ export const TemplateSlot = (args, { argTypes }) => ({
       :label-color="labelColor"
       :checked-color="checkedColor"
       :checked-icon-color="checkedIconColor"
+      :disabled="disabled"
     >
       <template #description>
         <p class="pb">

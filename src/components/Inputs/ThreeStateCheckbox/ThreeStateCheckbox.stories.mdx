@@ -1,8 +1,69 @@
 import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
 import PbThreeStateCheckbox from './ThreeStateCheckbox.vue';
+import { colors } from '@pb/utils/constants.js';
 
 <Meta
  title="Components/Inputs/PbThreeStateCheckbox"
  component={PbThreeStateCheckbox}
- argTypes={{}}
+ argTypes={{
+  value: {
+    type: 'Object',
+    defaultValue: {},
+  },
+  label: {
+    type: 'string',
+    defaultValue: 'Select this option'
+  },
+  color: {
+    control: { type: 'select', options: [ ...colors ] },
+    defaultValue: 'primary',
+  },
+  checkedIconColor: {
+    control: { type: 'select', options: [ ...colors ] },
+    defaultValue: 'white',
+  },
+  disabled: {
+    type: 'boolean',
+    defaultValue: false,
+  },
+ }}
 />
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbThreeStateCheckbox },
+  template: `
+    <PbThreeStateCheckbox
+      v-model="value"
+      :label="label"
+      :color="color"
+      :checked-icon-color="checkedIconColor"
+      :disabled="disabled"
+    />
+  `
+});
+
+# **PbThreeStateCheckbox**
+### The `PbThreeStateCheckbox` component can be used to select or check one option.
+
+### Purpose and Use case
+
+It is a simple checkbox field, with a third state, that can be used to provide a way to select one or more option like confirm terms and conditions,
+or inform that has a list of options selected.
+
+It has a label prop that can be used to pass a text to it.
+The component works with v-model to emit the checked value.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>

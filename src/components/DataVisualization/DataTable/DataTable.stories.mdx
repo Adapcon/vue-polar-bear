@@ -22,13 +22,19 @@ import PbButton from '../../Buttons/Button/Button.vue';
         control: {
           type: 'boolean',
         },
-        defaultValue: 'true'
+        defaultValue: false
       },
       showSortIcon: {
         control: {
           type: 'boolean',
         },
-        defaultValue: 'true'
+        defaultValue: true
+      },
+      showCreateButton: {
+        control: {
+          type: 'boolean',
+        },
+        defaultValue: true
       },
       entities: {
         control: {
@@ -49,17 +55,21 @@ import PbButton from '../../Buttons/Button/Button.vue';
           appId: {
             type: 'string',
             label: 'Pratos',
+            columnVisible: true
           },
           jsonData: {
             type: 'object',
             label: 'Dados',
+            columnVisible: true,
             contentObject: {
               address: {
                 type:'object',
+                columnVisible: true,
                 label: 'Endereço',
                 contentObject:{
                   number: {
                     type: 'number',
+                    columnVisible: true,
                     label: 'Valor',
                   },
                   street: {
@@ -71,6 +81,7 @@ import PbButton from '../../Buttons/Button/Button.vue';
               nome: {
                 type: 'string',
                 label: 'Serve',
+                columnVisible: true,
               },
               country: {
                 type: 'string',
@@ -87,21 +98,16 @@ export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: { PbDataTable, PbButton },
   template: `
-    <div>
+    <div style="background-color: white; padding: 30px;">
       <PbDataTable
         :title="title"
         :entities="entities"
         :entitySchema="entitySchema"
-        :settings="{showSortIcon, hiddenHeader, emptyText}"
+        :settings="{showSortIcon, hiddenHeader, emptyText, showCreateButton}"
+        @delete-entity="index => entities.splice(index, 1)"
+        @update-entity="(index, entity) => entities.splice(index, 1, entity)"
+        @create-entity="entity => entities.push(entity)"
       >
-        <template #actions>
-          <PbButton
-            color="primary"
-            buttonStyle="regular"
-            icon="fas fa-trash"
-            iconPosition="left"
-          />
-        </template>
       </PbDataTable>
     </div>
   `,
