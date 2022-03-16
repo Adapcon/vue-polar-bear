@@ -72,7 +72,6 @@
 </template>
 
 <script>
-import Form from '../Form.vue';
 import PbDoubleCheck from '../../../Buttons/DoubleCheck/DoubleCheck.vue';
 import PbButton from '../../../Buttons/Button/Button.vue';
 import PbTextInput from '../../../Inputs/TextInput/TextInput.vue';
@@ -84,7 +83,7 @@ export default {
   name: 'ObjectKeysField',
 
   components: {
-    Form,
+    Form: () => import('../Form.vue'),
     PbDoubleCheck,
     PbButton,
     PbTextInput,

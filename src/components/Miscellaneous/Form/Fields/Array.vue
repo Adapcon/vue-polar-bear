@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import Form from '../Form.vue';
 import PbDoubleCheck from '../../../Buttons/DoubleCheck/DoubleCheck.vue';
 import PbButton from '../../../Buttons/Button/Button.vue';
 
@@ -45,7 +44,7 @@ export default {
   name: 'ArrayField',
 
   components: {
-    Form,
+    Form: () => import('../Form.vue'),
     PbDoubleCheck,
     PbButton,
   },
@@ -74,7 +73,6 @@ export default {
     updateArrayValue(arrayIndex) {
       const newArrayValue = this.$refs[`form-${arrayIndex}`][0];
       this.arrayValue[arrayIndex] = newArrayValue.formResponse.contentArray;
-      console.log(this.arrayValue);
       this.$emit('input', this.arrayValue);
     },
 
