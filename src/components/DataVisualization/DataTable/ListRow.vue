@@ -15,7 +15,7 @@
           {{ getEntityValuePath(entity, item.path) }}
         </small>
       </div>
-      <div class="pb-col-2">
+      <div class="pb-col">
         <slot name="actions">
           <div class="pb-row">
             <PbButton
