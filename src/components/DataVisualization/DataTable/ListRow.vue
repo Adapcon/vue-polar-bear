@@ -45,7 +45,7 @@ export default {
   components: { PbButton },
   props: {
     entity: { type: Object, default: () => ({}) },
-    tableSchema: { type: Array, default: () => ([]) },
+    tableSchema: { type: Array, default: () => [] },
     indexEntity: { type: Number, default: 0 },
   },
 
