@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { EntitySchemaUtils } from '../../utils/entitySchema';
 import HeaderList from './HeaderList.vue';
 import ListRow from './ListRow.vue';
 
@@ -66,25 +67,7 @@ export default {
   },
 
   methods: {
-    getTableSchema(entitySchema, historicPath = '', array = []) {
-      Object.keys(entitySchema).forEach(key => {
-        const newHistoricPath = historicPath ? `${historicPath}.${key}` : key;
-        const element = entitySchema[key];
-
-        if (!element.columnVisible) return;
-
-        if (element.type === 'object') {
-          array.push(...this.getTableSchema(element.contentObject, newHistoricPath));
-        } else {
-          array.push({
-            ...element,
-            field: key,
-            path: newHistoricPath,
-          });
-        }
-      });
-      return array;
-    },
+    getTableSchema: EntitySchemaUtils.getTableSchema,
   },
 };
 </script>

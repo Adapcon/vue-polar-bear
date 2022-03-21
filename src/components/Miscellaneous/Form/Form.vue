@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import { EntitySchemaUtils } from '../../utils/entitySchema';
 import HtmlField from './Fields/Html.vue';
 import FileField from './Fields/File.vue';
 import ArrayField from './Fields/Array.vue';
@@ -156,77 +157,13 @@ export default {
       this.entitySchema,
     );
     this.state.sortedSchema = this.orderSchemaProps(
-      this.state.formattedSchema,
+      Object.values(this.state.formattedSchema),
     );
   },
 
   methods: {
-    formatSchemaProps(entitySchema) {
-      const schemaKeys = Object.keys(entitySchema);
-
-      return schemaKeys.reduce((acc, key) => {
-        const formattedSchema = acc;
-        const entity = entitySchema[key];
-
-        const formattedEntity = {
-          ...entity,
-          field: key,
-          defaultValue: this.getDefaultValue(entity),
-        };
-
-        if (formattedEntity.occult)
-          return formattedSchema;
-
-        if (formattedEntity.type === 'object') {
-          formattedEntity.contentObject = this.formatSchemaProps(
-            formattedEntity.contentObject,
-          );
-        }
-
-        if (formattedEntity.type === 'object-keys') {
-          formattedEntity.contentObject = this.formatSchemaProps(
-            formattedEntity.contentObject,
-          );
-        }
-
-        if (formattedEntity.type === 'array') {
-          formattedEntity.contentArray = this.formatSchemaProps(
-            { contentArray: formattedEntity.contentArray },
-          ).contentArray;
-        }
-
-        formattedSchema[key] = formattedEntity;
-        return formattedSchema;
-      }, {});
-    },
-
-    orderSchemaProps(entitySchema) {
-      const bigNumber = 77 ** 7;
-      return Object.values(entitySchema).sort(
-        (propA, propB) => (propA.position || bigNumber) - (propB.position || bigNumber),
-      );
-    },
-
-    getDefaultValue(propSchema) {
-      if (propSchema.defaultValue) return propSchema.defaultValue;
-      if (!propSchema.required) return;
-
-      const defaultValues = {
-        html: '',
-        text: '',
-        select: '',
-        string: '',
-        number: 0,
-        datetime: 0,
-        file: {},
-        array: [],
-        object: {},
-        boolean: false,
-        'object-keys': {},
-        'custom-field': null,
-      };
-      return defaultValues[propSchema.type];
-    },
+    orderSchemaProps: EntitySchemaUtils.orderSchemaProps,
+    formatSchemaProps: EntitySchemaUtils.formatSchemaProps,
   },
 };
 </script>
