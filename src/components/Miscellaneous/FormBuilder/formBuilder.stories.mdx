@@ -1,0 +1,42 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbFormBuilder from './FormBuilder.vue';
+
+<Meta
+  title="Components/Miscellaneous/PbFormBuilder"
+  component={PbFormBuilder}
+  argTypes={{
+    formBuilderResponse: {
+      type: 'object',
+      defaultValue: {},
+    }
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbFormBuilder },
+  template: `
+    <section style="background-color: white; padding: 35px;">
+      <PbFormBuilder
+        v-model="formBuilderResponse"
+      />
+      BuildedSchema: {{formBuilderResponse.entitySchema}}
+    </section>
+  `
+});
+
+# **PbFormBuilder**
+### The `PbFormBuilder` component can be used to create a full formBuilder.
+
+### Purpose and Use case
+Create a screen to solicite a entity data.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
