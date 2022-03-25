@@ -33,7 +33,7 @@ import PbForm from './Form.vue';
                 "boolean",
                 "text",
                 "file",
-                "datetime",
+                "date-time",
                 "object",
                 "array",
                 "select",
@@ -91,7 +91,7 @@ import PbForm from './Form.vue';
               "type": "boolean",
               "label": "[verdadeiro/falso (boolean)] possui tres estados"
             },
-            "filterFileTypes": {
+            "contentFile": {
               "type": "array",
               "label": "[Arquivo] tipos de arquivo",
               "contentArray": {
@@ -201,13 +201,14 @@ Possibilities of types
 
 - html: html field
 - string: text field
+- - contentString: string with string type ('cnpj', 'cpf', 'cpf-cnpj', ....)
 - number: number field
 - boolean: switch
 - - hasThreeState: if enable undefined or null value
 - text: text area
 - file: upload field
-- - filterFileTypes: array of types file to accept
-- datetime: date piker
+- - contentFile: array of types file to accept
+- date-time: date piker
 - - onlyDate: if has only date in piker
 - object: object field
 - - contentObject: the settings of object content
@@ -223,6 +224,61 @@ Possibilities of types
 - custom-field: slot field
 - - slotName: name of slot to be used
 
+```ts
+export type PropSchemaTypes =
+'html' |
+'text' |
+'file' |
+'array' |
+'string' |
+'number' |
+'select' |
+'object' |
+'boolean' |
+'date-time' |
+'object-keys' |
+'custom-field'
+
+export type StringTypes =
+'default' |
+'cnpj' |
+'email'
+
+export interface EntitySchemaProps {
+  [key: string]: EntitySchemaSettings
+}
+
+export interface EntitySchemaSettings {
+  type: PropSchemaTypes
+  label: string
+  field: string
+  path: string
+  required?: boolean
+  position?: number
+  tip?: string
+  dynamic?: boolean
+  columnVisible?: boolean
+  occult?: boolean
+  defaultValue?: any
+  validator?: Function
+  placeholder?: string
+  hasThreeState?: boolean
+  contentFile?: string[]
+  onlyDate?: boolean
+  contentObject?: EntitySchemaProps | EntitySchemaSettings
+  contentArray?: EntitySchemaSettings
+  contentString?: StringTypes
+  enabledValue?: string[]
+  labelValue?: string[]
+  keyType?: 'string' | 'number'
+  keyLabel?: string
+  slotName?: string
+}
+
+export interface SolicitationEntitySchema {
+  [key: string]: true | SolicitationEntitySchema
+}
+```
 
 ## Examples
 
