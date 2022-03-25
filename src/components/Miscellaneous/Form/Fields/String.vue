@@ -1,6 +1,20 @@
 <template>
   <section class="string-container">
     <PbTextInput
+      v-if="!entitySchema.contentString || entitySchema.contentString === 'default'"
+      v-model="stringValue"
+      :placeholder="entitySchema.placeholder"
+      :disabled="onlyShow || entitySchema.dynamic"
+      :validator="entitySchema.validator"
+    />
+    <PbCnpjInput
+      v-if="entitySchema.contentString === 'cnpj'"
+      v-model="stringValue"
+      :disabled="onlyShow || entitySchema.dynamic"
+      :required="entitySchema.required"
+    />
+    <PbEmailInput
+      v-if="entitySchema.contentString === 'email'"
       v-model="stringValue"
       :placeholder="entitySchema.placeholder"
       :disabled="onlyShow || entitySchema.dynamic"
@@ -11,12 +25,16 @@
 
 <script>
 import PbTextInput from '../../../Inputs/TextInput/TextInput.vue';
+import PbEmailInput from '../../../Inputs/EmailInput/EmailInput.vue';
+import PbCnpjInput from '../../../Inputs/CnpjInput/CnpjInput.vue';
 
 export default {
   name: 'StringField',
 
   components: {
     PbTextInput,
+    PbEmailInput,
+    PbCnpjInput,
   },
 
   props: {
