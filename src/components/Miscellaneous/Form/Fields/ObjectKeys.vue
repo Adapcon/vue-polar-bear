@@ -124,7 +124,7 @@ export default {
         this.state.newKey = '';
         return;
       }
-      this.$set(this.objectKeysValue, this.state.newKey, this.entitySchema.contentObject.defaultValue || {});
+      this.$set(this.objectKeysValue, this.state.newKey, this.entitySchema.contentObject || {});
       this.$emit('input', this.objectKeysValue);
       this.switchShowKey(this.state.newKey, true);
       this.state.newKey = '';
