@@ -64,7 +64,7 @@
         :only-show="onlyShow"
       />
       <DatetimeField
-        v-if="schema.type === 'datetime'"
+        v-if="schema.type === 'date-time'"
         v-model="formResponse[schema.field]"
         :entity-schema="schema"
         :only-show="onlyShow"
