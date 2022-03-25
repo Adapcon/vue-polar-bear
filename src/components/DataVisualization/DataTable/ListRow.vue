@@ -15,7 +15,7 @@
           {{ getEntityValuePath(entity, item.path) }}
         </small>
       </div>
-      <div class="pb-col-2">
+      <div class="pb-col">
         <slot name="actions">
           <div class="pb-row">
             <PbButton
@@ -45,7 +45,7 @@ export default {
   components: { PbButton },
   props: {
     entity: { type: Object, default: () => ({}) },
-    tableSchema: { type: Object, default: () => ({}) },
+    tableSchema: { type: Array, default: () => [] },
     indexEntity: { type: Number, default: 0 },
   },
 
