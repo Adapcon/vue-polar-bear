@@ -2,10 +2,11 @@
   <section class="string-container">
     <PbTextInput
       v-if="!entitySchema.contentString || entitySchema.contentString === 'default'"
+      :ref="`${entitySchema.type}-${entitySchema.field}`"
       v-model="stringValue"
       :placeholder="entitySchema.placeholder"
       :disabled="onlyShow || entitySchema.dynamic"
-      :validator="entitySchema.validator"
+      :validator="validateField"
     />
     <PbCnpjInput
       v-if="entitySchema.contentString === 'cnpj'"
@@ -54,6 +55,19 @@ export default {
       set(newStringValue) {
         this.$emit('input', newStringValue);
       },
+    },
+  },
+
+  methods: {
+    validateField(value) {
+      if (this.entitySchema.required && !value) return false;
+      if (this.entitySchema.validator) return this.entitySchema.validator(value);
+      return true;
+    },
+
+    validateRequired() {
+      const field = this.$refs[`${this.entitySchema.type}-${this.entitySchema.field}`];
+      if (field?.internalValidator) return field.internalValidator();
     },
   },
 };
