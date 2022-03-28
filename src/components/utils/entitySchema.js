@@ -87,8 +87,8 @@ export const EntitySchemaUtils = {
 
       if (formattedEntity.type === 'object-keys') {
         formattedEntity.contentObject = EntitySchemaUtils.formatSchemaProps(
-          { contentObject: formattedEntity.contentObject },
-        ).contentObject;
+          formattedEntity.contentObject,
+        );
       }
 
       if (formattedEntity.type === 'array') {
