@@ -47,6 +47,7 @@
       />
       <StringField
         v-if="schema.type === 'string'"
+        :ref="`${schema.type}-${schema.field}`"
         v-model="formResponse[schema.field]"
         :entity-schema="schema"
         :only-show="onlyShow"
@@ -162,6 +163,16 @@ export default {
   },
 
   methods: {
+    validateRequired() {
+      let isValid = true;
+      this.state.sortedSchema.forEach(element => {
+        const reference = this.$refs[`${element.type}-${element.field}`][0];
+        if (reference?.validateRequired && isValid)
+          isValid = reference.validateRequired();
+      });
+      return isValid;
+    },
+
     orderSchemaProps: EntitySchemaUtils.orderSchemaProps,
     formatSchemaProps: EntitySchemaUtils.formatSchemaProps,
   },
