@@ -19,7 +19,7 @@
                 M 0 ${getY(indexName)}
                 H 30
                 ${getTopRoundedCorners(indexName, idName)}
-                V ${isInvertedCurvedLine(indexName, idName) ? getY(idName) + 3 : getY(idName) - 6}
+                V ${getVerticalValue(indexName, idName)}
                 ${getBottomRoundedCorners(indexName, idName)}
                 H 75
               `"
@@ -61,6 +61,10 @@ export default {
   },
 
   methods: {
+    getVerticalValue(indexName, idName) {
+      return this.isInvertedCurvedLine(indexName, idName) ? this.getY(idName) + 3 : this.getY(idName) - 6;
+    },
+
     needCurvedLine(idCard, idLine) {
       return (
         this.getY(idLine) - this.getY(idCard) > 1
