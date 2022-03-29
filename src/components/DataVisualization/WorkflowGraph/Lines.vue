@@ -19,7 +19,7 @@
                 M 0 ${getY(indexName)}
                 H 30
                 ${getTopRoundedCorners(indexName, idName)}
-                V ${isInvertedCurvedLine(indexName, idName) ? getY(idName) : getY(idName) - 6}
+                V ${isInvertedCurvedLine(indexName, idName) ? getY(idName) + 3 : getY(idName) - 6}
                 ${getBottomRoundedCorners(indexName, idName)}
                 H 75
               `"
@@ -73,18 +73,17 @@ export default {
     },
 
     getTopRoundedCorners(idCard, idLine) {
-      return this.isInvertedCurvedLine(idCard, idLine)
-        ? 'C 39 120 40 114.3667 40 111'
-        : 'C 35 27 35 29.5 35 31';
+      const yPos = this.getY(idCard);
+      const isInverted = this.isInvertedCurvedLine(idCard, idLine);
+
+      return `C 35 ${yPos} 35 ${isInverted ? yPos - 2 : yPos + 4} 35 ${isInverted ? yPos - 4 : yPos + 4}`;
     },
 
     getBottomRoundedCorners(idCard, idLine) {
-      const y = this.getY(idLine);
+      const yPos = this.getY(idLine);
       const isInverted = this.isInvertedCurvedLine(idCard, idLine);
 
-      return isInverted
-        ? `C 40 ${y - 4} 47.33 ${y - 6} 51 ${y - 6}`
-        : `C 35 ${y - 2} 38.3333 ${y} 40 ${y}`;
+      return `C 35 ${isInverted ? yPos + 1 : yPos - 2} 38.3333 ${yPos} 40 ${yPos}`;
     },
 
     getY(idName, heightCalculation = true) {
