@@ -66,8 +66,7 @@ export default {
     },
 
     validateRequired() {
-      const field = this.$refs[`${this.entitySchema.type}-${this.entitySchema.field}`];
-      if (field?.internalValidator) return field.internalValidator();
+      return this.validateField(this.stringValue);
     },
   },
 };
