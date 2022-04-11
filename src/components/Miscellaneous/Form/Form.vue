@@ -2,87 +2,23 @@
   <section class="form-container">
     <PbFieldset
       v-for="(schema, property) in state.sortedSchema"
+      v-show="showField(schema)"
       :key="`form-${property}`"
       :title="schema.label"
       :required="schema.required"
       :info="schema.tip"
       style="padding: 15px;"
     >
-      <HtmlField
-        v-if="schema.type === 'html'"
-        v-model="formResponse[schema.field]"
-        :entity-schema="schema"
-        :only-show="onlyShow"
-      />
-      <FileField
-        v-if="schema.type === 'file'"
-        v-model="formResponse[schema.field]"
-        :entity-schema="schema"
-        :only-show="onlyShow"
-        :upload-file="uploadFile"
-      />
-      <ArrayField
-        v-if="schema.type === 'array'"
-        v-model="formResponse[schema.field]"
-        :entity-schema="schema"
-        :only-show="onlyShow"
-      />
-      <ObjectField
-        v-if="schema.type === 'object'"
-        v-model="formResponse[schema.field]"
-        :entity-schema="schema"
-        :only-show="onlyShow"
-      />
-      <SelectField
-        v-if="schema.type === 'select'"
-        v-model="formResponse[schema.field]"
-        :entity-schema="schema"
-        :only-show="onlyShow"
-      />
-      <ObjectKeysField
-        v-if="schema.type === 'object-keys'"
-        v-model="formResponse[schema.field]"
-        :entity-schema="schema"
-        :only-show="onlyShow"
-      />
-      <StringField
-        v-if="schema.type === 'string'"
-        :ref="`${schema.type}-${schema.field}`"
-        v-model="formResponse[schema.field]"
-        :entity-schema="schema"
-        :only-show="onlyShow"
-      />
-      <NumberField
-        v-if="schema.type === 'number'"
-        v-model="formResponse[schema.field]"
-        :entity-schema="schema"
-        :only-show="onlyShow"
-      />
-      <TextField
-        v-if="schema.type === 'text'"
-        v-model="formResponse[schema.field]"
-        :entity-schema="schema"
-        :only-show="onlyShow"
-      />
-      <DatetimeField
-        v-if="schema.type === 'date-time'"
-        v-model="formResponse[schema.field]"
-        :entity-schema="schema"
-        :only-show="onlyShow"
-      />
-      <BooleanField
-        v-if="schema.type === 'boolean'"
-        v-model="formResponse[schema.field]"
-        :entity-schema="schema"
-        :only-show="onlyShow"
-      />
-      <slot
-        v-if="schema.type === 'custom-field'"
-        :value="formResponse[schema.field]"
-        :name="schema.slotName"
-        :entity-schema="schema"
-        :only-show="onlyShow"
-      />
+      <keep-alive>
+        <component
+          :is="state.fieldsList[schema.type]"
+          :ref="`${schema.type}-${schema.field}`"
+          v-model="formResponse[schema.field]"
+          :entity-schema="schema"
+          :only-show="onlyShow"
+          :upload-file="uploadFile"
+        />
+      </keep-alive>
       <br>
     </PbFieldset>
   </section>
@@ -138,6 +74,20 @@ export default {
       state: {
         formattedSchema: {},
         sortedSchema: [],
+        fieldsList: {
+          html: 'HtmlField',
+          string: 'StringField',
+          number: 'NumberField',
+          boolean: 'BooleanField',
+          text: 'TextField',
+          'date-time': 'DatetimeField',
+          file: 'FileField',
+          array: 'ArrayField',
+          object: 'ObjectField',
+          select: 'SelectField',
+          'object-keys': 'ObjectKeysField',
+          'custom-field': 'CustomField',
+        },
       },
     };
   },
@@ -164,13 +114,36 @@ export default {
 
   methods: {
     validateRequired() {
-      let isValid = true;
-      this.state.sortedSchema.forEach(element => {
-        const reference = this.$refs[`${element.type}-${element.field}`][0];
-        if (reference?.validateRequired && isValid)
-          isValid = reference.validateRequired();
-      });
-      return isValid;
+      try {
+        this.state.sortedSchema.forEach(element => {
+          const reference = this.$refs[`${element.type}-${element.field}`];
+          if (!reference) return;
+          if (!reference[0]?.validateRequired) return;
+          if (!reference[0].validateRequired()) throw new Error(`${element.field} is required!`);
+        });
+      } catch (error) {
+        return false;
+      }
+      return true;
+    },
+
+    showField(schema) {
+      const { showIf } = schema;
+      if (!showIf) return true;
+
+      try {
+        showIf.forEach(validationObj => {
+          const { field, value } = validationObj;
+
+          const itemData = this.formResponse[field];
+
+          if (itemData === value) throw new Error(`${field} is required to show!`);
+        });
+      } catch (error) {
+        return true;
+      }
+
+      return false;
     },
 
     orderSchemaProps: EntitySchemaUtils.orderSchemaProps,
