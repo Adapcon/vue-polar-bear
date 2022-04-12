@@ -15,6 +15,7 @@
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="1"
+              :style="getY(indexName) === 0 ? `display: none;` : ''"
               :d="`
                 M 0 ${getY(indexName)}
                 H 30
@@ -32,7 +33,8 @@
               :y2="getY(idName)"
               stroke="gray"
               stroke-width="1"
-            />
+              :style="getY(indexName) === 0 ? `display: none;` : ''"
+            />0
           </svg>
         </template>
       </template>
