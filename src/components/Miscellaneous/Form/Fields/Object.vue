@@ -35,8 +35,13 @@ export default {
 
   methods: {
     updateObject() {
+      if (!this.validateRequired()) return;
       const objectForm = this.$refs.form;
       this.$emit('input', objectForm.formResponse);
+    },
+
+    validateRequired() {
+      return this.$refs.form[0].validateRequired();
     },
   },
 };

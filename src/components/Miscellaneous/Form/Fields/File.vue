@@ -90,8 +90,8 @@ export default {
 
       try {
         const [file] = files;
-        if (this.entitySchema.filterFileTypes)
-          this.validateFile(file, this.entitySchema.filterFileTypes);
+        if (this.entitySchema.contentFile)
+          this.validateFile(file, this.entitySchema.contentFile);
 
         const fileDetails = {
           name: file.name,
