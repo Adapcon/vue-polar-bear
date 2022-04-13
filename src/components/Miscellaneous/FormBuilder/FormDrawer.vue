@@ -149,7 +149,6 @@ export default {
                 label: 'Valor da entidade',
               },
               tip: 'Utilizar gerador para preencher este campo',
-              build: true,
               showIf: [{
                 field: 'type',
                 value: 'object',
