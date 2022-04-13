@@ -58,8 +58,31 @@ export default {
     return {
       state: {
         reload: false,
+        reloadIndex: null,
       },
     };
+  },
+
+  mounted() {
+    this.loadLines();
+  },
+
+  beforeDestroy() {
+    clearInterval(this.state.reloadIndex);
+  },
+
+  methods: {
+    reloadGraph() {
+      this.state.reload = false;
+
+      this.$nextTick(() => { this.state.reload = true; });
+    },
+
+    loadLines() {
+      this.state.reloadIndex = setInterval(() => {
+        this.reloadGraph();
+      }, 1000);
+    },
   },
 };
 </script>
