@@ -113,6 +113,12 @@ export default {
                 // 'Campo customizado',
               ],
             },
+            name: {
+              type: 'string',
+              label: 'Chave do campo',
+              required: true,
+              tip: 'Chaves de campos são valores únicos',
+            },
             label: {
               type: 'string',
               label: 'Nome do campo',
