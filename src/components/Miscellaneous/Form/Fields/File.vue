@@ -104,7 +104,7 @@ export default {
 
         const { link } = await this.uploadFile({ file, filename: file.name });
 
-        this.newFileValue = {
+        this.fileValue = {
           url: link,
           fileDetails,
           name: `${this.entitySchema.field} - ${file.name}`,
