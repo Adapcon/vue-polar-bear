@@ -126,7 +126,7 @@ export default {
     includeField() {
       this.formResponse = {
         ...this.formResponse,
-        [this.state.newField.label]: { ...this.state.newField },
+        [this.state.newField.name]: { ...this.state.newField },
       };
 
       this.state.newField = {};
