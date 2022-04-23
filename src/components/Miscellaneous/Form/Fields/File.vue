@@ -9,12 +9,14 @@
         v-if="isImage"
         key="application-img"
         :src="fileValue.url"
+        class="image"
       >
       <iframe
         v-else
         key="application-pdf"
         :src="`https://docs.google.com/gview?url=${fileValue.url}&embedded=true`"
         frameborder="0"
+        class="iframe"
       />
       <PbDoubleCheck
         :disabled="onlyShow || entitySchema.dynamic"
@@ -104,7 +106,7 @@ export default {
 
         const { link } = await this.uploadFile({ file, filename: file.name });
 
-        this.newFileValue = {
+        this.fileValue = {
           url: link,
           fileDetails,
           name: `${this.entitySchema.field} - ${file.name}`,
@@ -130,6 +132,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.html-container{
+.file-container{
+
+  .iframe {
+    width: 100%;
+    max-height: 30vh;
+  }
+
+  .image {
+    width: 100%;
+    max-height: 30vh;
+  }
 }
 </style>
