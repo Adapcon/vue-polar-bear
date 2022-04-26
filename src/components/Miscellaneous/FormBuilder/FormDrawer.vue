@@ -117,12 +117,18 @@ export default {
               type: 'string',
               label: 'Chave do campo',
               required: true,
-              tip: 'Chaves de campos são valores únicos',
+              tip: 'Chaves de campos são valores únicos. A chave do campo não pode ser alterada.',
             },
             label: {
               type: 'string',
               label: 'Nome do campo',
               required: true,
+            },
+            position: {
+              type: 'number',
+              label: 'Posição no formulário',
+              required: false,
+              tip: 'Campos com posição definida são ordenados pelo valor da posição. Campos podem ter a mesma posição.',
             },
             required: {
               type: 'boolean',

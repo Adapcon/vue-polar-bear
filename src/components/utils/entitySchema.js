@@ -37,10 +37,12 @@ export const EntitySchemaUtils = {
   },
 
   orderSchemaProps(entitySchema) {
-    const bigNumber = 77 ** 7;
-    return entitySchema.sort(
-      (propA, propB) => (propA.position ?? bigNumber) - (propB.position ?? bigNumber),
-    );
+    return entitySchema.sort((propA, propB) => {
+      if (typeof propA.position === 'undefined' && propB.position === 'undefined') return 0;
+      if (typeof propA.position === 'undefined') return 1;
+      if (typeof propB.position === 'undefined') return -1;
+      return propA.position - propB.position;
+    });
   },
 
   getDefaultValue(propSchema) {
