@@ -37,6 +37,10 @@ import { colors } from '@pb/utils/constants';
     type: 'boolean',
     defaultValue: false,
   },
+  showOnlyIcon: {
+    type: 'boolean',
+    defaultValue: false,
+  },
   color: {
     control: {
       type: 'select',
@@ -59,6 +63,7 @@ export const Template = (args, { argTypes }) => ({
       :editable-tab="editableTab"
       :verticalTabs="verticalTabs"
       :abbreviatedText="abbreviatedText"
+      :show-only-icon="showOnlyIcon"
     />
   `
 });
