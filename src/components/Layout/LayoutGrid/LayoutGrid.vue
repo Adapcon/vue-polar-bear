@@ -92,10 +92,9 @@ export default {
   .sidebar {
     border-right: solid #eeeeee 1px;
     margin: 28px 0px 40px;
-
+    
     .sidebar-content {
       margin-top: 40px;
-      min-height: 560px;
     }
   }
 
@@ -105,7 +104,6 @@ export default {
   }
 
   .main {
-    min-height: 512px;
     margin-top: 40px;
   }
 }
