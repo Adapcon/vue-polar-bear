@@ -35,7 +35,6 @@
                     ${`color: var(--color-${colorTab(tab)});`}
                   `"
                   class="selected-tab"
-                  :class="{ 'abbreviatedText': abbreviatedText }"
                 >
                   <div
                     v-if="tabSettings.icon"
@@ -47,14 +46,14 @@
                   </div>
                   <div
                     v-if="!showOnlyIcon"
+                    :class="{ 'abbreviatedText': abbreviatedText }"
                   >
                     <b
                       v-if="!state.editTab"
                       class="pb selected-tab"
                       :style="`color: var(--color-${color});`"
                     >
-
-                      {{ textAbbreviated(tabSettings.label) }}
+                      {{ tabSettings.label }}
                     </b>
                     <input
                       v-if="state.editTab"
@@ -80,7 +79,6 @@
                     ${tabSettings.color ? `color: var(--color-${tabSettings.color}); ` : ''}
                   `"
                   :class="{
-                    'abbreviatedText': abbreviatedText,
                     'unselected-tab': !isSelectedTab(tab) && !tabSettings.disabled
                   }"
                 >
@@ -93,11 +91,14 @@
                       @click="tabSettings.disabled ? '' : $emit('update:selected-tab', tab)"
                     />
                   </div>
-                  <div v-if="!showOnlyIcon">
+                  <div
+                    :v-if="!showOnlyIcon"
+                    :class="{ 'abbreviatedText': abbreviatedText }"
+                  >
                     <b
                       class="pb"
                     >
-                      {{ textAbbreviated(tabSettings.label) }}
+                      {{ tabSettings.label }}
                     </b>
                   </div>
                 </div>
@@ -246,17 +247,6 @@ export default {
       return this.isSelectedTab(tab) ? 'primary' : this.tabs[tab]?.color;
     },
 
-    textAbbreviated(text) {
-      if (this.abbreviatedText) {
-        const textWidth = text.length * 8;
-        const maxWidth = 100;
-
-        if (textWidth > maxWidth)
-          return `${text.substring(0, 9 - 3)}...`;
-      }
-      return text;
-    },
-
     isSelectedTab(tab) {
       return this.selectedTab === tab;
     },
@@ -306,30 +296,33 @@ export default {
 
 .abbreviatedText {
   max-width: 100px !important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .line {
-  transition: .9s ease-in;
+  transition: .5s ease-in;
 }
 
 .unselected-tab:hover {
   color: var(--color-primary) !important;
-  transition: .9s ease-in;
+  transition: .3s ease-in;
   > div {
     > svg {
       color: var(--color-primary) !important;
-      transition: .9s ease-in;
+      transition: .3s ease-in;
     }
   }
 }
 
 .selected-tab {
   color: var(--color-primary) !important;
-  transition: .9s ease-in;
+  transition: .3s ease-in;
   > div {
     > svg {
       color: var(--color-primary) !important;
-      transition: .9s ease-in;
+      transition: .3s ease-in;
     }
   }
 }
@@ -362,9 +355,6 @@ export default {
   .tab-title {
     margin-right: 24px !important;
     user-select: none;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
   }
 
   .tab-title-editable {
