@@ -4,23 +4,28 @@
       <div class="sidebar pb-col-12">
         <div class="pb-row">
           <div class="pb-col-12 pb-col-md-10">
-            <div style="display: flex;">
+            <div class="sidebar-area">
               <PbButton
                 v-if="!state.isMobileCell"
+                style="margin-top: 10px;"
                 color="primary"
                 button-style="regular"
-                :icon="`fas fa-${state.isMobileTablet ? 'bars': 'arrow-up fa-rotate-270'}`"
+                icon="fas fa-arrow-up fa-rotate-270"
                 @click.native="backFunction"
               />
-              <h2 class="pb">
-                {{ title }}
-              </h2>
-            </div>
-            <div
-              v-show="(!state.isMobileTablet && !state.isMobileCell) || showSideMenu"
-              class="sidebar-content"
-            >
-              <slot name="sidebar" />
+
+              <div>
+                <h2 class="pb">
+                  {{ title }}
+                </h2>
+
+                <div
+                  v-show="(!state.isMobileTablet && !state.isMobileCell) || showSideMenu"
+                  class="sidebar-content"
+                >
+                  <slot name="sidebar" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -65,11 +70,11 @@ export default {
   },
 
   mounted() {
-    window.addEventListener("resize", this.getWidthSizeCell);
+    window.addEventListener('resize', this.getWidthSizeCell);
   },
 
   beforeDestroy() {
-    window.removeEventListener("resize", this.getWidthSizeCell);
+    window.removeEventListener('resize', this.getWidthSizeCell);
   },
 
   methods: {
@@ -81,7 +86,7 @@ export default {
     },
 
     toggleSidebar() {
-      this.$emit('update:show-side-menu', !this.showSideMenu) ;
+      this.$emit('update:show-side-menu', !this.showSideMenu);
     },
   },
 };
@@ -92,7 +97,12 @@ export default {
   .sidebar {
     border-right: solid #eeeeee 1px;
     margin: 28px 0px 40px;
-    
+
+    .sidebar-area {
+      display: flex;
+      align-items: flex-start;
+    }
+
     .sidebar-content {
       margin-top: 40px;
     }
