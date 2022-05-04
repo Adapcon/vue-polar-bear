@@ -6,118 +6,121 @@
     }"
     :style="style"
   >
-    <template v-for="(tabSettings, tab) in formattedTabs">
-      <div
+    <div
+      v-for="(tabSettings, tab) in formattedTabs"
+      :key="tab"
+      :class="{ 'disabled': tabSettings.disabled }"
+      :style="verticalTabs ? `margin-bottom: 14px !important;` : ''"
+    >
+      <nav
         :key="tab"
         :class="tabSettings.disabled === true ? 'tab-content-disable' : 'tab-content'"
-        :style="verticalTabs ? `margin-bottom: ${selectedTab === tab ? 9 : 21}px !important;` : ''"
+        :style="`color: var(--color-${colorTab(tab)})`"
       >
-        <div
-          v-if="selectedTab !== tab"
-          class="icon"
-        >
-          <PbIcon
-            v-if="tabSettings.icon"
-            :icon="`${tabSettings.icon} fa-xs`"
-            :style="`color: var(--color-${tabSettings.color})`"
-            @click="tabSettings.disabled ? '' : $emit('update:selected-tab', tab)"
-          />
-        </div>
-        <div
-          v-if="abbreviatedText"
-          style="width: 100px;"
-        >
+        <div>
           <PbHint
             position="top-right"
             :hint-text="tabSettings.label"
-            :disabled="false"
+            :disabled="!abbreviatedText"
           >
-            <p
-              :style="tabSettings.disabled ? 'cursor: not-allowed !important;' : `color: var(--color-${tabSettings.color});`"
+            <div
               :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title'"
               @click="tabSettings.disabled ? '' : $emit('update:selected-tab', tab)"
             >
-              <template v-if="selectedTab === tab">
-                <PbIcon
-                  v-if="tabSettings.icon"
-                  :icon="`${tabSettings.icon} fa-xs`"
-                  :style="`color: var(--color-${color});`"
+              <div v-if="isSelectedTab(tab)">
+                <div
+                  style="display: flex; flex-direction: row;"
+                  :style="`
+                    ${tabSettings.disabled ? 'cursor: not-allowed;' : 'cursor: pointer;'}
+                    ${`color: var(--color-${colorTab(tab)});`}
+                  `"
+                  class="selected-tab"
+                  :class="{ 'abbreviatedText': abbreviatedText }"
+                >
+                  <div
+                    v-if="tabSettings.icon"
+                    :class="{ 'icon': !showOnlyIcon }"
+                  >
+                    <PbIcon
+                      :icon="`${tabSettings.icon} fa`"
+                    />
+                  </div>
+                  <div
+                    v-if="!showOnlyIcon"
+                  >
+                    <b
+                      v-if="!state.editTab"
+                      class="pb selected-tab"
+                      :style="`color: var(--color-${color});`"
+                    >
+
+                      {{ textAbbreviated(tabSettings.label) }}
+                    </b>
+                    <input
+                      v-if="state.editTab"
+                      v-focus
+                      :value="tabSettings.label"
+                      class="input"
+                      :style="{'backgroundColor': colorOpacityPrimary}"
+                      @blur="event => {addInputValue(event, tab)}"
+                      @keyup.enter="event => {addInputValue(event, tab)}"
+                    >
+                  </div>
+                </div>
+                <p
+                  class="line"
+                  style="margin: 8px 0 0 0; height: 2px; background-color: var(--color-primary)"
                 />
-           
-                <b
-                  v-if="!state.editTab"
-                  class="pb"
-                  :style="`color: var(--color-${color});`"
+              </div>
+              <div v-else>
+                <div
+                  style="display: flex; flex-direction: row;"
+                  :style="`
+                    ${tabSettings.disabled ? 'cursor: not-allowed;' : 'cursor: pointer;'}
+                    ${tabSettings.color ? `color: var(--color-${tabSettings.color}); ` : ''}
+                  `"
+                  :class="{
+                    'abbreviatedText': abbreviatedText,
+                    'unselected-tab': !isSelectedTab(tab) && !tabSettings.disabled
+                  }"
                 >
-             
-                  {{ tabSettings.label }}
-                </b>
-                <input
-                  v-if="state.editTab"
-                  v-focus
-                  :value="tabSettings.label"
-                  class="input"
-                  :style="{'backgroundColor': colorOpacityPrimary}"
-                  @blur="event => {addInputValue(event, tab)}"
-                  @keyup.enter="event => {addInputValue(event, tab)}"
-                >
-                <hr
-                  :style="`margin: 10px 0 0 0; border: 1px solid var(--color-${color})`"
-                >
-              </template>
-              <template v-else>
-                {{ tabSettings.label }}
-              </template>
-            </p>
+                  <div
+                    v-if="!isSelectedTab(tab) && tabSettings.icon"
+                    :class="{ 'icon': !showOnlyIcon }"
+                  >
+                    <PbIcon
+                      :icon="`${tabSettings.icon} fa`"
+                      @click="tabSettings.disabled ? '' : $emit('update:selected-tab', tab)"
+                    />
+                  </div>
+                  <div v-if="!showOnlyIcon">
+                    <b
+                      class="pb"
+                    >
+                      {{ textAbbreviated(tabSettings.label) }}
+                    </b>
+                  </div>
+                </div>
+                <p
+                  class="line"
+                  style="margin: 8px 0 0 0; height: 2px;"
+                />
+              </div>
+            </div>
           </PbHint>
         </div>
 
-        <div v-if="!abbreviatedText">
-          <p
-            :style="tabSettings.disabled ? 'cursor: not-allowed !important;' : `color: var(--color-${tabSettings.color});`"
-            :class="state.editTab ? 'pb tab-title-editable' : 'pb tab-title'"
-            @click="tabSettings.disabled ? '' : $emit('update:selected-tab', tab)"
-          >
-            <template v-if="selectedTab === tab">
-              <PbIcon
-                v-if="tabSettings.icon"
-                :icon="`${tabSettings.icon} fa-xs`"
-                :style="`color: var(--color-${color});`"
-              />
-              <b
-                v-if="!state.editTab"
-                class="pb"
-                :style="`color: var(--color-${color});`"
-              >
-                {{ tabSettings.label }}
-              </b>
-              <input
-                v-if="state.editTab"
-                v-focus
-                :value="tabSettings.label"
-                class="input"
-                :style="{'backgroundColor': colorOpacityPrimary}"
-                @blur="event => {addInputValue(event, tab)}"
-                @keyup.enter="event => {addInputValue(event, tab)}"
-              >
-              <hr
-                :style="`margin: 10px 0 0 0; border: 1px solid var(--color-${color})`"
-              >
-            </template>
-            <template v-else>{{ tabSettings.label }}</template>
-          </p>
-        </div>
         <div>
           <PbButton
             v-if="state.editTab"
-            :color="selectedTab === tab ? 'primary' : 'gray-10'"
+            :color="isSelectedTab(tab) ? 'primary' : 'gray-10'"
             button-style="regular"
             icon="fas fa-trash"
             @click.native="deleteTab(tab)"
           />
         </div>
-      </div>
-    </template>
+      </nav>
+    </div>
     <div
       v-if="editableTab"
       class="edit-buttons"
@@ -182,6 +185,7 @@ export default {
     abbreviatedText: { type: Boolean, default: false },
     editableTab: { type: Boolean, default: false },
     verticalTabs: { type: Boolean, default: false },
+    showOnlyIcon: { type: Boolean, default: false },
     newTabSettings: { type: Function, default: () => ({ key: `${Date.now()}`, label: 'Nova aba' }) },
   },
 
@@ -220,6 +224,9 @@ export default {
         const newFormattedTabs = acc;
 
         const tab = this.tabs[key];
+        if (this.showOnlyIcon && !tab.icon)
+          return acc;
+
         newFormattedTabs[key] = tab;
 
         if (typeof tab === 'string')
@@ -235,6 +242,25 @@ export default {
   },
 
   methods: {
+    colorTab(tab) {
+      return this.isSelectedTab(tab) ? 'primary' : this.tabs[tab]?.color;
+    },
+
+    textAbbreviated(text) {
+      if (this.abbreviatedText) {
+        const textWidth = text.length * 8;
+        const maxWidth = 100;
+
+        if (textWidth > maxWidth)
+          return `${text.substring(0, 9 - 3)}...`;
+      }
+      return text;
+    },
+
+    isSelectedTab(tab) {
+      return this.selectedTab === tab;
+    },
+
     checkEdit() {
       this.state.tabsValue = this.formattedTabs;
       this.state.editTab = !this.state.editTab;
@@ -274,6 +300,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.disabled {
+  cursor: not-allowed !important;
+}
+
+.abbreviatedText {
+  max-width: 100px !important;
+}
+
+.line {
+  transition: .9s ease-in;
+}
+
+.unselected-tab:hover {
+  color: var(--color-primary) !important;
+  transition: .9s ease-in;
+  > div {
+    > svg {
+      color: var(--color-primary) !important;
+      transition: .9s ease-in;
+    }
+  }
+}
+
+.selected-tab {
+  color: var(--color-primary) !important;
+  transition: .9s ease-in;
+  > div {
+    > svg {
+      color: var(--color-primary) !important;
+      transition: .9s ease-in;
+    }
+  }
+}
+
 .tabs-header {
   width: 100%;
   display: flex;
@@ -284,7 +344,7 @@ export default {
     display: flex;
 
     .icon {
-      padding: 1px 5px 0  0 ;
+      padding: 0 5px 0  0 ;
     }
   }
 
@@ -295,14 +355,13 @@ export default {
 
     .icon {
       cursor: not-allowed;
-      padding: 1px 5px 0  0 ;
+      padding: 0 5px 0  0 ;
     }
   }
 
   .tab-title {
-    margin-right: 21px !important;
+    margin-right: 24px !important;
     user-select: none;
-    cursor: pointer;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
