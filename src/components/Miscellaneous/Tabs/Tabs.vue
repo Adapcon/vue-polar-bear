@@ -92,7 +92,7 @@
                     />
                   </div>
                   <div
-                    :v-if="!showOnlyIcon"
+                    v-if="!showOnlyIcon"
                     :class="{ 'abbreviatedText': abbreviatedText }"
                   >
                     <b
