@@ -1,7 +1,9 @@
 <template>
   <div
     v-if="visible"
+    tabindex="0"
     class="drawer-container layer-always-on-top fullscreen"
+    @keydown.esc="close"
   >
     <div class="overlay">
       <div
