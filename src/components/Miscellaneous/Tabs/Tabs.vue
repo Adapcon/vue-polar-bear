@@ -39,7 +39,7 @@
                 >
                   <div
                     v-if="tabSettings.icon"
-                    :class="{ 'icon': !showOnlyIcon, 'min-width': showOnlyIcon }"
+                    :class="{ 'icon': !showOnlyIcon, 'centralize-icon': showOnlyIcon }"
                   >
                     <PbIcon
                       :icon="`${tabSettings.icon} fa`"
@@ -69,7 +69,7 @@
                 </div>
                 <p
                   class="line"
-                  :class="{ 'min-width': showOnlyIcon }"
+                  :class="{ 'centralize-icon': showOnlyIcon }"
                   style="margin: 8px 0 0 0; height: 2px; background-color: var(--color-primary)"
                 />
               </div>
@@ -86,7 +86,7 @@
                 >
                   <div
                     v-if="!isSelectedTab(tab) && tabSettings.icon"
-                    :class="{ 'icon': !showOnlyIcon, 'min-width': showOnlyIcon }"
+                    :class="{ 'icon': !showOnlyIcon, 'centralize-icon': showOnlyIcon }"
                   >
                     <PbIcon
                       :icon="`${tabSettings.icon} fa`"
@@ -106,7 +106,7 @@
                 </div>
                 <p
                   class="line"
-                  :class="{ 'min-width': showOnlyIcon }"
+                  :class="{ 'centralize-icon': showOnlyIcon }"
                   style="margin: 8px 0 0 0; height: 2px;"
                 />
               </div>
@@ -308,7 +308,7 @@ export default {
   transition: .5s ease-in;
 }
 
-.min-width {
+.centralize-icon {
   min-width: 100px;
   display: flex;
   justify-content: center;
