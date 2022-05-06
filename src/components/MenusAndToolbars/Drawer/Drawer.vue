@@ -100,6 +100,8 @@ export default {
   position: fixed;
   top: 0;
   right: 0;
+  overscroll-behavior: contain;
+  overflow: auto;
 
   .overlay {
     min-width: 100vw;
