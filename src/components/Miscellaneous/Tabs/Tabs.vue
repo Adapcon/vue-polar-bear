@@ -30,7 +30,7 @@
             >
               <div v-if="isSelectedTab(tab)">
                 <div
-                  style="display: flex; flex-direction: row;"
+                  style="display: flex; flex-direction: row; margin-bottom: 12px;"
                   :style="`
                     ${tabSettings.disabled ? 'cursor: not-allowed;' : 'cursor: pointer;'}
                     ${`color: var(--color-${colorTab(tab)});`}
@@ -75,7 +75,7 @@
               </div>
               <div v-else>
                 <div
-                  style="display: flex; flex-direction: row;"
+                  style="display: flex; flex-direction: row;  margin-bottom: 12px;"
                   :style="`
                     ${tabSettings.disabled ? 'cursor: not-allowed;' : 'cursor: pointer;'}
                     ${tabSettings.color ? `color: var(--color-${tabSettings.color}); ` : ''}
@@ -205,7 +205,7 @@ export default {
     style() {
       if (this.hideBorder) return;
 
-      return 'border-bottom: 1px solid';
+      return 'border-bottom: 1px solid var(--color-gray-5);';
     },
 
     updateTabs: {
