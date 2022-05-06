@@ -1,36 +1,45 @@
 <template>
-  <div
-    v-if="visible"
-    class="drawer-container layer-always-on-top fullscreen"
-  >
-    <div class="overlay">
-      <div
-        :class="drawerClass"
-        class="drawer"
-      >
-        <div>
-          <div class="header">
-            <PbIcon
-              class="close-button"
-              icon="fas fa-times fa-lg"
-              @click="close"
-            />
-            <slot name="header" />
+  <transition>
+    <div
+      v-if="visible"
+      tabindex="0"
+      class="drawer-container layer-always-on-top fullscreen"
+      @keydown.esc="close"
+    >
+      <div style="display: flex; justify-content: end">
+        <div
+          class="overlay"
+          style="position: absolute;"
+        />
+        <div
+          :class="drawerClass"
+          class="drawer"
+          style="position: relative; z-index: 1"
+        >
+          <div>
+            <div class="header">
+              <PbIcon
+                class="close-button"
+                icon="fas fa-times fa-lg"
+                @click="close"
+              />
+              <slot name="header" />
+            </div>
+            <hr class="divider">
           </div>
-          <hr class="divider">
-        </div>
-        <div class="main">
-          <slot name="main" />
-        </div>
-        <div>
-          <hr class="divider">
-          <div class="footer">
-            <slot name="footer" />
+          <div class="main">
+            <slot name="main" />
+          </div>
+          <div>
+            <hr class="divider">
+            <div class="footer">
+              <slot name="footer" />
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -38,11 +47,11 @@ import PbIcon from '@pb/Miscellaneous/Icon/Icon';
 
 export default {
   name: 'PbDrawer',
-  
+
   components: {
     PbIcon,
   },
-  
+
   props: {
     /**
      * Defines the maximum width of the drawer for different device sizes.
@@ -60,14 +69,14 @@ export default {
       default: false,
     },
   },
-  
+
   emits: [
     /**
      * Event handler for closing the drawer.
      */
     'close',
   ],
-  
+
   computed: {
     drawerClass() {
       return {
@@ -77,7 +86,7 @@ export default {
       };
     },
   },
-  
+
   methods: {
     close() {
       this.$emit('close', this.visible);
@@ -91,6 +100,8 @@ export default {
   position: fixed;
   top: 0;
   right: 0;
+  overscroll-behavior: contain;
+  overflow: auto;
 
   .overlay {
     min-width: 100vw;
@@ -104,6 +115,7 @@ export default {
 
   .drawer {
     width: 100%;
+    height: 100vh;
     background-color: var(--color-white);
     box-shadow: 0 1px 10px rgba(34, 34, 34, .1);
     flex-direction: column;
@@ -151,6 +163,35 @@ export default {
       align-self: end;
       margin-bottom: 20px;
     }
+  }
+}
+
+.v-enter-active, .v-leave-active {
+  // trick: make children transitions get applied properly
+  transition: all .3s;
+
+  .overlay, {
+    transition: opacity .3s;
+  }
+
+  .drawer {
+    transition: transform .3s;
+  }
+}
+
+.v-enter, .v-leave-to {
+  .overlay {
+    opacity: 0;
+  }
+
+  .drawer {
+    transform: translateX(100%);
+  }
+}
+
+.v-enter-to, .v-leave {
+  .overlay {
+    opacity: 1;
   }
 }
 </style>
