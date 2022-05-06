@@ -87,6 +87,16 @@ export default {
     },
   },
 
+  watch: {
+    visible(val) {
+      // prevent body from scrolling when the drawer is visible
+      const { body } = document;
+      if (val)
+        body.style.overflow = 'hidden';
+      else body.style.overflow = 'auto';
+    },
+  },
+
   methods: {
     close() {
       this.$emit('close', this.visible);
