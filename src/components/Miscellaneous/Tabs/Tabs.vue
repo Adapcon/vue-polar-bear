@@ -10,7 +10,10 @@
       v-for="(tabSettings, tab) in formattedTabs"
       :key="tab"
       :class="{ 'disabled': tabSettings.disabled }"
-      :style="verticalTabs ? `margin-bottom: 14px !important;` : ''"
+      :style="`
+        ${verticalTabs ? `margin-bottom: 14px !important;` : ''}
+        ${tabSettings.disabled ? 'cursor: not-allowed;' : 'cursor: pointer;'}
+      `"
     >
       <nav
         :key="tab"
@@ -31,10 +34,7 @@
               <div v-if="isSelectedTab(tab)">
                 <div
                   style="display: flex; flex-direction: row; margin-bottom: 12px;"
-                  :style="`
-                    ${tabSettings.disabled ? 'cursor: not-allowed;' : 'cursor: pointer;'}
-                    ${`color: var(--color-${colorTab(tab)});`}
-                  `"
+                  :style="`color: var(--color-${colorTab(tab)});`"
                   class="selected-tab"
                 >
                   <div
