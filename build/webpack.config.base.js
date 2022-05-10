@@ -97,6 +97,7 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               // `dart-sass`
+              // eslint-disable-next-line global-require
               implementation: require('sass'),
             },
           },
