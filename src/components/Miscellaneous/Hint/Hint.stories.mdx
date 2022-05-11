@@ -26,6 +26,10 @@ import { colors } from '@pb/utils/constants.js';
     disabled: {
       type: 'boolean',
       defaultValue: false,
+    },
+    showOnOverflowOnly: {
+      type: 'boolean',
+      defaultValue: false,
     }
   }}
 />
@@ -39,6 +43,7 @@ export const Template = (args, { argTypes }) => ({
       :color="color"
       :hint-text="hintText"
       :disabled="disabled"
+      :show-on-overflow-only="showOnOverflowOnly"
     >
       Hover me
     </PbHint>
@@ -58,6 +63,37 @@ export const TemplateSlot = (args, { argTypes }) => ({
         <h1 class="pb">Hello</h1>
       </template>
     </PbHint>
+  `,
+});
+
+export const TemplateOnOverflowOnly = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbHint },
+  template: `
+    <div>
+      <PbHint
+        :position="position"
+        :color="color"
+        :hint-text="hintText"
+        :disabled="disabled"
+        :show-on-overflow-only="showOnOverflowOnly"
+      >
+        <p style="width: 125px; white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;">
+          I'm overflowed, here
+        </p>
+      </PbHint>
+      <PbHint
+        :position="position"
+        :color="color"
+        :hint-text="hintText"
+        :disabled="disabled"
+        :show-on-overflow-only="showOnOverflowOnly"
+      >
+        <p style="width: 125px; white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;">
+          I'm not overflowed
+        </p>
+      </PbHint>
+    </div>
   `,
 });
 
@@ -83,5 +119,13 @@ The component itself is in charge of controlling the display of the hint when ho
 <Canvas>
   <Story name="Slot" height="auto" parameters={{ layout: 'centered' }}>
     {TemplateSlot.bind({})}
+  </Story>
+</Canvas>
+
+### On Overflow Only
+
+<Canvas>
+  <Story name="On Overflow Only" height="auto" parameters={{ layout: 'centered' }} args={{ showOnOverflowOnly: true, position: 'top-right' }}>
+    {TemplateOnOverflowOnly.bind({})}
   </Story>
 </Canvas>
