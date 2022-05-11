@@ -2,8 +2,8 @@
   <div class="pb-hint-container">
     <div
       class="pb-hint-slot"
-      @mouseenter="state.showHint = true"
-      @mouseleave="state.showHint = false"
+      @mouseenter="showHint(true)"
+      @mouseleave="showHint(false)"
     >
       <slot />
     </div>
@@ -24,6 +24,7 @@
 <script>
 export default {
   name: 'PbHint',
+
   props: {
     position: {
       type: String,
@@ -38,13 +39,30 @@ export default {
     color: { type: String, default: 'primary' },
     hintText: { type: [String, Number], default: '' },
     disabled: { type: Boolean, default: false },
+    showOnOverflowOnly: { type: Boolean, default: false },
   },
+
   data() {
     return {
       state: {
         showHint: false,
       },
     };
+  },
+  
+  methods: {
+    showHint(value) {
+      if (this.showOnOverflowOnly) {
+        const element = this.$slots.default[0].elm;
+  
+        if (element.scrollWidth > element.clientWidth || element.scrollHeight > element.clientHeight)
+          this.$set(this.state, 'showHint', value);
+        
+        return;
+      }
+
+      this.$set(this.state, 'showHint', value);
+    },
   },
 };
 </script>
