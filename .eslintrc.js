@@ -59,15 +59,6 @@ module.exports = {
       },
     },
   },
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-    brain: 'writable',
-    $: true,
-    moment: true,
-    swal: true,
-    _: true,
-  },
   plugins: [
     'vue',
   ],
