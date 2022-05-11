@@ -33,14 +33,20 @@ export default {
       default: 'white',
       validator: color => validateColor(color),
     },
+    wrapContent: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
     style() {
       const backgroundColorIsHexColor = isHexColor(this.backgroundColor);
+      
       return `
         background: ${backgroundColorIsHexColor ? this.backgroundColor : `var(--color-${this.backgroundColor})`} !important;
         color: var(--color-${this.color}) !important;
+        display: ${this.wrapContent ? 'inline-block' : ''};
       `;
     },
 
