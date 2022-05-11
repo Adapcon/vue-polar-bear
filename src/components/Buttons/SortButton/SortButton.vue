@@ -46,7 +46,7 @@ export default {
     buttonColor() {
       return this.value
         ? 'primary'
-        : 'muted';
+        : 'gray-20';
     },
     buttonIcon() {
       return this.value === 'asc'

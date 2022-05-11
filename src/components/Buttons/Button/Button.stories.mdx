@@ -19,7 +19,7 @@ import { colors } from '@pb/utils/constants.js';
     buttonStyle: {
       control: {
         type: 'select',
-        options: ['regular', 'background', 'outline'],
+        options: ['regular', 'background', 'outline', 'background-light'],
       },
       defaultValue: 'regular',
     },
@@ -132,6 +132,18 @@ In this example we use the primary color:
 
 <Canvas>
   <Story name="Background" height="auto" args={{ buttonStyle: 'background' }} >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Background-light Color
+
+As same for background, but the background will be an 8% opacity from the color, and the text will be 100%.
+This property accepts our standard colors (primary, secondary, success, danger, warning, and info).
+In this example we use the primary color:
+
+<Canvas>
+  <Story name="Background-light" height="auto" args={{ buttonStyle: 'background-light' }} >
     {Template.bind({})}
   </Story>
 </Canvas>

@@ -107,7 +107,7 @@ export default {
     },
 
     getColor(color) {
-      return this.disabled ? 'muted' : color;
+      return this.disabled ? 'gray-20' : color;
     },
   },
 };
