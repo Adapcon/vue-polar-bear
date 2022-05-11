@@ -9,7 +9,7 @@
 
     <div class="sheets">
       <div
-        class="glass layer-overlay"
+        class="glass layer-always-on-top"
         :class="{ open: state.showSheets }"
         @click="toggleSheets"
       />
