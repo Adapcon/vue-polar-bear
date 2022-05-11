@@ -1,6 +1,9 @@
 <template>
   <div class="table-container">
-    <div :class="{ 'actions-bar': !isMobile, 'actions-bar-mobile': isMobile }">
+    <div
+      v-if="hasActionsBar"
+      :class="{ 'actions-bar': !isMobile, 'actions-bar-mobile': isMobile }"
+    >
       <div class="search-input">
         <PbSearchInput
           v-model="state.searchTerm"
@@ -70,9 +73,9 @@ export default {
     highlightOnHover: { type: Boolean, default: true },
     hasActionColumn: { type: Boolean, default: true },
     hasSort: { type: Boolean, default: true },
-    hasSearch: { type: Boolean, default: true },
+    hasActionsBar: { type: Boolean, default: true },
     maxHeight: { type: String, default: '' },
-    actionsSize: { type: String, default: '1' },
+    actionsSize: { type: Number, default: 1 },
   },
 
   data() {
@@ -103,6 +106,7 @@ export default {
     
     calculatedMaxHeight() {
       if (!this.maxHeight) return;
+      if (!this.hasActionsBar) return this.maxHeight;
 
       const actionsBarHeight = 50;
       const actionsBarMarginBottom = this.isMobile ? 24 : 40;

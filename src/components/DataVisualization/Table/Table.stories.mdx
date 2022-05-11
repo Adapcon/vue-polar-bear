@@ -10,7 +10,7 @@ import PbButton from '../../Buttons/Button/Button.vue';
     header: {
       type: 'array',
       defaultValue: [
-        { label: 'Nome', size: 3, priority: 1 },
+        { label: 'Nome', size: 2, priority: 1 },
         { label: 'Idade', size: 1, priority: 3 },
         { label: 'Banco Principal', size: 2, priority: 2 },
       ],
@@ -60,9 +60,9 @@ import PbButton from '../../Buttons/Button/Button.vue';
     highlightOnHover: { type: 'boolean', defaultValue: true },
     hasActionColumn: { type: 'boolean', defaultValue: true },
     hasSort: { type: 'boolean', defaultValue: true },
-    hasSearch: { type: 'boolean', defaultValue: true },
+    hasActionsBar: { type: 'boolean', defaultValue: true },
     maxHeight: { type: 'string', defaultValue: '' },
-    actionsSize: { type: 'string', defaultValue: '1' },
+    actionsSize: { type: 'number', defaultValue: 1 },
   }}
 />
 
@@ -80,7 +80,7 @@ export const Template = (args, { argTypes }) => ({
         :highlight-on-hover="highlightOnHover"
         :has-action-column="hasActionColumn"
         :has-sort="hasSort"
-        :has-search="hasSearch"
+        :has-actions-bar="hasActionsBar"
         :max-height="maxHeight"
         :actions-size="actionsSize"
       >
@@ -121,7 +121,7 @@ export const TemplateWithoutActions = (args, { argTypes }) => ({
         :highlight-on-hover="highlightOnHover"
         :has-action-column="hasActionColumn"
         :has-sort="hasSort"
-        :has-search="hasSearch"
+        :has-actions-bar="hasActionsBar"
         :max-height="maxHeight"
         :actions-size="actionsSize"
       />  
@@ -143,7 +143,7 @@ export const TemplateWithExtraActions = (args, { argTypes }) => ({
         :highlight-on-hover="highlightOnHover"
         :has-action-column="hasActionColumn"
         :has-sort="hasSort"
-        :has-search="hasSearch"
+        :has-actions-bar="hasActionsBar"
         :max-height="maxHeight"
         :actions-size="actionsSize"
       >
@@ -158,31 +158,63 @@ export const TemplateWithExtraActions = (args, { argTypes }) => ({
   `,
 });
 
-# **PbFooterNavigation Component**
-### The `PbFooterNavigation` component is used to navigate between pages.
+# **PbTable Component**
+### The `PbTable` component is used to display data.
 
 ### Purpose and Use case
 
-The footer navigation component receives an array of steps, that is, the screen views.
-Having the possibility to change the button label.
+The table receives a header array and rows array and display the data.
 
 ## Configuration
 
+### Header
+
+List wiht one object to each column of table.
+
+| Property                    | Type                   | Default | Description                                                                                   |
+|:----------------------------|:-----------------------|:--------|:----------------------------------------------------------------------------------------------|
+| label                       | String, Number         |         | The column label                                                                              |
+| size                        | Number                 |         | The size of column. The table uses the 12 column grid bootstrap system                        |
+| priority                    | Number                 |         | The priority of column. It is used to hide column  when occurs a overflow.                    |
+
+### Rows
+
+List of arrays to each row, containing one object to each column of table;
+
+| Property                    | Type                   | Default | Description                                                                                   |
+|:----------------------------|:-----------------------|:--------|:----------------------------------------------------------------------------------------------|
+| value                       | String, Number, Image  |         | The column value                                                                              |
+| secondaryValue              | String, Number         |         | A extra info to column (Optional).                                                            |
+| badges                      | String, Number         |         | A list of badges to column (Optional).                                                        |
+
+
 ### Properties
 
-| Property                    | Type        | Default     | Description                                                                                   |
-|:----------------------------|:------------|:------------|:----------------------------------------------------------------------------------------------|
-| views                       | Array       |             | List of views                                                                                 |
-| finalButtonLabel            | String      | Fechar      | Title of the final button                                                                     |
-| finalButtonDisabled         | Boolean     | false       | Disable the final button                                                                      |
-| showFirstBackButton         | Boolean     | false       | Shows the first back button, when the component is initialized                                |
-| metadata                    | Array       |             | Its a optional property. It can contains metadata about rows, so should have the same number of rows. It is available in actions slot |
+| Property                    | Type        | Default | Description                                                                                              |
+|:----------------------------|:------------|:--------|:---------------------------------------------------------------------------------------------------------|
+| metadata                    | Array       |         | A list of metadata about each row in table. It is available in actions slot (Optional).                  |
+| loading                     | Boolean     | false   | Indicates that data is being loaded and when true a loading bar is displayed.                            |
+| ellipsisOnOverflow          | Boolean     | true    | Shows ellipsis on overflow and display the rest of the information in a hint.                            |
+| highlightOnHover            | Boolean     | true    | Highlights the row on hover.                                                                             |
+| hasActionColumn             | Boolean     | true    | Shows the action column. When activated you can use the actions slot to put actions inside.              |
+| hasSort                     | Boolean     | true    | Allows sorting in columns.                                                                               |
+| hasActionsBar               | Boolean     | true    | Shows the actions bar, with a search input and a extra-actions slot.                                     |
+| maxHeight                   | String      |         | Sets a maximumn height to table. Should have the unit of measure.                                        |
+| actionsSize                 | Number      | 1       | Sets the size of actions column,                                                                         |
 
 ### Events
 
-| Event                       | Type        | Emitter                            | Description                                                                                   |
-|:----------------------------|:------------|:-----------------------------------|:----------------------------------------------------------------------------------------------|
-| changeView                  | String      | Click to next or previous view     | Emits the view to change                                                                      |
+| Event                       | Type        | Emitter                            | Description                                                                   |
+|:----------------------------|:------------|:-----------------------------------|:------------------------------------------------------------------------------|
+| search                      | String      | Input data in searchinput          | Emits the search term                                                         |
+| clear-input                 |             | Clean the search input             | Emits that search input has been cleared                                      |
+
+### Slots
+
+| Name                       | Props           | Description                                                                                                                                |
+|:---------------------------|:----------------|:-------------------------------------------------------------------------------------------------------------------------------------------|
+| actions                    | row, metadata   | This slot is displayed in actions column. It available two properties: row (the columns objects) and metadata (the wor metadata).          |
+| extra-actions              |                 | This slot is displayed on the right side of the search input.                                                                              |
 
 
 ## Examples

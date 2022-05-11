@@ -80,7 +80,7 @@ export default {
     highlightOnHover: { type: Boolean, default: true },
     hasActionColumn: { type: Boolean, default: true },
     maxHeight: { type: String, default: '' },
-    actionsSize: { type: String, default: '1' },
+    actionsSize: { type: Number, default: 1 },
   },
 
   methods: {
