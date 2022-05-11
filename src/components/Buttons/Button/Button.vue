@@ -150,11 +150,16 @@ export default {
         ? `var(--color-${this.color})`
         : 'var(--color-primary)';
 
+      const color = getComputedStyle(document.documentElement).getPropertyValue(`--color-${this.color}`);
+      const hexadecimalOpacity = '14'; // 8%
+
       switch (this.buttonStyle) {
         case 'outline':
           return `border-color: ${colorVar}; color: ${colorVar};`;
         case 'background':
           return `background-color: ${colorVar}; color: ${this.color === 'white' ? 'var(--color-primary)' : 'white'};`;
+        case 'background-light':
+          return `background-color: ${color}${hexadecimalOpacity};  color: ${colorVar};`;
         default:
           return `color: ${colorVar};`;
       }
