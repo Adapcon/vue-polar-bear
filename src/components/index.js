@@ -38,6 +38,7 @@ export { default as PbProgressBar } from './DataVisualization/ProgressBar/Progre
 export { default as PbRanking } from './DataVisualization/Ranking/Ranking.vue';
 export { default as PbServerTable } from './DataVisualization/ServerTable/ServerTable.vue';
 export { default as PbSummaryDisplayItem } from './DataVisualization/SummaryDisplayItem/SummaryDisplayItem.vue';
+export { default as PbTable } from './DataVisualization/Table/Table.vue';
 export { default as PbCard } from './DataVisualization/Card/Card.vue';
 export { default as PbCarousel } from './DataVisualization/Carousel/Carousel.vue';
 export { default as PbDataTable } from './DataVisualization/DataTable/DataTable.vue';

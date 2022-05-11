@@ -1,0 +1,214 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+
+import PbTable from './Table.vue';
+import PbButton from '../../Buttons/Button/Button.vue';
+
+<Meta
+  title = "Components/Data Visualization/PbTable"
+  component = { PbTable }
+  argTypes = {{
+    header: {
+      type: 'array',
+      defaultValue: [
+        { label: 'Nome', size: 3, priority: 1 },
+        { label: 'Idade', size: 1, priority: 3 },
+        { label: 'Banco Principal', size: 2, priority: 2 },
+      ],
+    },
+    rows: {
+      type: 'array',
+      defaultValue: [
+        [
+          { value: 'João Paulo de Ávila Alfredo', secondaryValue: '123.456.789-10' },
+          { value: '20' },
+          { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-237.png' },
+        ],
+        [
+          { value: 'Maria da Silva', secondaryValue: '661.313.649-23' },
+          { value: '22', },
+          { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-341.png' },
+        ],
+        [
+          { value: 'Lucca Gael Ferreira', secondaryValue: '898.372.281-30' },
+          { value: '16', },
+          { value: 'Não informado', badges: ['menor de idade'] },
+        ],
+        [
+          { value: 'Sofia Jennifer Gomes da Silva Mendes de Souza', secondaryValue: '398.722.811-30' },
+          { value: '23', },
+          { value: 'Sem preferência' },
+        ],
+        [
+          { value: 'Mário Oliveira', secondaryValue: '898.372.281-30' },
+          { value: '11', },
+          { value: 'Não informado', badges: ['menor de idade', '< 12'] },
+        ],
+      ],
+    },
+    metadata: {
+      type: 'array',
+      defaultValue: [
+        { name: 'João Paulo de Ávila', cpf: '12345678910', driverLicense: true },
+        { name: 'Maria da Silva', cpf: '66131364923', driverLicense: true },
+        { name: 'Lucca Gael Ferreira', cpf: '89837228130', driverLicense: false },
+        { name: 'Sofia Jennifer Gomes da Silva Mendes de Souza', cpf: '39872281130', driverLicense: true },
+        { name: 'Mário Oliveira', cpf: '89837228130', driverLicense: false }
+      ],
+    },
+    loading: { type: 'boolean', defaultValue: false },
+    ellipsisOnOverflow: { type: 'boolean', defaultValue: true },
+    highlightOnHover: { type: 'boolean', defaultValue: true },
+    hasActionColumn: { type: 'boolean', defaultValue: true },
+    hasSort: { type: 'boolean', defaultValue: true },
+    hasSearch: { type: 'boolean', defaultValue: true },
+    maxHeight: { type: 'string', defaultValue: '' },
+    actionsSize: { type: 'string', defaultValue: '1' },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbTable, PbButton },
+  template: `
+    <div style="background-color: white;">
+      <PbTable
+        :header="header"
+        :rows="rows"
+        :metadata="metadata"
+        :loading="loading"
+        :ellipsis-on-overflow="ellipsisOnOverflow"
+        :highlight-on-hover="highlightOnHover"
+        :has-action-column="hasActionColumn"
+        :has-sort="hasSort"
+        :has-search="hasSearch"
+        :max-height="maxHeight"
+        :actions-size="actionsSize"
+      >
+        <template #actions="{ row, metadata }">
+          <div style="display: flex;">
+            <PbButton
+              icon="fas fa-star"
+              button-style="regular"
+            />
+            <PbButton
+              v-if="row[2].badges && row[2].badges.find(badge => badge === '< 12')"
+              icon="fas fa-info-circle"
+              button-style="regular"
+            />
+            <PbButton
+              v-if="metadata.driverLicense"
+              icon="fas fa-image"
+              button-style="regular"
+            />
+          </div>
+        </template>
+      </PbTable>
+    </div>
+  `,
+});
+
+export const TemplateWithoutActions = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbTable },
+  template: `
+    <div style="background-color: white;">
+      <PbTable
+        :header="header"
+        :rows="rows"
+        :metadata="metadata"
+        :loading="loading"
+        :ellipsis-on-overflow="ellipsisOnOverflow"
+        :highlight-on-hover="highlightOnHover"
+        :has-action-column="hasActionColumn"
+        :has-sort="hasSort"
+        :has-search="hasSearch"
+        :max-height="maxHeight"
+        :actions-size="actionsSize"
+      />  
+    </div>
+  `,
+});
+
+export const TemplateWithExtraActions = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbTable, PbButton },
+  template: `
+    <div style="background-color: white;">
+      <PbTable
+        :header="header"
+        :rows="rows"
+        :metadata="metadata"
+        :loading="loading"
+        :ellipsis-on-overflow="ellipsisOnOverflow"
+        :highlight-on-hover="highlightOnHover"
+        :has-action-column="hasActionColumn"
+        :has-sort="hasSort"
+        :has-search="hasSearch"
+        :max-height="maxHeight"
+        :actions-size="actionsSize"
+      >
+        <template #extra-actions>
+          <PbButton
+            label="Baixar CSV"
+            button-style="background"
+          />
+        </template>
+      </PbTable>
+    </div>
+  `,
+});
+
+# **PbFooterNavigation Component**
+### The `PbFooterNavigation` component is used to navigate between pages.
+
+### Purpose and Use case
+
+The footer navigation component receives an array of steps, that is, the screen views.
+Having the possibility to change the button label.
+
+## Configuration
+
+### Properties
+
+| Property                    | Type        | Default     | Description                                                                                   |
+|:----------------------------|:------------|:------------|:----------------------------------------------------------------------------------------------|
+| views                       | Array       |             | List of views                                                                                 |
+| finalButtonLabel            | String      | Fechar      | Title of the final button                                                                     |
+| finalButtonDisabled         | Boolean     | false       | Disable the final button                                                                      |
+| showFirstBackButton         | Boolean     | false       | Shows the first back button, when the component is initialized                                |
+| metadata                    | Array       |             | Its a optional property. It can contains metadata about rows, so should have the same number of rows. It is available in actions slot |
+
+### Events
+
+| Event                       | Type        | Emitter                            | Description                                                                                   |
+|:----------------------------|:------------|:-----------------------------------|:----------------------------------------------------------------------------------------------|
+| changeView                  | String      | Click to next or previous view     | Emits the view to change                                                                      |
+
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto">
+    { Template.bind({}) }
+  </Story>
+</Canvas>
+
+
+### Without Actions
+
+<Canvas>
+  <Story name="Without Actions" height="auto" args={{ hasActionColumn: false }}>
+    { TemplateWithoutActions.bind({}) }
+  </Story>
+</Canvas>
+
+### With Extra Actions
+
+<Canvas>
+  <Story name="With Extra Actions" height="auto">
+    { TemplateWithExtraActions.bind({}) }
+  </Story>
+</Canvas>
+
