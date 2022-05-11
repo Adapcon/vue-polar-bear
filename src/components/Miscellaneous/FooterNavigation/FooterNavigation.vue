@@ -118,7 +118,7 @@ export default {
   width: 100vw;
   bottom: 0;
   position: fixed;
-  background-color: var(--color-background-dark);
+  background-color: var(--color-gray-60);
 
   .liveshop-footer-navigation-actions {
     display: flex;

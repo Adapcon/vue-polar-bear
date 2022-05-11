@@ -33,7 +33,7 @@ export default {
 
     validator: { type: Function, default: null },
 
-    color: { type: String, default: 'muted', validator: validateColor },
+    color: { type: String, default: 'gray-20', validator: validateColor },
 
     focus: { type: Boolean, default: false },
 
