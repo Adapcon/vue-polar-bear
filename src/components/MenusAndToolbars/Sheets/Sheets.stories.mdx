@@ -5,58 +5,128 @@ import PbSheets from "./Sheets.vue";
   title="Components/Data Visualization/PbSheets"
   component={PbSheets}
   argTypes={{
-    enabledToggleButton: { type: "boolean", defaultValue: true },
     sheets: {
-      type: "object",
-      defaultValue: {
-        Bloquear: {
-          icon: "fas fa-ban",
-          title: "Bloquear",
-          disable: true,
+      type: 'array',
+      defaultValue: [
+        {
+          label: 'Compartilhar por e-mail',
+          icon: 'fas fa-envelope',
+          value: 'email',
         },
-        Confirmar: {
-          icon: "fas fa-check",
-          title: "Confirmar",
-          disable: false,
+        {
+          label: 'Enviar por whatsapp',
+          icon: 'fab fa-whatsapp',
+          value: 'whatsapp',
         },
-        Configurar: {
-          icon: "fas fa-cog",
-          title: "Configurar",
-          disable: false,
+        {
+          label: 'Compartilhar link',
+          value: 'link',
         },
-      },
+      ],
     },
-    optionSelected: {
-      action: "optionSelected",
+    buttonIcon: {
+      type: 'string',
+      defaultValue: 'fas fa-ellipsis-v',
+    },
+    buttonColor: {
+      type: 'string',
+      defaultValue: 'primary',
+    },
+    buttonStyle: {
+      type: 'string',
+      defaultValue: 'regular',
     },
   }}
 />
 
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
+  methods: {
+    onSelectSheet(value) {
+      console.log('selected sheet', value);
+    }
+  },
   components: { PbSheets },
   template: `
-    <PbSheets 
+    <PbSheets
       :sheets="sheets"
-      :enabledToggleButton="enabledToggleButton"
-      @option-selected="optionSelected"
+      :button-icon="buttonIcon"
+      :button-color="buttonColor"
+      :button-style="buttonStyle"
+      @selectSheet="onSelectSheet"
     />
   `,
 });
 
-# **PbSheets Component**
-### The `PbSheets` component is used to display multiple buttons in just one.
+# **PbSheets**
+### The `PbSheets` is a surface containing supplementary content that are anchored to the bottom of the screen.
 
-### Purpose and Use case
+### Purpose and Use Case
 
-has the proposal to display several buttons in just one. component has an overlay that overlays the entire screen. you can pass an object containing the name of the option and within that option the title of the button and its icon
+Probably you'll want to use PbSheets on mobile navigation.
+
+## Configuration
+
+### Properties
+
+| Property                | Type      | Default            | Description
+|:------------------------|:----------|:-------------------|:--------------------------------------------------------------------------------------|
+| sheets                  | Array     | Required           | An array of content objects, it includes the label, icon and value. Icon is unrequired|
+| buttonIcon              | String    | fas fa-ellipsis-v  | Button icon                                                                           |
+| buttonColor             | String    | primary            | Button color                                                                          |
+| buttonStyle             | String    | regular            | Button style                                                                          |
+
+### Events
+
+| Event                       | Description
+|:----------------------------|:-----------------------------------------|
+| selectSheet                 | Fired right after selection of a sheet   |
 
 ## Examples
 
 ### Default
 
 <Canvas>
-  <Story name="Default" height="auto">
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Customized button icon
+
+<Canvas>
+  <Story
+    name="With custom button icon"
+    args={{
+      buttonIcon: 'fas fa-plus',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Customized button color
+
+<Canvas>
+  <Story
+    name="With custom button color"
+    args={{
+      buttonColor: 'warning',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Customized button style
+
+<Canvas>
+  <Story
+    name="With custom button style"
+    args={{
+      buttonStyle: 'outline',
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
