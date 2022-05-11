@@ -109,7 +109,7 @@ export default {
     background: none;
     outline: none;
     transition: all .3s ease;
-    border: 1px solid var(--color-muted);
+    border: 1px solid var(--color-gray-20);
 
     &:focus {
       border: 1px solid var(--color-gray-90);
@@ -189,13 +189,13 @@ export default {
   flex-direction: column;
   font-size: 13px;
   background: #fff;
-  border: 1px solid var(--color-muted);
+  border: 1px solid var(--color-gray-20);
   border-radius: 0 0 20px 20px;
 
   .pb-search-suggestions-item {
     cursor: pointer;
     padding: 6px 20px;
-    color: var(--color-muted);
+    color: var(--color-gray-20);
     transition: all .2s ease;
 
     .pb-search-suggestions-item-icon {

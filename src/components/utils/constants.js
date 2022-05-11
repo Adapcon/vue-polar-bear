@@ -6,7 +6,7 @@ export const colors = [
   'danger',
   'warning',
   'info',
-  'muted',
+  'notification',
   'white',
   'gray',
   'gray-10',
@@ -15,5 +15,4 @@ export const colors = [
   'gray-60',
   'gray-80',
   'gray-90',
-  'background-dark',
 ];
