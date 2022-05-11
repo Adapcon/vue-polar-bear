@@ -100,7 +100,7 @@ export default {
     background: none;
     outline: none;
     transition: all .3s ease;
-    border: 1px solid var(--color-muted);
+    border: 1px solid var(--color-gray-20);
 
     &:focus {
       border: 1px solid var(--color-primary);

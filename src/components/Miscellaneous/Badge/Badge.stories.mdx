@@ -22,6 +22,10 @@ import { colors } from '@pb/utils/constants.js';
     control: { type: 'select', options: [ ...colors ] },
     defaultValue: 'white',
   },
+  wrapContent: {
+    type: 'boolean',
+    defaultValue: false,
+  },
  }}
 />
 
@@ -34,6 +38,7 @@ export const Template = (args, { argTypes }) => ({
       :title="title"
       :background-color="backgroundColor"
       :color="color"
+      :wrap-content="wrapContent"
     />
   `
 });
@@ -51,6 +56,14 @@ This component was created to highlight the relevant text for the user on the sc
 
 <Canvas>
   <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Wrap Content
+
+<Canvas>
+  <Story name="Wrap Content" args={{ wrapContent: true }}>
     {Template.bind({})}
   </Story>
 </Canvas>

@@ -1,48 +1,54 @@
-var chalk = require('chalk')
-var semver = require('semver')
-var packageConfig = require('../package.json')
-var shell = require('shelljs')
-function exec (cmd) {
-  return require('child_process').execSync(cmd).toString().trim()
+/* eslint-disable no-redeclare */
+/* eslint-disable block-scoped-var */
+/* eslint-disable no-var */
+/* eslint-disable vars-on-top */
+/* eslint-disable import/no-extraneous-dependencies */
+const chalk = require('chalk');
+const semver = require('semver');
+const shell = require('shelljs');
+const packageConfig = require('../package.json');
+
+function exec(cmd) {
+  // eslint-disable-next-line global-require
+  return require('child_process').execSync(cmd).toString().trim();
 }
 
-var versionRequirements = [
+const versionRequirements = [
   {
     name: 'node',
     currentVersion: semver.clean(process.version),
-    versionRequirement: packageConfig.engines.node
+    versionRequirement: packageConfig.engines.node,
   },
-]
+];
 
 if (shell.which('npm')) {
   versionRequirements.push({
     name: 'npm',
     currentVersion: exec('npm --version'),
-    versionRequirement: packageConfig.engines.npm
-  })
+    versionRequirement: packageConfig.engines.npm,
+  });
 }
 
 module.exports = function () {
-  var warnings = []
+  const warnings = [];
   for (var i = 0; i < versionRequirements.length; i++) {
-    var mod = versionRequirements[i]
+    const mod = versionRequirements[i];
     if (!semver.satisfies(mod.currentVersion, mod.versionRequirement)) {
-      warnings.push(mod.name + ': ' +
-        chalk.red(mod.currentVersion) + ' should be ' +
-        chalk.green(mod.versionRequirement)
-      )
+      warnings.push(`${mod.name}: ${
+        chalk.red(mod.currentVersion)} should be ${
+        chalk.green(mod.versionRequirement)}`);
     }
   }
 
   if (warnings.length) {
-    console.log('')
-    console.log(chalk.yellow('To use this template, you must update following to modules:'))
-    console.log()
+    console.log('');
+    console.log(chalk.yellow('To use this template, you must update following to modules:'));
+    console.log();
     for (var i = 0; i < warnings.length; i++) {
-      var warning = warnings[i]
-      console.log('  ' + warning)
+      const warning = warnings[i];
+      console.log(`  ${warning}`);
     }
-    console.log()
-    process.exit(1)
+    console.log();
+    process.exit(1);
   }
-}
+};

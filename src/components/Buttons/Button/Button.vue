@@ -1,20 +1,20 @@
 <template>
   <button
     :class="buttonClasses"
-    :style="buttonColor"
+    :style="`${buttonHeight} ${buttonColor}`"
     :disabled="disabled || loading"
   >
     <div class="pb-button-container" :style="`flex-direction: ${iconPosition === 'right' ? 'row-reverse' : 'row'};`">
       <PbIcon
         v-if="icon"
-        class="pb-button-icon"
+        :class="iconClass"
         style="transition: all .3s ease"
         :style="iconMargin"
         :icon="buttonIcon"
       />
       <p
         v-if="label"
-        class="pb"
+        :class="labelClass"
         :style="!icon && loading ? 'animation: opacity-blink 2s infinite;' : ''"
       >
         {{ label }}
@@ -60,6 +60,16 @@ export default {
         'regular',
         'outline',
         'background',
+      ].includes(style),
+    },
+
+    buttonSize: {
+      type: String,
+      default: 'large',
+      validator: style => [
+        'small',
+        'medium',
+        'large',
       ].includes(style),
     },
 
@@ -124,28 +134,63 @@ export default {
       };
     },
 
+    buttonHeight() {
+      switch (this.buttonSize) {
+        case 'small':
+          return this.isIconOnly ? 'height: 24px; width: 24px;' : '';
+        case 'medium':
+          return this.isIconOnly ? 'height: 32px; width: 32px;' : 'height: 32px; padding: 12px;';
+        default:
+          return 'height: 40px; padding: 16px;';
+      }
+    },
+
     buttonColor() {
       const colorVar = this.color
         ? `var(--color-${this.color})`
         : 'var(--color-primary)';
 
+      const color = getComputedStyle(document.documentElement).getPropertyValue(`--color-${this.color}`);
+      const hexadecimalOpacity = '14'; // 8%
+
       switch (this.buttonStyle) {
         case 'outline':
-          return `border-color: ${colorVar}; color: ${colorVar}`;
+          return `border-color: ${colorVar}; color: ${colorVar};`;
         case 'background':
           return `background-color: ${colorVar}; color: ${this.color === 'white' ? 'var(--color-primary)' : 'white'};`;
+        case 'background-light':
+          return `background-color: ${color}${hexadecimalOpacity};  color: ${colorVar};`;
         default:
-          return `color: ${colorVar}`;
+          return `color: ${colorVar};`;
+      }
+    },
+
+    labelClass() {
+      switch (this.buttonSize) {
+        case 'medium':
+          return 'pb-sm-strong';
+        default:
+          return 'pb-strong';
+      }
+    },
+
+    iconClass() {
+      switch (this.buttonSize) {
+        case 'small':
+          return 'fa-sm';
+        case 'medium':
+          return 'fa-sm';
+        default:
+          return 'fa';
       }
     },
 
     iconMargin() {
       if (this.isIconOnly) return '';
+      
+      const iconMargin = this.buttonSize === 'medium' ? '6px' : '8px';
 
-      const iconMargin = '10px';
-      return this.iconPosition === 'left'
-        ? `margin-right: ${iconMargin}`
-        : `margin-left: ${iconMargin}`;
+      return this.iconPosition === 'left' ? `margin-right: ${iconMargin};`: `margin-left: ${iconMargin};`;
     },
 
     isIconOnly() {
@@ -157,9 +202,7 @@ export default {
 
 <style lang="scss" scoped>
 .pb-button {
-  height: 40px;
   border-radius: 20px;
-  padding: 6px 20px;
   font-size: 14px !important;
   font-weight: 600 !important;
   text-transform: unset !important;

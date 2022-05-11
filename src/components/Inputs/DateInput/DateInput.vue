@@ -23,7 +23,7 @@ export default {
     onValidate: { type: Function, default: null },
     color: {
       type: String,
-      default: 'muted',
+      default: 'gray-20',
       validator: color => validateColor(color),
     },
   },
