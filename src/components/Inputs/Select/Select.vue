@@ -1,5 +1,8 @@
 <template>
-  <div v-click-outside="closeSelector" class="pb-select-wrapper">
+  <div
+    v-click-outside="closeSelector"
+    class="pb-select-wrapper"
+  >
     <button
       ref="button"
       :disabled="disabled || !options.length"
@@ -74,6 +77,7 @@ import PbCollapseIcon from '@pb/Miscellaneous/CollapseIcon/CollapseIcon.vue';
 
 import { removeAccents } from '@pb/utils/text';
 import { validateColor } from '@pb/utils/validator';
+import { buttonStyles } from '@pb/utils/constants';
 
 export default {
   name: 'PbSelect',
@@ -96,11 +100,7 @@ export default {
     selectStyle: {
       type: String,
       default: 'background',
-      validator: style => [
-        'regular',
-        'outline',
-        'background',
-      ].includes(style),
+      validator: style => buttonStyles.includes(style),
     },
     buttonLabel: { type: String, default: 'Selecione' },
     disabled: { type: Boolean, default: false },

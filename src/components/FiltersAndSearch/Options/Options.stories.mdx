@@ -1,7 +1,7 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 
 import PbOptions from './Options.vue';
-import { colors } from '@pb/utils/constants.js';
+import { colors, buttonStyles } from '@pb/utils/constants.js';
 
 <Meta
   title="Components/Filters and Search/PbOptions"
@@ -14,7 +14,7 @@ import { colors } from '@pb/utils/constants.js';
     buttonStyle: {
       control: {
         type: 'select',
-        options: ['regular', 'background', 'outline'],
+        options: buttonStyles,
       },
       defaultValue: 'regular',
     },
