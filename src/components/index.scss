@@ -4,14 +4,16 @@
 @import './widths.scss';
 
 :root {
+  /** default colors */
   --color-primary: #3a79cc;
   --color-secondary: #103972;
-  --color-active: #0011ff;
   --color-success: #417617;
   --color-danger: #AC4545;
   --color-warning: #DD8218;
   --color-info: #18a0fb;
-  --color-muted: #aaa;
+  --color-notification: #FF7614;
+
+  /** grayscale colors */
   --color-white: #fff;
   --color-gray: #f8f8f8;
   --color-gray-5: #eee;
@@ -21,8 +23,12 @@
   --color-gray-60: #555;
   --color-gray-80: #333;
   --color-gray-90: #222;
-  --color-background-dark: #484F59;
+
+  /** Other colors */
+  --color-active: #0011ff;
+  --color-muted: #aaa;
   --color-overlay: rgba(0, 0, 0, .5);
+  --color-background-dark: #484F59;
 }
 
 /* roboto-300 - latin */
