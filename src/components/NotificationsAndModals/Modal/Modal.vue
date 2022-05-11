@@ -73,7 +73,6 @@ export default {
     justify-content: space-between;
     background: var(--color-white);
     max-width: 95%;
-    min-height: 350px;
     border-radius: 0px 20px 20px;
     transition: all 0.3s ease;
     margin: 0 auto;
