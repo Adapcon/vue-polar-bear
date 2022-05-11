@@ -23,6 +23,13 @@ import { colors } from '@pb/utils/constants.js';
       },
       defaultValue: 'regular',
     },
+    buttonSize: {
+      control: {
+        type: 'select',
+        options: ['small', 'medium', 'large'],
+      },
+      defaultValue: 'large',
+    },
     disableHover: {
       type: 'boolean',
       defaultValue: false,
@@ -81,6 +88,7 @@ export const Template = (args, { argTypes }) => ({
       :icon-position="iconPosition"
       :color="color"
       :button-style="buttonStyle"
+      :button-size="buttonSize"
       :disable-hover="disableHover"
       :disabled="disabled"
       :loading="loading"
