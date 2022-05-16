@@ -4,7 +4,10 @@
     :style="`${buttonHeight} ${buttonColor}`"
     :disabled="disabled || loading"
   >
-    <div class="pb-button-container" :style="`flex-direction: ${iconPosition === 'right' ? 'row-reverse' : 'row'};`">
+    <div
+      class="pb-button-container"
+      :style="`flex-direction: ${iconPosition === 'right' ? 'row-reverse' : 'row'};`"
+    >
       <PbIcon
         v-if="icon"
         :class="iconClass"
@@ -39,6 +42,7 @@
 <script>
 import PbIcon from '@pb/Miscellaneous/Icon/Icon';
 import { validateColor } from '@pb/utils/validator';
+import { buttonStyles } from '@pb/utils/constants';
 
 export default {
   name: 'PbButton',
@@ -56,11 +60,7 @@ export default {
     buttonStyle: {
       type: String,
       default: 'regular',
-      validator: style => [
-        'regular',
-        'outline',
-        'background',
-      ].includes(style),
+      validator: style => buttonStyles.includes(style),
     },
 
     buttonSize: {
@@ -187,10 +187,10 @@ export default {
 
     iconMargin() {
       if (this.isIconOnly) return '';
-      
+
       const iconMargin = this.buttonSize === 'medium' ? '6px' : '8px';
 
-      return this.iconPosition === 'left' ? `margin-right: ${iconMargin};`: `margin-left: ${iconMargin};`;
+      return this.iconPosition === 'left' ? `margin-right: ${iconMargin};` : `margin-left: ${iconMargin};`;
     },
 
     isIconOnly() {
