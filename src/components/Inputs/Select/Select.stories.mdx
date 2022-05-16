@@ -1,6 +1,6 @@
 import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
 import PbSelect from './Select.vue';
-import { colors } from '@pb/utils/constants.js';
+import { colors, buttonStyles } from '@pb/utils/constants.js';
 
 <Meta
   title="Components/Inputs/PbSelect"
@@ -16,7 +16,7 @@ import { colors } from '@pb/utils/constants.js';
       defaultValue: 'secondary',
     },
     selectStyle: {
-      control: { type: 'select', options: ['background', 'outline', 'regular'] },
+      control: { type: 'select', options: buttonStyles },
       defaultValue: 'background',
     },
     options: {

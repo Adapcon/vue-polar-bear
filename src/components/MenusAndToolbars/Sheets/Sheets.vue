@@ -3,6 +3,7 @@
     <PbButton
       :color="buttonColor"
       :button-style="buttonStyle"
+      :button-size="buttonSize"
       :icon="buttonIcon"
       @click.native="toggleSheets"
     />
@@ -58,6 +59,7 @@ export default {
     buttonIcon: { type: String, default: 'fas fa-ellipsis-v' },
     buttonColor: { type: String, default: 'primary' },
     buttonStyle: { type: String, default: 'regular' },
+    buttonSize: { type: String, default: 'large' },
   },
 
   data() {

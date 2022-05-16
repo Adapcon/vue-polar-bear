@@ -16,3 +16,10 @@ export const colors = [
   'gray-80',
   'gray-90',
 ];
+
+export const buttonStyles = [
+  'regular',
+  'outline',
+  'background',
+  'background-light',
+];
