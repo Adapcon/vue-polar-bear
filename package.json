@@ -19,6 +19,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "adapcon-utils-js": "^0.8.0",
     "core-js": "^3.18.3",
     "jquery": "^3.6.0",
     "path": "^0.12.7",
