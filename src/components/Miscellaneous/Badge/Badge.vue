@@ -4,7 +4,7 @@
     :style="style"
   >
     <PbIcon
-      v-if="hasIcon"
+      v-if="icon"
       :icon="icon"
       :class="iconClass"
       class="pb-icon"
@@ -29,10 +29,6 @@ export default {
   },
   props: {
     icon: { type: String, default: '' },
-    hasIcon: {
-      type: Boolean,
-      default: false,
-    },
     size: {
       type: String,
       default: 'pb-sm',
@@ -74,7 +70,7 @@ export default {
         case 'pb-sm':
           return 'fa-sm';
         case 'pb-md':
-          return 'fa-sm';
+          return 'fa-md';
         case 'pb-lg':
           return 'fa-lg';
         default:

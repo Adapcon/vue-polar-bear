@@ -7,13 +7,9 @@ import { list } from '@pb/Miscellaneous/Icon/list.js';
  title="Components/Miscellaneous/PbBadge"
  component={PbBadge}
  argTypes={{
-   hasIcon: {
-     type: 'boolean',
-     defaultValue: false,
-   },
     icon: {
       control: { type: 'select', options: [...list()] },
-      defaultValue: 'fas fa-times',
+      defaultValue: '',
     },
    size: {
      control: { type: 'select', options: ['pb-sm', 'pb-md', 'pb-lg'] },
@@ -44,7 +40,6 @@ export const Template = (args, { argTypes }) => ({
   template: `
     <PbBadge
       :icon="icon"
-      :hasIcon="hasIcon"
       :size="size"
       :title="title"
       :background-color="backgroundColor"
