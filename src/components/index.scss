@@ -4,24 +4,28 @@
 @import './widths.scss';
 
 :root {
+  /** default colors */
   --color-primary: #3a79cc;
   --color-secondary: #103972;
-  --color-active: #0011ff;
   --color-success: #417617;
   --color-danger: #AC4545;
   --color-warning: #DD8218;
   --color-info: #18a0fb;
-  --color-muted: #aaa;
+  --color-notification: #FF7614;
+
+  /** grayscale colors */
   --color-white: #fff;
-  --color-gray: #f8f8f8;
-  --color-gray-5: #eee;
-  --color-gray-10: #ccc;
-  --color-gray-20: #aaa;
-  --color-gray-40: #888;
-  --color-gray-60: #555;
-  --color-gray-80: #333;
-  --color-gray-90: #222;
-  --color-background-dark: #484F59;
+  --color-gray: #F9FAFB;
+  --color-gray-5: #ECEEF0;
+  --color-gray-10: #C7CBD1;
+  --color-gray-20: #A1A8B3;
+  --color-gray-40: #818A98;
+  --color-gray-60: #4D545E;
+  --color-gray-80: #373D43;
+  --color-gray-90: #292D32;
+
+  /** Other colors */
+  --color-active: #0011ff;
   --color-overlay: rgba(0, 0, 0, .5);
 }
 

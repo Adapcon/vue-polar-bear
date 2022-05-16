@@ -350,7 +350,6 @@ export default {
 
     .form-drawer-main-content {
       overflow: auto;
-      max-height: 60vh;
     }
 
     .form-drawer-footer {
