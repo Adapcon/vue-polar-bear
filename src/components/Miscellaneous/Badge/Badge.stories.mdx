@@ -1,11 +1,16 @@
 import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
 import PbBadge from './Badge.vue';
 import { colors } from '@pb/utils/constants.js';
+import { list } from '@pb/Miscellaneous/Icon/list.js';
 
 <Meta
  title="Components/Miscellaneous/PbBadge"
  component={PbBadge}
  argTypes={{
+    icon: {
+      control: { type: 'select', options: [...list()] },
+      defaultValue: '',
+    },
    size: {
      control: { type: 'select', options: ['pb-sm', 'pb-md', 'pb-lg'] },
      defaultValue: 'pb-sm',
@@ -34,6 +39,7 @@ export const Template = (args, { argTypes }) => ({
   components: { PbBadge },
   template: `
     <PbBadge
+      :icon="icon"
       :size="size"
       :title="title"
       :background-color="backgroundColor"
