@@ -95,6 +95,7 @@ export default {
                 // 'object',
                 // 'array',
                 'select',
+                'check-group',
                 // 'object-keys',
                 // 'custom-field',
               ],
@@ -109,6 +110,7 @@ export default {
                 // 'Entidade',
                 // 'Lista',
                 'Seleção',
+                'Grupo de seleção',
                 // 'Entidade chaveada',
                 // 'Campo customizado',
               ],
@@ -184,7 +186,7 @@ export default {
             },
             enabledValue: {
               type: 'array',
-              label: '[Seleção] dados da seleção',
+              label: 'Dados da seleção',
               contentArray: {
                 type: 'string',
                 label: 'Valor do select',
@@ -192,11 +194,15 @@ export default {
               showIf: [{
                 field: 'type',
                 value: 'select',
+              },
+              {
+                field: 'type',
+                value: 'check-group',
               }],
             },
             labelValue: {
               type: 'array',
-              label: '[Seleção] displays da seleção',
+              label: 'Displays da seleção',
               contentArray: {
                 type: 'string',
                 label: 'Valor do select',
@@ -204,6 +210,10 @@ export default {
               showIf: [{
                 field: 'type',
                 value: 'select',
+              },
+              {
+                field: 'type',
+                value: 'check-group',
               }],
             },
             keyType: {
@@ -247,6 +257,7 @@ export default {
           'array',
           'select',
           'object-keys',
+          'check-group',
         ],
       },
     };
