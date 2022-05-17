@@ -69,8 +69,8 @@ export default {
 
     needCurvedLine(idCard, idLine) {
       return (
-        this.getY(idLine) - this.getY(idCard) > 1
-        || this.getY(idCard) - this.getY(idLine) > 1
+        this.getY(idLine) - this.getY(idCard) > 3
+        || this.getY(idCard) - this.getY(idLine) > 3
       );
     },
 
