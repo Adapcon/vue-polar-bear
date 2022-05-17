@@ -1,15 +1,14 @@
 <template>
   <section class="check-group-container">
     <div
-      v-for="(checkGroupKey, checkGroupIndex) in checkGroup.enabledValue"
+      v-for="(checkGroupKey, checkGroupIndex) of checkGroup.enabledValue"
       :key="checkGroupIndex"
       class="check-group-content pb-row"
     >
-      {{ { ...defaultEntitySchema, ...{ name: checkGroupKey, label: checkGroup.labelValue[checkGroupIndex]} } }}
       <Form
         :ref="`form-check-group-${checkGroupIndex}`"
-        :value="!!updateInput[checkGroupKey]"
-        :entity-schema="{ ...defaultEntitySchema, ...{ name: checkGroupKey, label: checkGroup.labelValue[checkGroupIndex] }}"
+        :value="getFieldValue(checkGroupKey)"
+        :entity-schema="generateEntitySchema(checkGroupKey, checkGroupIndex)"
         :only-show="onlyShow || entitySchema.dynamic"
         class="pb-col-10"
         @input.native="updateCheckGroup(checkGroupKey)"
@@ -19,8 +18,6 @@
 </template>
 
 <script>
-// "asd": { "type": "check-group", "name": "keyField", "label": "Name", "enabledValue": [ "1", "2", "3" ], "labelValue": [ "1", "2", "3" ] }
-// "tst": { "type": "boolean", "name": "test", "label": "Teste", "required": true }
 export default {
   name: 'ArrayField',
 
@@ -42,8 +39,9 @@ export default {
       state: {
         defaultEntitySchema: {
           type: 'boolean',
-          required: true,
+          required: false,
         },
+        fieldValue: {},
       },
     };
   },
@@ -55,7 +53,7 @@ export default {
 
     updateInput: {
       get() {
-        return this.entitySchema || [];
+        return this.value || [];
       },
 
       set(value) {
@@ -64,10 +62,30 @@ export default {
     },
   },
 
+  created() {
+    if (!this.value)
+      this.updateInput = [];
+  },
+
   methods: {
+    getFieldValue(checkGroupKey) {
+      const fieldValue = this.updateInput.indexOf(checkGroupKey) > -1;
+      const value = {};
+      value[checkGroupKey] = fieldValue;
+
+      return value;
+    },
+    generateEntitySchema(checkGroupKey, checkGroupIndex) {
+      const newSchema = { name: checkGroupKey, label: this.checkGroup.labelValue[checkGroupIndex] || checkGroupKey };
+      const entitySchema = {};
+      entitySchema[checkGroupKey] = { ...this.state.defaultEntitySchema, ...newSchema };
+
+      return entitySchema;
+    },
+
     updateCheckGroup(checkGroupIndex) {
-      if (this.updateInput[checkGroupIndex])
-        this.$delete(this.updateInput, checkGroupIndex);
+      if (this.updateInput.indexOf(checkGroupIndex) > -1)
+        this.updateInput.splice(this.updateInput.indexOf(checkGroupIndex), 1);
       else this.updateInput.push(checkGroupIndex);
     },
 
@@ -86,32 +104,15 @@ export default {
 
 <style lang="scss" scoped>
 .check-group-container {
+  display: flex;
+  flex-wrap: wrap;
   padding-left: 20px;
   border-left: solid 1px var(--color-gray-10);
   border-radius: 0 10px;
 
-  .more-button {
-    margin-left: calc(100% - 40px);
-    margin-top: -15%;
-  }
-
   .check-group-content {
-    border: solid 1px var(--color-gray-90);
-    border-radius: 10px;
     padding: 5px;
     margin: 5px;
-  }
-
-  .list-move, /* apply transition to moving elements */
-  .list-enter-active,
-  .list-leave-active {
-    transition: all 0.5s ease;
-  }
-
-  .list-enter-from,
-  .list-leave-to {
-    opacity: 0;
-    transform: translateX(30px);
   }
 }
 </style>

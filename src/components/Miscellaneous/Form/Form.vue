@@ -38,6 +38,7 @@ import TextField from './Fields/Text.vue';
 import DatetimeField from './Fields/Datetime.vue';
 import BooleanField from './Fields/Boolean.vue';
 import PbFieldset from '../Fieldset/Fieldset.vue';
+import CheckGroup from './Fields/CheckGroup.vue';
 
 export default {
   name: 'PbForm',
@@ -55,6 +56,7 @@ export default {
     DatetimeField,
     BooleanField,
     PbFieldset,
+    CheckGroup,
   },
 
   props: {
@@ -87,6 +89,7 @@ export default {
           select: 'SelectField',
           'object-keys': 'ObjectKeysField',
           'custom-field': 'CustomField',
+          'check-group': 'CheckGroup',
         },
       },
     };
