@@ -1,5 +1,9 @@
 <template>
-  <div class="table-container">
+  <table
+    data-role="table"
+    data-mode="columntoggle"
+    class="table-container"
+  >
     <div
       v-if="hasActionsBar"
       :class="{ 'actions-bar': !isMobile, 'actions-bar-mobile': isMobile }"
@@ -12,7 +16,7 @@
           @clear-input="$emit('clear-input')"
         />
       </div>
-      
+
       <slot name="extra-actions" />
     </div>
 
@@ -45,7 +49,7 @@
         />
       </template>
     </TableRows>
-  </div>
+  </table>
 </template>
 
 <script>
@@ -103,7 +107,7 @@ export default {
 
       return rows.sort((current, next) => this.sort(current[columnIndex], next[columnIndex], type));
     },
-    
+
     calculatedMaxHeight() {
       if (!this.maxHeight) return;
       if (!this.hasActionsBar) return this.maxHeight;

@@ -1,9 +1,11 @@
 <template>
-  <div class="table-header-container pb-row">
+  <div
+    class="table-header-container pb-row"
+  >
     <div
       v-for="(column, index) in header"
       :key="column.label"
-      :class="`pb-col-${column.size} table-column`"
+      :class="`pb-col-${column.size} table-column flex flex-1 flex-wrap-reverse cc-min-width-120`"
     >
       <small class="pb">{{ column.label }}</small>
 
@@ -53,17 +55,60 @@ export default {
     };
   },
 
+  mounted() {
+    window.addEventListener('resize', this.getWidthSizeCell);
+  },
+
+  beforeDestroy() {
+    window.removeEventListener('resize', this.getWidthSizeCell);
+  },
+
   methods: {
+    getWidthSizeCell() {
+      // const e = document.getElementById('ateste');
+
+      // // const d = document.getElementById('teste');
+      // // const topPos = d.offsetTop;
+      // const ePos = e.offsetHeight;
+
+      // if (ePos) return console.log(ePos);
+
+      // eslint-disable-next-line no-undef
+      const wrappers = document.getElementsByClassName('flex');
+
+      if (wrappers.length) { // don't add listener if no flex elements
+        window.addEventListener('resize', () => {
+          wrappers.forEach(() => {
+            const prnt = wrappers;
+            const chldrn = prnt.children(':not(:first-child)'); // select flex items
+            const frst = prnt.children().first();
+
+            chldrn.forEach((i, e) => { wrappers(e).toggleClass('flex-wrapped', wrappers(e).offsetTop !== frst.offsetTop); }); // element has wrapped
+            prnt.toggleClass('flex-wrapping', !!frst.find('.flex-wrapped').length); // wrapping has started
+            frst.toggleClass('flex-wrapped', !chldrn.filter(':not(.flex-wrapped)').length); // all are wrapped
+          });
+        });
+      }
+    },
+
     getSortType(columnIndex) {
       return this.state.sorts[columnIndex] ? this.state.sorts[columnIndex].type : '';
     },
+
+    // getTop() {
+    //   const d = document.getElementById('teste');
+
+    //   const topPos = d.offsetTop;
+
+    //   if (topPos) console.log(topPos);
+    // },
 
     setSortState(type, columnIndex) {
       if (!this.state.sorts[columnIndex]) this.$set(this.state.sorts, [columnIndex], {});
 
       this.$set(this.state.sorts[columnIndex], 'type', type);
       this.clearSortState(columnIndex);
-      
+
       this.$emit('sort', { columnIndex, type });
     },
 
@@ -80,10 +125,31 @@ export default {
 <style lang="scss" scoped>
 .table-header-container {
   background-color: var(--color-gray);
-  
+
   .table-column {
-    display: flex;
+    // display: flex;
+    min-width: 120px;
     padding: 8px;
+
+     .flex {
+    display: flex;
+
+    .flex-wrap {
+      flex-wrap: wrap;
+    }
+
+    .flex-1 {
+      flex: 1;
+    }
+  }
+
+  .flex > * {
+    flex-grow: 1;
+  }
+
+  .cc-min-width-120 > * {
+    min-width: 120px;
+  }
 
     small {
       text-transform: uppercase;

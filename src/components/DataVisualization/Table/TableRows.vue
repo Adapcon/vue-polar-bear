@@ -92,7 +92,7 @@ export default {
 <style lang="scss" scoped>
 .table-rows {
   overflow: auto;
-  
+
   .row-highlight > :hover {
     background-color: var(--color-gray);
     transition: 0.5s;
@@ -103,6 +103,7 @@ export default {
 
     .table-column {
       padding: 8px;
+      min-width: 120px;
 
       .ellipsis-on-overflow {
         white-space: nowrap;
