@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: 'ArrayField',
+  name: 'CheckGroupField',
 
   components: {
     Form: () => import('../Form.vue'),
