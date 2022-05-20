@@ -11,48 +11,59 @@
       <div class="table-row pb-row">
         <div
           v-for="(column, columnIndex) in row"
+          v-show="!hiddenColumns.includes(columnIndex)"
           :key="columnIndex"
-          :class="`pb-col-${header[columnIndex].size} table-column`"
+          :class="columnClasses(header[columnIndex].size)"
         >
-          <img
-            v-if="isImage(column.value)"
-            :src="column.value"
-            class="image"
-          >
-
-          <div v-else>
-            <PbHint
-              :hint-text="column.value"
-              :disabled="!ellipsisOnOverflow"
-              :show-on-overflow-only="true"
-              position="bottom-right"
+          <div class="table-column">
+            <img
+              v-if="isImage(column.value)"
+              :src="column.value"
+              class="image"
             >
-              <p :class="`${ellipsisOnOverflow ? 'pb-md ellipsis-on-overflow' : 'pb-md'}`">{{ column.value }}</p>
-            </PbHint>
 
-            <p class="pb-sm secondary-value">{{ column.secondaryValue }}</p>
-          </div>
+            <div v-else>
+              <PbHint
+                :hint-text="column.value"
+                :disabled="!ellipsisOnOverflow"
+                :show-on-overflow-only="true"
+                position="bottom-right"
+              >
+                <p
+                  :class="`${
+                    ellipsisOnOverflow ? 'pb-md ellipsis-on-overflow' : 'pb-md'
+                  }`"
+                >
+                  {{ column.value }}
+                </p>
+              </PbHint>
 
-          <div>
-            <PbBadge
-              v-for="badge of column.badges"
-              :key="badge"
-              :title="badge"
-              :wrap-content="true"
-              style="margin-right: 2px;"
-            />
+              <p class="pb-sm secondary-value">{{ column.secondaryValue }}</p>
+            </div>
+
+            <div>
+              <PbBadge
+                v-for="badge of column.badges"
+                :key="badge"
+                :title="badge"
+                :wrap-content="true"
+                style="margin-right: 2px"
+              />
+            </div>
           </div>
         </div>
 
         <div
-          v-if="hasActionColumn"
-          :class="`pb-col-${actionsSize} column`"
+          v-if="hasActionColumn && !hiddenColumns.includes('action')"
+          :class="columnClasses(actionsSize)"
         >
-          <slot
-            name="actions"
-            :row="row"
-            :metadata="metadata[index]"
-          />
+          <div class="column">
+            <slot
+              name="actions"
+              :row="row"
+              :metadata="metadata[index]"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -60,9 +71,9 @@
 </template>
 
 <script>
+import { isImage } from 'adapcon-utils-js';
 import PbHint from '../../Miscellaneous/Hint/Hint.vue';
 import PbBadge from '../../Miscellaneous/Badge/Badge.vue';
-import { isImage } from 'adapcon-utils-js';
 
 export default {
   name: 'TableRows',
@@ -81,6 +92,8 @@ export default {
     hasActionColumn: { type: Boolean, default: true },
     maxHeight: { type: String, default: '' },
     actionsSize: { type: Number, default: 1 },
+    hiddenColumns: { type: Array, default: () => [] },
+    columnClasses: { type: Function, required: true },
   },
 
   methods: {
@@ -92,7 +105,7 @@ export default {
 <style lang="scss" scoped>
 .table-rows {
   overflow: auto;
-  
+
   .row-highlight > :hover {
     background-color: var(--color-gray);
     transition: 0.5s;
@@ -121,6 +134,5 @@ export default {
       }
     }
   }
-
 }
 </style>

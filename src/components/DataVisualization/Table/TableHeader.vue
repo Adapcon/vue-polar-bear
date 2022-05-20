@@ -2,39 +2,62 @@
   <div class="table-header-container pb-row">
     <div
       v-for="(column, index) in header"
+      v-show="!hiddenColumns.includes(index)"
       :key="column.label"
-      :class="`pb-col-${column.size} table-column`"
+      :class="columnClasses(column.size)"
     >
-      <small class="pb">{{ column.label }}</small>
+      <div class="table-column">
+        <small
+          class="pb"
+          style="color: var(--color-gray-90);"
+        >{{ column.label }}</small>
 
-      <PbSortIcon
-        v-if="hasSort"
-        :value="getSortType(index)"
-        color="gray-90"
-        class="sort-icon"
-        @input="type => setSortState(type, index)"
-      />
+        <PbSortIcon
+          v-if="hasSort"
+          :value="getSortType(index)"
+          color="gray-90"
+          class="sort-icon"
+          @input="(type) => setSortState(type, index)"
+        />
+      </div>
     </div>
 
     <div
-      v-if="hasActionColumn"
-      :class="`pb-col-${actionsSize} table-column`"
+      v-if="hasActionColumn && !hiddenColumns.includes('action')"
+      :class="columnClasses(actionsSize)"
     >
-      <small class="pb">AÇÕES</small>
+      <div class="table-column">
+        <small
+          class="pb"
+          style="color: var(--color-gray-90);"
+        >AÇÕES</small>
+      </div>
+    </div>
+    <div
+      v-if="showExpandIcon"
+      class="pb-col-1"
+    >
+      <div class="table-column">
+        <PbIcon
+          :icon="expandIcon"
+          :style="`color: var(--color-${expandIconColor}); cursor: pointer;`"
+          @click="$emit('update:expanded', !expanded)"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import PbSortIcon from '../../Miscellaneous/SortIcon/SortIcon.vue';
-import PbHint from '../../Miscellaneous/Hint/Hint.vue';
+import PbSortIcon from '@pb/Miscellaneous/SortIcon/SortIcon.vue';
+import PbIcon from '@pb/Miscellaneous/Icon/Icon';
 
 export default {
   name: 'TableHeader',
 
   components: {
     PbSortIcon,
-    PbHint,
+    PbIcon,
   },
 
   props: {
@@ -43,6 +66,9 @@ export default {
     hasActionColumn: { type: Boolean, default: true },
     hasSort: { type: Boolean, default: true },
     actionsSize: { type: Number, default: 1 },
+    hiddenColumns: { type: Array, default: () => [] },
+    columnClasses: { type: Function, required: true },
+    expanded: { type: Boolean, default: false },
   },
 
   data() {
@@ -53,17 +79,33 @@ export default {
     };
   },
 
+  computed: {
+    expandIcon() {
+      return this.expanded ? 'fas fa-compress' : 'fas fa-expand';
+    },
+
+    expandIconColor() {
+      return this.expanded ? 'primary' : 'gray-90';
+    },
+
+    showExpandIcon() {
+      return this.hiddenColumns.length;
+    },
+  },
   methods: {
     getSortType(columnIndex) {
-      return this.state.sorts[columnIndex] ? this.state.sorts[columnIndex].type : '';
+      return this.state.sorts[columnIndex]
+        ? this.state.sorts[columnIndex].type
+        : '';
     },
 
     setSortState(type, columnIndex) {
-      if (!this.state.sorts[columnIndex]) this.$set(this.state.sorts, [columnIndex], {});
+      if (!this.state.sorts[columnIndex])
+        this.$set(this.state.sorts, [columnIndex], {});
 
       this.$set(this.state.sorts[columnIndex], 'type', type);
       this.clearSortState(columnIndex);
-      
+
       this.$emit('sort', { columnIndex, type });
     },
 
@@ -80,7 +122,7 @@ export default {
 <style lang="scss" scoped>
 .table-header-container {
   background-color: var(--color-gray);
-  
+
   .table-column {
     display: flex;
     padding: 8px;

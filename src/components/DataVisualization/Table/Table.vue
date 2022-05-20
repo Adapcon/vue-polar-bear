@@ -12,7 +12,7 @@
           @clear-input="$emit('clear-input')"
         />
       </div>
-      
+
       <slot name="extra-actions" />
     </div>
 
@@ -22,7 +22,10 @@
       :has-action-column="hasActionColumn"
       :has-sort="hasSort"
       :actions-size="actionsSize"
-      @sort="activeSorting => state.activeSorting = activeSorting"
+      :hidden-columns="state.hiddenColumns"
+      :column-classes="columnClasses"
+      :expanded.sync="state.expanded"
+      @sort="(activeSorting) => (state.activeSorting = activeSorting)"
     />
 
     <PbLoadingBar v-if="loading" />
@@ -36,6 +39,8 @@
       :has-action-column="hasActionColumn"
       :max-height="calculatedMaxHeight"
       :actions-size="actionsSize"
+      :hidden-columns="state.hiddenColumns"
+      :column-classes="columnClasses"
     >
       <template #actions="props">
         <slot
@@ -85,6 +90,8 @@ export default {
         isMobile: window.innerWidth <= 375,
         activeSorting: {},
         searchTerm: '',
+        hiddenColumns: [],
+        expanded: false,
       },
     };
   },
@@ -103,7 +110,7 @@ export default {
 
       return rows.sort((current, next) => this.sort(current[columnIndex], next[columnIndex], type));
     },
-    
+
     calculatedMaxHeight() {
       if (!this.maxHeight) return;
       if (!this.hasActionsBar) return this.maxHeight;
@@ -116,7 +123,11 @@ export default {
   },
 
   mounted() {
-    window.addEventListener('resize', this.setWindowWidth);
+    this.setHiddenColumns();
+    window.addEventListener('resize', e => {
+      this.setWindowWidth(e);
+      this.setHiddenColumns();
+    });
   },
 
   beforeDestroy() {
@@ -128,6 +139,55 @@ export default {
       if (!target) return;
 
       this.windowWidth = target.innerWidth;
+    },
+
+    setHiddenColumns() {
+      this.state.hiddenColumns = [];
+
+      this.$nextTick(() => {
+        const headerColumns = Array.from(
+          document.body.getElementsByClassName('table-header-container')[0]
+            ?.childNodes || [],
+        );
+
+        const offsets = headerColumns
+          .map(node => node.offsetTop)
+          .filter(value => value !== undefined);
+        if (!offsets.length) return;
+
+        this.state.hiddenColumns = offsets.reduce((acc, curr, index) => {
+          if (index === 0) return acc;
+
+          if (curr === offsets[0]) return acc;
+
+          if (this.hasActionColumn && index === this.header.length)
+            acc.push('action');
+          else acc.push(index);
+
+          return acc;
+        }, []);
+      });
+    },
+
+    columnClasses(size) {
+      return [
+        `pb-col-lg-${this.getColumnSize(size)}`,
+        `pb-col-xl-${this.getColumnSize(size)}`,
+        `pb-col-sm-${this.getSmallColumnSize(size)}`,
+        `pb-col-md-${this.getMediumColumnSize(size)}`,
+      ];
+    },
+
+    getColumnSize(size) {
+      return Math.min(size, 12);
+    },
+
+    getSmallColumnSize(size) {
+      return Math.min(size * 2, 12);
+    },
+
+    getMediumColumnSize(size) {
+      return Math.min(size + 2, 12);
     },
 
     sort(current, next, type) {
