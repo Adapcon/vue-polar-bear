@@ -76,7 +76,8 @@ export default {
       return value;
     },
     generateEntitySchema(checkGroupKey, checkGroupIndex) {
-      const newSchema = { name: checkGroupKey, label: this.checkGroup.labelValue[checkGroupIndex] || checkGroupKey };
+      const labelValue = this.checkGroup?.labelValue || {};
+      const newSchema = { name: checkGroupKey, label: labelValue[checkGroupIndex] || checkGroupKey };
       const entitySchema = {};
       entitySchema[checkGroupKey] = { ...this.state.defaultEntitySchema, ...newSchema };
 
