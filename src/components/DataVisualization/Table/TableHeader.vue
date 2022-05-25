@@ -2,9 +2,8 @@
   <div class="table-header-container pb-row">
     <div
       v-for="(column, index) in header"
-      v-show="test(index)"
+      v-show="!hiddenColumnsIndex.includes(index)"
       :key="column.label"
-      class="test"
       :class="columnClasses(column.size, index)"
       :style="columnStyle(index)"
     >
@@ -113,10 +112,9 @@ export default {
   },
 
   methods: {
-    test(index) {
-      return !this.hiddenColumnsIndex.includes(index);
-    },
-
+    /**
+     * Used to set the priority of the column
+     */
     columnStyle(index) {
       const hiddenColumns = this.hiddenColumnsIndex.map(columnIndex => ({ ...this.header[columnIndex], index: columnIndex }))
         .filter(columnIndex => columnIndex !== undefined);
@@ -176,9 +174,6 @@ export default {
     display: flex;
     padding: 8px;
 
-    .test {
-      order: -999;
-    }
     small {
       text-transform: uppercase;
     }

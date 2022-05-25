@@ -114,6 +114,18 @@ export default {
       return rows.sort((current, next) => this.sort(current[columnIndex], next[columnIndex], type));
     },
 
+    headerColumns() {
+      return Array.from(
+        document.body.getElementsByClassName('table-header-container')[0]
+          ?.childNodes || [],
+      );
+    },
+
+    shownHeadersColumns() {
+      return Array.from(this.headerColumns.filter(value => value.offsetTop !== undefined))
+        .filter((_, idx) => !this.state.hiddenColumnsIndex.includes(idx));
+    },
+
     calculatedMaxHeight() {
       if (!this.maxHeight) return;
       if (!this.hasActionsBar) return this.maxHeight;
@@ -133,6 +145,7 @@ export default {
   beforeDestroy() {
     window.removeEventListener('resize', this.onWindowResize);
   },
+
   methods: {
     setWindowWidth({ target } = {}) {
       if (!target) return;
@@ -148,20 +161,19 @@ export default {
     setHiddenColumns() {
       this.state.hiddenColumnsIndex = [];
       this.$nextTick(() => {
-        const headerColumns = Array.from(
-          document.body.getElementsByClassName('table-header-container')[0]
-            ?.childNodes || [],
-        );
-
-        const offsets = headerColumns
+        const columnsOffset = this.headerColumns
           .map(node => node.offsetTop)
           .filter(value => value !== undefined);
-        if (!offsets.length) return;
+        if (!columnsOffset.length) return;
 
-        this.state.hiddenColumnsIndex = offsets.reduce((acc, curr, index) => {
+        /**
+         * Here, we are verifying if the column header was wrapped.
+         * If yes, ew need to hide this column.
+         */
+        this.state.hiddenColumnsIndex = columnsOffset.reduce((acc, curr, index) => {
           if (index === 0) return acc;
 
-          if (curr === offsets[0]) return acc;
+          if (curr === columnsOffset[0]) return acc;
 
           if (this.hasActionColumn && index === this.header.length)
             acc.push('action');
@@ -170,16 +182,20 @@ export default {
           return acc;
         }, []);
 
+        /**
+         * If there is any hidden column, we need to verify if there is enough space to the expand icon appears.
+         * If not, we need to subtract the last column size.
+         * If yes, we need to verify what size the expand icon should be.
+         */
+
         if (this.state.hiddenColumnsIndex) {
-          const shownHeaders = Array.from(headerColumns.filter(value => value.offsetTop !== undefined))
-            .filter((_, idx) => !this.state.hiddenColumnsIndex.includes(idx));
           // eslint-disable-next-line no-nested-ternary
           const sizeWord = this.windowWidth < 576 ? '' : this.windowWidth < 768 ? 'sm-' : this.windowWidth < 993 ? 'md-' : 'lg-';
           const sizeClass = `pb-col-${sizeWord}`;
 
-          const headerColumnSize = shownHeaders.reduce((acc, curr, index) => {
+          const headerColumnSize = this.shownHeadersColumns.reduce((acc, curr, index) => {
             /** expand div */
-            if (index === shownHeaders.length - 1) return acc;
+            if (index === this.shownHeadersColumns.length - 1) return acc;
 
             const classList = Array.from(curr.classList);
             const currentClass = classList.find(value => value.includes(sizeClass));
@@ -199,7 +215,13 @@ export default {
       });
     },
 
+    /**
+     * This function is responsible for add the classes to the columns;
+     */
     columnClasses(size, index) {
+      /**
+       * We are using the variable shouldSubtractLastColumnSize to verify if we need to subtract the last column size.
+       */
       const shownHeaders = Array.from(Array.from(
         document.body.getElementsByClassName('table-header-container')[0]
           ?.childNodes || [],
@@ -210,10 +232,6 @@ export default {
         ? 1
         : 0;
 
-      if (minus) {
-        console.log(index);
-        console.log(minus);
-      }
       return [
         `pb-col-${this.getSmallColumnSize(size) - minus}`,
         `pb-col-sm-${this.getSmallColumnSize(size) - minus}`,
