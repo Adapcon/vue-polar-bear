@@ -11,9 +11,9 @@
       <div class="table-row pb-row">
         <div
           v-for="(column, columnIndex) in row"
-          v-show="!hiddenColumns.includes(columnIndex)"
+          v-show="!hiddenColumnsIndex.includes(columnIndex)"
           :key="columnIndex"
-          :class="columnClasses(header[columnIndex].size)"
+          :class="columnClasses(header[columnIndex].size, columnIndex)"
         >
           <div class="table-column">
             <img
@@ -54,8 +54,11 @@
         </div>
 
         <div
-          v-if="hasActionColumn && !hiddenColumns.includes('action')"
+          v-if="hasActionColumn && !hiddenColumnsIndex.includes('action')"
           :class="columnClasses(actionsSize)"
+          :style="{
+            order: 1000,
+          }"
         >
           <div class="column">
             <slot
@@ -92,7 +95,7 @@ export default {
     hasActionColumn: { type: Boolean, default: true },
     maxHeight: { type: String, default: '' },
     actionsSize: { type: Number, default: 1 },
-    hiddenColumns: { type: Array, default: () => [] },
+    hiddenColumnsIndex: { type: Array, default: () => [] },
     columnClasses: { type: Function, required: true },
   },
 

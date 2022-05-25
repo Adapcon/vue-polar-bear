@@ -22,8 +22,9 @@
       :has-action-column="hasActionColumn"
       :has-sort="hasSort"
       :actions-size="actionsSize"
-      :hidden-columns="state.hiddenColumns"
+      :hidden-columns-index.sync="state.hiddenColumnsIndex"
       :column-classes="columnClasses"
+      :expand-rows-column-size="state.expandRowsColumnSize"
       :expanded.sync="state.expanded"
       @sort="(activeSorting) => (state.activeSorting = activeSorting)"
     />
@@ -39,7 +40,7 @@
       :has-action-column="hasActionColumn"
       :max-height="calculatedMaxHeight"
       :actions-size="actionsSize"
-      :hidden-columns="state.hiddenColumns"
+      :hidden-columns-index="state.hiddenColumnsIndex"
       :column-classes="columnClasses"
     >
       <template #actions="props">
@@ -90,8 +91,10 @@ export default {
         isMobile: window.innerWidth <= 375,
         activeSorting: {},
         searchTerm: '',
-        hiddenColumns: [],
+        hiddenColumnsIndex: [],
         expanded: false,
+        shouldSubtractLastColumnSize: null,
+        expandRowsColumnSize: 1,
       },
     };
   },
@@ -124,16 +127,12 @@ export default {
 
   mounted() {
     this.setHiddenColumns();
-    window.addEventListener('resize', e => {
-      this.setWindowWidth(e);
-      this.setHiddenColumns();
-    });
+    window.addEventListener('resize', this.onWindowResize);
   },
 
   beforeDestroy() {
-    window.removeEventListener('resize', this.setWindowWidth);
+    window.removeEventListener('resize', this.onWindowResize);
   },
-
   methods: {
     setWindowWidth({ target } = {}) {
       if (!target) return;
@@ -141,9 +140,13 @@ export default {
       this.windowWidth = target.innerWidth;
     },
 
-    setHiddenColumns() {
-      this.state.hiddenColumns = [];
+    onWindowResize(e) {
+      this.setWindowWidth(e);
+      this.setHiddenColumns();
+    },
 
+    setHiddenColumns() {
+      this.state.hiddenColumnsIndex = [];
       this.$nextTick(() => {
         const headerColumns = Array.from(
           document.body.getElementsByClassName('table-header-container')[0]
@@ -155,7 +158,7 @@ export default {
           .filter(value => value !== undefined);
         if (!offsets.length) return;
 
-        this.state.hiddenColumns = offsets.reduce((acc, curr, index) => {
+        this.state.hiddenColumnsIndex = offsets.reduce((acc, curr, index) => {
           if (index === 0) return acc;
 
           if (curr === offsets[0]) return acc;
@@ -166,15 +169,57 @@ export default {
 
           return acc;
         }, []);
+
+        if (this.state.hiddenColumnsIndex) {
+          const shownHeaders = Array.from(headerColumns.filter(value => value.offsetTop !== undefined))
+            .filter((_, idx) => !this.state.hiddenColumnsIndex.includes(idx));
+          // eslint-disable-next-line no-nested-ternary
+          const sizeWord = this.windowWidth < 576 ? '' : this.windowWidth < 768 ? 'sm-' : this.windowWidth < 993 ? 'md-' : 'lg-';
+          const sizeClass = `pb-col-${sizeWord}`;
+
+          const headerColumnSize = shownHeaders.reduce((acc, curr, index) => {
+            /** expand div */
+            if (index === shownHeaders.length - 1) return acc;
+
+            const classList = Array.from(curr.classList);
+            const currentClass = classList.find(value => value.includes(sizeClass));
+            return [...acc, Number(currentClass?.replace(/\D/g, ''))];
+          }, []);
+
+          const totalSize = headerColumnSize.reduce((acc, curr) => acc + curr, 0);
+          const shouldSubtractLastColumnSize = totalSize >= 12;
+          this.state.shouldSubtractLastColumnSize = shouldSubtractLastColumnSize;
+          this.state.columnWithReducedSize = shouldSubtractLastColumnSize
+            ? headerColumnSize.length - 1
+            : null;
+          this.state.expandRowsColumnSize = Math.max(12 - totalSize, 1);
+        } else {
+          this.state.columnWithReducedSize = null;
+        }
       });
     },
 
-    columnClasses(size) {
+    columnClasses(size, index) {
+      const shownHeaders = Array.from(Array.from(
+        document.body.getElementsByClassName('table-header-container')[0]
+          ?.childNodes || [],
+      ).filter(value => value.offsetTop !== undefined))
+        .filter((_, idx) => !this.state.hiddenColumnsIndex.includes(idx));
+
+      const minus = index === shownHeaders.length - 1 && this.state.shouldSubtractLastColumnSize
+        ? 1
+        : 0;
+
+      if (minus) {
+        console.log(index);
+        console.log(minus);
+      }
       return [
-        `pb-col-lg-${this.getColumnSize(size)}`,
-        `pb-col-xl-${this.getColumnSize(size)}`,
-        `pb-col-sm-${this.getSmallColumnSize(size)}`,
-        `pb-col-md-${this.getMediumColumnSize(size)}`,
+        `pb-col-${this.getSmallColumnSize(size) - minus}`,
+        `pb-col-sm-${this.getSmallColumnSize(size) - minus}`,
+        `pb-col-md-${this.getMediumColumnSize(size) - minus}`,
+        `pb-col-xl-${this.getColumnSize(size) - minus}`,
+        `pb-col-lg-${this.getColumnSize(size) - minus}`,
       ];
     },
 

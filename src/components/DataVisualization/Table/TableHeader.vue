@@ -2,15 +2,19 @@
   <div class="table-header-container pb-row">
     <div
       v-for="(column, index) in header"
-      v-show="!hiddenColumns.includes(index)"
+      v-show="test(index)"
       :key="column.label"
-      :class="columnClasses(column.size)"
+      class="test"
+      :class="columnClasses(column.size, index)"
+      :style="columnStyle(index)"
     >
       <div class="table-column">
         <small
           class="pb"
-          style="color: var(--color-gray-90);"
-        >{{ column.label }}</small>
+          style="color: var(--color-gray-90)"
+        >{{
+          column.label
+        }}</small>
 
         <PbSortIcon
           v-if="hasSort"
@@ -23,24 +27,34 @@
     </div>
 
     <div
-      v-if="hasActionColumn && !hiddenColumns.includes('action')"
+      v-if="hasActionColumn && !hiddenColumnsIndex.includes('action')"
       :class="columnClasses(actionsSize)"
+      :style="{
+        order: 1000,
+      }"
     >
       <div class="table-column">
         <small
           class="pb"
-          style="color: var(--color-gray-90);"
+          style="color: var(--color-gray-90)"
         >AÇÕES</small>
       </div>
     </div>
     <div
       v-if="showExpandIcon"
-      class="pb-col-1"
+      :class="expandIconClass"
+      :style="{
+        order: 1001,
+      }"
     >
-      <div class="table-column">
+      <div
+        class="table-column"
+        style="justify-content: flex-end;"
+      >
         <PbIcon
+          class="expand-icon"
           :icon="expandIcon"
-          :style="`color: var(--color-${expandIconColor}); cursor: pointer;`"
+          :style="`color: var(--color-${expandIconColor});`"
           @click="$emit('update:expanded', !expanded)"
         />
       </div>
@@ -66,9 +80,10 @@ export default {
     hasActionColumn: { type: Boolean, default: true },
     hasSort: { type: Boolean, default: true },
     actionsSize: { type: Number, default: 1 },
-    hiddenColumns: { type: Array, default: () => [] },
+    hiddenColumnsIndex: { type: Array, default: () => [] },
     columnClasses: { type: Function, required: true },
     expanded: { type: Boolean, default: false },
+    expandRowsColumnSize: { type: Number, default: 1 },
   },
 
   data() {
@@ -80,6 +95,10 @@ export default {
   },
 
   computed: {
+    expandIconClass() {
+      return `pb-col-${this.expandRowsColumnSize}`;
+    },
+
     expandIcon() {
       return this.expanded ? 'fas fa-compress' : 'fas fa-expand';
     },
@@ -89,10 +108,40 @@ export default {
     },
 
     showExpandIcon() {
-      return this.hiddenColumns.length;
+      return this.hiddenColumnsIndex.length;
     },
   },
+
   methods: {
+    test(index) {
+      return !this.hiddenColumnsIndex.includes(index);
+    },
+
+    columnStyle(index) {
+      const hiddenColumns = this.hiddenColumnsIndex.map(columnIndex => ({ ...this.header[columnIndex], index: columnIndex }))
+        .filter(columnIndex => columnIndex !== undefined);
+
+      const isAHiddenColumn = this.hiddenColumnsIndex.some(hiddenColumnIndex => hiddenColumnIndex === index);
+      if (isAHiddenColumn) {
+        return {
+          order: this.header[index].priority,
+        };
+      }
+
+      const hiddenColumnsWithMorePriority = hiddenColumns.filter(column => column.priority < this.header[index].priority);
+      if (!hiddenColumnsWithMorePriority.length)
+        return;
+
+      const newHiddenColumns = [...this.hiddenColumnsIndex
+        .filter(hiddenColumnIndex => hiddenColumnIndex !== hiddenColumnsWithMorePriority[0].index),
+      index];
+
+      this.$emit('update:hidden-columns-index', newHiddenColumns);
+      return {
+        order: this.header[index].priority,
+      };
+    },
+
     getSortType(columnIndex) {
       return this.state.sorts[columnIndex]
         ? this.state.sorts[columnIndex].type
@@ -127,6 +176,9 @@ export default {
     display: flex;
     padding: 8px;
 
+    .test {
+      order: -999;
+    }
     small {
       text-transform: uppercase;
     }
@@ -134,6 +186,18 @@ export default {
     .sort-icon {
       margin-left: 8px;
       font-size: 13px;
+    }
+
+    .expand-icon {
+      cursor: pointer;
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+      &:active {
+        transform: scale(1);
+      }
     }
   }
 }
