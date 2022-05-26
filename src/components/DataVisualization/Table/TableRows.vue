@@ -6,7 +6,10 @@
     <div
       v-for="(row, index) in rows"
       :key="index"
-      :class="{ 'row-highlight': highlightOnHover, 'row-expanded': expandedRows.includes(index) }"
+      :class="{
+        'row-highlight': highlightOnHover,
+        'row-expanded': expandedRows.includes(index),
+      }"
     >
       <div
         class="table-row pb-row"
@@ -78,14 +81,7 @@
             order: 1001,
           }"
         >
-          <div
-            class="table-column"
-            style="
-              display: flex;
-              justify-content: flex-end;
-              align-items: center;
-            "
-          >
+          <div class="table-column align-left">
             <PbIcon
               class="expand-icon"
               :icon="expandIcon(index)"
@@ -104,12 +100,7 @@
             class="pb-col-12"
           >
             <div class="table-column">
-              <small
-                class="pb"
-                style="color: var(--color-gray-90); margin-bottom: 8px !important;"
-              >{{
-                header[columnIndex].label
-              }}</small>
+              <small class="pb">{{ header[columnIndex].label }}</small>
               <img
                 v-if="isImage(column.value)"
                 :src="column.value"
@@ -125,7 +116,9 @@
                 >
                   <p
                     :class="`${
-                      ellipsisOnOverflow ? 'pb-md ellipsis-on-overflow' : 'pb-md'
+                      ellipsisOnOverflow
+                        ? 'pb-md ellipsis-on-overflow'
+                        : 'pb-md'
                     }`"
                   >
                     {{ column.value }}
@@ -196,7 +189,10 @@ export default {
   watch: {
     expandAll: {
       handler(newValue) {
-        this.$emit('update:expandedRows', newValue ? this.rows.map((_, index) => index) : []);
+        this.$emit(
+          'update:expandedRows',
+          newValue ? this.rows.map((_, index) => index) : [],
+        );
       },
     },
   },
@@ -213,7 +209,12 @@ export default {
     updateExpandedRows(index) {
       const expandRow = !this.expandedRows.includes(index);
 
-      this.$emit('update:expandedRows', expandRow ? [...this.expandedRows, index] : this.expandedRows.filter(i => i !== index));
+      this.$emit(
+        'update:expandedRows',
+        expandRow
+          ? [...this.expandedRows, index]
+          : this.expandedRows.filter(i => i !== index),
+      );
     },
   },
 };
@@ -238,6 +239,10 @@ export default {
     .table-column {
       padding: 8px;
 
+      small {
+        color: var(--color-gray-90);
+        margin-bottom: 8px !important;
+      }
       .ellipsis-on-overflow {
         white-space: nowrap;
         overflow: hidden;
@@ -262,6 +267,12 @@ export default {
           transform: scale(1);
         }
       }
+    }
+
+    .align-left {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
     }
   }
 }

@@ -10,7 +10,6 @@
       <div class="table-column">
         <small
           class="pb"
-          style="color: var(--color-gray-90)"
         >{{
           column.label
         }}</small>
@@ -35,7 +34,6 @@
       <div class="table-column">
         <small
           class="pb"
-          style="color: var(--color-gray-90)"
         >AÇÕES</small>
       </div>
     </div>
@@ -176,6 +174,7 @@ export default {
 
     small {
       text-transform: uppercase;
+      color: var(--color-gray-90) !important;
     }
 
     .sort-icon {

@@ -127,7 +127,7 @@ export default {
 
     shownHeadersColumns() {
       return Array.from(this.headerColumns.filter(value => value.offsetTop !== undefined))
-        .filter((_, idx) => !this.state.hiddenColumnsIndex.includes(idx));
+        .filter((, idx) => !this.state.hiddenColumnsIndex.includes(idx));
     },
 
     calculatedMaxHeight() {
