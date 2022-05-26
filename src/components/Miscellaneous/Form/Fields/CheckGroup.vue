@@ -91,13 +91,7 @@ export default {
     },
 
     validateRequired() {
-      let isValid = true;
-      this.checkGroup.forEach((checkGroupEntity, checkGroupIndex) => {
-        const reference = this.$refs[`form-check-group-${checkGroupIndex}`][0];
-        if (reference.validateRequired && isValid)
-          isValid = reference.validateRequired();
-      });
-      return isValid;
+      return typeof this.value === 'object' && this.value.length > 0;
     },
   },
 };
