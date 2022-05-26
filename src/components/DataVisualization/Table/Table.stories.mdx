@@ -10,9 +10,9 @@ import PbButton from '../../Buttons/Button/Button.vue';
     header: {
       type: 'array',
       defaultValue: [
-        { label: 'Nome', size: 2, priority: 1 },
-        { label: 'Idade', size: 1, priority: 3 },
-        { label: 'Banco Principal', size: 2, priority: 2 },
+        { label: 'Nome', size: 3, priority: 1 },
+        { label: 'Idade', size: 3, priority: 3 },
+        { label: 'Banco Principal', size: 3, priority: 2 },
       ],
     },
     rows: {
@@ -124,7 +124,7 @@ export const TemplateWithoutActions = (args, { argTypes }) => ({
         :has-actions-bar="hasActionsBar"
         :max-height="maxHeight"
         :actions-size="actionsSize"
-      />  
+      />
     </div>
   `,
 });

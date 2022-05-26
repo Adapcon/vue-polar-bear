@@ -47,6 +47,13 @@
         </div>
       </template>
     </PbDrawer>
+
+    <PbToastNotification
+      ref="toastNotification"
+      :message="state.toastNotification.message"
+      :duration="state.toastNotification.duration"
+      :background-color="state.toastNotification.backgroundColor"
+    />
   </section>
 </template>
 
@@ -54,6 +61,7 @@
 import PbButton from '../../Buttons/Button/Button.vue';
 import PbDrawer from '../../MenusAndToolbars/Drawer/Drawer.vue';
 import PbForm from '../Form/Form.vue';
+import PbToastNotification from '../../NotificationsAndModals/ToastNotification/ToastNotification.vue';
 
 export default {
   name: 'PbFormDrawer',
@@ -61,6 +69,7 @@ export default {
     PbForm,
     PbButton,
     PbDrawer,
+    PbToastNotification,
   },
 
   props: {
@@ -71,6 +80,11 @@ export default {
   data() {
     return {
       state: {
+        toastNotification: {
+          message: '',
+          duration: 5000,
+          backgroundColor: 'success',
+        },
         loading: {
           form: false,
         },
@@ -187,6 +201,7 @@ export default {
             enabledValue: {
               type: 'array',
               label: 'Dados da seleção',
+              required: true,
               contentArray: {
                 type: 'string',
                 label: 'Valor do select',
@@ -332,10 +347,16 @@ export default {
 
     currentStepIsValid() {
       const stepRef = this.$refs['form-steps'];
-      return stepRef.validateRequired();
+      const response = stepRef.validateRequired();
+
+      if (response !== true)
+        this.toggleToastNotification({ message: response.message, status: 'danger' });
+
+      return response === true;
     },
 
     includeField() {
+      if (!this.currentStepIsValid()) return;
       this.$emit('include-field');
     },
 
@@ -344,6 +365,12 @@ export default {
       setTimeout(() => {
         this.state.loading.form = false;
       }, 15);
+    },
+
+    toggleToastNotification({ message, status = 'success' }) {
+      this.state.toastNotification.message = message;
+      this.state.toastNotification.backgroundColor = status;
+      this.$refs.toastNotification.toggle();
     },
   },
 };

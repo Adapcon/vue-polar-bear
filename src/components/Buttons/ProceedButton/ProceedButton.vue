@@ -9,7 +9,10 @@
       {{ title }}
     </p>
 
-    <PbIcon icon="fas fa-arrow-up fa-rotate-90" style="color: var(--color-secondary);" />
+    <PbIcon
+      icon="fas fa-arrow-up fa-rotate-90"
+      style="color: var(--color-secondary);"
+    />
   </div>
 </template>
 
