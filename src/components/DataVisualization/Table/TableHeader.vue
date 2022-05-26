@@ -54,7 +54,7 @@
           class="expand-icon"
           :icon="expandIcon"
           :style="`color: var(--color-${expandIconColor});`"
-          @click="$emit('update:expanded', !expanded)"
+          @click="$emit('update:expand-all', !expandAll)"
         />
       </div>
     </div>
@@ -81,7 +81,7 @@ export default {
     actionsSize: { type: Number, default: 1 },
     hiddenColumnsIndex: { type: Array, default: () => [] },
     columnClasses: { type: Function, required: true },
-    expanded: { type: Boolean, default: false },
+    expandAll: { type: Boolean, default: false },
     expandRowsColumnSize: { type: Number, default: 1 },
   },
 
@@ -99,11 +99,11 @@ export default {
     },
 
     expandIcon() {
-      return this.expanded ? 'fas fa-compress' : 'fas fa-expand';
+      return this.expandAll ? 'fas fa-compress' : 'fas fa-expand';
     },
 
     expandIconColor() {
-      return this.expanded ? 'primary' : 'gray-90';
+      return this.expandAll ? 'primary' : 'gray-90';
     },
 
     showExpandIcon() {

@@ -6,9 +6,12 @@
     <div
       v-for="(row, index) in rows"
       :key="index"
-      :class="{ 'row-highlight': highlightOnHover }"
+      :class="{ 'row-highlight': highlightOnHover, 'row-expanded': expandedRows.includes(index) }"
     >
-      <div class="table-row pb-row">
+      <div
+        class="table-row pb-row"
+        style="align-items: center"
+      >
         <div
           v-for="(column, columnIndex) in row"
           v-show="!hiddenColumnsIndex.includes(columnIndex)"
@@ -68,6 +71,82 @@
             />
           </div>
         </div>
+        <div
+          v-if="showExpandIcon"
+          :class="expandIconClass"
+          :style="{
+            order: 1001,
+          }"
+        >
+          <div
+            class="table-column"
+            style="
+              display: flex;
+              justify-content: flex-end;
+              align-items: center;
+            "
+          >
+            <PbIcon
+              class="expand-icon"
+              :icon="expandIcon(index)"
+              :style="`color: var(--color-primary);`"
+              @click="updateExpandedRows(index)"
+            />
+          </div>
+        </div>
+      </div>
+      <div v-if="expandedRows.includes(index)">
+        <div class="table-row pb-row">
+          <div
+            v-for="(column, columnIndex) in row"
+            v-show="hiddenColumnsIndex.includes(columnIndex)"
+            :key="columnIndex"
+            class="pb-col-12"
+          >
+            <div class="table-column">
+              <small
+                class="pb"
+                style="color: var(--color-gray-90); margin-bottom: 8px !important;"
+              >{{
+                header[columnIndex].label
+              }}</small>
+              <img
+                v-if="isImage(column.value)"
+                :src="column.value"
+                class="image"
+              >
+
+              <div v-else>
+                <PbHint
+                  :hint-text="column.value"
+                  :disabled="!ellipsisOnOverflow"
+                  :show-on-overflow-only="true"
+                  position="bottom-right"
+                >
+                  <p
+                    :class="`${
+                      ellipsisOnOverflow ? 'pb-md ellipsis-on-overflow' : 'pb-md'
+                    }`"
+                  >
+                    {{ column.value }}
+                  </p>
+                </PbHint>
+
+                <p class="pb-sm secondary-value">{{ column.secondaryValue }}</p>
+              </div>
+
+              <div>
+                <PbBadge
+                  v-for="badge of column.badges"
+                  :key="badge"
+                  :title="badge"
+                  :wrap-content="true"
+                  style="margin-right: 2px"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -77,6 +156,7 @@
 import { isImage } from 'adapcon-utils-js';
 import PbHint from '../../Miscellaneous/Hint/Hint.vue';
 import PbBadge from '../../Miscellaneous/Badge/Badge.vue';
+import PbIcon from '../../Miscellaneous/Icon/Icon';
 
 export default {
   name: 'TableRows',
@@ -84,6 +164,7 @@ export default {
   components: {
     PbHint,
     PbBadge,
+    PbIcon,
   },
 
   props: {
@@ -95,12 +176,45 @@ export default {
     hasActionColumn: { type: Boolean, default: true },
     maxHeight: { type: String, default: '' },
     actionsSize: { type: Number, default: 1 },
+    expandedRows: { type: Array, default: () => [] },
     hiddenColumnsIndex: { type: Array, default: () => [] },
     columnClasses: { type: Function, required: true },
+    expandRowsColumnSize: { type: Number, default: 1 },
+    expandAll: { type: Boolean, default: false },
+  },
+
+  computed: {
+    expandIconClass() {
+      return `pb-col-${this.expandRowsColumnSize}`;
+    },
+
+    showExpandIcon() {
+      return this.hiddenColumnsIndex.length;
+    },
+  },
+
+  watch: {
+    expandAll: {
+      handler(newValue) {
+        this.$emit('update:expandedRows', newValue ? this.rows.map((_, index) => index) : []);
+      },
+    },
   },
 
   methods: {
     isImage,
+
+    expandIcon(index) {
+      return this.expandedRows.includes(index)
+        ? 'fas fa-chevron-up'
+        : 'fas fa-chevron-up fa-rotate-180';
+    },
+
+    updateExpandedRows(index) {
+      const expandRow = !this.expandedRows.includes(index);
+
+      this.$emit('update:expandedRows', expandRow ? [...this.expandedRows, index] : this.expandedRows.filter(i => i !== index));
+    },
   },
 };
 </script>
@@ -112,6 +226,10 @@ export default {
   .row-highlight > :hover {
     background-color: var(--color-gray);
     transition: 0.5s;
+  }
+
+  .row-expanded {
+    background-color: var(--color-gray);
   }
 
   .table-row {
@@ -134,6 +252,15 @@ export default {
       .secondary-value {
         color: var(--color-gray-40);
         margin-top: 8px !important;
+      }
+
+      .expand-icon {
+        cursor: pointer;
+        transition: transform 0.2s;
+
+        &:active {
+          transform: scale(1);
+        }
       }
     }
   }

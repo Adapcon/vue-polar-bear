@@ -25,7 +25,7 @@
       :hidden-columns-index.sync="state.hiddenColumnsIndex"
       :column-classes="columnClasses"
       :expand-rows-column-size="state.expandRowsColumnSize"
-      :expanded.sync="state.expanded"
+      :expand-all.sync="state.expandAll"
       @sort="(activeSorting) => (state.activeSorting = activeSorting)"
     />
 
@@ -40,8 +40,11 @@
       :has-action-column="hasActionColumn"
       :max-height="calculatedMaxHeight"
       :actions-size="actionsSize"
+      :expand-rows-column-size="state.expandRowsColumnSize"
       :hidden-columns-index="state.hiddenColumnsIndex"
       :column-classes="columnClasses"
+      :expanded-rows.sync="state.expandedRows"
+      :expand-all="state.expandAll"
     >
       <template #actions="props">
         <slot
@@ -92,7 +95,8 @@ export default {
         activeSorting: {},
         searchTerm: '',
         hiddenColumnsIndex: [],
-        expanded: false,
+        expandAll: false,
+        expandedRows: [],
         shouldSubtractLastColumnSize: null,
         expandRowsColumnSize: 1,
       },
