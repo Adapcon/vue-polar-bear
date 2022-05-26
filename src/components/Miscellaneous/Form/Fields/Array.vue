@@ -66,7 +66,6 @@ export default {
 
   methods: {
     addArrayIndex() {
-      if (!this.validateRequired()) return;
       this.arrayValue.push(this.entitySchema.contentArray.defaultValue);
       this.$emit('input', this.arrayValue);
     },
@@ -83,13 +82,7 @@ export default {
     },
 
     validateRequired() {
-      let isValid = true;
-      this.arrayValue.forEach((arrayEntity, arrayIndex) => {
-        const reference = this.$refs[`form-${arrayIndex}`][0];
-        if (reference.validateRequired && isValid)
-          isValid = reference.validateRequired();
-      });
-      return isValid;
+      return typeof this.value === 'object' && this.value.length > 0;
     },
   },
 };

@@ -51,7 +51,7 @@
                 :key="badge"
                 :title="badge"
                 :wrap-content="true"
-                style="margin-right: 2px"
+                style="margin-right: 2px;"
               />
             </div>
           </div>

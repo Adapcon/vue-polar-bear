@@ -61,6 +61,10 @@ export default {
     updateSelection(optionSelected) {
       this.selectValue = optionSelected.option.value;
     },
+
+    validateRequired() {
+      return !!this.selectValue;
+    },
   },
 };
 </script>
