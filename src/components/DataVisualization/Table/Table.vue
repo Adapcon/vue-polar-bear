@@ -226,11 +226,12 @@ export default {
       /**
        * We are using the variable shouldSubtractLastColumnSize to verify if we need to subtract the last column size.
        */
-      const shownHeaders = Array.from(Array.from(
+      const allHeaders = Array.from(Array.from(
         document.body.getElementsByClassName('table-header-container')[0]
           ?.childNodes || [],
-      ).filter(value => value.offsetTop !== undefined))
-        .filter((_, idx) => !this.state.hiddenColumnsIndex.includes(idx));
+      )).filter(value => value.offsetTop !== undefined);
+
+      const shownHeaders = allHeaders.filter((_, idx) => !this.state.hiddenColumnsIndex.includes(idx));
 
       const minus = index === shownHeaders.length - 1 && this.state.shouldSubtractLastColumnSize
         ? 1

@@ -36,9 +36,7 @@
                 position="bottom-right"
               >
                 <p
-                  :class="`${
-                    ellipsisOnOverflow ? 'pb-md ellipsis-on-overflow' : 'pb-md'
-                  }`"
+                  :class="ellipsisClass"
                 >
                   {{ column.value }}
                 </p>
@@ -115,11 +113,7 @@
                   position="bottom-right"
                 >
                   <p
-                    :class="`${
-                      ellipsisOnOverflow
-                        ? 'pb-md ellipsis-on-overflow'
-                        : 'pb-md'
-                    }`"
+                    :class="ellipsisClass"
                   >
                     {{ column.value }}
                   </p>
@@ -181,18 +175,29 @@ export default {
       return `pb-col-${this.expandRowsColumnSize}`;
     },
 
+    internalExpandedRows: {
+      get() {
+        return this.expandedRows;
+      },
+
+      set(newValue) {
+        this.$emit('update:expandedRows', newValue);
+      },
+    },
+
     showExpandIcon() {
       return this.hiddenColumnsIndex.length;
+    },
+
+    ellipsisClass() {
+      return this.ellipsisOnOverflow ? 'pb-md ellipsis-on-overflow' : 'pb-md';
     },
   },
 
   watch: {
     expandAll: {
       handler(newValue) {
-        this.$emit(
-          'update:expandedRows',
-          newValue ? this.rows.map((_, index) => index) : [],
-        );
+        this.internalExpandedRows = newValue ? this.rows.map((_, index) => index) : [];
       },
     },
   },
@@ -209,12 +214,9 @@ export default {
     updateExpandedRows(index) {
       const expandRow = !this.expandedRows.includes(index);
 
-      this.$emit(
-        'update:expandedRows',
-        expandRow
-          ? [...this.expandedRows, index]
-          : this.expandedRows.filter(i => i !== index),
-      );
+      this.internalExpandedRows = expandRow
+        ? [...this.expandedRows, index]
+        : this.expandedRows.filter(i => i !== index);
     },
   },
 };
