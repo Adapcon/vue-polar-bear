@@ -49,13 +49,13 @@
                     v-if="!showOnlyIcon"
                     :class="{ 'abbreviatedText': abbreviatedText }"
                   >
-                    <b
+                    <p
                       v-if="!state.editTab"
-                      class="pb selected-tab"
+                      class="pb-strong selected-tab"
                       :style="`color: var(--color-${color});`"
                     >
                       {{ tabSettings.label }}
-                    </b>
+                    </p>
                     <input
                       v-if="state.editTab"
                       v-focus
@@ -97,11 +97,11 @@
                     v-if="!showOnlyIcon"
                     :class="{ 'abbreviatedText': abbreviatedText }"
                   >
-                    <b
-                      class="pb"
+                    <p
+                      class="pb-strong"
                     >
                       {{ tabSettings.label }}
-                    </b>
+                    </p>
                   </div>
                 </div>
                 <p
