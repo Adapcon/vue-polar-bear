@@ -6,10 +6,10 @@
           <div class="pb-col-12 pb-col-md-10">
             <div class="sidebar-area">
               <PbButton
-                v-if="!state.isMobileCell"
-                style="margin-top: 10px;"
+                v-if="!state.isMobileCell && !state.isMobileTablet"
                 color="primary"
                 button-style="regular"
+                class="back-button"
                 icon="fas fa-arrow-up fa-rotate-270"
                 @click.native="backFunction"
               />
@@ -94,13 +94,19 @@ export default {
 
 <style lang="scss" scoped>
 .layout-grid-container {
+  padding-top: 28px;
+  
   .sidebar {
     border-right: solid #eeeeee 1px;
-    margin: 28px 0px 40px;
+    margin: 0px 0px 40px;
 
     .sidebar-area {
       display: flex;
       align-items: flex-start;
+
+      .back-button {
+        margin-top: 0px;
+      }
     }
 
     .sidebar-content {
@@ -110,7 +116,6 @@ export default {
 
   .tool-bar {
     height: 40px;
-    margin-top: 28px;
   }
 
   .main {
