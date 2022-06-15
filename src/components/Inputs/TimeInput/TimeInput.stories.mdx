@@ -1,0 +1,44 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbTimeInput from './TimeInput.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Inputs/PbTimeInput"
+  component={ PbTimeInput }
+  argTypes={{
+    timeValue: {
+      type: 'string',
+      defaultValue: '',
+    },
+    color: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'gray-20',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbTimeInput },
+  template: `
+      <PbTimeInput
+        v-model="timeValue"
+        :color="color"
+      />
+  `,
+});
+
+# **PbTimeInput component**
+### The `PbTimeInput` was created to capture time through user input.
+
+### Purpose and Use case
+
+The `PbTimeInput` component is used to capture time input from the user.
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>
