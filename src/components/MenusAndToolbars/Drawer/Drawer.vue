@@ -27,7 +27,7 @@
             </div>
             <hr class="divider">
           </div>
-          <div class="main">
+          <div class="main pb-scroll-primary">
             <slot name="main" />
           </div>
           <div>
@@ -141,6 +141,7 @@ export default {
     .main {
       padding: 20px;
       flex-grow: 1;
+      overflow: auto;
     }
 
     .footer {
