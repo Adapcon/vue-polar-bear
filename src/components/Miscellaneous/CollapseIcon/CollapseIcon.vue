@@ -20,21 +20,21 @@ export default {
 
 <style lang="scss" scoped>
   .pb-collapse-icon {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     position: relative;
 
     span {
       width: 50%;
-      height: 3px;
+      height: 2px;
       position: absolute;
       top: 50%;
-      transform: translateY(-50%) rotateZ(35deg);
-      border-radius: 1.5px;
+      transform: translateY(-50%) rotateZ(45deg);
+      border-radius: 1px;
       transition: transform .3s ease;
       &:nth-of-type(2) {
-        left: calc(50% + -4px);
-        transform: translateY(-50%) rotateZ(-35deg);
+        left: calc(50% + -3px);
+        transform: translateY(-50%) rotateZ(-45deg);
       }
     }
   }
