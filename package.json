@@ -1,6 +1,6 @@
 {
   "name": "vue-polar-bear",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "author": "adapcon",
   "scripts": {
     "storybook": "start-storybook --quiet -p 6006 -s ./src/static",

@@ -119,7 +119,7 @@ export default {
     validateRequired() {
       try {
         this.state.sortedSchema.forEach(element => {
-          if (!element?.required) return;
+          if (!element?.required || !this.showField(element)) return;
           const reference = this.$refs[`${element.type}-${element.field}`];
           if (!reference) return;
           if (!reference[0]?.validateRequired) return;
