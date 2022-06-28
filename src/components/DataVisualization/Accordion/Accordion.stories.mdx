@@ -1,0 +1,45 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbAccordion from './Accordion.vue';
+
+<Meta
+  title="Components/Data Visualization/PbAccordion"
+  component={ PbAccordion }
+  argTypes={{
+    title: {
+      type: 'text',
+      defaultValue: 'CollapseList',
+    }
+  }}
+/>
+
+# **PbAccordion component**
+### The `PbAccordion` component was created to render an collapse for the user.
+
+### Purpose and Use case
+
+The component have a header with a collapse trigger, and inside it you could show
+what you want inside the slot field.
+
+## Examples
+
+### Default
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbAccordion },
+  template: `
+  <div>
+    <PbAccordion
+      :title="title"
+    >
+      <h4 class="pb" style="color: var(--color-gray-40); padding: 8px 14px">Here you could code what you want!</h4>
+    </PbAccordion>
+  </div>
+  `,
+});
+
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>
