@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="accordion-container">
     <div class="accordion">
       <h6 class="pb">{{ title }}</h6>
       <PbCollapseIcon
@@ -46,14 +46,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.accordion {
-  width: 100%;
-  height: auto;
-  background: var(--color-gray);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 14px;
-  border-radius: 8px;
+
+.accordion-container {
+    width: 100%;
+    height: auto;
+  .accordion {
+    background: var(--color-gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    border-radius: 8px;
+  }
 }
 </style>
