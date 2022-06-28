@@ -4,7 +4,7 @@
       <h6 class="pb">{{ title }}</h6>
       <PbCollapseIcon
         :is-icon-up="state.collapsed"
-        color="gray-20"
+        color="var(--color-gray-20)"
         @click.native="toggleCollapse"
       />
     </div>
