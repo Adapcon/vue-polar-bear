@@ -43,6 +43,7 @@ export { default as PbCard } from './DataVisualization/Card/Card.vue';
 export { default as PbCarousel } from './DataVisualization/Carousel/Carousel.vue';
 export { default as PbDataTable } from './DataVisualization/DataTable/DataTable.vue';
 export { default as PbWorkflowGraph } from './DataVisualization/WorkflowGraph/WorkflowGraph.vue';
+export { default as PbAccordion } from './DataVisualization/Accordion/Accordion.vue';
 
 // ? Inputs
 export { default as PbCheckbox } from './Inputs/Checkbox/Checkbox.vue';
