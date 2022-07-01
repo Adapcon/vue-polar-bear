@@ -1,11 +1,15 @@
 <template>
-  <section class="accordion-container">
-    <div class="accordion">
+  <section
+    class="accordion-container"
+  >
+    <div
+      class="accordion"
+      @click="toggleCollapse"
+    >
       <h6 class="pb">{{ title }}</h6>
       <PbCollapseIcon
         :is-icon-up="state.collapsed"
         color="var(--color-gray-20)"
-        @click.native="toggleCollapse"
       />
     </div>
     <slot v-if="state.collapsed" />
@@ -57,6 +61,7 @@ export default {
     align-items: center;
     padding: 12px 14px;
     border-radius: 8px;
+    cursor: pointer;
   }
 }
 </style>
