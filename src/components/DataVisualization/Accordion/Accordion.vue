@@ -31,12 +31,16 @@ export default {
       type: String,
       default: 'Nome do campo',
     },
+    open: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
     return {
       state: {
-        collapsed: false,
+        collapsed: this.open,
       },
     };
   },
