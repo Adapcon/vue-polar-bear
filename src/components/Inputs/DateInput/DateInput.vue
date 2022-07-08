@@ -1,14 +1,18 @@
 <template>
-  <div class="pb-date-input-container">
+  <div
+    class="pb-date-input-container"
+  >
     <input
-      v-model="inputDate"
+      :v-model="state.typeInput !== 'date' ? placeholder : inputDate"
       class="pb"
-      type="date"
+      :type="state.typeInput"
+      :placeholder="placeholder"
       :style="inputStyle"
       :class="{
         'input-error': !state.validation,
         'white-calendar': color === 'white'
       }"
+      @click="() => changeTypeInput()"
     >
   </div>
 </template>
@@ -20,6 +24,7 @@ export default {
   name: 'PbDateInput',
   props: {
     value: { type: [String, Date], default: '' },
+    placeholder: { type: String, default: '' },
     onValidate: { type: Function, default: null },
     color: {
       type: String,
@@ -31,6 +36,7 @@ export default {
   data() {
     return {
       state: {
+        typeInput: this.placeholder === '' ? 'date' : 'text',
         validation: true,
         changeDate: null,
       },
@@ -79,6 +85,10 @@ export default {
   },
 
   methods: {
+    changeTypeInput() {
+      this.state.typeInput = 'date';
+    },
+
     validate(date) {
       let validation = true;
       if (!this.isValidDate(date))
