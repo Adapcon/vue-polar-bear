@@ -65,7 +65,7 @@ export default {
       },
     },
     focusBlur() {
-      return this.disableTouchKeyboard ? 'blur()' : true;
+      return this.disableSoftKeyboard ? 'blur()' : true;
     },
 
     onFocusBlur: {
