@@ -22,6 +22,10 @@ import { colors } from '@pb/utils/constants.js';
       type: 'boolean',
       defaultValue: false,
     },
+    disableSoftKeyboard: {
+      type: 'boolean',
+      defaultValue: false,
+    },
     color: {
       control: { type: 'select', options: [ ...colors ] },
       defaultValue: 'gray-20',
@@ -72,6 +76,7 @@ export const Template = (args, { argTypes}) => ({
         v-model="value"
         :placeholder="placeholder"
         :disabled="disabled"
+        :disableSoftKeyboard="disableSoftKeyboard"
         :validator="validator"
         :color="color"
         :focus="focus"
