@@ -32,7 +32,7 @@ export default {
 
     disabled: { type: Boolean, default: false },
 
-    disableTouchKeyboard: { type: Boolean, default: false },
+    disableSoftKeyboard: { type: Boolean, default: false },
 
     validator: { type: Function, default: null },
 
@@ -67,7 +67,7 @@ export default {
 
     onFocusBlur: {
       get() {
-        return this.disableTouchKeyboard ? 'blur()' : true;
+        return this.disableSoftKeyboard ? 'blur()' : true;
       },
 
       set(newVal) {
