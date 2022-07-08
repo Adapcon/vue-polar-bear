@@ -64,10 +64,13 @@ export default {
         this.setValue(newVal);
       },
     },
+    focusBlur() {
+      return this.disableTouchKeyboard ? 'blur()' : true;
+    },
 
     onFocusBlur: {
       get() {
-        return this.disableTouchKeyboard ? 'blur()' : true;
+        return this.focusBlur;
       },
 
       set(newVal) {
