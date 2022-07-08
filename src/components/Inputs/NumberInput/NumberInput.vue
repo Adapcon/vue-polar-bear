@@ -3,6 +3,7 @@
     <input
       ref="input"
       v-model="internalValue"
+      :onfocus="onFocusBlur"
       type="number"
       class="pb"
       :class="{
@@ -31,6 +32,8 @@ export default {
 
     disabled: { type: Boolean, default: false },
 
+    disableTouchKeyboard: { type: Boolean, default: false },
+
     validator: { type: Function, default: null },
 
     color: { type: String, default: 'gray-20', validator: validateColor },
@@ -55,6 +58,16 @@ export default {
     internalValue: {
       get() {
         return this.value;
+      },
+
+      set(newVal) {
+        this.setValue(newVal);
+      },
+    },
+
+    onFocusBlur: {
+      get() {
+        return this.disableTouchKeyboard ? 'blur()' : true;
       },
 
       set(newVal) {
