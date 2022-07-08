@@ -32,7 +32,7 @@ export default {
 
     disabled: { type: Boolean, default: false },
 
-    disableTouchKeyboard: { type: Boolean, default: false },
+    disableSoftKeyboard: { type: Boolean, default: false },
 
     validator: { type: Function, default: null },
 

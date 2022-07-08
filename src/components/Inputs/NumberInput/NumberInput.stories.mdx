@@ -22,7 +22,7 @@ import { colors } from '@pb/utils/constants.js';
       type: 'boolean',
       defaultValue: false,
     },
-    disableTouchKeyboard: {
+    disableSoftKeyboard: {
       type: 'boolean',
       defaultValue: false,
     },
@@ -76,7 +76,7 @@ export const Template = (args, { argTypes}) => ({
         v-model="value"
         :placeholder="placeholder"
         :disabled="disabled"
-        :disableTouchKeyboard="disableTouchKeyboard"
+        :disableSoftKeyboard="disableSoftKeyboard"
         :validator="validator"
         :color="color"
         :focus="focus"
