@@ -8,7 +8,15 @@ import PbAccordion from './Accordion.vue';
     title: {
       type: 'text',
       defaultValue: 'CollapseList',
-    }
+    },
+    quantity: {
+      type: 'number',
+      defaultValue: 0,
+    },
+    showQuantity: {
+      type: 'boolean',
+      defaultValue: false,
+    },
   }}
 />
 
@@ -19,6 +27,9 @@ import PbAccordion from './Accordion.vue';
 
 The component have a header with a collapse trigger, and inside it you could show
 what you want inside the slot field.
+
+You can select the quantity counter option to show the length of the element that you have
+inside you Accordion too.
 
 ## Examples
 
@@ -41,5 +52,29 @@ export const Template = (args, { argTypes }) => ({
 <Canvas>
   <Story name="Default" height="auto">
     {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Quantity Counter
+
+export const TemplateAccordion = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbAccordion },
+  template: `
+  <div>
+    <PbAccordion
+      :title="title"
+      :quantity="0"
+      :showQuantity="true"
+    >
+      <h4 class="pb" style="color: var(--color-gray-40); padding: 8px 14px;">Here you could code what you want!</h4>
+    </PbAccordion>
+  </div>
+  `,
+});
+
+<Canvas>
+  <Story name="Quantity Counter" height="auto">
+    {TemplateAccordion.bind({})}
   </Story>
 </Canvas>
