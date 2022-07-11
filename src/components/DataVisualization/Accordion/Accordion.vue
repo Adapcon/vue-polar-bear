@@ -1,15 +1,21 @@
 <template>
-  <section
-    class="accordion-container"
-  >
+  <section class="accordion-container">
     <div
       class="accordion"
       @click="toggleCollapse"
     >
-      <h6 class="pb">{{ title }}</h6>
+      <div class="accordion-infos">
+        <h6 class="pb">{{ title }}</h6>
+        <div
+          v-if="showQuantity"
+          class="quantity"
+        >
+          <small style="color: var(--color-gray-40)">{{ quantity }}</small>
+        </div>
+      </div>
       <PbCollapseIcon
         :is-icon-up="state.collapsed"
-        color="var(--color-gray-20)"
+        :color="isOpened()"
       />
     </div>
     <slot v-if="state.collapsed" />
@@ -35,6 +41,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    quantity: {
+      type: Number,
+      default: 0,
+    },
+    showQuantity: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -49,16 +63,33 @@ export default {
     toggleCollapse() {
       this.state.collapsed = !this.state.collapsed;
     },
+    isOpened() {
+      return this.state.collapsed ? 'var(--color-primary)' : 'var(--color-gray-20)';
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 .accordion-container {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
   .accordion {
+    .accordion-infos {
+      width: calc(100% - 48px);
+      display: flex;
+      justify-content: space-between;
+
+      .quantity {
+        width: 26px;
+        height: 20px;
+        border-radius: 20px;
+        background: rgba(var(--color-gray-40-rgb), 0.08);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
     background: var(--color-gray);
     display: flex;
     justify-content: space-between;
