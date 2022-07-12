@@ -3,7 +3,7 @@
     <input
       ref="input"
       v-model="internalValue"
-      :inputmode="disableSoftKeyboard ?'none': ''"
+      :inputmode="disableSoftKeyboard ? 'none' : ''"
       type="number"
       class="pb"
       :class="{
