@@ -3,7 +3,7 @@
     <input
       ref="input"
       v-model="internalValue"
-      :onfocus="onFocusBlur"
+      :inputmode="disableSoftKeyboard ?'none': ''"
       type="number"
       class="pb"
       :class="{
@@ -58,19 +58,6 @@ export default {
     internalValue: {
       get() {
         return this.value;
-      },
-
-      set(newVal) {
-        this.setValue(newVal);
-      },
-    },
-    focusBlur() {
-      return this.disableSoftKeyboard ? 'blur()' : true;
-    },
-
-    onFocusBlur: {
-      get() {
-        return this.focusBlur;
       },
 
       set(newVal) {
