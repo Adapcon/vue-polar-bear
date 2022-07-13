@@ -127,6 +127,7 @@ export default {
     border-radius: 20px;
     width: 100%;
     background: transparent;
+    caret-color: transparent;
   }
 
   .pb-input-error {
