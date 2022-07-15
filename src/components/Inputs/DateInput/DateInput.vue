@@ -3,7 +3,7 @@
     class="pb-date-input-container"
   >
     <input
-      :v-model="typeInputValidation"
+      v-model="typeInputValidation"
       class="pb"
       :type="state.typeInput"
       :placeholder="placeholder"
@@ -76,8 +76,14 @@ export default {
       },
     },
 
-    typeInputValidation() {
-      return this.state.typeInput !== 'date' ? this.placeholder : this.inputDate;
+    typeInputValidation: {
+      get() {
+        return this.state.typeInput !== 'date' ? this.placeholder : this.inputDate;
+      },
+
+      set(newValue) {
+        this.inputDate = newValue;
+      },
     },
 
     inputStyle() {
