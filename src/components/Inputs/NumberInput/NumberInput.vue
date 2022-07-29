@@ -12,6 +12,7 @@
         [`pb-input-${color}`]: true,
         'pb-input-center': textCenter,
       }"
+      :style="styleUserSelect"
       :disabled="disabled"
       :placeholder="placeholder"
       @blur="(val) => blur(Number(val.target.value))"
@@ -33,6 +34,8 @@ export default {
     disabled: { type: Boolean, default: false },
 
     disableSoftKeyboard: { type: Boolean, default: false },
+
+    userSelect: { type: Boolean, default: false },
 
     validator: { type: Function, default: null },
 
@@ -63,6 +66,10 @@ export default {
       set(newVal) {
         this.setValue(newVal);
       },
+    },
+
+    styleUserSelect() {
+      return this.userSelect ? ' -webkit-user-select: none !important; -ms-user-select: none !important; user-select: none !important;' : '';
     },
   },
 
