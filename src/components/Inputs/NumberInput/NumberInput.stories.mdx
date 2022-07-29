@@ -42,6 +42,10 @@ import { colors } from '@pb/utils/constants.js';
       type: 'boolean',
       defaultValue: false,
     },
+    userSelect: {
+      type: 'boolean',
+      defaultValue: false,
+    },
   }}
 />
 
@@ -79,6 +83,7 @@ export const Template = (args, { argTypes}) => ({
         :disableSoftKeyboard="disableSoftKeyboard"
         :validator="validator"
         :color="color"
+        :userSelect="userSelect"
         :focus="focus"
         :textCenter="textCenter"
         :inputTimeout="inputTimeout"
