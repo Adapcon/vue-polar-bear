@@ -23,7 +23,17 @@
                 icon="fas fa-times fa-lg"
                 @click="close"
               />
-              <slot name="header" />
+              <h3
+                v-if="title"
+                class="pb"
+              >
+                {{ title }}
+              </h3>
+              
+              <slot
+                v-else
+                name="header"
+              />
             </div>
             <hr class="divider">
           </div>
@@ -67,6 +77,10 @@ export default {
     visible: {
       type: Boolean,
       default: false,
+    },
+    title: {
+      type: String,
+      default: '',
     },
   },
 
