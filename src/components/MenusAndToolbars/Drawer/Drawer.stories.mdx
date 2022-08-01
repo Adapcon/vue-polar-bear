@@ -18,6 +18,10 @@ import PbSelect from '@pb/Inputs/Select/Select.vue';
     },
     close: {
       control: { type: Boolean },
+    },
+    title: {
+      control: { type: 'text' },
+      defaultValue: '',
     }
   }}
 />
@@ -54,7 +58,7 @@ export const Template = (args, { argTypes }) => ({
     >Open Drawer
     </PbButton>
     <PbDrawer :visible="visible" :width-mode="widthMode"
-              @close="visible = false"
+              @close="visible = false" :title="title"
     >
       <template #header>
         <h3 class="pb">Novo Signatário</h3>
