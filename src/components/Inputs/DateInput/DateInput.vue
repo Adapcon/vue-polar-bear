@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       state: {
+        dateObj: new Date(),
         typeInput: this.placeholder === '' ? 'date' : 'text',
         validation: true,
         changeDate: null,
@@ -56,8 +57,8 @@ export default {
           return;
         }
 
-        const dateObj = new Date(date);
-        dateObj.setHours(dateObj.getHours() + (dateObj.getTimezoneOffset() / 60));
+        this.state.dateObj = new Date(date);
+        this.state.dateObj.setHours(this.state.dateObj.getHours() + (this.state.dateObj.getTimezoneOffset() / 60));
 
         if (this.state.changeDate)
           clearTimeout(this.state.changeDate);
@@ -65,9 +66,9 @@ export default {
         this.state.changeDate = setTimeout(() => {
           clearTimeout(this.state.changeDate);
 
-          this.validate(dateObj);
+          this.validate(this.state.dateObj);
 
-          this.$emit('input', dateObj);
+          this.$emit('input', this.state.dateObj);
 
           this.$emit('validation', {
             validation: this.state.validation,
@@ -96,6 +97,20 @@ export default {
 
   methods: {
     changeTypeInput() {
+      if (this.state.changeDate)
+        clearTimeout(this.state.changeDate);
+
+      this.state.changeDate = setTimeout(() => {
+        clearTimeout(this.state.changeDate);
+
+        this.validate(this.state.dateObj);
+
+        this.$emit('input', this.state.dateObj);
+
+        this.$emit('validation', {
+          validation: this.state.validation,
+        });
+      }, 1000);
       this.state.typeInput = 'date';
     },
 
