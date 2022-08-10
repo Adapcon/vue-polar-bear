@@ -113,6 +113,7 @@ import {
   faWrench as fasWrench,
   faTh as FasTh,
   faGripVertical as fasGripVertical,
+  faFire as fasFire,
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -289,6 +290,7 @@ library.add(
   FasTh,
   fasPlus,
   fasGripVertical,
+  fasFire,
 );
 
 // Replace any existing <i> tags with <svg> and set up a MutationObserver to
