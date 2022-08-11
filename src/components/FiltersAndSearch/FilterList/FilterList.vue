@@ -9,6 +9,7 @@
         <div id="icons">
           <PbIcon
             v-if="allowSearch"
+            :color="getSearchIconColor"
             icon="fas fa-search"
             class="icon"
             @click="openSearchOption"
@@ -112,6 +113,10 @@ export default {
       return this.options.filter(option => option.title.match(new RegExp(filterExpression, 'gi')));
     },
 
+    getSearchIconColor() {
+      return this.state.search.visible ? 'var(--color-primary)' : 'var(--color-gray-20)';
+    },
+
     getHeaderColor() {
       if (this.isColorWhite)
         return !this.state.collapsed ? 'var(--color-primary)' : `var(--color-${this.color})`;
@@ -174,10 +179,10 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: var(--color-gray);
+    border-radius: 50px;
     height: 25px;
-    border-bottom: 2px solid;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding: 15px;
 
     .title {
       text-transform: uppercase;
@@ -198,9 +203,14 @@ export default {
 
   .options {
     display: flex;
+    list-style: none;
     flex-direction: column;
-    padding: 0;
+    padding-left: 16px;
     position: relative;
+
+    li {
+      padding-top: 12px;
+    }
   }
 }
 </style>
