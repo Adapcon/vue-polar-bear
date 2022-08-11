@@ -69,7 +69,7 @@ export default {
     },
 
     styleUserSelect() {
-      return this.userSelect ? ' -webkit-user-select: none !important; -ms-user-select: none !important; user-select: none !important;' : '';
+      return this.userSelect ? '-webkit-user-select: none !important; -ms-user-select: none !important; user-select: none !important; caret-color: transparent;' : '';
     },
   },
 
@@ -134,7 +134,6 @@ export default {
     border-radius: 20px;
     width: 100%;
     background: transparent;
-    caret-color: transparent;
   }
 
   .pb-input-error {
