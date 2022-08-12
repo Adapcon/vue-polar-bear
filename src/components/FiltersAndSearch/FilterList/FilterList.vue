@@ -1,7 +1,10 @@
 <template>
   <ul class="pb pb-filter-list-container">
     <li>
-      <div class="header" :style="`color: ${getHeaderColor}`">
+      <div
+        class="header"
+        :style="`color: ${getHeaderColor}`"
+      >
         <small class="pb title">
           <b>{{ title }}</b>
         </small>
@@ -9,6 +12,7 @@
         <div id="icons">
           <PbIcon
             v-if="allowSearch"
+            :color="getSearchIconColor"
             icon="fas fa-search"
             class="icon"
             @click="openSearchOption"
@@ -27,7 +31,7 @@
         v-if="state.search.visible"
         v-model="state.search.searchValue"
         v-focus
-        style="color: var(--color-gray-20); margin-left: 0px;"
+        style="color: var(--color-gray-20); margin-left: 0px"
         @search="searchOption()"
       />
 
@@ -40,11 +44,8 @@
           v-for="(option, index) in optionsList"
           :key="`${index}||${option.title}`"
           class="pb"
-          :style="{
-            color: `var(--color-${isColorWhite ? 'white' : 'gray-80'})`,
-            cursor: 'pointer',
-          }"
-          @click="selectOption(option)"
+          :style="state.labels.includes(index) ? 'color: var(--color-primary)' : 'color: var(--color-gray-80)'"
+          @click="selectOption(option), isActive(option.title, index)"
         >
           <p class="pb-sm">
             <b>{{ option.title }}</b>
@@ -71,8 +72,9 @@ export default {
   },
 
   props: {
+    labels: { type: String, required: true },
     title: { type: String, default: '' },
-    options: { type: Array, default: () => ([]) },
+    options: { type: Array, default: () => [] },
     displaySize: { type: Number, default: 5 },
     collapsed: { type: Boolean, default: false },
     allowSearch: { type: Boolean, default: true },
@@ -86,11 +88,13 @@ export default {
   data() {
     return {
       state: {
+        label: false,
         collapsed: false,
         search: {
           visible: false,
           searchValue: '',
         },
+        labels: [],
       },
     };
   },
@@ -98,25 +102,43 @@ export default {
   computed: {
     optionsSize() {
       return {
-        height: `${(28.25 * (this.options.length < this.displaySize ? this.options.length : this.displaySize))}px`,
+        height: `${
+          28.25
+          * (this.options.length < this.displaySize
+            ? this.options.length
+            : this.displaySize)
+        }px`,
         overflow: this.options.length <= this.displaySize ? 'hidden' : 'auto',
       };
     },
 
     optionsList() {
-      if (!this.state.search.searchValue)
-        return this.options;
+      if (!this.state.search.searchValue) return this.options;
 
-      const filterExpression = this.state.search.searchValue.replace(/\s/g, '.*');
+      const filterExpression = this.state.search.searchValue.replace(
+        /\s/g,
+        '.*',
+      );
 
       return this.options.filter(option => option.title.match(new RegExp(filterExpression, 'gi')));
     },
 
-    getHeaderColor() {
-      if (this.isColorWhite)
-        return !this.state.collapsed ? 'var(--color-primary)' : `var(--color-${this.color})`;
+    getSearchIconColor() {
+      return this.state.search.visible
+        ? 'var(--color-primary)'
+        : 'var(--color-gray-20)';
+    },
 
-      return !this.state.collapsed ? `var(--color-${this.color})` : 'var(--color-gray-20)';
+    getHeaderColor() {
+      if (this.isColorWhite) {
+        return !this.state.collapsed
+          ? 'var(--color-primary)'
+          : `var(--color-${this.color})`;
+      }
+
+      return !this.state.collapsed
+        ? `var(--color-${this.color})`
+        : 'var(--color-gray-20)';
     },
 
     isColorWhite() {
@@ -137,6 +159,14 @@ export default {
   methods: {
     selectOption(option) {
       this.$emit('click', { option });
+    },
+
+    isActive(value, index) {
+      this.state.labels = [];
+
+      this.state.labels = [...this.state.labels, index];
+
+      this.$emit('title', value);
     },
 
     toggleCollapse() {
@@ -174,10 +204,10 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: var(--color-gray);
+    border-radius: 50px;
     height: 25px;
-    border-bottom: 2px solid;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding: 15px;
 
     .title {
       text-transform: uppercase;
@@ -198,9 +228,15 @@ export default {
 
   .options {
     display: flex;
+    list-style: none;
     flex-direction: column;
-    padding: 0;
+    padding-left: 16px;
     position: relative;
+
+    li {
+      cursor: pointer;
+      padding-top: 12px;
+    }
   }
 }
 </style>
