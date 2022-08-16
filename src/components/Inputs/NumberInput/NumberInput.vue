@@ -1,6 +1,7 @@
 <template>
   <div class="pb-number-input-container">
     <input
+      id="text-box"
       ref="input"
       v-model="internalValue"
       :inputmode="disableSoftKeyboard ? 'none' : ''"
@@ -15,6 +16,7 @@
       :style="styleUserSelect"
       :disabled="disabled"
       :placeholder="placeholder"
+      @click="selectText ? selectAllText() : null"
       @blur="(val) => blur(Number(val.target.value))"
     >
   </div>
@@ -32,6 +34,8 @@ export default {
     placeholder: { type: String, default: '' },
 
     disabled: { type: Boolean, default: false },
+
+    selectText: { type: Boolean, default: false },
 
     disableSoftKeyboard: { type: Boolean, default: false },
 
@@ -86,6 +90,11 @@ export default {
   },
 
   methods: {
+    selectAllText() {
+      const input = document.getElementById('text-box');
+      input.focus();
+      input.select();
+    },
     blur(val) {
       this.loseFocus();
       this.$emit('blur', val);
