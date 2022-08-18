@@ -1,87 +1,118 @@
 <template>
-  <ul class="pb pb-filter-list-container">
-    <li>
-      <div
-        class="header"
-        :style="`color: ${getHeaderColor}`"
-      >
-        <small class="pb title">
-          <b>{{ title }}</b>
-        </small>
-
-        <div id="icons">
-          <PbIcon
-            v-if="allowSearch"
-            :color="getSearchIconColor"
-            icon="fas fa-search"
-            class="icon"
-            @click="openSearchOption"
-          />
-
-          <PbCollapseIcon
-            :is-icon-up="!state.collapsed"
-            :color="getHeaderColor"
-            class="icon"
-            @click.native="toggleCollapse"
-          />
+  <div
+    class="pb pb-filter-list-container pb-row"
+    :style="!state.collapsed ? 'padding-bottom: 20px;' : 'padding: 0 16px;'"
+  >
+    <div class="header pb-col-12" :style="`color: ${getHeaderColor}`">
+      <div class="pb-row header-container">
+        <div class="pb-col-4">
+          <p class="pb title">
+            <b>{{ title }}</b>
+          </p>
+        </div>
+        <div id="icons" class="pb-col-6 pb-col-sm-3">
+          <div
+            class="counter"
+            :style="
+              state.checkedValues.length !== 0
+                ? ' background: rgba(var(--color-primary-rgb), 0.08)'
+                : ''
+            "
+          >
+            <small
+              class="pb"
+              :style="
+                state.checkedValues.length !== 0
+                  ? 'color: var(--color-primary);'
+                  : ''
+              "
+            >
+              {{ state.checkedValues.length }}
+            </small>
+          </div>
+          <div class="icon-container">
+            <PbCollapseIcon
+              :is-icon-up="!state.collapsed"
+              :color="getHeaderColor"
+              class="icon"
+              @click.native="toggleCollapse"
+            />
+          </div>
         </div>
       </div>
-
+    </div>
+    <div class="pb-col-12">
       <PbSearchInput
-        v-if="state.search.visible"
+        v-if="allowSearch && !state.collapsed && showSearch"
         v-model="state.search.searchValue"
-        v-focus
-        style="color: var(--color-gray-20); margin-left: 0px"
+        style="color: var(--color-gray-20);"
         @search="searchOption()"
       />
+    </div>
 
-      <ul
-        v-show="!state.collapsed"
-        :class="`options pb-scroll-${color}`"
-        :style="optionsSize"
+    <ul
+      v-show="!state.collapsed"
+      :class="`options pb-scroll-${color}`"
+      :style="optionsSize"
+    >
+      <li
+        v-for="(option, index) in optionsList"
+        :key="`${index}||${option.title}`"
+        class="pb"
+        :style="
+          state.checkedValues.includes(option.title)
+            ? `color: ${getHeaderColor}`
+            : 'color: var(--color-gray-80)'
+        "
+        @click="
+          multiSelector
+            ? multipleSelector(option.title)
+            : selector(option.title)
+        "
       >
-        <li
-          v-for="(option, index) in optionsList"
-          :key="`${index}||${option.title}`"
-          class="pb"
-          :style="state.labels.includes(index) ? 'color: var(--color-primary)' : 'color: var(--color-gray-80)'"
-          @click="selectOption(option), isActive(option.title, index)"
-        >
-          <p class="pb-sm">
-            <b>{{ option.title }}</b>
+        <div class="option-title">
+          <p class="pb-md">
+            {{ option.title }}
           </p>
-        </li>
-      </ul>
-    </li>
-  </ul>
+        </div>
+      </li>
+    </ul>
+    <PbChips
+      v-show="multiSelector"
+      :chips.sync="chips"
+      color="primary"
+      @update:chips="updateChips"
+    />
+  </div>
 </template>
 
 <script>
-import PbCollapseIcon from '@pb/Miscellaneous/CollapseIcon/CollapseIcon.vue';
-import PbSearchInput from '@pb/FiltersAndSearch/SearchInput/SearchInput.vue';
-import PbIcon from '@pb/Miscellaneous/Icon/Icon';
-import { validateColor } from '@pb/utils/validator';
+import PbCollapseIcon from "@pb/Miscellaneous/CollapseIcon/CollapseIcon.vue";
+import PbSearchInput from "@pb/FiltersAndSearch/SearchInput/SearchInput.vue";
+import { validateColor } from "@pb/utils/validator";
+import PbChips from "../../DataVisualization/Chips/Chips.vue";
 
 export default {
-  name: 'PbFilterList',
+  name: "PbFilterList",
 
   components: {
     PbCollapseIcon,
     PbSearchInput,
-    PbIcon,
+    PbChips,
   },
 
   props: {
     labels: { type: String, required: true },
-    title: { type: String, default: '' },
+    title: { type: String, default: "" },
     options: { type: Array, default: () => [] },
     displaySize: { type: Number, default: 5 },
     collapsed: { type: Boolean, default: false },
+    multiSelector: { type: Boolean, default: false },
     allowSearch: { type: Boolean, default: true },
     color: {
       type: String,
-      default: 'primary',
-      validator: color => validateColor(color),
+      default: "primary",
+      validator: (color) => validateColor(color),
     },
   },
 
@@ -92,24 +123,34 @@ export default {
         collapsed: false,
         search: {
           visible: false,
-          searchValue: '',
+          searchValue: "",
         },
         labels: [],
+        checkedValues: [],
       },
     };
   },
 
   computed: {
+    chips() {
+      const chips = this.state.checkedValues.map((title) => ({ title }));
+
+      return chips;
+    },
     optionsSize() {
       return {
         height: `${
-          28.25
-          * (this.options.length < this.displaySize
+          28.25 *
+          (this.options.length < this.displaySize
             ? this.options.length
             : this.displaySize)
         }px`,
-        overflow: this.options.length <= this.displaySize ? 'hidden' : 'auto',
+        overflow: this.options.length <= this.displaySize ? "hidden" : "auto",
       };
+    },
+
+    showSearch() {
+      return this.optionsList.length <= 10;
     },
 
     optionsList() {
@@ -117,32 +158,34 @@ export default {
 
       const filterExpression = this.state.search.searchValue.replace(
         /\s/g,
-        '.*',
+        ".*"
       );
 
-      return this.options.filter(option => option.title.match(new RegExp(filterExpression, 'gi')));
+      return this.options.filter((option) =>
+        option.title.match(new RegExp(filterExpression, "gi"))
+      );
     },
 
     getSearchIconColor() {
       return this.state.search.visible
-        ? 'var(--color-primary)'
-        : 'var(--color-gray-20)';
+        ? "var(--color-primary)"
+        : "var(--color-gray-20)";
     },
 
     getHeaderColor() {
       if (this.isColorWhite) {
         return !this.state.collapsed
-          ? 'var(--color-primary)'
+          ? "var(--color-primary)"
           : `var(--color-${this.color})`;
       }
 
       return !this.state.collapsed
         ? `var(--color-${this.color})`
-        : 'var(--color-gray-20)';
+        : "var(--color-gray-20)";
     },
 
     isColorWhite() {
-      return this.color === 'white';
+      return this.color === "white";
     },
   },
 
@@ -157,21 +200,29 @@ export default {
   },
 
   methods: {
-    selectOption(option) {
-      this.$emit('click', { option });
+    updateChips(value) {
+      this.state.checkedValues = value.map((chip) => chip.title);
+    },
+    multipleSelector(value) {
+      if (this.state.checkedValues.includes(value)) {
+        const index = this.state.checkedValues.indexOf(value);
+
+        return this.state.checkedValues.splice(index, 1);
+      }
+      this.state.checkedValues = [...this.state.checkedValues, value];
+
+      this.$emit(value);
     },
 
-    isActive(value, index) {
-      this.state.labels = [];
+    selector(value) {
+      this.state.checkedValues = [];
 
-      this.state.labels = [...this.state.labels, index];
-
-      this.$emit('title', value);
+      this.state.checkedValues = [...this.state.checkedValues, value];
     },
 
     toggleCollapse() {
       this.collapseOptions(!this.state.collapsed);
-      this.$emit('collapsed', this.state.collapsed);
+      this.$emit("collapsed", this.state.collapsed);
     },
 
     collapseOptions(status) {
@@ -179,7 +230,7 @@ export default {
 
       if (this.state.collapsed === true) {
         this.state.search.visible = false;
-        this.state.search.searchValue = '';
+        this.state.search.searchValue = "";
       }
     },
 
@@ -188,7 +239,7 @@ export default {
       this.collapseOptions(false);
 
       if (this.state.search.visible === false)
-        this.state.search.searchValue = '';
+        this.state.search.searchValue = "";
     },
   },
 };
@@ -196,32 +247,53 @@ export default {
 
 <style lang="scss" scoped>
 .pb-filter-list-container {
-  padding: 0 0 10px;
+  padding: 0 16px;
   width: 100%;
+  border-radius: 8px;
+  background-color: var(--color-gray);
   color: var(--color-primary) !important;
 
   .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--color-gray);
     border-radius: 50px;
-    height: 25px;
-    padding: 15px;
+    height: 20px;
+    padding: 16px 0;
 
-    .title {
-      text-transform: uppercase;
-    }
-
-    #icons {
-      display: flex;
+    .header-container {
       justify-content: space-between;
 
-      .icon {
-        margin-left: 10px;
-        width: 20px;
-        height: 14px;
-        cursor: pointer;
+
+      .title {
+        text-transform: uppercase;
+      }
+
+      #icons {
+        display: flex;
+        justify-content: end;
+
+        .counter {
+          width: 26px;
+          height: 20px;
+          margin-right: 20px;
+          border-radius: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: rgba(var(--color-gray-40-rgb), 0.08);
+
+          small {
+            color: var(--color-gray-40);
+          }
+        }
+        .icon-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .icon {
+            width: 16px;
+            height: 10px;
+            cursor: pointer;
+          }
+        }
       }
     }
   }
@@ -230,12 +302,22 @@ export default {
     display: flex;
     list-style: none;
     flex-direction: column;
-    padding-left: 16px;
     position: relative;
+    margin-right: 8px;
+
+    .option-title {
+      height: auto;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+
+      p {
+        margin: 0;
+      }
+    }
 
     li {
       cursor: pointer;
-      padding-top: 12px;
     }
   }
 }
