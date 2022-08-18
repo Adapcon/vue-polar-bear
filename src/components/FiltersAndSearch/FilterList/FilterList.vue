@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <div class="pb-col-12" style="margin-bottom: 12px;">
+    <div class="pb-col-12">
       <PbSearchInput
         v-if="allowSearch && !state.collapsed && showSearch"
         v-model="state.search.searchValue"
@@ -77,8 +77,9 @@
         </div>
       </li>
     </ul>
-    <div style="padding-bottom: 8px;">
+    <div>
       <PbChips
+        v-if="!state.collapsed"
         v-show="multiSelector"
         :chips.sync="chips"
         color="primary"
@@ -306,6 +307,7 @@ export default {
     flex-direction: column;
     position: relative;
     margin-right: 8px;
+    margin: 12px 8px 16px 0;
 
     .option-title {
       height: auto;
