@@ -1,9 +1,10 @@
 <template>
-  <div
-    class="pb pb-filter-list-container pb-row"
-    :style="!state.collapsed ? 'padding-bottom: 20px;' : 'padding: 0 16px;'"
-  >
-    <div class="header pb-col-12" :style="`color: ${getHeaderColor}`">
+  <div class="pb pb-filter-list-container pb-row">
+    <div
+      class="header pb-col-12"
+      :style="`color: ${getHeaderColor}`"
+      @click="toggleCollapse"
+    >
       <div class="pb-row header-container">
         <div class="pb-col-4">
           <p class="pb title">
@@ -35,13 +36,12 @@
               :is-icon-up="!state.collapsed"
               :color="getHeaderColor"
               class="icon"
-              @click.native="toggleCollapse"
             />
           </div>
         </div>
       </div>
     </div>
-    <div class="pb-col-12">
+    <div class="pb-col-12" style="margin-bottom: 12px;">
       <PbSearchInput
         v-if="allowSearch && !state.collapsed && showSearch"
         v-model="state.search.searchValue"
@@ -77,12 +77,14 @@
         </div>
       </li>
     </ul>
-    <PbChips
-      v-show="multiSelector"
-      :chips.sync="chips"
-      color="primary"
-      @update:chips="updateChips"
-    />
+    <div style="padding-bottom: 8px;">
+      <PbChips
+        v-show="multiSelector"
+        :chips.sync="chips"
+        color="primary"
+        @update:chips="updateChips"
+      />
+    </div>
   </div>
 </template>
 
@@ -260,7 +262,7 @@ export default {
 
     .header-container {
       justify-content: space-between;
-
+      cursor: pointer;
 
       .title {
         text-transform: uppercase;
