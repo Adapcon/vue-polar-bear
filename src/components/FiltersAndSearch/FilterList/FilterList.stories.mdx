@@ -18,6 +18,10 @@ import { colors } from '@pb/utils/constants.js';
       type: 'boolean',
       defaultValue: false,
     },
+    multiSelector: {
+      type: 'boolean',
+      defaultValue: false,
+    },
     allowSearch: {
       type: 'boolean',
       defaultValue: true,
@@ -72,9 +76,11 @@ export const Template = (args, { argTypes }) => ({
       :title="title"
       :options="options"
       :color="color"
+      :multi-selector="multiSelector"
       :display-size="displaySize"
       :collapsed="collapsed"
       :allow-search="allowSearch"
+      style="width: 300px;"
     />
   `,
 });
@@ -94,10 +100,37 @@ export const TemplateExternalControl = (args, { argTypes }) => ({
       :title="title"
       :options="options"
       :display-size="displaySize"
+      :multi-selector="multiSelector"
       :collapsed="state.collapsed"
       :allow-search="allowSearch"
       @click="$set(state, 'collapsed', true)"
       @collapsed="(value) => $set(state, 'collapsed', value)"
+      style="width: 300px;"
+    />
+  `,
+});
+
+export const TemplateMultiSelector = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  data() {
+    return {
+      state: {
+        multiSelector: true,
+      },
+    }
+  },
+  components: { PbFilterList },
+  template: `
+    <PbFilterList
+      :title="title"
+      :options="options"
+      :display-size="displaySize"
+      :multi-selector="state.multiSelector"
+      :collapsed="state.collapsed"
+      :allow-search="allowSearch"
+      @click="$set(state, 'collapsed', true)"
+      @collapsed="(value) => $set(state, 'collapsed', value)"
+      style="width: 300px;"
     />
   `,
 });
@@ -112,6 +145,9 @@ You also can specify:
 - The number of items that will be displayed in the component per time
 - The visibility of the search button
 - How the component should be rendered: collapsed or not
+
+
+Note: The search input is not rendering well on storybook, but it will work perfectly in your local code.
 
 ## Examples
 
@@ -148,3 +184,16 @@ Click on an option and collapse the options
     { TemplateExternalControl.bind({}) }
   </Story>
 </Canvas>
+
+### Multi Selector control
+
+With this control, you can visualize all options you´ve selected in chips, and you can remove them to.
+
+The counter will show how many options you have selected.
+
+<Canvas>
+  <Story name="MultiSelector">
+    { TemplateMultiSelector.bind({}) }
+  </Story>
+</Canvas>
+
