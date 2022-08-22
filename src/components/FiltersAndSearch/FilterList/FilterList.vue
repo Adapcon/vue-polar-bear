@@ -45,7 +45,7 @@
       <PbSearchInput
         v-if="allowSearch && !state.collapsed && showSearch"
         v-model="state.search.searchValue"
-        style="color: var(--color-gray-20);"
+        style="color: var(--color-gray-20); margin-top: 20px;"
         @search="searchOption()"
       />
     </div>
@@ -143,7 +143,7 @@ export default {
     optionsSize() {
       return {
         height: `${
-          28.25 *
+          35 *
           (this.options.length < this.displaySize
             ? this.options.length
             : this.displaySize)
@@ -153,7 +153,7 @@ export default {
     },
 
     showSearch() {
-      return this.optionsList.length <= 10;
+      return this.optionsList.length >= 10;
     },
 
     optionsList() {
