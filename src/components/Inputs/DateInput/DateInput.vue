@@ -12,7 +12,7 @@
         'input-error': !state.validation,
         'white-calendar': color === 'white'
       }"
-      @click="() => changeTypeInput()"
+      @click="changeTypeInput()"
     >
   </div>
 </template>
@@ -83,7 +83,8 @@ export default {
       },
 
       set(newValue) {
-        this.inputDate = newValue;
+        if (newValue)
+          this.inputDate = newValue;
       },
     },
 
