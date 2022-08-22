@@ -1,5 +1,5 @@
 <template>
-  <div class="pb pb-filter-list-container pb-row">
+  <div class="pb pb-filter-list-container pb-row" style="padding-bottom: 16px">
     <div
       class="header pb-col-12"
       :style="`color: ${getHeaderColor}`"
