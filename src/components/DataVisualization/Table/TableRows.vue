@@ -275,6 +275,9 @@ export default {
 
         small {
           margin: 0 !important;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         .success {
           background: rgba(var(--color-success-rgb), 0.2);
