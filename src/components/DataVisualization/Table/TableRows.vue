@@ -28,6 +28,30 @@
               class="image"
             >
 
+            <div class="status-container" v-if="column.type">
+              <div
+                id="status-ticket"
+                class="finished"
+                v-if="column.type === 'finished'"
+              >
+                <small class="pb">{{ column.value }}</small>
+              </div>
+              <div
+                id="status-ticket"
+                class="success"
+                v-if="column.type === 'success'"
+              >
+                <small class="pb">{{ column.value }}</small>
+              </div>
+              <div
+                id="status-ticket"
+                class="inProgress"
+                v-if="column.type === 'inProgress'"
+              >
+                <small class="pb">{{ column.value }}</small>
+              </div>
+            </div>
+
             <div v-else>
               <PbHint
                 :hint-text="column.value"
@@ -35,9 +59,7 @@
                 :show-on-overflow-only="true"
                 position="bottom-right"
               >
-                <p
-                  :class="ellipsisClass"
-                >
+                <p :class="ellipsisClass">
                   {{ column.value }}
                 </p>
               </PbHint>
@@ -112,9 +134,7 @@
                   :show-on-overflow-only="true"
                   position="bottom-right"
                 >
-                  <p
-                    :class="ellipsisClass"
-                  >
+                  <p :class="ellipsisClass">
                     {{ column.value }}
                   </p>
                 </PbHint>
@@ -197,7 +217,9 @@ export default {
   watch: {
     expandAll: {
       handler(newValue) {
-        this.internalExpandedRows = newValue ? this.rows.map((_, index) => index) : [];
+        this.internalExpandedRows = newValue
+          ? this.rows.map((_, index) => index)
+          : [];
       },
     },
   },
@@ -240,6 +262,44 @@ export default {
 
     .table-column {
       padding: 8px;
+
+      .status-container {
+        #status-ticket {
+          width: auto;
+          height: 20px;
+          display: flex;
+          border-radius: 20px;
+          align-items: center;
+          justify-content: center;
+        }
+
+        small {
+          margin: 0 !important;
+        }
+        .success {
+          background: rgba(var(--color-success-rgb), 0.2);
+
+          small {
+            color: var(--color-success);
+          }
+        }
+
+        .finished {
+          background: rgba(var(--color-danger-rgb), 0.2);
+
+          small {
+            color: var(--color-danger);
+          }
+        }
+
+        .inProgress {
+          background: rgba(var(--color-warning-rgb), 0.2);
+
+          small {
+            color: var(--color-warning);
+          }
+        }
+      }
 
       small {
         color: var(--color-gray-90);

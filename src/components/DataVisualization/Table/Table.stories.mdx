@@ -13,6 +13,7 @@ import PbButton from '../../Buttons/Button/Button.vue';
         { label: 'Nome', size: 3, priority: 1 },
         { label: 'Idade', size: 3, priority: 3 },
         { label: 'Banco Principal', size: 3, priority: 2 },
+        { label: 'Status', size: 1, priority: 1 },
       ],
     },
     rows: {
@@ -22,26 +23,31 @@ import PbButton from '../../Buttons/Button/Button.vue';
           { value: 'João Paulo de Ávila Alfredo', secondaryValue: '123.456.789-10' },
           { value: '20' },
           { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-237.png' },
+          { value: 'Concluído', type: 'success' },
         ],
         [
           { value: 'Maria da Silva', secondaryValue: '661.313.649-23' },
           { value: '22', },
           { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-341.png' },
+          { value: 'Em Andamento', type: 'inProgress' },
         ],
         [
           { value: 'Lucca Gael Ferreira', secondaryValue: '898.372.281-30' },
           { value: '16', },
           { value: 'Não informado', badges: ['menor de idade'] },
+          { value: 'Concluído', type: 'success' },
         ],
         [
           { value: 'Sofia Jennifer Gomes da Silva Mendes de Souza', secondaryValue: '398.722.811-30' },
           { value: '23', },
           { value: 'Sem preferência' },
+          { value: 'Finalizado', type: 'finished' },
         ],
         [
           { value: 'Mário Oliveira', secondaryValue: '898.372.281-30' },
           { value: '11', },
           { value: 'Não informado', badges: ['menor de idade', '< 12'] },
+          { value: 'Finalizado', type: 'finished' },
         ],
       ],
     },
@@ -186,8 +192,7 @@ List of arrays to each row, containing one object to each column of table;
 | value                       | String, Number, Image  |         | The column value                                                                              |
 | secondaryValue              | String, Number         |         | A extra info to column (Optional).                                                            |
 | badges                      | String, Number         |         | A list of badges to column (Optional).                                                        |
-
-
+| type                        | String, Number         |         | A status badge. (Optional)
 ### Properties
 
 | Property                    | Type        | Default | Description                                                                                              |
