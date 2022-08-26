@@ -1,5 +1,8 @@
 <template>
-  <div class="pb pb-filter-list-container pb-row">
+  <div
+    class="pb pb-filter-list-container pb-row"
+    style="padding-bottom: 16px;"
+  >
     <div
       class="header pb-col-12"
       :style="`color: ${getHeaderColor}`"
@@ -11,7 +14,10 @@
             <b>{{ title }}</b>
           </p>
         </div>
-        <div id="icons" class="pb-col-6 pb-col-sm-3">
+        <div
+          id="icons"
+          class="pb-col-6 pb-col-sm-3"
+        >
           <div
             class="counter"
             :style="
@@ -45,8 +51,12 @@
       <PbSearchInput
         v-if="allowSearch && !state.collapsed && showSearch"
         v-model="state.search.searchValue"
-        style="color: var(--color-gray-20);"
+        style="color: var(--color-gray-20); margin-top: 20px;"
         @search="searchOption()"
+      />
+      <PbLoadingBar
+        v-if="loading"
+        color="primary"
       />
     </div>
 
@@ -90,32 +100,34 @@
 </template>
 
 <script>
-import PbCollapseIcon from "@pb/Miscellaneous/CollapseIcon/CollapseIcon.vue";
-import PbSearchInput from "@pb/FiltersAndSearch/SearchInput/SearchInput.vue";
-import { validateColor } from "@pb/utils/validator";
-import PbChips from "../../DataVisualization/Chips/Chips.vue";
+import PbCollapseIcon from '@pb/Miscellaneous/CollapseIcon/CollapseIcon.vue';
+import PbSearchInput from '@pb/FiltersAndSearch/SearchInput/SearchInput.vue';
+import PbLoadingBar from '@pb/Loadings/LoadingBar/LoadingBar.vue';
+import { validateColor } from '@pb/utils/validator';
+import PbChips from '../../DataVisualization/Chips/Chips.vue';
 
 export default {
-  name: "PbFilterList",
+  name: 'PbFilterList',
 
   components: {
     PbCollapseIcon,
     PbSearchInput,
     PbChips,
+    PbLoadingBar,
   },
 
   props: {
-    labels: { type: String, required: true },
-    title: { type: String, default: "" },
+    title: { type: String, default: '' },
     options: { type: Array, default: () => [] },
     displaySize: { type: Number, default: 5 },
     collapsed: { type: Boolean, default: false },
     multiSelector: { type: Boolean, default: false },
     allowSearch: { type: Boolean, default: true },
+    loading: { type: Boolean, default: false },
     color: {
       type: String,
-      default: "primary",
-      validator: (color) => validateColor(color),
+      default: 'primary',
+      validator: color => validateColor(color),
     },
   },
 
@@ -126,34 +138,51 @@ export default {
         collapsed: false,
         search: {
           visible: false,
-          searchValue: "",
+          searchValue: '',
         },
-        labels: [],
         checkedValues: [],
       },
     };
   },
 
   computed: {
-    chips() {
-      const chips = this.state.checkedValues.map((title) => ({ title }));
+    chips: {
+      get() {
+        const chips = this.checkedValues.map(title => ({ title }));
 
-      return chips;
+        return chips;
+      },
+
+      set(chips) {
+        this.checkedValues = chips.map(chip => chip.title);
+      },
     },
+
+    checkedValues: {
+      get() {
+        return this.state.checkedValues;
+      },
+
+      set(value) {
+        this.$set(this.state, 'checkedValues', value);
+        this.$emit('update:checkedValues', this.getValueList());
+      },
+    },
+
     optionsSize() {
       return {
         height: `${
-          28.25 *
-          (this.options.length < this.displaySize
+          35
+          * (this.options.length < this.displaySize
             ? this.options.length
             : this.displaySize)
         }px`,
-        overflow: this.options.length <= this.displaySize ? "hidden" : "auto",
+        overflow: this.options.length <= this.displaySize ? 'hidden' : 'auto',
       };
     },
 
     showSearch() {
-      return this.optionsList.length <= 10;
+      return this.optionsList.length >= 10;
     },
 
     optionsList() {
@@ -161,34 +190,32 @@ export default {
 
       const filterExpression = this.state.search.searchValue.replace(
         /\s/g,
-        ".*"
+        '.*',
       );
 
-      return this.options.filter((option) =>
-        option.title.match(new RegExp(filterExpression, "gi"))
-      );
+      return this.options.filter(option => option.title.match(new RegExp(filterExpression, 'gi')));
     },
 
     getSearchIconColor() {
       return this.state.search.visible
-        ? "var(--color-primary)"
-        : "var(--color-gray-20)";
+        ? 'var(--color-primary)'
+        : 'var(--color-gray-20)';
     },
 
     getHeaderColor() {
       if (this.isColorWhite) {
         return !this.state.collapsed
-          ? "var(--color-primary)"
+          ? 'var(--color-primary)'
           : `var(--color-${this.color})`;
       }
 
       return !this.state.collapsed
         ? `var(--color-${this.color})`
-        : "var(--color-gray-20)";
+        : 'var(--color-gray-20)';
     },
 
     isColorWhite() {
-      return this.color === "white";
+      return this.color === 'white';
     },
   },
 
@@ -204,28 +231,27 @@ export default {
 
   methods: {
     updateChips(value) {
-      this.state.checkedValues = value.map((chip) => chip.title);
+      this.state.checkedValues = value.map(chip => chip.title);
     },
+
     multipleSelector(value) {
-      if (this.state.checkedValues.includes(value)) {
-        const index = this.state.checkedValues.indexOf(value);
+      if (this.checkedValues.includes(value)) {
+        const index = this.checkedValues.indexOf(value);
 
-        return this.state.checkedValues.splice(index, 1);
+        return this.checkedValues.splice(index, 1);
       }
-      this.state.checkedValues = [...this.state.checkedValues, value];
-
-      this.$emit(value);
+      this.checkedValues = [...this.checkedValues, value];
     },
 
     selector(value) {
-      this.state.checkedValues = [];
+      this.checkedValues = [];
 
-      this.state.checkedValues = [...this.state.checkedValues, value];
+      this.checkedValues = [...this.checkedValues, value];
     },
 
     toggleCollapse() {
       this.collapseOptions(!this.state.collapsed);
-      this.$emit("collapsed", this.state.collapsed);
+      this.$emit('collapsed', this.state.collapsed);
     },
 
     collapseOptions(status) {
@@ -233,7 +259,7 @@ export default {
 
       if (this.state.collapsed === true) {
         this.state.search.visible = false;
-        this.state.search.searchValue = "";
+        this.state.search.searchValue = '';
       }
     },
 
@@ -242,7 +268,14 @@ export default {
       this.collapseOptions(false);
 
       if (this.state.search.visible === false)
-        this.state.search.searchValue = "";
+        this.state.search.searchValue = '';
+    },
+
+    getValueList() {
+      return this.checkedValues.map(values => {
+        const option = this.options.find(opt => opt.title === values);
+        return option?.value || option?.title;
+      });
     },
   },
 };
