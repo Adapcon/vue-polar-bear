@@ -28,29 +28,6 @@
               class="image"
             >
 
-            <div class="status-container" v-if="column.type">
-              <div
-                id="status-ticket"
-                class="finished"
-                v-if="column.type === 'finished'"
-              >
-                <small class="pb">{{ column.value }}</small>
-              </div>
-              <div
-                id="status-ticket"
-                class="success"
-                v-if="column.type === 'success'"
-              >
-                <small class="pb">{{ column.value }}</small>
-              </div>
-              <div
-                id="status-ticket"
-                class="inProgress"
-                v-if="column.type === 'inProgress'"
-              >
-                <small class="pb">{{ column.value }}</small>
-              </div>
-            </div>
 
             <div v-else>
               <PbHint
@@ -67,13 +44,16 @@
               <p class="pb-sm secondary-value">{{ column.secondaryValue }}</p>
             </div>
 
-            <div>
+            <div class="badges" v-if="column.badges">
               <PbBadge
                 v-for="badge of column.badges"
                 :key="badge"
-                :title="badge"
+                :title="badge.value"
                 :wrap-content="true"
+                :background-color="badge.badgeColor"
+                :color="badge.badgeFontColor"
                 style="margin-right: 2px;"
+                :size="badge.badgeSize"
               />
             </div>
           </div>
@@ -182,6 +162,9 @@ export default {
     highlightOnHover: { type: Boolean, default: true },
     hasActionColumn: { type: Boolean, default: true },
     maxHeight: { type: String, default: '' },
+    badgeColor: { type: String, default: '' },
+    badgeSize: { type: String, default: '' },
+    badgeFontColor: { type: String, default: '' },
     actionsSize: { type: Number, default: 1 },
     expandedRows: { type: Array, default: () => [] },
     hiddenColumnsIndex: { type: Array, default: () => [] },
@@ -263,45 +246,8 @@ export default {
     .table-column {
       padding: 8px;
 
-      .status-container {
-        #status-ticket {
-          width: auto;
-          height: 20px;
-          display: flex;
-          border-radius: 20px;
-          align-items: center;
-          justify-content: center;
-        }
-
-        small {
-          margin: 0 !important;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        .success {
-          background: rgba(var(--color-success-rgb), 0.2);
-
-          small {
-            color: var(--color-success);
-          }
-        }
-
-        .finished {
-          background: rgba(var(--color-danger-rgb), 0.2);
-
-          small {
-            color: var(--color-danger);
-          }
-        }
-
-        .inProgress {
-          background: rgba(var(--color-warning-rgb), 0.2);
-
-          small {
-            color: var(--color-warning);
-          }
-        }
+      .badges {
+        text-transform: uppercase;
       }
 
       small {
