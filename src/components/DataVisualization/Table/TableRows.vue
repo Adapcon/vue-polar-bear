@@ -28,6 +28,7 @@
               class="image"
             >
 
+
             <div v-else>
               <PbHint
                 :hint-text="column.value"
@@ -35,9 +36,7 @@
                 :show-on-overflow-only="true"
                 position="bottom-right"
               >
-                <p
-                  :class="ellipsisClass"
-                >
+                <p :class="ellipsisClass">
                   {{ column.value }}
                 </p>
               </PbHint>
@@ -45,13 +44,16 @@
               <p class="pb-sm secondary-value">{{ column.secondaryValue }}</p>
             </div>
 
-            <div>
+            <div class="badges" v-if="column.badges">
               <PbBadge
                 v-for="badge of column.badges"
                 :key="badge"
-                :title="badge"
+                :title="badge.value"
                 :wrap-content="true"
+                :background-color="badge.backgroundColor"
+                :color="badge.fontColor"
                 style="margin-right: 2px;"
+                :size="badge.size"
               />
             </div>
           </div>
@@ -112,9 +114,7 @@
                   :show-on-overflow-only="true"
                   position="bottom-right"
                 >
-                  <p
-                    :class="ellipsisClass"
-                  >
+                  <p :class="ellipsisClass">
                     {{ column.value }}
                   </p>
                 </PbHint>
@@ -197,7 +197,9 @@ export default {
   watch: {
     expandAll: {
       handler(newValue) {
-        this.internalExpandedRows = newValue ? this.rows.map((_, index) => index) : [];
+        this.internalExpandedRows = newValue
+          ? this.rows.map((_, index) => index)
+          : [];
       },
     },
   },
@@ -240,6 +242,10 @@ export default {
 
     .table-column {
       padding: 8px;
+
+      .badges {
+        text-transform: uppercase;
+      }
 
       small {
         color: var(--color-gray-90);
