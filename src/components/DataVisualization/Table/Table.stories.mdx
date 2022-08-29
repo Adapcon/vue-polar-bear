@@ -23,31 +23,31 @@ import PbButton from '../../Buttons/Button/Button.vue';
           { value: 'João Paulo de Ávila Alfredo', secondaryValue: '123.456.789-10' },
           { value: '20' },
           { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-237.png' },
-          { badges: [{ value: 'Finalizado', badgeColor: 'success-light', badgeFontColor: 'success', badgeSize: 'pb-md' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
         ],
         [
           { value: 'Maria da Silva', secondaryValue: '661.313.649-23' },
           { value: '22', },
           { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-341.png' },
-          { badges: [{ value: 'Finalizado', badgeColor: 'success-light', badgeFontColor: 'success', badgeSize: 'pb-md' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
         ],
         [
           { value: 'Lucca Gael Ferreira', secondaryValue: '898.372.281-30' },
           { value: '16', },
           { value: 'Não informado', badges: [{ value: 'menor de idade' }] },
-          { badges: [{ value: 'Finalizado', badgeColor: 'success-light', badgeFontColor: 'success', badgeSize: 'pb-md' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
         ],
         [
           { value: 'Sofia Jennifer Gomes da Silva Mendes de Souza', secondaryValue: '398.722.811-30' },
           { value: '23', },
           { value: 'Sem preferência' },
-          { badges: [{ value: 'Finalizado', badgeColor: 'success-light', badgeFontColor: 'success', badgeSize: 'pb-md' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
         ],
         [
           { value: 'Mário Oliveira', secondaryValue: '898.372.281-30' },
           { value: '11', },
           { value: 'Não informado', badges: [{ value: 'menor de idade'}, { value: '<12' }] },
-          { badges: [{ value: 'Finalizado', badgeColor: 'success-light', badgeFontColor: 'success', badgeSize: 'pb-md' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
         ],
       ],
     },
@@ -64,9 +64,6 @@ import PbButton from '../../Buttons/Button/Button.vue';
     loading: { type: 'boolean', defaultValue: false },
     ellipsisOnOverflow: { type: 'boolean', defaultValue: true },
     highlightOnHover: { type: 'boolean', defaultValue: true },
-    badgeColor: { type: 'string', defaultValue: 'primary'},
-    badgeFontColor: { type: 'string', defaultValue: 'white' },
-    badgeSize: { type: 'string', defaultValue: 'pb-sm' },
     hasActionColumn: { type: 'boolean', defaultValue: true },
     hasSort: { type: 'boolean', defaultValue: true },
     hasActionsBar: { type: 'boolean', defaultValue: true },
@@ -90,9 +87,6 @@ export const Template = (args, { argTypes }) => ({
         :has-action-column="hasActionColumn"
         :has-sort="hasSort"
         :has-actions-bar="hasActionsBar"
-        :badgeColor="badgeColor"
-        :badgeSize="badgeSize"
-        :badgeFontColor="badgeFontColor"
         :max-height="maxHeight"
         :actions-size="actionsSize"
       >
@@ -197,11 +191,8 @@ List of arrays to each row, containing one object to each column of table;
 |:----------------------------|:-----------------------|:--------|:----------------------------------------------------------------------------------------------|
 | value                       | String, Number, Image  |         | The column value                                                                              |
 | secondaryValue              | String, Number         |         | A extra info to column (Optional).                                                            |
-| badges                      | String, Number         |         | A list of badges to column (Optional).                                                        |
-| badgeColor                  | String                 |'primary'| Sets the background-color of the badge.                                                       |
-| badgeFontColor              | String                 | 'white' | Sets the font-color of the badge.                                                             |
-| badgeSize                   | String                 | 'pb-sm' | Sets the size of the badge. ('pb-sm', 'pb-md', 'pb-lg').
-| type                        | String, Number         |         | A status badge. (Optional)
+| badges                      | Object                 |         | A list of badges to column. Example: badges: [{ value: 'Finalizado', backgroundColor: 'primary', fontColor: 'white', size: 'pb-md' }].  (Optional) |
+
 ### Properties
 
 | Property                    | Type        | Default | Description                                                                                              |

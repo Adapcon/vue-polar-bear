@@ -50,10 +50,10 @@
                 :key="badge"
                 :title="badge.value"
                 :wrap-content="true"
-                :background-color="badge.badgeColor"
-                :color="badge.badgeFontColor"
+                :background-color="badge.backgroundColor"
+                :color="badge.fontColor"
                 style="margin-right: 2px;"
-                :size="badge.badgeSize"
+                :size="badge.size"
               />
             </div>
           </div>
@@ -162,9 +162,6 @@ export default {
     highlightOnHover: { type: Boolean, default: true },
     hasActionColumn: { type: Boolean, default: true },
     maxHeight: { type: String, default: '' },
-    badgeColor: { type: String, default: '' },
-    badgeSize: { type: String, default: '' },
-    badgeFontColor: { type: String, default: '' },
     actionsSize: { type: Number, default: 1 },
     expandedRows: { type: Array, default: () => [] },
     hiddenColumnsIndex: { type: Array, default: () => [] },
