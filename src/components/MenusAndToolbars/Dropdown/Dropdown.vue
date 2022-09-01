@@ -25,6 +25,7 @@
           `${ withBoxShadow ? 'dropdown-box-shaddow' : '' }`
         ]"
         :style="getStyle"
+        @click="closeDropDownOnClick"
       >
         <slot />
       </div>
@@ -47,6 +48,7 @@ export default {
     text: { type: String, default: '' },
     hideCollapseIcon: { type: Boolean, default: false },
     withBoxShadow: { type: Boolean, default: false },
+    closeOnOptionSelect: { type: Boolean, default: true },
     side: {
       type: String,
       default: 'right',
@@ -81,6 +83,11 @@ export default {
   },
 
   methods: {
+    closeDropDownOnClick() {
+      if (this.closeOnOptionSelect)
+        return this.closeDropDown();
+    },
+
     toggleDropdown() {
       return this.state.isDropdownVisible
         ? this.closeDropDown()
