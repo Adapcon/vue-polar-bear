@@ -22,7 +22,7 @@
         :class="[
           'dropdown-item-wrapper',
           `dropdown-${side}`,
-          `${withBoxShadow ? 'dropdown-box-shaddow' : '' }`
+          `${ withBoxShadow ? 'dropdown-box-shaddow' : '' }`
         ]"
         :style="getStyle"
         @click="closeDropDownOnClick()"
