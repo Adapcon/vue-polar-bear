@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import PbCollapseIcon from "@pb/Miscellaneous/CollapseIcon/CollapseIcon.vue";
-import { validateColor } from "@pb/utils/validator";
+import PbCollapseIcon from '@pb/Miscellaneous/CollapseIcon/CollapseIcon.vue';
+import { validateColor } from '@pb/utils/validator';
 
 export default {
   name: 'PbDropdown',
