@@ -22,7 +22,7 @@
         :class="[
           'dropdown-item-wrapper',
           `dropdown-${side}`,
-          `${withBoxShadow ? 'dropdown-box-shaddow' : ''}`
+          `${withBoxShadow ? 'dropdown-box-shaddow' : '' }`
         ]"
         :style="getStyle"
         @click="closeDropDownOnClick()"
@@ -77,8 +77,8 @@ export default {
     getStyle() {
       const styleString = `background-color: var(--color-${this.color});`;
 
-      if (!this.$slots.header) return styleString.concat("top: 30px;");
-      return styleString.concat("top: 50px;");
+      if (!this.$slots.header) return styleString.concat('top: 30px;');
+      return styleString.concat('top: 50px;');
     },
   },
 
