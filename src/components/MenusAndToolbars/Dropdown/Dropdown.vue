@@ -11,7 +11,7 @@
         v-if="!hideCollapseIcon"
         :is-icon-up="state.isDropdownVisible"
         color="var(--color-primary)"
-        style="margin-left: 10px"
+        style="margin-left: 10px;"
       />
     </div>
 
@@ -22,7 +22,7 @@
         :class="[
           'dropdown-item-wrapper',
           `dropdown-${side}`,
-          `${withBoxShadow ? 'dropdown-box-shaddow' : ''}`,
+          `${withBoxShadow ? 'dropdown-box-shaddow' : ''}`
         ]"
         :style="getStyle"
         @click="closeDropDownOnClick()"
@@ -38,30 +38,30 @@ import PbCollapseIcon from "@pb/Miscellaneous/CollapseIcon/CollapseIcon.vue";
 import { validateColor } from "@pb/utils/validator";
 
 export default {
-  name: "PbDropdown",
+  name: 'PbDropdown',
 
   components: {
     PbCollapseIcon,
   },
 
   props: {
-    text: { type: String, default: "" },
+    text: { type: String, default: '' },
     hideCollapseIcon: { type: Boolean, default: false },
     withBoxShadow: { type: Boolean, default: false },
     closeOnOptionSelect: { type: Boolean, default: true },
     side: {
       type: String,
-      default: "right",
-      validator: (side) => {
-        const sides = ["right", "left"];
+      default: 'right',
+      validator: side => {
+        const sides = ['right', 'left'];
 
         return sides.includes(side);
       },
     },
     color: {
       type: String,
-      default: "white",
-      validator: (color) => validateColor(color),
+      default: 'white',
+      validator: color => validateColor(color),
     },
   },
 
@@ -94,11 +94,11 @@ export default {
     },
     openDropDown() {
       this.state.isDropdownVisible = true;
-      this.$emit("update:dropdownOpened");
+      this.$emit('update:dropdownOpened');
     },
     closeDropDown() {
       this.state.isDropdownVisible = false;
-      this.$emit("update:dropdownClosed");
+      this.$emit('update:dropdownClosed');
     },
   },
 };
