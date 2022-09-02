@@ -26,6 +26,10 @@ import PbCollapseIcon from '@pb/Miscellaneous/CollapseIcon/CollapseIcon.vue';
       type: 'boolean',
       defaultValue: false,
     },
+    closeOnOptionSelect: {
+      type: 'boolean',
+      defaultValue: false,
+    },
     withBoxShadow: {
       type: 'boolean',
       defaultValue: false,
@@ -75,6 +79,7 @@ export const Template = (args, { argTypes }) => ({
         :text="text"
         :side="side"
         :hideCollapseIcon="hideCollapseIcon"
+        :closeOnOptionSelect="closeOnOptionSelect"
         :withBoxShadow="withBoxShadow"
       >
         <template v-if="!hideHeaderSlot" #header>

@@ -15,7 +15,7 @@
       />
     </div>
 
-    <transition name="slide-fade-down">
+    <transition name="slide-fade">
       <div
         v-if="state.isDropdownVisible"
         v-click-outside="closeDropDown"
@@ -25,6 +25,7 @@
           `${ withBoxShadow ? 'dropdown-box-shaddow' : '' }`
         ]"
         :style="getStyle"
+        @click="closeDropDownOnClick()"
       >
         <slot />
       </div>
@@ -47,6 +48,7 @@ export default {
     text: { type: String, default: '' },
     hideCollapseIcon: { type: Boolean, default: false },
     withBoxShadow: { type: Boolean, default: false },
+    closeOnOptionSelect: { type: Boolean, default: true },
     side: {
       type: String,
       default: 'right',
@@ -81,6 +83,10 @@ export default {
   },
 
   methods: {
+    closeDropDownOnClick() {
+      if (this.closeOnOptionSelect) return this.closeDropDown();
+    },
+
     toggleDropdown() {
       return this.state.isDropdownVisible
         ? this.closeDropDown()
@@ -99,6 +105,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.slide-fade-enter-active {
+  transition: all 0.2s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateY(10px);
+  opacity: 0;
+}
 .pb-dropdown-container {
   position: relative;
 
@@ -123,8 +139,7 @@ export default {
   }
 
   .dropdown-box-shaddow {
-    box-shadow:
-      -2px 4px 14px 8px rgba(0, 0, 0, 0.05),
+    box-shadow: -2px 4px 14px 8px rgba(0, 0, 0, 0.05),
       -1px 1px 4px rgba(0, 0, 0, 0.1);
   }
 }
