@@ -21,6 +21,13 @@ import PbAccordion from './Accordion.vue';
       type: 'boolean',
       defaultValue: false,
     },
+    labels: {
+      type: 'array',
+      defaultValue: [
+        { title: 'Quantidade', value: '200' },
+        { title: 'Valor', value: 'R$ 30.000,00' },
+      ]
+    }
   }}
 />
 
@@ -69,8 +76,8 @@ export const TemplateAccordion = (args, { argTypes }) => ({
   <div>
     <PbAccordion
       :title="title"
-      :quantity="0"
-      :showQuantity="true"
+      :quantity="quantity"
+      :showQuantity="showQuantity"
       :noBackground="noBackground"
     >
       <h4 class="pb" style="color: var(--color-gray-40); padding: 8px 14px;">Here you could code what you want!</h4>
@@ -82,5 +89,31 @@ export const TemplateAccordion = (args, { argTypes }) => ({
 <Canvas>
   <Story name="Quantity Counter" height="auto">
     {TemplateAccordion.bind({})}
+  </Story>
+</Canvas>
+
+### With Header Labels
+
+export const TemplateHeaderLabels = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbAccordion },
+  template: `
+  <div>
+    <PbAccordion
+      :title="title"
+      :quantity="quantity"
+      :showQuantity="showQuantity"
+      :noBackground="noBackground"
+      :labels="labels"
+    >
+      <h4 class="pb" style="color: var(--color-gray-40); padding: 8px 14px;">Here you could code what you want!</h4>
+    </PbAccordion>
+  </div>
+  `,
+});
+
+<Canvas>
+  <Story name="With Header Labels" height="auto">
+    {TemplateHeaderLabels.bind({})}
   </Story>
 </Canvas>
