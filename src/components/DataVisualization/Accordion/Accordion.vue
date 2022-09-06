@@ -2,6 +2,7 @@
   <section class="accordion-container">
     <div
       class="accordion"
+      :class="{ 'accordion-background': !noBackground, 'accordion-collapsed': state.collapsed }"
       @click="toggleCollapse"
     >
       <div class="accordion-infos">
@@ -49,6 +50,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    noBackground: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -74,7 +79,27 @@ export default {
 .accordion-container {
   width: 100%;
   height: auto;
+
   .accordion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &-background {
+      background-color: var(--color-gray);
+      padding: 12px 14px;
+    }
+
+    &-background:hover {
+      background-color: #F5F6F7;
+    }
+
+    &-collapsed {
+      border-radius: 8px 8px 0px 0px;
+    }
+
     .accordion-infos {
       width: calc(100% - 48px);
       display: flex;
@@ -90,13 +115,6 @@ export default {
         align-items: center;
       }
     }
-    background: var(--color-gray);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 14px;
-    border-radius: 8px;
-    cursor: pointer;
   }
 }
 </style>
