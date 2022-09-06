@@ -6,7 +6,18 @@
       @click="toggleCollapse"
     >
       <div class="accordion-infos">
-        <h6 class="pb">{{ title }}</h6>
+        <h6
+          class="pb"
+          :style="hasHeaderLabels() ? 'flex: 1' : ''"
+        >
+          {{ title }}
+        </h6>
+        <slot
+          v-if="hasHeaderLabels()"
+          name="HeaderLabels"
+        >
+          <HeaderLabels :labels="labels" />
+        </slot>
         <div
           v-if="showQuantity"
           class="quantity"
@@ -25,12 +36,14 @@
 
 <script>
 import { PbCollapseIcon } from '@pb';
+import HeaderLabels from './HeaderLabels.vue';
 
 export default {
   name: 'PbAccordion',
 
   components: {
     PbCollapseIcon,
+    HeaderLabels,
   },
 
   props: {
@@ -54,6 +67,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    labels: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   data() {
@@ -70,6 +87,9 @@ export default {
     },
     isOpened() {
       return this.state.collapsed ? 'var(--color-primary)' : 'var(--color-gray-20)';
+    },
+    hasHeaderLabels() {
+      return this.labels.length > 0;
     },
   },
 };
@@ -104,6 +124,7 @@ export default {
       width: calc(100% - 48px);
       display: flex;
       justify-content: space-between;
+      align-items: center;
 
       .quantity {
         width: 26px;
