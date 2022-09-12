@@ -3,21 +3,20 @@
     <div
       class="accordion"
       :class="{ 'accordion-background': !noBackground, 'accordion-collapsed': state.collapsed }"
-      @click="toggleCollapse"
+      @click="openOnIconOnly ? null : toggleCollapse()"
     >
       <div class="accordion-infos">
         <h6
           class="pb"
-          :style="hasHeaderLabels() ? 'flex: 1' : ''"
+          :style="hasHeaderLabels ? 'flex: 1' : ''"
         >
           {{ title }}
         </h6>
-        <slot
-          v-if="hasHeaderLabels()"
-          name="HeaderLabels"
-        >
-          <HeaderLabels :labels="labels" />
-        </slot>
+        <HeaderLabels
+          v-if="hasHeaderLabels"
+          :labels="labels"
+        />
+        <slot name="header" />
         <div
           v-if="showQuantity"
           class="quantity"
@@ -27,7 +26,8 @@
       </div>
       <PbCollapseIcon
         :is-icon-up="state.collapsed"
-        :color="isOpened()"
+        :color="isOpened"
+        @click.native="openOnIconOnly ? toggleCollapse() : null"
       />
     </div>
     <slot v-if="state.collapsed" />
@@ -71,25 +71,33 @@ export default {
       type: Array,
       default: () => [],
     },
+    openOnIconOnly: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
     return {
       state: {
         collapsed: this.open,
+        test: false,
       },
     };
   },
 
-  methods: {
-    toggleCollapse() {
-      this.state.collapsed = !this.state.collapsed;
+  computed: {
+    hasHeaderLabels() {
+      return this.labels.length > 0;
     },
     isOpened() {
       return this.state.collapsed ? 'var(--color-primary)' : 'var(--color-gray-20)';
     },
-    hasHeaderLabels() {
-      return this.labels.length > 0;
+  },
+  
+  methods: {
+    toggleCollapse() {
+      this.state.collapsed = !this.state.collapsed;
     },
   },
 };
