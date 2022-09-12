@@ -81,7 +81,6 @@ export default {
     return {
       state: {
         collapsed: this.open,
-        test: false,
       },
     };
   },
