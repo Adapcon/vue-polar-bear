@@ -27,6 +27,10 @@ import PbAccordion from './Accordion.vue';
         { title: 'Quantidade', value: '200' },
         { title: 'Valor', value: 'R$ 30.000,00' },
       ]
+    },
+    openOnIconOnly: {
+      type: 'boolean',
+      defaultValue: false
     }
   }}
 />
@@ -54,6 +58,7 @@ export const Template = (args, { argTypes }) => ({
     <PbAccordion
       :title="title"
       :noBackground="noBackground"
+      :openOnIconOnly="openOnIconOnly"
     >
       <h4 class="pb" style="color: var(--color-gray-40); padding: 8px 14px;">Here you could code what you want!</h4>
     </PbAccordion>
