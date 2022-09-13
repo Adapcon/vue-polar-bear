@@ -49,7 +49,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: 'Nome do campo',
+      default: '',
     },
     open: {
       type: Boolean,
