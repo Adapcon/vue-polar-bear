@@ -7,6 +7,7 @@
     >
       <div class="accordion-infos">
         <h6
+          v-if="title"
           class="pb"
           :style="hasHeaderLabels ? 'flex: 1' : ''"
         >
