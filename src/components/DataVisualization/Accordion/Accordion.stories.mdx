@@ -57,6 +57,7 @@ export const Template = (args, { argTypes }) => ({
   <div>
     <PbAccordion
       :title="title"
+      :showQuantity="showQuantity"
       :noBackground="noBackground"
       :openOnIconOnly="openOnIconOnly"
     >
@@ -82,7 +83,7 @@ export const TemplateAccordion = (args, { argTypes }) => ({
     <PbAccordion
       :title="title"
       :quantity="quantity"
-      :showQuantity="showQuantity"
+      :showQuantity="true"
       :noBackground="noBackground"
     >
       <h4 class="pb" style="color: var(--color-gray-40); padding: 8px 14px;">Here you could code what you want!</h4>
