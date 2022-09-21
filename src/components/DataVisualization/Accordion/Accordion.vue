@@ -8,7 +8,7 @@
       <div class="accordion-infos">
         <h6
           v-if="title"
-          class="pb"
+          class="pb ellipsis"
           :style="hasHeaderLabels ? 'flex: 1' : ''"
         >
           {{ title }}
@@ -22,7 +22,7 @@
           v-if="showQuantity"
           class="quantity"
         >
-          <small style="color: var(--color-gray-40)">{{ quantity }}</small>
+          <small class="pb" style="color: var(--color-gray-40)">{{ quantity }}</small>
         </div>
       </div>
       <PbCollapseIcon
@@ -94,7 +94,7 @@ export default {
       return this.state.collapsed ? 'var(--color-primary)' : 'var(--color-gray-20)';
     },
   },
-  
+
   methods: {
     toggleCollapse() {
       this.state.collapsed = !this.state.collapsed;
@@ -133,6 +133,14 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      h6 {
+        padding-right: 40px;
+      }
+      .ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
       .quantity {
         width: 26px;

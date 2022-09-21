@@ -57,6 +57,7 @@ export const Template = (args, { argTypes }) => ({
   <div>
     <PbAccordion
       :title="title"
+      :showQuantity="showQuantity"
       :noBackground="noBackground"
       :openOnIconOnly="openOnIconOnly"
     >
@@ -92,7 +93,13 @@ export const TemplateAccordion = (args, { argTypes }) => ({
 });
 
 <Canvas>
-  <Story name="Quantity Counter" height="auto">
+  <Story
+    name="Quantity Counter"
+    height="auto"
+    args={{
+      showQuantity: true,
+    }}
+  >
     {TemplateAccordion.bind({})}
   </Story>
 </Canvas>
