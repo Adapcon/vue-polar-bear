@@ -83,7 +83,7 @@ export const TemplateAccordion = (args, { argTypes }) => ({
     <PbAccordion
       :title="title"
       :quantity="quantity"
-      :showQuantity="true"
+      :showQuantity="showQuantity"
       :noBackground="noBackground"
     >
       <h4 class="pb" style="color: var(--color-gray-40); padding: 8px 14px;">Here you could code what you want!</h4>
@@ -93,7 +93,13 @@ export const TemplateAccordion = (args, { argTypes }) => ({
 });
 
 <Canvas>
-  <Story name="Quantity Counter" height="auto">
+  <Story
+    name="Quantity Counter"
+    height="auto"
+    args={{
+      showQuantity: true,
+    }}
+  >
     {TemplateAccordion.bind({})}
   </Story>
 </Canvas>
