@@ -244,12 +244,7 @@ export default {
     },
 
     selector(value) {
-      if (this.checkedValues.includes(value)) {
-        this.checkedValues = [];
-      } else {
-        this.checkedValues = [];
-        this.checkedValues = [...this.checkedValues, value];
-      }
+      this.checkedValues = !this.checkedValues.includes(value) ? [value] : [];
     },
 
     toggleCollapse() {
