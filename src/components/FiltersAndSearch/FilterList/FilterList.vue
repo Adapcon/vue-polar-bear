@@ -244,9 +244,12 @@ export default {
     },
 
     selector(value) {
-      this.checkedValues = [];
-
-      this.checkedValues = [...this.checkedValues, value];
+      if (this.checkedValues.includes(value)) {
+        this.checkedValues = [];
+      } else {
+        this.checkedValues = [];
+        this.checkedValues = [...this.checkedValues, value];
+      }
     },
 
     toggleCollapse() {
