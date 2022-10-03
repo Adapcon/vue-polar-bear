@@ -1,24 +1,28 @@
-import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
-import PbLayoutGrid from './LayoutGrid.vue';
+import { Meta, Story, Canvas } from "@storybook/addon-docs/blocks";
+import PbLayoutGrid from "./LayoutGrid.vue";
 
 <Meta
   title="Components/Layout/PbLayoutGrid"
   component={PbLayoutGrid}
   argTypes={{
-    title: { 
-        type: 'string',
-        defaultValue: 'Title',
+    title: {
+      type: "string",
+      defaultValue: "Title",
     },
-    disableToolBar: { 
-        type: 'boolean', 
-        defaultValue: false,
+    disableToolBar: {
+      type: "boolean",
+      defaultValue: false,
     },
     backFunction: {
-      action: 'backFunction',
+      action: "backFunction",
     },
-    showSideMenu: { 
-        type: 'boolean', 
-        defaultValue: false,
+    showSideMenu: {
+      type: "boolean",
+      defaultValue: false,
+    },
+    newStyle: {
+      type: "boolean",
+      defaultValue: false,
     },
   }}
 />
@@ -27,37 +31,35 @@ export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: { PbLayoutGrid },
   template: `
-    <div style="width: 850px; background-color: white;">
         <PbLayoutGrid 
             :title="title"
             :disableToolBar="disableToolBar"
             :backFunction="backFunction"
             :showSideMenu="showSideMenu"
+            :newStyle="newStyle"
             ref="PbLayoutGrid"
         >
             <template #main>
-                <div style="background-color: rgba(173, 172, 250, 0.2); height: 100%;">
+                <div style="background-color: rgba(173, 172, 250, 0.2);">
                     main
                 </div>   
             </template>
             <template #sidebar>
-                <div style="background-color: rgba(250, 78, 202, 0.2); height: 560px;">
+                <div style="background-color: rgba(250, 78, 202, 0.2); height: 100px">
                     Sidebar
                 </div>   
             </template>
             <template #tool-bar>
-                <div style="background-color: rgba(155, 239, 88, 0.2); height: 100%;">
+                <div style="background-color: rgba(155, 239, 88, 0.2);">
                     Tool Bar
                 </div>   
             </template>
         </PbLayoutGrid>
-    </div>
   `,
 });
 
-
-
 # **PbLayoutGrid component**
+
 ### The `PbLayoutGrid` component used to format the screen with a grid with 3 slots.
 
 ### Purpose and Use case
@@ -69,11 +71,8 @@ The component's purpose is to organize the screen layout.
 ### Default
 
 <Canvas>
-  <Story name="Default" height="auto" parameters={{ layout: 'centered' }}>
-    {Template.bind({})}
-  </Story>
+  <Story name="Default">{Template.bind({})}</Story>
 </Canvas>
-
 
 <!-- TODO: Descobrir como deixar o canvas em mobile -->
 
@@ -84,4 +83,3 @@ The component's purpose is to organize the screen layout.
     {Template.bind({})}
   </Story>
 </Canvas> -->
-

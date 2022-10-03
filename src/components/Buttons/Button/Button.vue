@@ -224,6 +224,7 @@ export default {
   &.pb-button-style-regular {
     padding: 0 !important;
     height: auto;
+    align-items: center;
     &:hover {
       color: var(--color-primary) !important;
     }
@@ -241,11 +242,13 @@ export default {
   }
 
   .pb-button-container {
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: var(--color-primary);
+    border-radius: 25px;
   }
 
   .pb-button-notification-badge {

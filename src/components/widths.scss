@@ -564,7 +564,8 @@
 
   .pb-col-md-9 {
     flex: 0 0 auto;
-    width: 75%;
+    justify-content: flex-end;
+    width: 65%;
   }
 
   .pb-col-md-10 {
