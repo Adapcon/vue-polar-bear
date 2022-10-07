@@ -283,7 +283,6 @@ export default {
 
     setOffset() {
       this.$emit('offset', this.currentPage * this.pageLimit);
-      console.log(this.currentPage * this.pageLimit, 'this.currentPage * this.pageLimit');
     },
 
     currentIndex(index) {
