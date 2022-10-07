@@ -185,7 +185,7 @@
       <PbButton
         :disabled="disableNextOnLastPage"
         icon="fas fa-chevron-up"
-        style="transform: rotate(90deg)"
+        style="transform: rotate(90deg);"
         @click.native="changePage('next')"
       />
     </div>
