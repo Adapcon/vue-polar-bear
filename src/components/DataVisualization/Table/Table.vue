@@ -45,6 +45,9 @@
       :column-classes="columnClasses"
       :expanded-rows.sync="state.expandedRows"
       :expand-all="state.expandAll"
+      :count="count"
+      :page-limit="pageLimit"
+      @offset="(value) => $emit('offset', value)"
     >
       <template #actions="props">
         <slot
@@ -85,7 +88,11 @@ export default {
     hasActionsBar: { type: Boolean, default: true },
     maxHeight: { type: String, default: '' },
     actionsSize: { type: Number, default: 1 },
+    count: { type: Number, default: 0 },
+    pageLimit: { type: Number, default: 5 },
   },
+
+  emits: ['offset'],
 
   data() {
     return {

@@ -49,6 +49,72 @@ import PbButton from '../../Buttons/Button/Button.vue';
           { value: 'Não informado', badges: [{ value: 'menor de idade'}, { value: '<12' }] },
           { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
         ],
+        [
+          { value: 'Alfredo', secondaryValue: '123.456.789-10' },
+          { value: '20' },
+          { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-237.png' },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Silva', secondaryValue: '661.313.649-23' },
+          { value: '22', },
+          { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-341.png' },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Gael', secondaryValue: '898.372.281-30' },
+          { value: '16', },
+          { value: 'Não informado', badges: [{ value: 'menor de idade' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Gomes da Silva Mendes de Souza', secondaryValue: '398.722.811-30' },
+          { value: '23', },
+          { value: 'Sem preferência' },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Oliveira', secondaryValue: '898.372.281-30' },
+          { value: '11', },
+          { value: 'Não informado', badges: [{ value: 'menor de idade'}, { value: '<12' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Silva', secondaryValue: '661.313.649-23' },
+          { value: '22', },
+          { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-341.png' },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Gael', secondaryValue: '898.372.281-30' },
+          { value: '16', },
+          { value: 'Não informado', badges: [{ value: 'menor de idade' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Gomes da Silva Mendes de Souza', secondaryValue: '398.722.811-30' },
+          { value: '23', },
+          { value: 'Sem preferência' },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Oliveira', secondaryValue: '898.372.281-30' },
+          { value: '11', },
+          { value: 'Não informado', badges: [{ value: 'menor de idade'}, { value: '<12' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Oliveira', secondaryValue: '898.372.281-30' },
+          { value: '11', },
+          { value: 'Não informado', badges: [{ value: 'menor de idade'}, { value: '<12' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Oliveira', secondaryValue: '898.372.281-30' },
+          { value: '11', },
+          { value: 'Não informado', badges: [{ value: 'menor de idade'}, { value: '<12' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
       ],
     },
     metadata: {
@@ -58,7 +124,18 @@ import PbButton from '../../Buttons/Button/Button.vue';
         { name: 'Maria da Silva', cpf: '66131364923', driverLicense: true },
         { name: 'Lucca Gael Ferreira', cpf: '89837228130', driverLicense: false },
         { name: 'Sofia Jennifer Gomes da Silva Mendes de Souza', cpf: '39872281130', driverLicense: true },
-        { name: 'Mário Oliveira', cpf: '89837228130', driverLicense: false }
+        { name: 'Mário Oliveira', cpf: '89837228130', driverLicense: false },
+        { name: 'João Paulo de Ávila', cpf: '12345678910', driverLicense: true },
+        { name: 'Maria da Silva', cpf: '66131364923', driverLicense: true },
+        { name: 'Lucca Gael Ferreira', cpf: '89837228130', driverLicense: false },
+        { name: 'Sofia Jennifer Gomes da Silva Mendes de Souza', cpf: '39872281130', driverLicense: true },
+        { name: 'Mário Oliveira', cpf: '89837228130', driverLicense: false },
+        { name: 'Maria da Silva', cpf: '66131364923', driverLicense: true },
+        { name: 'Lucca Gael Ferreira', cpf: '89837228130', driverLicense: false },
+        { name: 'Sofia Jennifer Gomes da Silva Mendes de Souza', cpf: '39872281130', driverLicense: true },
+        { name: 'Mário Oliveira', cpf: '89837228130', driverLicense: false },
+        { name: 'Mário Oliveira', cpf: '89837228130', driverLicense: false },
+        { name: 'Sofia Jennifer Gomes da Silva Mendes de Souza', cpf: '39872281130', driverLicense: true },
       ],
     },
     loading: { type: 'boolean', defaultValue: false },
@@ -69,6 +146,8 @@ import PbButton from '../../Buttons/Button/Button.vue';
     hasActionsBar: { type: 'boolean', defaultValue: true },
     maxHeight: { type: 'string', defaultValue: '' },
     actionsSize: { type: 'number', defaultValue: 1 },
+    count: { type: Number, defaultValue: null },
+    pageLimit: { type: Number, defaultValue: 5 },
   }}
 />
 
@@ -89,6 +168,8 @@ export const Template = (args, { argTypes }) => ({
         :has-actions-bar="hasActionsBar"
         :max-height="maxHeight"
         :actions-size="actionsSize"
+        :count="count"
+        :pageLimit="pageLimit"
       >
         <template #actions="{ row, metadata }">
           <div style="display: flex;">
