@@ -162,7 +162,7 @@
             class="pb"
             @click="goToFirstPage()"
           >
-            {{ 1 }}
+            1
           </p>
         </div>
 
