@@ -4,7 +4,18 @@
     :style="`${maxHeight ? `max-height: ${maxHeight}` : ''}`"
   >
     <div
-      v-for="(row, index) in rows"
+      v-if="rows.length < 1"
+      class="empty-title"
+    >
+      <p
+        class="pb"
+        style="color: var(--color-gray-20)"
+      >
+        Sem registros
+      </p>
+    </div>
+    <div
+      v-for="(row, index) in pageArray[currentPage]"
       :key="index"
       :class="{
         'row-highlight': highlightOnHover,
@@ -13,7 +24,7 @@
     >
       <div
         class="table-row pb-row"
-        style="align-items: center"
+        style="align-items: center;"
       >
         <div
           v-for="(column, columnIndex) in row"
@@ -27,7 +38,6 @@
               :src="column.value"
               class="image"
             >
-
 
             <div v-else>
               <PbHint
@@ -44,7 +54,10 @@
               <p class="pb-sm secondary-value">{{ column.secondaryValue }}</p>
             </div>
 
-            <div class="badges" v-if="column.badges">
+            <div
+              v-if="column.badges"
+              class="badges"
+            >
               <PbBadge
                 v-for="badge of column.badges"
                 :key="badge"
@@ -136,6 +149,46 @@
         </div>
       </div>
     </div>
+    <div class="page-indicators">
+      <PbButton
+        :disabled="disableReturnOnFirstPage"
+        icon="fas fa-chevron-up"
+        style="transform: rotate(-90deg)"
+        @click.native="changePage('return')"
+      />
+      <div class="page-indexes">
+        <div :class="currentPage === 0 ? 'current-page-indicator' : ''">
+          <p
+            class="pb"
+            @click="goToFirstPage()"
+          >
+            {{ 1 }}
+          </p>
+        </div>
+
+        <p
+          v-if="currentPage > 4"
+          class="pb"
+        >
+          ...
+        </p>
+        <div class="visualize-pages-index">
+          <div
+            v-for="index of pageArray.length - 1"
+            :key="index"
+            :class="currentIndex(index)"
+          >
+            <p class="pb">{{ index + 1 }}</p>
+          </div>
+        </div>
+      </div>
+      <PbButton
+        :disabled="disableNextOnLastPage"
+        icon="fas fa-chevron-up"
+        style="transform: rotate(90deg)"
+        @click.native="changePage('next')"
+      />
+    </div>
   </div>
 </template>
 
@@ -144,6 +197,7 @@ import { isImage } from 'adapcon-utils-js';
 import PbHint from '../../Miscellaneous/Hint/Hint.vue';
 import PbBadge from '../../Miscellaneous/Badge/Badge.vue';
 import PbIcon from '../../Miscellaneous/Icon/Icon';
+import PbButton from '../../Buttons/Button/Button.vue';
 
 export default {
   name: 'TableRows',
@@ -152,6 +206,7 @@ export default {
     PbHint,
     PbBadge,
     PbIcon,
+    PbButton,
   },
 
   props: {
@@ -168,9 +223,24 @@ export default {
     columnClasses: { type: Function, required: true },
     expandRowsColumnSize: { type: Number, default: 1 },
     expandAll: { type: Boolean, default: false },
+    count: { type: Number, default: 16 },
+    pageLimit: { type: Number, default: 5 },
+  },
+
+  data() {
+    return {
+      pageArray: [],
+      currentPage: 0,
+    };
   },
 
   computed: {
+    disableReturnOnFirstPage() {
+      return this.currentPage === 0;
+    },
+    disableNextOnLastPage() {
+      return this.currentPage === Math.ceil(this.count / this.pageLimit) - 1;
+    },
     expandIconClass() {
       return `pb-col-${this.expandRowsColumnSize}`;
     },
@@ -204,8 +274,33 @@ export default {
     },
   },
 
+  created() {
+    for (let i = 0; i < this.rows.length; i += this.pageLimit) this.pageArray.push(this.rows.slice(i, i + this.pageLimit));
+  },
+
   methods: {
     isImage,
+
+    setOffset() {
+      this.$emit('offset', this.currentPage * this.pageLimit);
+      console.log(this.currentPage * this.pageLimit, 'this.currentPage * this.pageLimit');
+    },
+
+    currentIndex(index) {
+      return this.currentPage === index ? 'current-page-indicator' : '';
+    },
+
+    changePage(setPagination) {
+      if (setPagination === 'next') this.$emit('currentPage', this.currentPage++);
+
+      if (setPagination === 'return') this.$emit('currentPage', this.currentPage--);
+
+      this.setOffset();
+    },
+
+    goToFirstPage() {
+      this.currentPage = 0;
+    },
 
     expandIcon(index) {
       return this.expandedRows.includes(index)
@@ -225,8 +320,54 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.current-page-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: rgba(var(--color-primary-rgb), 0.16);
+}
 .table-rows {
   overflow: auto;
+
+  .page-indicators {
+    width: auto;
+    display: flex;
+    align-items: center;
+
+    .page-indexes {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gray-20);
+
+      .visualize-pages-index {
+        display: flex;
+        max-width: 97px;
+        overflow: hidden;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      p {
+        padding: 0 12px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .empty-title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      padding: 16px;
+    }
+  }
 
   .row-highlight > :hover {
     background-color: var(--color-gray);
