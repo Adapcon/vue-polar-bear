@@ -9,7 +9,7 @@
     >
       <p
         class="pb"
-        style="color: var(--color-gray-20)"
+        style="color: var(--color-gray-20);"
       >
         Sem registros
       </p>
