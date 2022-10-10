@@ -1,6 +1,16 @@
 <template>
-  <div style="position: relative; margin: 5px; width: 100%;">
+  <div>
     <div class="pb-search-input-container">
+      <div
+        v-if="showIcon"
+        class="pb-search-input-icon-search icons"
+        :class="{
+          'pb-search-input-icon-search-white': darkBackground,
+        }"
+        @click="$emit('search')"
+      >
+        <PbIcon icon="fas fa-search" />
+      </div>
       <input
         v-model="valueInput"
         :placeholder="placeholder"
@@ -16,18 +26,8 @@
         @keyup.enter="() => $emit('search')"
       >
       <div
-        v-if="showIcon"
-        class="pb-search-input-icon-search"
-        :class="{
-          'pb-search-input-icon-search-white': darkBackground,
-        }"
-        @click="$emit('search')"
-      >
-        <PbIcon icon="fas fa-search" />
-      </div>
-      <div
         v-if="valueInput.length"
-        class="pb-search-input-icon-clear"
+        class="pb-search-input-icon-clear icons"
         :class="{
           'pb-search-input-icon-clear-white': darkBackground,
         }"
@@ -98,40 +98,44 @@ export default {
 
 <style lang='scss' scoped>
 .pb-search-input-container {
-  width: 100%;
-  position: relative;
-
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 40px;
+  border-radius: 20px;
+  background: none;
+  outline: none;
+  transition: all .3s ease;
+  border: 1px solid var(--color-gray-20);
+  
+  &:focus {
+    border: 1px solid var(--color-gray-90);
+  }
+  
   input {
-    width: 100%;
-    height: 40px;
-    border-radius: 20px;
-    padding: 0 32px 0 36px;
-    background: none;
-    outline: none;
-    transition: all .3s ease;
-    border: 1px solid var(--color-gray-20);
+    width: 96%;
 
-    &:focus {
-      border: 1px solid var(--color-gray-90);
+    @media (max-width: 1600px) {
+      width: 94%;
+    }
+
+    @media (max-width: 720px) {
+      width: 80%;
     }
   }
 
   .pb-search-input-icon-search,
   .pb-search-input-icon-clear {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     color: var(--color-gray-40);
     cursor: pointer;
     transition: all .3s ease;
   }
 
-  .pb-search-input-icon-search {
-    left: 14px;
+  .icons {
+    padding-top: 11px
   }
 
   .pb-search-input-icon-clear {
-    right: 14px;
     &:hover {
       color: var(--color-gray-90);
     }
@@ -179,7 +183,6 @@ export default {
 .pb-search-suggestions {
   width: 100%;
   max-height: 180px;
-  position: absolute;
   top: 39px;
   left: 0;
   z-index: 9999;

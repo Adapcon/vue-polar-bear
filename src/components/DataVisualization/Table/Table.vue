@@ -279,7 +279,6 @@ export default {
     margin-bottom: 40px;
 
     .search-input {
-      margin-right: 24px;
       width: 100%;
     }
   }
@@ -290,7 +289,6 @@ export default {
     margin-bottom: 24px;
 
     .search-input {
-      margin-right: 16px;
       width: 100%;
     }
   }
