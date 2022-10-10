@@ -65,12 +65,12 @@ export default {
     disableToolBar: { type: Boolean, default: false },
     backFunction: { type: Function, default: () => () => {} },
     showSideMenu: { type: Boolean, default: false },
-    newStyle: { type: Boolean, default: false },
+    showContentSidebarMobile: { type: Boolean, default: false },
   },
 
   computed: {
     showContentSideBar() {
-      if (this.newStyle) return 'show';
+      if (this.showContentSidebarMobile) return 'show';
 
       return 'hidden';
     },
