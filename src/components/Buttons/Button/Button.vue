@@ -243,7 +243,7 @@ export default {
 
   .pb-button-container {
     width: 80%;
-    height: 70%;
+    height: 80%;
     display: flex;
     justify-content: center;
     align-items: center;

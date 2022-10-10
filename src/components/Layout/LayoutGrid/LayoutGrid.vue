@@ -5,25 +5,24 @@
         <div class="pb-row">
           <div class="pb-col-12">
             <div class="sidebar-area">
-              <PbButton
-                color="white"
-                button-style="regular"
-                class="back-button"
-                icon="fas fa-arrow-up fa-rotate-270"
-                @click.native="backFunction"
-              />
-
-              <div class="right-container">
-                <h2 class="pb">
+              <div class="sidebar-header">
+                <PbButton
+                  color="white"
+                  button-style="regular"
+                  class="back-button"
+                  icon="fas fa-arrow-up fa-rotate-270"
+                  @click.native="backFunction"
+                />
+                <h2 class="pb sidebar-title">
                   {{ title }}
                 </h2>
+              </div>
 
-                <div
-                  :class="showContentSideBar"
-                  class="sidebar-content"
-                >
-                  <slot name="sidebar" />
-                </div>
+              <div
+                :class="showContentSideBar"
+                class="sidebar-content"
+              >
+                <slot name="sidebar" />
               </div>
             </div>
           </div>
@@ -91,6 +90,14 @@ export default {
     margin: 0px 0px 40px;
     padding-right: 40px;
 
+    .sidebar-header {
+      display: flex;
+      .sidebar-title {
+        align-self: center;
+        margin-left: 4px !important;
+      }
+      
+    }
     .sidebar-content {
       margin-top: 40px;
     }
@@ -103,11 +110,6 @@ export default {
       .show {
         display: block
       }
-    }
-
-    .right-container {
-      width: 100%;
-      margin-top: 5px;
     }
   }
 
