@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="pb-search-input-container">
       <div
         v-if="showIcon"
