@@ -39,7 +39,10 @@
             {{ subtitle }}
           </small>
 
-          <slot v-if="state.footerShow" name="expansive-footer" />
+          <slot
+            v-if="state.footerShow"
+            name="expansive-footer"
+          />
         </div>
       </div>
     </div>
@@ -48,7 +51,7 @@
 
 <script>
 export default {
-  name: 'PbCard',
+  name: 'PbGalleryCard',
 
   props: {
     title: { type: String, default: '' },

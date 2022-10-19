@@ -1,9 +1,9 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
-import PbCard from './Card.vue';
+import PbGalleryCard from './GalleryCard.vue';
 
 <Meta
-  title="Components/Data Visualization/PbCard"
-  component={PbCard}
+  title="Components/Data Visualization/PbGalleryCard"
+  component={PbGalleryCard}
   argTypes={{
       title: {
         control: {
@@ -36,10 +36,10 @@ import PbCard from './Card.vue';
 
 export const Template = (args, { argTypes}) => ({
   props: Object.keys(argTypes),
-  components: { PbCard },
+  components: { PbGalleryCard },
   template: `
     <div>
-      <PbCard
+      <PbGalleryCard
         :title="title"
         :subtitle="subtitle"
         :backgroundImage="backgroundImage"
@@ -55,17 +55,17 @@ export const Template = (args, { argTypes}) => ({
             Content Expansive Footer
           </span>
         </template>
-      </PbCard>
+      </PbGalleryCard>
     </div>
   `,
 });
 
-# **PbCard**
-### The `PbCard` componente provide a flexible and extensible content container.
+# **PbGalleryCard**
+### The `PbGalleryCard` componente provide a flexible and extensible content container.
 
 ### Purpose and Use Case
 
-A `PbCard` is an expansive content container.
+A `PbGalleryCard` is an expansive content container.
 Having the possibility to change your background.
 
 Its `title` and `subtitle` are attached to the expanding footer,
