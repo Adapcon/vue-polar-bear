@@ -146,8 +146,10 @@ import PbButton from '../../Buttons/Button/Button.vue';
     hasActionsBar: { type: 'boolean', defaultValue: true },
     maxHeight: { type: 'string', defaultValue: '' },
     actionsSize: { type: 'number', defaultValue: 1 },
-    count: { type: Number, defaultValue: null },
-    pageLimit: { type: Number, defaultValue: 5 },
+    count: { type: Number, defaultValue: 100 },
+    pageLimit: { type: Number, defaultValue: 3 },
+    hasPagination: { type: 'boolean', defaultValue: true },
+    currentPage: { type: Number, defaultValue: 0 },
   }}
 />
 
@@ -158,7 +160,7 @@ export const Template = (args, { argTypes }) => ({
     <div style="background-color: white;">
       <PbTable
         :header="header"
-        :rows="rows"
+        :rows="pageRows"
         :metadata="metadata"
         :loading="loading"
         :ellipsis-on-overflow="ellipsisOnOverflow"
@@ -170,6 +172,9 @@ export const Template = (args, { argTypes }) => ({
         :actions-size="actionsSize"
         :count="count"
         :pageLimit="pageLimit"
+        :has-pagination="hasPagination"
+        :current-page="page"
+        @change-page="pg => { pageRows = rows.slice(pg * pageLimit, (pg * pageLimit) + pageLimit); page = pg }"
       >
         <template #actions="{ row, metadata }">
           <div style="display: flex;">
@@ -192,6 +197,12 @@ export const Template = (args, { argTypes }) => ({
       </PbTable>
     </div>
   `,
+  data() {
+    return {
+      pageRows: this.rows.slice(0, this.pageLimit),
+      page: this.currentPage
+    }
+  },
 });
 
 export const TemplateWithoutActions = (args, { argTypes }) => ({
