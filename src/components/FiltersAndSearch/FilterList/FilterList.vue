@@ -9,14 +9,14 @@
       @click="toggleCollapse"
     >
       <div class="pb-row header-container">
-        <div class="pb-col-4">
-          <p class="pb title">
+        <div class="pb-col-8">
+          <p class="pb title ellipsis">
             <b>{{ title }}</b>
           </p>
         </div>
         <div
           id="icons"
-          class="pb-col-6 pb-col-sm-3"
+          class="pb-col-4 pb-col-sm-3"
         >
           <div
             class="counter"
@@ -244,9 +244,7 @@ export default {
     },
 
     selector(value) {
-      this.checkedValues = [];
-
-      this.checkedValues = [...this.checkedValues, value];
+      this.checkedValues = !this.checkedValues.includes(value) ? [value] : [];
     },
 
     toggleCollapse() {
@@ -297,6 +295,12 @@ export default {
     .header-container {
       justify-content: space-between;
       cursor: pointer;
+
+      .ellipsis {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
 
       .title {
         text-transform: uppercase;
