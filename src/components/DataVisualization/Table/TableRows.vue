@@ -4,6 +4,17 @@
     :style="`${maxHeight ? `max-height: ${maxHeight}` : ''}`"
   >
     <div
+      v-if="rows.length < 1"
+      class="empty-title"
+    >
+      <p
+        class="pb"
+        style="color: var(--color-gray-20);"
+      >
+        Sem registros
+      </p>
+    </div>
+    <div
       v-for="(row, index) in rows"
       :key="index"
       :class="{
@@ -13,7 +24,7 @@
     >
       <div
         class="table-row pb-row"
-        style="align-items: center"
+        style="align-items: center;"
       >
         <div
           v-for="(column, columnIndex) in row"
@@ -27,7 +38,6 @@
               :src="column.value"
               class="image"
             >
-
 
             <div v-else>
               <PbHint
@@ -44,7 +54,10 @@
               <p class="pb-sm secondary-value">{{ column.secondaryValue }}</p>
             </div>
 
-            <div class="badges" v-if="column.badges">
+            <div
+              v-if="column.badges"
+              class="badges"
+            >
               <PbBadge
                 v-for="(badge, badgeIndex) of column.badges"
                 :key="`badge-${index}-${columnIndex}-${badgeIndex}`"
@@ -222,6 +235,10 @@ export default {
 
   methods: {
     isImage,
+
+    setOffset() {
+      this.$emit('offset', this.currentPage * this.pageLimit);
+    },
 
     expandIcon(index) {
       return this.expandedRows.includes(index)
