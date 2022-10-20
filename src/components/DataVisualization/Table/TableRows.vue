@@ -29,7 +29,7 @@
         <div
           v-for="(column, columnIndex) in row"
           v-show="!hiddenColumnsIndex.includes(columnIndex)"
-          :key="columnIndex"
+          :key="`column-${index}-${columnIndex}`"
           :class="columnClasses(header[columnIndex].size, columnIndex)"
         >
           <div class="table-column">
@@ -59,8 +59,8 @@
               class="badges"
             >
               <PbBadge
-                v-for="badge of column.badges"
-                :key="badge"
+                v-for="(badge, badgeIndex) of column.badges"
+                :key="`badge-${index}-${columnIndex}-${badgeIndex}`"
                 :title="badge.value"
                 :wrap-content="true"
                 :background-color="badge.backgroundColor"
@@ -137,13 +137,29 @@
 
               <div>
                 <PbBadge
-                  v-for="badge of column.badges"
-                  :key="badge"
-                  :title="badge"
+                  v-for="(badge, badgeIndex) of column.badges"
+                  :key="`badge-${columnIndex}-${badgeIndex}`"
+                  :title="badge.value"
                   :wrap-content="true"
-                  style="margin-right: 2px"
+                  :background-color="badge.backgroundColor"
+                  :color="badge.fontColor"
+                  style="margin-right: 2px;"
+                  :size="badge.size"
                 />
               </div>
+            </div>
+          </div>
+
+          <div
+            v-if="hasActionColumn && hiddenColumnsIndex.includes('action')"
+          >
+            <div class="table-column">
+              <small class="pb">Ações</small>
+              <slot
+                name="actions"
+                :row="row"
+                :metadata="metadata[index]"
+              />
             </div>
           </div>
         </div>
