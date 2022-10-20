@@ -101,7 +101,7 @@ export default {
     currentPage: { type: Number, default: 0 },
   },
 
-  emits: ['offset'],
+  emits: ['change-page'],
 
   data() {
     return {
