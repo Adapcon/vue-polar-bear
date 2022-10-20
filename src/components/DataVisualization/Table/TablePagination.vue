@@ -21,24 +21,18 @@
           <p class="pb"> ... </p>
         </div>
 
-        <TransitionGroup
-          name="slide"
-          tag="div"
-          class="page-indexes"
+        <div
+          v-for="index of pageIndexes"
+          :key="index"
+          :class="currentIndex(index)"
         >
-          <div
-            v-for="index of pageIndexes"
-            :key="index"
-            :class="currentIndex(index)"
+          <p
+            class="pb"
+            @click="changePage('', index)"
           >
-            <p
-              class="pb"
-              @click="changePage('', index)"
-            >
-              {{ index + 1 }}
-            </p>
-          </div>
-        </TransitionGroup>
+            {{ index + 1 }}
+          </p>
+        </div>
       </div>
     </div>
     <PbButton
