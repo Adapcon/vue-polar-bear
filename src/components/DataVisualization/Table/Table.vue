@@ -60,7 +60,7 @@
       :count="count"
       :page-limit="pageLimit"
       :current-page="currentPage"
-      @change-page="(value) => $emit('change-page', value)"
+      @change-page="value => $emit('change-page', value)"
     />
   </div>
 </template>
