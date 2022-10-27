@@ -17,6 +17,7 @@
     <div
       v-for="(row, index) in rows"
       :key="index"
+      class="line"
       :class="{
         'row-highlight': highlightOnHover,
         'row-expanded': expandedRows.includes(index),
@@ -30,6 +31,7 @@
           v-for="(column, columnIndex) in row"
           v-show="!hiddenColumnsIndex.includes(columnIndex)"
           :key="`column-${index}-${columnIndex}`"
+          style="min-height: 60px;"
           :class="columnClasses(header[columnIndex].size, columnIndex)"
         >
           <div class="table-column">
@@ -75,6 +77,7 @@
         <div
           v-if="hasActionColumn && !hiddenColumnsIndex.includes('action')"
           :class="columnClasses(actionsSize)"
+          style="min-height: 60px;"
           :style="{
             order: 1000,
           }"
@@ -258,6 +261,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.line {
+  border-bottom: 1px solid #D6DBE0
+}
+
 .table-rows {
   overflow: auto;
 
