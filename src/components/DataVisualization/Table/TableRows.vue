@@ -17,6 +17,7 @@
     <div
       v-for="(row, index) in rows"
       :key="index"
+      class="line"
       :class="{
         'row-highlight': highlightOnHover,
         'row-expanded': expandedRows.includes(index),
@@ -166,7 +167,6 @@
           </div>
         </div>
       </div>
-      <p class="line" />
     </div>
   </div>
 </template>
@@ -262,9 +262,7 @@ export default {
 
 <style lang="scss" scoped>
 .line {
-  background-color: #D6DBE0;
-  height: 1px;
-  margin-top: 8px;
+  border-bottom: 1px solid #D6DBE0
 }
 
 .table-rows {
