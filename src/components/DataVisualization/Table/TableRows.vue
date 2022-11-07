@@ -41,6 +41,43 @@
               class="image"
             >
 
+            <div v-else-if="isArray(column.value)">
+              <div class="items-list">
+                <div
+                  v-for="(item, arrayIndex) in column.value"
+                  :key="arrayIndex"
+                >
+                  <p
+                    v-if="
+                      state.seeMoreInfo[index]
+                        ? arrayIndex < column.value.length
+                        : arrayIndex < 2
+                    "
+                    class="pb"
+                  >
+                    {{ item }}
+                  </p>
+                </div>
+              </div>
+              <PbButton
+                v-if="column.value.length > 2"
+                class="see-more-info-button"
+                color="primary"
+                button-style="default"
+                @click.native="seeMoreInfo(index)"
+              >
+                <span class="pb">{{
+                  "Ver" + (state.seeMoreInfo[index] ? " menos" : " mais")
+                }}</span>
+              </PbButton>
+              <p
+                v-if="column.value.length <= 0"
+                class="pb"
+              >
+                Sem registros
+              </p>
+            </div>
+
             <div v-else>
               <PbHint
                 :hint-text="column.value"
@@ -123,6 +160,43 @@
                 class="image"
               >
 
+              <div v-else-if="isArray(column.value)">
+                <div class="items-list">
+                  <div
+                    v-for="(item, arrayIndex) in column.value"
+                    :key="arrayIndex"
+                  >
+                    <p
+                      v-if="
+                        state.seeMoreInfo[index]
+                          ? arrayIndex < column.value.length
+                          : arrayIndex < 2
+                      "
+                      class="pb"
+                    >
+                      {{ item }}
+                    </p>
+                  </div>
+                </div>
+                <PbButton
+                  v-if="column.value.length > 2"
+                  class="see-more-info-button"
+                  color="primary"
+                  button-style="default"
+                  @click.native="seeMoreInfo(index)"
+                >
+                  <span class="pb">{{
+                    "Ver" + (state.seeMoreInfo[index] ? " menos" : " mais")
+                  }}</span>
+                </PbButton>
+                <p
+                  v-if="column.value.length <= 0"
+                  class="pb"
+                >
+                  Sem registros
+                </p>
+              </div>
+
               <div v-else>
                 <PbHint
                   :hint-text="column.value"
@@ -176,6 +250,7 @@ import { isImage } from 'adapcon-utils-js';
 import PbHint from '../../Miscellaneous/Hint/Hint.vue';
 import PbBadge from '../../Miscellaneous/Badge/Badge.vue';
 import PbIcon from '../../Miscellaneous/Icon/Icon';
+import PbButton from '../../Buttons/Button/Button.vue';
 
 export default {
   name: 'TableRows',
@@ -184,6 +259,7 @@ export default {
     PbHint,
     PbBadge,
     PbIcon,
+    PbButton,
   },
 
   props: {
@@ -200,6 +276,14 @@ export default {
     columnClasses: { type: Function, required: true },
     expandRowsColumnSize: { type: Number, default: 1 },
     expandAll: { type: Boolean, default: false },
+  },
+
+  data() {
+    return {
+      state: {
+        seeMoreInfo: {},
+      },
+    };
   },
 
   computed: {
@@ -239,6 +323,14 @@ export default {
   methods: {
     isImage,
 
+    isArray(value) {
+      return Array.isArray(value);
+    },
+
+    seeMoreInfo(id) {
+      this.$set(this.state.seeMoreInfo, id, !this.state.seeMoreInfo[id]);
+    },
+
     setOffset() {
       this.$emit('offset', this.currentPage * this.pageLimit);
     },
@@ -262,7 +354,7 @@ export default {
 
 <style lang="scss" scoped>
 .line {
-  border-bottom: 1px solid #D6DBE0
+  border-bottom: 1px solid #d6dbe0;
 }
 
 .table-rows {
@@ -282,6 +374,17 @@ export default {
 
     .table-column {
       padding: 8px;
+
+      .items-list {
+        padding: 8px 0;
+      }
+      .see-more-info-button {
+        &::v-deep {
+          margin: 0;
+          padding: 0 !important;
+          height: 20px !important;
+        }
+      }
 
       .badges {
         text-transform: uppercase;
