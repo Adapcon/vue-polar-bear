@@ -1,46 +1,51 @@
 <template>
   <section class="table-pagination-container">
-    <PbButton
-      :disabled="disableReturnOnFirstPage"
-      icon="fas fa-chevron-up"
-      style="transform: rotate(-90deg);"
-      @click.native="changePage('return')"
-    />
-    <div class="page-indexes">
-      <div class="visualize-pages-index">
-        <div
-          v-if="pageOffset > 0"
-          class="page-indexes"
-        >
-          <p
-            class="pb"
-            @click="goToFirstPage()"
+    <div class="items-indicator-container">
+      <p class="pb">{{ pageRange }}</p>
+    </div>
+    <div class="page-indexes-container">
+      <PbButton
+        :disabled="disableReturnOnFirstPage"
+        icon="fas fa-chevron-up"
+        style="transform: rotate(-90deg)"
+        @click.native="changePage('return')"
+      />
+      <div class="page-indexes">
+        <div class="visualize-pages-index">
+          <div
+            v-if="pageOffset > 0"
+            class="page-indexes"
           >
-            1
-          </p>
-          <p class="pb"> ... </p>
-        </div>
+            <p
+              class="pb"
+              @click="goToFirstPage()"
+            >
+              1
+            </p>
+            <p class="pb"> ... </p>
+          </div>
 
-        <div
-          v-for="index of pageIndexes"
-          :key="index"
-          :class="currentIndex(index)"
-        >
-          <p
-            class="pb"
-            @click="changePage('', index)"
+          <div
+            v-for="index of pageIndexes"
+            :key="index"
+            :class="currentIndex(index)"
           >
-            {{ index + 1 }}
-          </p>
+            <p
+              class="pb"
+              @click="changePage('', index)"
+            >
+              {{ index + 1 }}
+            </p>
+          </div>
         </div>
       </div>
+      <PbButton
+        :disabled="disableNextOnLastPage"
+        icon="fas fa-chevron-up"
+        style="transform: rotate(90deg)"
+        @click.native="changePage('next')"
+      />
     </div>
-    <PbButton
-      :disabled="disableNextOnLastPage"
-      icon="fas fa-chevron-up"
-      style="transform: rotate(90deg);"
-      @click.native="changePage('next')"
-    />
   </section>
 </template>
 
@@ -63,6 +68,13 @@ export default {
   computed: {
     disableReturnOnFirstPage() {
       return this.currentPage === 0;
+    },
+
+    pageRange() {
+      const firstItemIndex = this.pageLimit * this.currentPage;
+      const pageTotal = (this.currentPage + 1) * this.pageLimit;
+
+      return `${firstItemIndex + 1} a ${pageTotal > this.count ? this.count : pageTotal} de ${this.count} registro(s)`;
     },
 
     disableNextOnLastPage() {
@@ -91,7 +103,9 @@ export default {
     },
 
     currentIndex(index) {
-      return this.currentPage === index ? 'current-page-indicator' : 'current-page';
+      return this.currentPage === index
+        ? 'current-page-indicator'
+        : 'current-page';
     },
 
     changePage(setPagination = '', index = null) {
@@ -111,45 +125,62 @@ export default {
 
 <style lang="scss" scoped>
 .table-pagination-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px 0 16px;
+
+  .items-indicator-container {
+    display: flex;
+    align-items: center;
+
+    p {
+      color: var(--color-gray-20);
+    }
+  }
+
+  .page-indexes-container {
     width: auto;
     display: flex;
     align-items: center;
+    margin-right: 28px;
 
-  .current-page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 25px;
-    height: 25px;
-
-    &-indicator {
+    .current-page {
       display: flex;
       align-items: center;
       justify-content: center;
       width: 25px;
       height: 25px;
-      border-radius: 50%;
-      background: rgba(var(--color-primary-rgb), 0.16);
+
+      &-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: rgba(var(--color-primary-rgb), 0.16);
+      }
     }
-  }
 
-  .page-indexes {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-gray-20);
-
-    .visualize-pages-index {
+    .page-indexes {
       display: flex;
-      // max-width: 97px;
-      overflow: hidden;
-      justify-content: flex-end;
       align-items: center;
-    }
+      justify-content: center;
+      color: var(--color-gray-20);
 
-    p {
-      padding: 0 12px;
-      cursor: pointer;
+      .visualize-pages-index {
+        display: flex;
+        // max-width: 97px;
+        overflow: hidden;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      p {
+        padding: 0 12px;
+        cursor: pointer;
+      }
     }
   }
 }
