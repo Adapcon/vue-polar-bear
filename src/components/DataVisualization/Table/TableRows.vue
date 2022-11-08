@@ -360,6 +360,16 @@ export default {
 .table-rows {
   overflow: auto;
 
+  .empty-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      padding: 16px;
+    }
+  }
+
   .row-highlight > :hover {
     background-color: var(--color-gray);
     transition: 0.5s;
