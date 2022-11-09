@@ -21,8 +21,14 @@
         <div
           v-if="showQuantity"
           class="quantity"
+          :style="changeStyleWhenEmpty('background')"
         >
-          <small class="pb" style="color: var(--color-gray-40)">{{ quantity }}</small>
+          <small
+            class="pb"
+            :style="changeStyleWhenEmpty('color')"
+          >
+            {{ quantity }}
+          </small>
         </div>
       </div>
       <PbCollapseIcon
@@ -96,6 +102,14 @@ export default {
   },
 
   methods: {
+    changeStyleWhenEmpty(prop) {
+      if (prop === 'background')
+        return this.quantity > 0 ? 'background: rgba(var(--color-primary-rgb), 0.08)' : 'background: rgba(var(--color-gray-40-rgb), 0.08)';
+      if (prop === 'color')
+        return this.quantity > 0 ? 'color: var(--color-primary)' : 'color: var(--color-gray-40)';
+      return '';
+    },
+
     toggleCollapse() {
       this.state.collapsed = !this.state.collapsed;
     },
@@ -147,7 +161,6 @@ export default {
         width: 26px;
         height: 20px;
         border-radius: 20px;
-        background: rgba(var(--color-gray-40-rgb), 0.08);
         display: flex;
         justify-content: center;
         align-items: center;
