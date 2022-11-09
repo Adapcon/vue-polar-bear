@@ -171,7 +171,6 @@ export default {
 
       .visualize-pages-index {
         display: flex;
-        // max-width: 97px;
         overflow: hidden;
         justify-content: flex-end;
         align-items: center;
