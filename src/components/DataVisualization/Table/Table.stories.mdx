@@ -12,6 +12,7 @@ import PbButton from '../../Buttons/Button/Button.vue';
       defaultValue: [
         { label: 'Nome', size: 3, priority: 1 },
         { label: 'Idade', size: 3, priority: 3 },
+        { label: 'CNPJ', size: 3, priority: 2 },
         { label: 'Banco Principal', size: 3, priority: 2 },
         { label: 'Status', size: 1, priority: 1 },
       ],
@@ -22,30 +23,112 @@ import PbButton from '../../Buttons/Button/Button.vue';
         [
           { value: 'João Paulo de Ávila Alfredo', secondaryValue: '123.456.789-10' },
           { value: '20' },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
           { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-237.png' },
           { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
         ],
         [
           { value: 'Maria da Silva', secondaryValue: '661.313.649-23' },
           { value: '22', },
+          { value: ['54.577.985/0001-90', '54.577.985/0001-90', '54.577.985/0001-90', '54.577.985/0001-90'] },
           { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-341.png' },
           { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
         ],
         [
           { value: 'Lucca Gael Ferreira', secondaryValue: '898.372.281-30' },
           { value: '16', },
+          { value: [] },
           { value: 'Não informado', badges: [{ value: 'menor de idade' }] },
           { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
         ],
         [
           { value: 'Sofia Jennifer Gomes da Silva Mendes de Souza', secondaryValue: '398.722.811-30' },
           { value: '23', },
+          { value: ['54.577.985/0001-90', '54.577.985/0001-90', '54.577.985/0001-90', '54.577.985/0001-90'] },
           { value: 'Sem preferência' },
           { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
         ],
         [
           { value: 'Mário Oliveira', secondaryValue: '898.372.281-30' },
           { value: '11', },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
+          { value: 'Não informado', badges: [{ value: 'menor de idade'}, { value: '<12' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Alfredo', secondaryValue: '123.456.789-10' },
+          { value: '20' },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
+          { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-237.png' },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Silva', secondaryValue: '661.313.649-23' },
+          { value: '22', },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
+          { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-341.png' },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Gael', secondaryValue: '898.372.281-30' },
+          { value: '16', },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
+          { value: 'Não informado', badges: [{ value: 'menor de idade' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Gomes da Silva Mendes de Souza', secondaryValue: '398.722.811-30' },
+          { value: '23', },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
+          { value: 'Sem preferência' },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Oliveira', secondaryValue: '898.372.281-30' },
+          { value: '11', },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
+          { value: 'Não informado', badges: [{ value: 'menor de idade'}, { value: '<12' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Silva', secondaryValue: '661.313.649-23' },
+          { value: '22', },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
+          { value: 'https://s3-sa-east-1.amazonaws.com/adapcon-pro-production-customer/script-financeiro/bacen-341.png' },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Gael', secondaryValue: '898.372.281-30' },
+          { value: '16', },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
+          { value: 'Não informado', badges: [{ value: 'menor de idade' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Gomes da Silva Mendes de Souza', secondaryValue: '398.722.811-30' },
+          { value: '23', },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
+          { value: 'Sem preferência' },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Oliveira', secondaryValue: '898.372.281-30' },
+          { value: '11', },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
+          { value: 'Não informado', badges: [{ value: 'menor de idade'}, { value: '<12' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Oliveira', secondaryValue: '898.372.281-30' },
+          { value: '11', },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
+          { value: 'Não informado', badges: [{ value: 'menor de idade'}, { value: '<12' }] },
+          { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
+        ],
+        [
+          { value: 'Oliveira', secondaryValue: '898.372.281-30' },
+          { value: '11', },
+          { value: ['33.237.930/8965-90', '54.577.985/0001-90'] },
           { value: 'Não informado', badges: [{ value: 'menor de idade'}, { value: '<12' }] },
           { badges: [{ value: 'Finalizado', backgroundColor: 'success-light', fontColor: 'success', size: 'pb-md' }] },
         ],
@@ -58,7 +141,18 @@ import PbButton from '../../Buttons/Button/Button.vue';
         { name: 'Maria da Silva', cpf: '66131364923', driverLicense: true },
         { name: 'Lucca Gael Ferreira', cpf: '89837228130', driverLicense: false },
         { name: 'Sofia Jennifer Gomes da Silva Mendes de Souza', cpf: '39872281130', driverLicense: true },
-        { name: 'Mário Oliveira', cpf: '89837228130', driverLicense: false }
+        { name: 'Mário Oliveira', cpf: '89837228130', driverLicense: false },
+        { name: 'João Paulo de Ávila', cpf: '12345678910', driverLicense: true },
+        { name: 'Maria da Silva', cpf: '66131364923', driverLicense: true },
+        { name: 'Lucca Gael Ferreira', cpf: '89837228130', driverLicense: false },
+        { name: 'Sofia Jennifer Gomes da Silva Mendes de Souza', cpf: '39872281130', driverLicense: true },
+        { name: 'Mário Oliveira', cpf: '89837228130', driverLicense: false },
+        { name: 'Maria da Silva', cpf: '66131364923', driverLicense: true },
+        { name: 'Lucca Gael Ferreira', cpf: '89837228130', driverLicense: false },
+        { name: 'Sofia Jennifer Gomes da Silva Mendes de Souza', cpf: '39872281130', driverLicense: true },
+        { name: 'Mário Oliveira', cpf: '89837228130', driverLicense: false },
+        { name: 'Mário Oliveira', cpf: '89837228130', driverLicense: false },
+        { name: 'Sofia Jennifer Gomes da Silva Mendes de Souza', cpf: '39872281130', driverLicense: true },
       ],
     },
     loading: { type: 'boolean', defaultValue: false },
@@ -69,6 +163,10 @@ import PbButton from '../../Buttons/Button/Button.vue';
     hasActionsBar: { type: 'boolean', defaultValue: true },
     maxHeight: { type: 'string', defaultValue: '' },
     actionsSize: { type: 'number', defaultValue: 1 },
+    count: { type: Number, defaultValue: 16 },
+    pageLimit: { type: Number, defaultValue: 5 },
+    hasPagination: { type: 'boolean', defaultValue: true },
+    currentPage: { type: Number, defaultValue: 0 },
   }}
 />
 
@@ -79,7 +177,7 @@ export const Template = (args, { argTypes }) => ({
     <div style="background-color: white;">
       <PbTable
         :header="header"
-        :rows="rows"
+        :rows="pageRows"
         :metadata="metadata"
         :loading="loading"
         :ellipsis-on-overflow="ellipsisOnOverflow"
@@ -89,6 +187,11 @@ export const Template = (args, { argTypes }) => ({
         :has-actions-bar="hasActionsBar"
         :max-height="maxHeight"
         :actions-size="actionsSize"
+        :count="count"
+        :pageLimit="pageLimit"
+        :has-pagination="hasPagination"
+        :current-page="page"
+        @change-page="pg => { pageRows = rows.slice(pg * pageLimit, (pg * pageLimit) + pageLimit); page = pg }"
       >
         <template #actions="{ row, metadata }">
           <div style="display: flex;">
@@ -111,6 +214,12 @@ export const Template = (args, { argTypes }) => ({
       </PbTable>
     </div>
   `,
+  data() {
+    return {
+      pageRows: this.rows.slice(0, this.pageLimit),
+      page: this.currentPage
+    }
+  },
 });
 
 export const TemplateWithoutActions = (args, { argTypes }) => ({

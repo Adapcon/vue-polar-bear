@@ -15,6 +15,8 @@ export const colors = [
   'gray-60',
   'gray-80',
   'gray-90',
+  'warning-light',
+  'success-light',
 ];
 
 export const buttonStyles = [

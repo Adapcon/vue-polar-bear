@@ -4,8 +4,20 @@
     :style="`${maxHeight ? `max-height: ${maxHeight}` : ''}`"
   >
     <div
+      v-if="rows.length < 1"
+      class="empty-title"
+    >
+      <p
+        class="pb"
+        style="color: var(--color-gray-20);"
+      >
+        Sem registros
+      </p>
+    </div>
+    <div
       v-for="(row, index) in rows"
       :key="index"
+      class="line"
       :class="{
         'row-highlight': highlightOnHover,
         'row-expanded': expandedRows.includes(index),
@@ -13,12 +25,13 @@
     >
       <div
         class="table-row pb-row"
-        style="align-items: center"
+        style="align-items: center;"
       >
         <div
           v-for="(column, columnIndex) in row"
           v-show="!hiddenColumnsIndex.includes(columnIndex)"
-          :key="columnIndex"
+          :key="`column-${index}-${columnIndex}`"
+          style="min-height: 60px;"
           :class="columnClasses(header[columnIndex].size, columnIndex)"
         >
           <div class="table-column">
@@ -28,6 +41,42 @@
               class="image"
             >
 
+            <div v-else-if="isArray(column.value)">
+              <div class="items-list">
+                <div
+                  v-for="(item, arrayIndex) in column.value"
+                  :key="arrayIndex"
+                >
+                  <p
+                    v-if="
+                      state.seeMoreInfo[index]
+                        ? arrayIndex < column.value.length
+                        : arrayIndex < 2
+                    "
+                    class="pb"
+                  >
+                    {{ item }}
+                  </p>
+                </div>
+              </div>
+              <PbButton
+                v-if="column.value.length > 2"
+                class="see-more-info-button"
+                color="primary"
+                button-style="default"
+                @click.native="seeMoreInfo(index)"
+              >
+                <span class="pb">{{
+                  "Ver" + (state.seeMoreInfo[index] ? " menos" : " mais")
+                }}</span>
+              </PbButton>
+              <p
+                v-if="column.value.length <= 0"
+                class="pb"
+              >
+                Sem registros
+              </p>
+            </div>
 
             <div v-else>
               <PbHint
@@ -44,10 +93,13 @@
               <p class="pb-sm secondary-value">{{ column.secondaryValue }}</p>
             </div>
 
-            <div class="badges" v-if="column.badges">
+            <div
+              v-if="column.badges"
+              class="badges"
+            >
               <PbBadge
-                v-for="badge of column.badges"
-                :key="badge"
+                v-for="(badge, badgeIndex) of column.badges"
+                :key="`badge-${index}-${columnIndex}-${badgeIndex}`"
                 :title="badge.value"
                 :wrap-content="true"
                 :background-color="badge.backgroundColor"
@@ -62,6 +114,7 @@
         <div
           v-if="hasActionColumn && !hiddenColumnsIndex.includes('action')"
           :class="columnClasses(actionsSize)"
+          style="min-height: 60px;"
           :style="{
             order: 1000,
           }"
@@ -107,6 +160,43 @@
                 class="image"
               >
 
+              <div v-else-if="isArray(column.value)">
+                <div class="items-list">
+                  <div
+                    v-for="(item, arrayIndex) in column.value"
+                    :key="arrayIndex"
+                  >
+                    <p
+                      v-if="
+                        state.seeMoreInfo[index]
+                          ? arrayIndex < column.value.length
+                          : arrayIndex < 2
+                      "
+                      class="pb"
+                    >
+                      {{ item }}
+                    </p>
+                  </div>
+                </div>
+                <PbButton
+                  v-if="column.value.length > 2"
+                  class="see-more-info-button"
+                  color="primary"
+                  button-style="default"
+                  @click.native="seeMoreInfo(index)"
+                >
+                  <span class="pb">{{
+                    "Ver" + (state.seeMoreInfo[index] ? " menos" : " mais")
+                  }}</span>
+                </PbButton>
+                <p
+                  v-if="column.value.length <= 0"
+                  class="pb"
+                >
+                  Sem registros
+                </p>
+              </div>
+
               <div v-else>
                 <PbHint
                   :hint-text="column.value"
@@ -124,13 +214,29 @@
 
               <div>
                 <PbBadge
-                  v-for="badge of column.badges"
-                  :key="badge"
-                  :title="badge"
+                  v-for="(badge, badgeIndex) of column.badges"
+                  :key="`badge-${columnIndex}-${badgeIndex}`"
+                  :title="badge.value"
                   :wrap-content="true"
-                  style="margin-right: 2px"
+                  :background-color="badge.backgroundColor"
+                  :color="badge.fontColor"
+                  style="margin-right: 2px;"
+                  :size="badge.size"
                 />
               </div>
+            </div>
+          </div>
+
+          <div
+            v-if="hasActionColumn && hiddenColumnsIndex.includes('action')"
+          >
+            <div class="table-column">
+              <small class="pb">Ações</small>
+              <slot
+                name="actions"
+                :row="row"
+                :metadata="metadata[index]"
+              />
             </div>
           </div>
         </div>
@@ -144,6 +250,7 @@ import { isImage } from 'adapcon-utils-js';
 import PbHint from '../../Miscellaneous/Hint/Hint.vue';
 import PbBadge from '../../Miscellaneous/Badge/Badge.vue';
 import PbIcon from '../../Miscellaneous/Icon/Icon';
+import PbButton from '../../Buttons/Button/Button.vue';
 
 export default {
   name: 'TableRows',
@@ -152,6 +259,7 @@ export default {
     PbHint,
     PbBadge,
     PbIcon,
+    PbButton,
   },
 
   props: {
@@ -168,6 +276,14 @@ export default {
     columnClasses: { type: Function, required: true },
     expandRowsColumnSize: { type: Number, default: 1 },
     expandAll: { type: Boolean, default: false },
+  },
+
+  data() {
+    return {
+      state: {
+        seeMoreInfo: {},
+      },
+    };
   },
 
   computed: {
@@ -207,6 +323,18 @@ export default {
   methods: {
     isImage,
 
+    isArray(value) {
+      return Array.isArray(value);
+    },
+
+    seeMoreInfo(id) {
+      this.$set(this.state.seeMoreInfo, id, !this.state.seeMoreInfo[id]);
+    },
+
+    setOffset() {
+      this.$emit('offset', this.currentPage * this.pageLimit);
+    },
+
     expandIcon(index) {
       return this.expandedRows.includes(index)
         ? 'fas fa-chevron-up'
@@ -225,8 +353,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.line {
+  border-bottom: 1px solid #d6dbe0;
+}
+
 .table-rows {
   overflow: auto;
+
+  .empty-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      padding: 16px;
+    }
+  }
 
   .row-highlight > :hover {
     background-color: var(--color-gray);
@@ -242,6 +384,17 @@ export default {
 
     .table-column {
       padding: 8px;
+
+      .items-list {
+        padding: 8px 0;
+      }
+      .see-more-info-button {
+        &::v-deep {
+          margin: 0;
+          padding: 0 !important;
+          height: 20px !important;
+        }
+      }
 
       .badges {
         text-transform: uppercase;

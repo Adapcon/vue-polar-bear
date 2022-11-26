@@ -54,12 +54,21 @@
         />
       </template>
     </TableRows>
+
+    <TablePagination
+      v-if="hasPagination"
+      :count="count"
+      :page-limit="pageLimit"
+      :current-page="currentPage"
+      @change-page="value => $emit('change-page', value)"
+    />
   </div>
 </template>
 
 <script>
 import TableHeader from './TableHeader.vue';
 import TableRows from './TableRows.vue';
+import TablePagination from './TablePagination.vue';
 import PbSearchInput from '../../FiltersAndSearch/SearchInput/SearchInput.vue';
 import PbLoadingBar from '../../Loadings/LoadingBar/LoadingBar.vue';
 
@@ -69,6 +78,7 @@ export default {
   components: {
     TableHeader,
     TableRows,
+    TablePagination,
     PbSearchInput,
     PbLoadingBar,
   },
@@ -85,7 +95,13 @@ export default {
     hasActionsBar: { type: Boolean, default: true },
     maxHeight: { type: String, default: '' },
     actionsSize: { type: Number, default: 1 },
+    count: { type: Number, default: 16 },
+    pageLimit: { type: Number, default: 5 },
+    hasPagination: { type: Boolean, default: false },
+    currentPage: { type: Number, default: 0 },
   },
+
+  emits: ['change-page'],
 
   data() {
     return {
