@@ -1,31 +1,26 @@
 <template>
   <div class="pb-cnpj-input-container">
-    <TheMask
+    <input
       v-model="cnpjInput"
-      :mask="['##.###.###/####-##']"
       class="pb"
-      style="width: 100%;"
-      :class="
-        !state.validation ? 'error' : ''
-      "
-      :style="{
-        ...(state.validation ?
-          { border: `1px solid var(--color-${color})`}
-          : '')
-      }"
+      style="width: 100%"
+      :class="!state.validation ? 'error' : ''"
+      :style="cnpjInputStyle"
       placeholder="__.___.___/____-__"
-      @blur.native="validateCnpj"
-      @focus.native="updateValidationFiled"
-    />
-    <p v-if="state.message" class="pb error-text">
+      maxlength="18"
+      @blur="validateCnpj"
+      @focus="updateValidationFiled"
+    >
+    <p
+      v-if="state.message"
+      class="pb error-text"
+    >
       {{ state.message }}
     </p>
   </div>
 </template>
 
 <script>
-import { TheMask } from 'vue-the-mask'
-
 import { validateColor } from '@pb/utils/validator';
 
 export default {
@@ -34,12 +29,10 @@ export default {
   props: {
     required: { type: Boolean, default: false },
     value: { type: String, default: '' },
+    background: { type: String, default: 'transparent' },
     color: { type: String, default: 'gray-20', validator: validateColor },
   },
 
-  components: {
-    TheMask,
-  },
   data() {
     return {
       state: {
@@ -50,31 +43,58 @@ export default {
   },
 
   computed: {
+    cnpjInputStyle() {
+      return {
+        ...(this.state.validation
+          ? {
+            background: `var(--color-${this.background})`,
+            border: `1px solid var(--color-${this.color})`,
+          }
+          : { background: `var(--color-${this.background})` }),
+      };
+    },
+
     cnpjInput: {
       get() {
-        return this.value;
+        const cnpjToString = String(this.value);
+        return this.stringToCnpjFormat(cnpjToString);
       },
 
       set(cnpj) {
-        this.$emit('input', cnpj);
+        const formatCnpjValue = cnpj
+          .replace(/[^\w\s]/gi, '')
+          .replace(/\s+/g, '')
+          .trim();
+        this.$emit('input', formatCnpjValue);
         // this.validateCnpj();
       },
     },
   },
 
   mounted() {
-    if (this.cnpjInput)
-      this.validateCnpj();
+    if (this.cnpjInput) this.validateCnpj();
   },
   methods: {
+    stringToCnpjFormat(cnpj) {
+      cnpj = cnpj.replace(/\D/g, '');
+      cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
+      cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+      cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
+      cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
+      return cnpj;
+    },
     validateCnpj() {
       let errorMessage = '';
 
-      if (this.required && (!this.cnpjInput || this.cnpjInput.length === 0))
+      const cnpjToValidate = this.cnpjInput.replace(/[^\w\s]/gi, '')
+        .replace(/\s+/g, '')
+        .trim();
+
+      if (this.required && (!cnpjToValidate || cnpjToValidate.length === 0))
         errorMessage = 'Este campo é obrigatório!';
-      else if (this.cnpjInput.length !== 14)
+      else if (cnpjToValidate.length !== 14)
         errorMessage = 'Este campo precisa ter 14 dígitos!';
-      else if (!this.isCnpj(this.cnpjInput))
+      else if (!this.isCnpj(cnpjToValidate))
         errorMessage = 'Informe um CNPJ válido!';
 
       this.updateValidationFiled({ message: errorMessage });
@@ -100,14 +120,12 @@ export default {
       let positions = positionsParameter || 10;
 
       for (let i = 0; i < digits.length; i++) {
-        sumDigits += (digits[i] * positions);
+        sumDigits += digits[i] * positions;
         positions--;
-        if (positions < 2)
-          positions = 9;
+        if (positions < 2) positions = 9;
       }
       sumDigits %= 11;
-      if (sumDigits < 2)
-        sumDigits = 0;
+      if (sumDigits < 2) sumDigits = 0;
       else sumDigits = 11 - sumDigits;
 
       const cnpj = digits + sumDigits;
