@@ -1,20 +1,21 @@
 <template>
   <div class="pb-phone-input-container">
-    <the-mask
+    <input
       v-model="phoneInput"
-      :mask="['(##) ####-####', '(##) #####-####']"
-      :masked="false"
-      class="pb"
       :class="inputTypeClass"
       :style="inputTypeStyle"
+      class="pb"
       style="width: 100%;"
-      :disabled="disabled"
       placeholder="(__) _____ - ____"
-      autocomplete="tel"
-      @blur.native="validatePhone"
-      @focus.native="updateValidationFiled"
-    />
-    <p v-if="state.message" class="pb error-text">
+      maxlength="19"
+      :disabled="disabled"
+      @blur="validatePhone"
+      @focus="updateValidationFiled"
+    >
+    <p
+      v-if="state.message"
+      class="pb error-text"
+    >
       {{ state.message }}
     </p>
   </div>
@@ -22,6 +23,7 @@
 
 <script>
 import { validateColor } from '@pb/utils/validator';
+import { formatPhone } from 'adapcon-utils-js';
 
 export default {
   name: 'PbPhoneInput',
@@ -30,6 +32,7 @@ export default {
     disabled: { type: Boolean, default: false },
     value: { type: String, default: '' },
     color: { type: String, default: 'gray-20', validator: color => validateColor(color) },
+    background: { type: String, default: 'transparent' },
 
     inputStyle: {
       type: String,
@@ -49,13 +52,15 @@ export default {
       },
     };
   },
+
   computed: {
     inputTypeStyle() {
-      if (this.inputStyle === 'regular') return;
+      if (this.inputStyle === 'regular') return { background: `var(--color-${this.background})`, opacity: `${this.disabled ? '0.5' : '1'}` };
       return {
         ...(this.state.validation
-          ? { border: `1px solid var(--color-${this.color})` }
-          : ''),
+          ? { background: `var(--color-${this.background})`, border: `1px solid var(--color-${this.color})`, opacity: `${this.disabled ? '0.5' : '1'}` }
+          : { background: `var(--color-${this.background})`, opacity: `${this.disabled ? '0.5' : '1'}` }
+        ),
       };
     },
 
@@ -66,11 +71,12 @@ export default {
 
     phoneInput: {
       get() {
-        return this.value;
+        return formatPhone(this.value);
       },
 
       set(phone) {
-        this.$emit('input', phone);
+        const formatPhoneValue = phone.replace(/[^\w\s]/gi, '').replace(/\s+/g, '').trim();
+        this.$emit('input', formatPhoneValue);
         // this.validatePhone();
       },
     },

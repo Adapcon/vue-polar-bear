@@ -14,6 +14,13 @@ import { colors } from '@pb/utils/constants';
       type: 'boolean',
       defaultValue: false,
     },
+    background: {
+      control: {
+        type: 'select',
+        options: [ ...colors ],
+      },
+      defaultValue: 'transparent',
+    },
     color: {
       control: {
         type: 'select',
@@ -30,6 +37,7 @@ export const Template = (args, { argTypes }) => ({
   template: `
     <PbCnpjInput
       v-model="value"
+      :background="background"
       :color="color"
       :required="required"
     />
