@@ -22,6 +22,14 @@ import { colors } from '@pb/utils/constants.js';
       control: { type: 'select', options: [ ...colors ] },
       defaultValue: 'gray-20',
     },
+    borderColor: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'gray-20',
+    },
+    background: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'transparent',
+    },
     validator: {
       type: 'function',
       defaultValue: null,
@@ -59,7 +67,9 @@ export const Template = (args, { argTypes}) => ({
       v-model="value"
       :placeholder="placeholder"
       :disabled="disabled"
+      :border-color="borderColor"
       :validator="validator"
+      :background="background"
       :color="color"
       :focus="focus"
     />

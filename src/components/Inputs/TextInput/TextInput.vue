@@ -4,9 +4,10 @@
       ref="input"
       v-model="inputValue"
       class="pb"
+      :style="textInputStyle"
       :class="{
-        'pb-input-error' : state.hasError,
-        'pb-input-disabled' : disabled,
+        'pb-input-error': state.hasError,
+        'pb-input-disabled': disabled,
         [`pb-input-${color}`]: true,
       }"
       :disabled="disabled"
@@ -24,15 +25,12 @@ export default {
 
   props: {
     value: { type: String, default: '' },
-
     placeholder: { type: String, default: '' },
-
     disabled: { type: Boolean, default: false },
-
     validator: { type: Function, default: null },
-
+    background: { type: String, default: 'transparent' },
+    borderColor: { type: String, default: 'gray-20', validator: validateColor },
     color: { type: String, default: 'gray-20', validator: validateColor },
-
     focus: { type: Boolean, default: false },
   },
 
@@ -45,6 +43,10 @@ export default {
   },
 
   computed: {
+    textInputStyle() {
+      return { background: `var(--color-${this.background})`, border: `1px solid var(--color-${this.borderColor})` };
+    },
+
     inputValue: {
       get() {
         return this.value;
@@ -60,8 +62,7 @@ export default {
 
   watch: {
     focus(newValue) {
-      if (newValue)
-        this.focusInput();
+      if (newValue) this.focusInput();
     },
   },
 
@@ -108,10 +109,9 @@ export default {
     opacity: 0.3 !important;
   }
 
-  @import '@pb/variables.scss';
+  @import "@pb/variables.scss";
   @each $color in $colors {
     .pb-input-#{$color} {
-      border: 1px solid var(--color-#{$color});
       color: var(--color-#{$color});
 
       &::placeholder {
