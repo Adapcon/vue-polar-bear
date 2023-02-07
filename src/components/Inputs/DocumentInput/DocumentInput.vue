@@ -4,7 +4,7 @@
       v-model="documentInput"
       class="pb"
       style="width: 100%"
-      :class="!state.validation ? 'error' : ''"
+      :class="validationClass"
       :style="documentInputStyle"
       placeholder="__.___.___/____-__"
       :maxlength="getMaxLength"
@@ -45,6 +45,9 @@ export default {
   },
 
   computed: {
+    validationClass() {
+      return !this.state.validation ? 'error' : '';
+    },
     documentInputStyle() {
       return {
         ...(this.state.validation
@@ -62,6 +65,34 @@ export default {
       if (this.inputType.includes('cpf')) return '14';
 
       return '18';
+    },
+
+    setLengthValidator() {
+      const documentLength = [];
+
+      if (this.inputType.includes('cnpj')) documentLength.push('14');
+
+      if (this.inputType.includes('cpf')) documentLength.push('11');
+
+      const lengthValidatorGenerate = this.inputType.map((doc, index) => {
+        if (index === this.inputType.length - 1)
+          return `documentToValidate.length !== ${documentLength[index]}`;
+        return `documentToValidate.length !== ${documentLength[index]} &&`;
+      });
+
+      return lengthValidatorGenerate.join(' ');
+    },
+
+    documentTypeValidators() {
+      const validations = this.inputType.map((doc, index) => {
+        const capitalize = doc.charAt(0).toUpperCase() + doc.slice(1);
+
+        if (index === this.inputType.length - 1)
+          return `!is${capitalize}(documentToValidate)`;
+        return `!is${capitalize}(documentToValidate) &&`;
+      });
+
+      return validations.join(' ');
     },
 
     documentInput: {
@@ -105,34 +136,6 @@ export default {
       return cpf;
     },
 
-    setLengthValidator() {
-      const documentLength = [];
-
-      if (this.inputType.includes('cnpj')) documentLength.push('14');
-
-      if (this.inputType.includes('cpf')) documentLength.push('11');
-
-      const lengthValidatorGenerate = this.inputType.map((doc, index) => {
-        if (index === this.inputType.length - 1)
-          return `documentToValidate.length !== ${documentLength[index]}`;
-        return `documentToValidate.length !== ${documentLength[index]} &&`;
-      });
-
-      return lengthValidatorGenerate.join(' ');
-    },
-
-    documentTypeValidators() {
-      const validations = this.inputType.map((doc, index) => {
-        const capitalize = doc.charAt(0).toUpperCase() + doc.slice(1);
-
-        if (index === this.inputType.length - 1)
-          return `!is${capitalize}(documentToValidate)`;
-        return `!is${capitalize}(documentToValidate) &&`;
-      });
-
-      return validations.join(' ');
-    },
-
     validateDocument() {
       let errorMessage = '';
 
@@ -141,9 +144,9 @@ export default {
         .replace(/\s+/g, '')
         .trim();
 
-      if (!documentToValidate || documentToValidate.length === 0) {
+      if (this.required && (!documentToValidate || documentToValidate.length === 0)) {
         errorMessage = 'Este campo é obrigatório!';
-      } else if (eval(this.setLengthValidator())) {
+      } else if (eval(this.setLengthValidator)) {
         errorMessage = 'O documento informado não é válido!';
       } else if (this.inputType.includes('cpf') && this.inputType.includes('cnpj')) {
         !isCpf(documentToValidate) && !isCnpj(documentToValidate)
