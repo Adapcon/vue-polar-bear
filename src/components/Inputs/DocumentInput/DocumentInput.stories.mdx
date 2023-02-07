@@ -1,14 +1,22 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
-import PbCnpjInput from './CnpjInput.vue';
+import PbDocumentInput from './DocumentInput.vue';
 import { colors } from '@pb/utils/constants';
+import { documentTypes } from '@pb/utils/inputDocumentTypes';
 
 <Meta
-  title="Components/Inputs/PbCnpjInput"
-  component={PbCnpjInput}
+  title="Components/Inputs/PbDocumentInput"
+  component={PbDocumentInput}
   argTypes={{
     value: {
       type: 'number',
       defaultValue: null,
+    },
+    inputType: {
+      control: {
+        type: 'inline-check',
+        options: [ ...documentTypes ],
+      },
+      defaultValue: [ 'cnpj' ],
     },
     required: {
       type: 'boolean',
@@ -31,21 +39,23 @@ import { colors } from '@pb/utils/constants';
   }}
 />
 
+
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
-  components: { PbCnpjInput },
+  components: { PbDocumentInput },
   template: `
-    <PbCnpjInput
+    <PbDocumentInput
       v-model="value"
       :background="background"
       :color="color"
+      :inputType="inputType"
       :required="required"
     />
   `,
 });
 
-# **PbCnpjInput**
-### The `PbCnpjInput` component is used as input for get official company register document.
+# **PbDocumentInput**
+### The `PbDocumentInput` component is used as input for get official company register document.
 
 ### Purpose and Use Case
 Its main purpose is to group input and validation together with a component.
