@@ -1,7 +1,5 @@
 <template>
   <div class="pb-document-input-container">
-    {{ inputType }}
-    {{ getMaxLength }}
     <input
       v-model="documentInput"
       class="pb"
