@@ -61,9 +61,13 @@ export default {
     },
 
     setInputPlaceholder() {
-      if (this.inputType.length <= 1 && this.inputType.includes('cpf')) return '___.___.___-__';
+      if (!this.placeholder) {
+        if (this.inputType.length <= 1 && this.inputType.includes('cpf'))
+          return '___.___.___-__';
 
-      if (this.inputType.length <= 1 && this.inputType.includes('cnpj')) return '__.___.___/____-__';
+        if (this.inputType.length <= 1 && this.inputType.includes('cnpj'))
+          return '__.___.___/____-__';
+      }
 
       return this.placeholder;
     },
@@ -123,8 +127,7 @@ export default {
   },
 
   mounted() {
-    if (this.documentInput)
-      this.validateDocument();
+    if (this.documentInput) this.validateDocument();
   },
 
   methods: {
@@ -153,19 +156,31 @@ export default {
         .replace(/\s+/g, '')
         .trim();
 
-      if (this.required && (!documentToValidate || documentToValidate.length === 0)) {
+      if (
+        this.required
+        && (!documentToValidate || documentToValidate.length === 0)
+      ) {
         errorMessage = 'Este campo é obrigatório!';
       } else if (eval(this.setLengthValidator)) {
         errorMessage = 'O documento informado não é válido!';
-      } else if (this.inputType.includes('cpf') && this.inputType.includes('cnpj')) {
+      } else if (
+        this.inputType.includes('cpf')
+        && this.inputType.includes('cnpj')
+      ) {
         !isCpf(documentToValidate) && !isCnpj(documentToValidate)
           ? (errorMessage = 'O documento é inválido!')
           : (errorMessage = '');
-      } else if (this.inputType.includes('cpf') && !this.inputType.includes('cnpj')) {
+      } else if (
+        this.inputType.includes('cpf')
+        && !this.inputType.includes('cnpj')
+      ) {
         !isCpf(documentToValidate)
           ? (errorMessage = 'O CPF é inválido!')
           : (errorMessage = '');
-      } else if (!this.inputType.includes('cpf') && this.inputType.includes('cnpj')) {
+      } else if (
+        !this.inputType.includes('cpf')
+        && this.inputType.includes('cnpj')
+      ) {
         !isCnpj(documentToValidate)
           ? (errorMessage = 'O CNPJ é inválido!')
           : (errorMessage = '');
