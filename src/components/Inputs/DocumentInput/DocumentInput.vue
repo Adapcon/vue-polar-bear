@@ -7,7 +7,7 @@
       :class="validationClass"
       :style="documentInputStyle"
       :placeholder="setInputPlaceholder"
-      :maxlength="getMaxLength"
+      :maxlength="getMaxLength(inputType)"
       @blur="validateDocument"
       @focus="updateValidationFiled"
     >
@@ -72,14 +72,6 @@ export default {
       return this.placeholder;
     },
 
-    getMaxLength() {
-      if (this.inputType.includes('cnpj')) return '18';
-
-      if (this.inputType.includes('cpf')) return '14';
-
-      return '18';
-    },
-
     setLengthValidator() {
       const documentLength = [];
 
@@ -131,6 +123,17 @@ export default {
   },
 
   methods: {
+    getMaxLength(type) {
+      const maxLength = {
+        cnpj: '18',
+        cpf: '14',
+      };
+
+      const types = type.map(item => Number(maxLength[item]));
+
+      return Math.max(...types);
+    },
+
     stringToCnpjFormat(cnpj) {
       cnpj = cnpj.replace(/\D/g, '');
       cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
