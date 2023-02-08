@@ -125,11 +125,11 @@ export default {
   methods: {
     getMaxLength(type) {
       const maxLength = {
-        cnpj: '18',
-        cpf: '14',
+        cnpj: 18,
+        cpf: 14,
       };
 
-      const types = type.map(item => Number(maxLength[item]));
+      const types = type.map(item => maxLength[item]);
 
       return Math.max(...types);
     },
