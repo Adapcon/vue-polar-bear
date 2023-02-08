@@ -33,7 +33,7 @@ export default {
     background: { type: String, default: 'transparent' },
     color: { type: String, default: 'gray-20', validator: validateColor },
     inputType: { type: Array, default: () => ['cnpj'] },
-    placeholder: { type: String, default: '' },
+    placeholder: { type: String, default: '__.___.___/____-__' },
   },
 
   data() {
@@ -61,14 +61,11 @@ export default {
     },
 
     setInputPlaceholder() {
-      if (this.inputType.includes('cnpj') && this.inputType.includes('cpf'))
-        return this.placeholder;
+      if (this.inputType.length <= 1 && this.inputType.includes('cpf')) return '___.___.___-__';
 
-      if (this.inputType.includes('cnpj')) return this.placeholder || '__.___.___/____-__';
+      if (this.inputType.length <= 1 && this.inputType.includes('cnpj')) return '__.___.___/____-__';
 
-      if (this.inputType.includes('cpf')) return this.placeholder || '___.___.___-__';
-
-      return '__.___.___/____-__';
+      return this.placeholder;
     },
 
     getMaxLength() {
