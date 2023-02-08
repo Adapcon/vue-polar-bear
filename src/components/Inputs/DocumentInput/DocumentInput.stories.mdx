@@ -1,7 +1,7 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 import PbDocumentInput from './DocumentInput.vue';
 import { colors } from '@pb/utils/constants';
-import { documentTypes } from '@pb/utils/inputDocumentTypes';
+import { documentTypes, documentPlaceholders } from '@pb/utils/inputDocumentTypes';
 
 <Meta
   title="Components/Inputs/PbDocumentInput"
@@ -17,6 +17,10 @@ import { documentTypes } from '@pb/utils/inputDocumentTypes';
         options: [ ...documentTypes ],
       },
       defaultValue: [ 'cnpj' ],
+    },
+    placeholder: {
+      type: 'string',
+      defaultValue: '__.___.___/____-_',
     },
     required: {
       type: 'boolean',
@@ -48,11 +52,13 @@ export const Template = (args, { argTypes }) => ({
       v-model="value"
       :background="background"
       :color="color"
+      :placeholder="placeholder"
       :inputType="inputType"
       :required="required"
     />
   `,
 });
+
 
 # **PbDocumentInput**
 ### The `PbDocumentInput` component is used as input for get official company register document.
@@ -60,12 +66,35 @@ export const Template = (args, { argTypes }) => ({
 ### Purpose and Use Case
 Its main purpose is to group input and validation together with a component.
 
+### Usage
+With `inputType`, you can select the type of document you want to use as input, and the placeholder will be automatically set, unless you want to use a custom placeholder.
+You can also set two different input types, to support more documents.
+
+If you want to use a custom placeholder, you can set it using the `placeholder` prop.
+
+If the input is required, you can set it using the `required` prop.
+
+The `background` and `color` props are used to set the background and color of the input.
+
 ## Examples
 
 ### Default
 
 <Canvas>
   <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### With CPF and CNPJ
+
+<Canvas>
+  <Story name="Only show form"
+    args={{
+      inputType: [ 'cpf', 'cnpj' ],
+      placeholder: 'CPF or CNPJ',
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>

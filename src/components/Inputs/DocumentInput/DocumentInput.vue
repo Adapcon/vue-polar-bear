@@ -6,7 +6,7 @@
       style="width: 100%"
       :class="validationClass"
       :style="documentInputStyle"
-      placeholder="__.___.___/____-__"
+      :placeholder="setInputPlaceholder"
       :maxlength="getMaxLength"
       @blur="validateDocument"
       @focus="updateValidationFiled"
@@ -33,6 +33,7 @@ export default {
     background: { type: String, default: 'transparent' },
     color: { type: String, default: 'gray-20', validator: validateColor },
     inputType: { type: Array, default: () => ['cnpj'] },
+    placeholder: { type: String, default: '' },
   },
 
   data() {
@@ -57,6 +58,17 @@ export default {
           }
           : { background: `var(--color-${this.background})` }),
       };
+    },
+
+    setInputPlaceholder() {
+      if (this.inputType.includes('cnpj') && this.inputType.includes('cpf'))
+        return this.placeholder;
+
+      if (this.inputType.includes('cnpj')) return this.placeholder || '__.___.___/____-__';
+
+      if (this.inputType.includes('cpf')) return this.placeholder || '___.___.___-__';
+
+      return '__.___.___/____-__';
     },
 
     getMaxLength() {
