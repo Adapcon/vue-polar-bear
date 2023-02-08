@@ -61,13 +61,13 @@ export default {
     },
 
     setInputPlaceholder() {
-      if (!this.placeholder) {
-        if (this.inputType.length <= 1 && this.inputType.includes('cpf'))
-          return '___.___.___-__';
+      const placeholders = {
+        cnpj: '__.___.___/____-__',
+        cpf: '___.___.___-__',
+      };
 
-        if (this.inputType.length <= 1 && this.inputType.includes('cnpj'))
-          return '__.___.___/____-__';
-      }
+      if (!this.placeholder && this.inputType.length <= 1)
+        return placeholders[this.inputType[0]];
 
       return this.placeholder;
     },
