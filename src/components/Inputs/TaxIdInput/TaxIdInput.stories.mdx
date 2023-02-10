@@ -1,11 +1,11 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
-import PbDocumentInput from './DocumentInput.vue';
+import PbTaxIdInput from './TaxIdInput.vue';
 import { colors } from '@pb/utils/constants';
 import { documentTypes } from '@pb/utils/inputDocumentTypes';
 
 <Meta
-  title="Components/Inputs/PbDocumentInput"
-  component={PbDocumentInput}
+  title="Components/Inputs/PbTaxIdInput"
+  component={PbTaxIdInput}
   argTypes={{
     value: {
       type: 'number',
@@ -46,9 +46,9 @@ import { documentTypes } from '@pb/utils/inputDocumentTypes';
 
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
-  components: { PbDocumentInput },
+  components: { PbTaxIdInput },
   template: `
-    <PbDocumentInput
+    <PbTaxIdInput
       v-model="value"
       :background="background"
       :color="color"
@@ -60,8 +60,8 @@ export const Template = (args, { argTypes }) => ({
 });
 
 
-# **PbDocumentInput**
-### The `PbDocumentInput` component is used as input for get official company register document.
+# **PbTaxIdInput**
+### The `PbTaxIdInput` component is used as input for get official company register document.
 
 ### Purpose and Use Case
 Its main purpose is to group input and validation together with a component.

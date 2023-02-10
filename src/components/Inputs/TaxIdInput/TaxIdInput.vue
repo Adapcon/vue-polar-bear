@@ -1,11 +1,11 @@
 <template>
   <div class="pb-document-input-container">
     <input
-      v-model="documentInput"
+      v-model="taxIdInput"
       class="pb"
       style="width: 100%"
       :class="validationClass"
-      :style="documentInputStyle"
+      :style="taxIdInputStyle"
       :placeholder="setInputPlaceholder"
       :maxlength="getMaxLength(inputType)"
       @blur="validateDocument"
@@ -22,17 +22,21 @@
 
 <script>
 import { validateColor } from '@pb/utils/validator';
+import { documentPlaceholders } from '@pb/utils/inputDocumentTypes';
 import { isCpf, isCnpj } from 'adapcon-utils-js';
 
 export default {
-  name: 'PbDocumentInput',
+  name: 'PbTaxIdInput',
 
   props: {
     required: { type: Boolean, default: false },
     value: { type: String, default: '' },
     background: { type: String, default: 'transparent' },
     color: { type: String, default: 'gray-20', validator: validateColor },
-    inputType: { type: Array, default: () => ['cnpj'] },
+    inputType: {
+      type: Array,
+      default: () => ['cnpj'],
+    },
     placeholder: { type: String, default: '__.___.___/____-__' },
   },
 
@@ -41,6 +45,7 @@ export default {
       state: {
         validation: true,
         message: '',
+        inputValue: '',
       },
     };
   },
@@ -49,7 +54,7 @@ export default {
     validationClass() {
       return !this.state.validation ? 'error' : '';
     },
-    documentInputStyle() {
+    taxIdInputStyle() {
       return {
         ...(this.state.validation
           ? {
@@ -61,13 +66,8 @@ export default {
     },
 
     setInputPlaceholder() {
-      const placeholders = {
-        cnpj: '__.___.___/____-__',
-        cpf: '___.___.___-__',
-      };
-
       if (!this.placeholder && this.inputType.length <= 1)
-        return placeholders[this.inputType[0]];
+        return documentPlaceholders[this.inputType[0]];
 
       return this.placeholder;
     },
@@ -100,12 +100,11 @@ export default {
       return validations.join(' ');
     },
 
-    documentInput: {
+    taxIdInput: {
       get() {
-        const documentToString = String(this.value);
-        return documentToString.length <= 11
-          ? this.stringToCpfFormat(documentToString)
-          : this.stringToCnpjFormat(documentToString);
+        return this.state.inputValue.length <= 11
+          ? this.stringToCpfFormat(this.state.inputValue)
+          : this.stringToCnpjFormat(this.state.inputValue);
       },
 
       set(document) {
@@ -118,8 +117,14 @@ export default {
     },
   },
 
+  watch: {
+    value() {
+      this.state.inputValue = String(this.value);
+    },
+  },
+
   mounted() {
-    if (this.documentInput) this.validateDocument();
+    if (this.taxIdInput) this.validateDocument();
   },
 
   methods: {
@@ -152,42 +157,45 @@ export default {
     },
 
     validateDocument() {
-      let errorMessage = '';
-
-      const documentToValidate = this.documentInput
+      const documentToValidate = this.taxIdInput
         .replace(/[^\w\s]/gi, '')
         .replace(/\s+/g, '')
         .trim();
 
-      if (
-        this.required
-        && (!documentToValidate || documentToValidate.length === 0)
-      ) {
-        errorMessage = 'Este campo é obrigatório!';
-      } else if (eval(this.setLengthValidator)) {
-        errorMessage = 'O documento informado não é válido!';
-      } else if (
-        this.inputType.includes('cpf')
-        && this.inputType.includes('cnpj')
-      ) {
-        !isCpf(documentToValidate) && !isCnpj(documentToValidate)
-          ? (errorMessage = 'O documento é inválido!')
-          : (errorMessage = '');
-      } else if (
-        this.inputType.includes('cpf')
-        && !this.inputType.includes('cnpj')
-      ) {
-        !isCpf(documentToValidate)
-          ? (errorMessage = 'O CPF é inválido!')
-          : (errorMessage = '');
-      } else if (
-        !this.inputType.includes('cpf')
-        && this.inputType.includes('cnpj')
-      ) {
-        !isCnpj(documentToValidate)
-          ? (errorMessage = 'O CNPJ é inválido!')
-          : (errorMessage = '');
-      }
+      const validationTypes = {
+        required: () => {
+          if (
+            this.required
+            && (!documentToValidate || documentToValidate.length === 0)
+          )
+            return 'Este campo é obrigatório!';
+        },
+        lengthValidator: () => {
+          if (eval(this.setLengthValidator))
+            return 'O documento informado não é válido!';
+        },
+        cpf: () => {
+          if (!isCpf(documentToValidate))
+            return 'O CPF é inválido!';
+        },
+        cnpj: () => {
+          if (!isCnpj(documentToValidate))
+            return 'O CNPJ é inválido!';
+        },
+      };
+
+      let errorMessage = '';
+
+      if (this.inputType.includes('cpf') && this.inputType.includes('cnpj'))
+        errorMessage = (!validationTypes.cpf() || !validationTypes.cnpj()) ? '' : 'O documento informado não é válido!';
+      else if (this.inputType.includes('cpf'))
+        errorMessage = validationTypes.cpf();
+      else if (this.inputType.includes('cnpj'))
+        errorMessage = validationTypes.cnpj();
+
+      errorMessage = errorMessage
+        || validationTypes.lengthValidator()
+        || validationTypes.required();
 
       this.updateValidationFiled({ message: errorMessage });
     },

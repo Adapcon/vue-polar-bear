@@ -8,7 +8,7 @@
       :disabled="onlyShow || entitySchema.dynamic"
       :validator="validateField"
     />
-    <PbDocumentInput
+    <PbTaxIdInput
       v-if="entitySchema.contentString === 'cnpj'"
       v-model="stringValue"
       :inputType="['cnpj']"
@@ -28,7 +28,7 @@
 <script>
 import PbTextInput from '../../../Inputs/TextInput/TextInput.vue';
 import PbEmailInput from '../../../Inputs/EmailInput/EmailInput.vue';
-import PbDocumentInput from '../../../Inputs/DocumentInput/DocumentInput.vue';
+import PbTaxIdInput from '../../../Inputs/TaxIdInput/TaxIdInput.vue';
 
 export default {
   name: 'StringField',
@@ -36,7 +36,7 @@ export default {
   components: {
     PbTextInput,
     PbEmailInput,
-    PbDocumentInput,
+    PbTaxIdInput,
   },
 
   props: {
