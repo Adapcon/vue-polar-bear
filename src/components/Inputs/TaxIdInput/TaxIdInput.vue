@@ -163,27 +163,27 @@ export default {
             return 'O documento informado não é válido!';
         },
         cpf: () => {
-          if (!isCpf(documentToValidate))
-            return 'O CPF é inválido!';
+          if (!isCpf(documentToValidate)) return 'O CPF é inválido!';
         },
         cnpj: () => {
-          if (!isCnpj(documentToValidate))
-            return 'O CNPJ é inválido!';
+          if (!isCnpj(documentToValidate)) return 'O CNPJ é inválido!';
         },
       };
 
       let errorMessage = '';
 
-      if (this.inputType.includes('cpf') && this.inputType.includes('cnpj'))
-        errorMessage = (!validationTypes.cpf() || !validationTypes.cnpj()) ? '' : 'O documento informado não é válido!';
-      else if (this.inputType.includes('cpf'))
-        errorMessage = validationTypes.cpf();
-      else if (this.inputType.includes('cnpj'))
-        errorMessage = validationTypes.cnpj();
+      if (documentToValidate.length) {
+        errorMessage = errorMessage
+          || validationTypes.lengthValidator()
+          || validationTypes.required();
 
-      errorMessage = errorMessage
-        || validationTypes.lengthValidator()
-        || validationTypes.required();
+        if (this.inputType.includes('cpf') && this.inputType.includes('cnpj'))
+          errorMessage = !validationTypes.cpf() || !validationTypes.cnpj() ? '' : 'O documento informado não é válido!';
+        else if (this.inputType.includes('cpf'))
+          errorMessage = validationTypes.cpf();
+        else if (this.inputType.includes('cnpj'))
+          errorMessage = validationTypes.cnpj();
+      }
 
       this.updateValidationFiled({ message: errorMessage });
     },
