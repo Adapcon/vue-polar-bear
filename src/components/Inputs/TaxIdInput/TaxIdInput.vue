@@ -88,18 +88,6 @@ export default {
       return lengthValidatorGenerate.join(' ');
     },
 
-    documentTypeValidators() {
-      const validations = this.inputType.map((doc, index) => {
-        const capitalize = doc.charAt(0).toUpperCase() + doc.slice(1);
-
-        if (index === this.inputType.length - 1)
-          return `!is${capitalize}(documentToValidate)`;
-        return `!is${capitalize}(documentToValidate) &&`;
-      });
-
-      return validations.join(' ');
-    },
-
     taxIdInput: {
       get() {
         return this.state.inputValue.length <= 11
