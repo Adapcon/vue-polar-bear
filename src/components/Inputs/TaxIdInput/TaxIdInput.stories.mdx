@@ -1,7 +1,7 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 import PbTaxIdInput from './TaxIdInput.vue';
 import { colors } from '@pb/utils/constants';
-import { documentTypes } from '@pb/utils/inputDocumentTypes';
+import { documentTypes } from './documentTypes.js';
 
 <Meta
   title="Components/Inputs/PbTaxIdInput"
@@ -11,7 +11,7 @@ import { documentTypes } from '@pb/utils/inputDocumentTypes';
       type: 'number',
       defaultValue: null,
     },
-    inputType: {
+    allowedDocuments: {
       control: {
         type: 'inline-check',
         options: [ ...documentTypes ],
@@ -53,7 +53,7 @@ export const Template = (args, { argTypes }) => ({
       :background="background"
       :color="color"
       :placeholder="placeholder"
-      :inputType="inputType"
+      :allowed-documents="allowedDocuments"
       :required="required"
     />
   `,
@@ -67,10 +67,10 @@ export const Template = (args, { argTypes }) => ({
 Its main purpose is to group input and validation together with a component.
 
 ### Usage
-With `inputType`, you can select the type of document you want to use as input, and the placeholder will be automatically set, unless you want to use a custom placeholder.
+With `allowedDocuments`, you can select the type of document you want to use as input, and the placeholder will be automatically set, unless you want to use a custom placeholder.
 You can also set two different input types, to support more documents.
 
-When the `inputType`, has more than one type, the placeholder will be empty, unless you set a custom placeholder.
+When the `allowedDocuments`, has more than one type, the placeholder will be empty, unless you set a custom placeholder.
 
 If you want to use a custom placeholder, you can set it using the `placeholder` prop.
 
@@ -93,7 +93,7 @@ The `background` and `color` props are used to set the background and color of t
 <Canvas>
   <Story name="Only show form"
     args={{
-      inputType: [ 'cpf', 'cnpj' ],
+      allowedDocuments: [ 'cpf', 'cnpj' ],
       placeholder: 'CPF or CNPJ',
     }}
   >

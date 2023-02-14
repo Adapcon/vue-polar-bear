@@ -4,10 +4,10 @@
       v-model="taxIdInput"
       class="pb"
       style="width: 100%"
-      :class="validationClass"
+      :class="taxIdInputClass"
       :style="taxIdInputStyle"
-      :placeholder="setInputPlaceholder"
-      :maxlength="getMaxLength(inputType)"
+      :placeholder="taxIdInputPlaceholder"
+      :maxlength="maxLength"
       @blur="validateDocument"
       @focus="updateValidationFiled"
     >
@@ -22,7 +22,6 @@
 
 <script>
 import { validateColor } from '@pb/utils/validator';
-import { documentPlaceholders } from '@pb/utils/inputDocumentTypes';
 import { isCpf, isCnpj } from 'adapcon-utils-js';
 
 export default {
@@ -33,9 +32,13 @@ export default {
     value: { type: String, default: '' },
     background: { type: String, default: 'transparent' },
     color: { type: String, default: 'gray-20', validator: validateColor },
-    inputType: {
+    allowedDocuments: {
       type: Array,
       default: () => ['cnpj'],
+      validator: documentType => {
+        const allowedDocuments = ['cnpj', 'cpf'];
+        return documentType.every(item => allowedDocuments.includes(item));
+      },
     },
     placeholder: { type: String, default: '__.___.___/____-__' },
   },
@@ -43,7 +46,7 @@ export default {
   data() {
     return {
       state: {
-        validation: true,
+        isValidDocument: true,
         message: '',
         inputValue: '',
       },
@@ -51,36 +54,49 @@ export default {
   },
 
   computed: {
-    validationClass() {
-      return !this.state.validation ? 'error' : '';
+    taxIdInputClass() {
+      return !this.state.isValidDocument ? 'error' : '';
     },
+
     taxIdInputStyle() {
       return {
-        ...(this.state.validation
-          ? {
-            background: `var(--color-${this.background})`,
-            border: `1px solid var(--color-${this.color})`,
-          }
-          : { background: `var(--color-${this.background})` }),
+        background: `var(--color-${this.background})`,
+        border: `1px solid var(--color-${this.state.isValidDocument ? this.color : 'danger'})`,
       };
     },
 
-    setInputPlaceholder() {
-      if (!this.placeholder && this.inputType.length <= 1)
-        return documentPlaceholders[this.inputType[0]];
+    taxIdInputPlaceholder() {
+      const documentPlaceholders = {
+        cpf: '___.___.___-__',
+        cnpj: '__.___.___/____-__',
+      };
+
+      if (!this.placeholder && this.allowedDocuments.length === 1)
+        return documentPlaceholders[this.allowedDocuments[0]];
 
       return this.placeholder;
+    },
+
+    maxLength() {
+      const documentsTypeMaxLength = {
+        cnpj: 18,
+        cpf: 14,
+      };
+
+      const maxLength = this.allowedDocuments.map(documentType => documentsTypeMaxLength[documentType]);
+
+      return Math.max(...maxLength);
     },
 
     setLengthValidator() {
       const documentLength = [];
 
-      if (this.inputType.includes('cnpj')) documentLength.push('14');
+      if (this.allowedDocuments.includes('cnpj')) documentLength.push('14');
 
-      if (this.inputType.includes('cpf')) documentLength.push('11');
+      if (this.allowedDocuments.includes('cpf')) documentLength.push('11');
 
-      const lengthValidatorGenerate = this.inputType.map((doc, index) => {
-        if (index === this.inputType.length - 1)
+      const lengthValidatorGenerate = this.allowedDocuments.map((doc, index) => {
+        if (index === this.allowedDocuments.length - 1)
           return `documentToValidate.length !== ${documentLength[index]}`;
         return `documentToValidate.length !== ${documentLength[index]} &&`;
       });
@@ -116,17 +132,6 @@ export default {
   },
 
   methods: {
-    getMaxLength(type) {
-      const maxLength = {
-        cnpj: 18,
-        cpf: 14,
-      };
-
-      const types = type.map(item => maxLength[item]);
-
-      return Math.max(...types);
-    },
-
     stringToCnpjFormat(cnpj) {
       cnpj = cnpj.replace(/\D/g, '');
       cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
@@ -177,11 +182,11 @@ export default {
         || validationTypes.required();
 
       if (documentToValidate.length) {
-        if (this.inputType.includes('cpf') && this.inputType.includes('cnpj'))
+        if (this.allowedDocuments.includes('cpf') && this.allowedDocuments.includes('cnpj'))
           errorMessage = !validationTypes.cpf() || !validationTypes.cnpj() ? '' : 'O documento informado não é válido!';
-        else if (this.inputType.includes('cpf'))
+        else if (this.allowedDocuments.includes('cpf'))
           errorMessage = validationTypes.cpf();
-        else if (this.inputType.includes('cnpj'))
+        else if (this.allowedDocuments.includes('cnpj'))
           errorMessage = validationTypes.cnpj();
       }
 
@@ -189,11 +194,11 @@ export default {
     },
 
     updateValidationFiled({ message }) {
-      this.state.validation = !message;
+      this.state.isValidDocument = !message;
       this.state.message = message || '';
 
       this.$emit('validation', {
-        validation: this.state.validation,
+        isValidDocument: this.state.isValidDocument,
         message: this.state.message,
       });
     },
@@ -204,7 +209,6 @@ export default {
 <style lang="scss" scoped>
 .pb-document-input-container {
   .error {
-    border: 1px solid var(--color-danger);
     animation: shake 0.08s 3;
   }
 

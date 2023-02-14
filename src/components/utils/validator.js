@@ -1,5 +1,5 @@
 import { colors } from './constants';
-import { documentTypes } from './inputDocumentTypes';
+import { documentTypes } from '../Inputs/TaxIdInput/documentTypes';
 
 export const validateColor = color => colors.includes(color);
 
