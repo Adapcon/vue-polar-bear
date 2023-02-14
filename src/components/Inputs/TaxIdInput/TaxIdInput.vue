@@ -159,7 +159,7 @@ export default {
             return 'Este campo é obrigatório!';
         },
         lengthValidator: () => {
-          if (eval(this.setLengthValidator))
+          if (documentToValidate.length && eval(this.setLengthValidator))
             return 'O documento informado não é válido!';
         },
         cpf: () => {
@@ -172,11 +172,11 @@ export default {
 
       let errorMessage = '';
 
-      if (documentToValidate.length) {
-        errorMessage = errorMessage
-          || validationTypes.lengthValidator()
-          || validationTypes.required();
+      errorMessage = errorMessage
+        || validationTypes.lengthValidator()
+        || validationTypes.required();
 
+      if (documentToValidate.length) {
         if (this.inputType.includes('cpf') && this.inputType.includes('cnpj'))
           errorMessage = !validationTypes.cpf() || !validationTypes.cnpj() ? '' : 'O documento informado não é válido!';
         else if (this.inputType.includes('cpf'))
