@@ -1,7 +1,7 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 import PbTaxIdInput from './TaxIdInput.vue';
 import { colors } from '@pb/utils/constants';
-import { documentTypes } from './documentTypes.js';
+import { documentTypesData } from './documentTypes.js';
 
 <Meta
   title="Components/Inputs/PbTaxIdInput"
@@ -14,7 +14,7 @@ import { documentTypes } from './documentTypes.js';
     allowedDocuments: {
       control: {
         type: 'inline-check',
-        options: [ ...documentTypes ],
+        options: Object.keys(documentTypesData),
       },
       defaultValue: [ 'cnpj' ],
     },
@@ -78,6 +78,15 @@ If the input is required, you can set it using the `required` prop.
 
 The `background` and `color` props are used to set the background and color of the input.
 
+### Properties
+
+| Property                | Type                 | Default              | Description
+|:------------------------|:---------------------|:---------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------|
+| allowedDocuments        | Array                | ['cnpj']             | Array containing the types of documents. Never use a empty array.                                                                                   |            |
+| required                | Boolean              | false                | Disable or enable the field requirement.                                                                                                            |
+| background              | String               | transparent          | Set the background color of the input.                                                                                               |
+| color                   | String               | primary              | Set the color of the input.                                                                                                                          |
+| placeholder             | String               | 'Insira o número do documento!' | Set a custom placeholder.                                                                                                                            |
 ## Examples
 
 ### Default

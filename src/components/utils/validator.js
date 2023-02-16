@@ -1,9 +1,6 @@
 import { colors } from './constants';
-import { documentTypes } from '../Inputs/TaxIdInput/documentTypes';
 
 export const validateColor = color => colors.includes(color);
-
-export const validateDocumentType = doc => documentTypes.includes(doc);
 
 export const isHexColor = color => /^#([0-9A-F]{3}){1,2}$/i.test(color);
 

@@ -8,6 +8,7 @@
       :style="taxIdInputStyle"
       :placeholder="taxIdInputPlaceholder"
       :maxlength="maxLength"
+      :disabled="state.disabled"
       @blur="validateDocument"
       @focus="updateValidationField"
     >
@@ -23,6 +24,7 @@
 <script>
 import { validateColor } from '@pb/utils/validator';
 import { isCpf, isCnpj } from 'adapcon-utils-js';
+import { documentTypesData } from './documentTypes';
 
 export default {
   name: 'PbTaxIdInput',
@@ -35,10 +37,9 @@ export default {
     allowedDocuments: {
       type: Array,
       default: () => ['cnpj'],
-      validator: documentType => {
-        const allowedDocuments = ['cnpj', 'cpf'];
-        return documentType.every(item => allowedDocuments.includes(item));
-      },
+      // eslint-disable-next-line max-len
+      validator: allowedDocuments => allowedDocuments.length
+        && allowedDocuments.every(item => Object.keys(documentTypesData).includes(item)),
     },
     placeholder: { type: String, default: '__.___.___/____-__' },
   },
@@ -49,6 +50,7 @@ export default {
         isValidDocument: true,
         message: '',
         inputValue: '',
+        disabled: false,
       },
     };
   },
@@ -61,29 +63,23 @@ export default {
     taxIdInputStyle() {
       return {
         background: `var(--color-${this.background})`,
-        border: `1px solid var(--color-${this.state.isValidDocument ? this.color : 'danger'})`,
+        border: `1px solid var(--color-${
+          this.state.isValidDocument ? this.color : 'danger'
+        })`,
       };
     },
 
     taxIdInputPlaceholder() {
-      const documentPlaceholders = {
-        cpf: '___.___.___-__',
-        cnpj: '__.___.___/____-__',
-      };
-
       if (!this.placeholder && this.allowedDocuments.length === 1)
-        return documentPlaceholders[this.allowedDocuments[0]];
+        return documentTypesData[this.allowedDocuments[0]].placeholder;
 
       return this.placeholder;
     },
 
     maxLength() {
-      const documentsTypeMaxLength = {
-        cnpj: 18,
-        cpf: 14,
-      };
-
-      const maxLength = this.allowedDocuments.map(documentType => documentsTypeMaxLength[documentType]);
+      const maxLength = this.allowedDocuments.map(
+        documentType => documentTypesData[documentType].formattedLength,
+      );
 
       return Math.max(...maxLength);
     },
@@ -108,6 +104,13 @@ export default {
   watch: {
     value() {
       this.state.inputValue = String(this.value);
+    },
+    allowedDocuments() {
+      const hasAllowedDocuments = this.allowedDocuments.length >= 1;
+
+      this.updateValidationField({ message: !hasAllowedDocuments ? 'Informe um tipo de documento. Consulte a documentação do componente!' : '' });
+
+      this.state.disabled = !hasAllowedDocuments;
     },
   },
 
@@ -134,13 +137,10 @@ export default {
     },
 
     validateLength(documentToValidate) {
-      const documentsLength = {
-        cnpj: 14,
-        cpf: 11,
-      };
-
       // eslint-disable-next-line max-len
-      const hasValidLength = this.allowedDocuments.some(documentType => documentToValidate.length === documentsLength[documentType]);
+      const hasValidLength = this.allowedDocuments.some(
+        documentType => documentToValidate.length === documentTypesData[documentType].length,
+      );
 
       return hasValidLength;
     },
@@ -158,14 +158,27 @@ export default {
         cnpj: isCnpj(documentToValidate),
       };
 
-      if (!documentToValidate) return this.updateValidationField({ message: 'O documento é obrigatório!' });
+      if (!documentToValidate) {
+        return this.updateValidationField({
+          message: 'O documento é obrigatório!',
+        });
+      }
 
-      if (!this.validateLength(documentToValidate)) this.updateValidationField({ message: 'O documento informado não é válido!' });
+      if (!this.validateLength(documentToValidate)) {
+        this.updateValidationField({
+          message: 'O documento informado não é válido!',
+        });
+      }
 
-      const isValidDocument = this.allowedDocuments.some(documentType => validations[documentType]);
+      const isValidDocument = this.allowedDocuments.some(
+        documentType => validations[documentType],
+      );
 
-      if (!isValidDocument)
-        return this.updateValidationField({ message: 'O documento informado não é válido!' });
+      if (!isValidDocument) {
+        return this.updateValidationField({
+          message: 'O documento informado não é válido!',
+        });
+      }
     },
 
     updateValidationField({ message }) {
