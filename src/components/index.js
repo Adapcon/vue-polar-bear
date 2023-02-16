@@ -49,7 +49,7 @@ export { default as PbAccordion } from './DataVisualization/Accordion/Accordion.
 export { default as PbCheckbox } from './Inputs/Checkbox/Checkbox.vue';
 export { default as PbQuantitySelector } from './Inputs/QuantitySelector/QuantitySelector.vue';
 export { default as PbSelect } from './Inputs/Select/Select.vue';
-export { default as PbCnpjInput } from './Inputs/CnpjInput/CnpjInput.vue';
+export { default as PbTaxIdInput } from './Inputs/TaxIdInput/TaxIdInput.vue';
 export { default as PbEmailInput } from './Inputs/EmailInput/EmailInput.vue';
 export { default as PbPhoneInput } from './Inputs/PhoneInput/PhoneInput.vue';
 export { default as PbDateInput } from './Inputs/DateInput/DateInput.vue';
