@@ -26,7 +26,7 @@
       :column-classes="columnClasses"
       :expand-rows-column-size="state.expandRowsColumnSize"
       :expand-all.sync="state.expandAll"
-      @sort="(activeSorting) => (state.activeSorting = activeSorting)"
+      @sort="handleSort"
     />
 
     <PbLoadingBar v-if="loading" />
@@ -282,6 +282,11 @@ export default {
       if (type === 'asc') return currentValue > nextValue ? 1 : -1;
 
       return 0;
+    },
+
+    handleSort(activeSorting) {
+      this.state.activeSorting = activeSorting;
+      this.$emit('sort', activeSorting);
     },
   },
 };
