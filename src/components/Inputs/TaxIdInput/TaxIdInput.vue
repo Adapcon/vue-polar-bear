@@ -108,7 +108,8 @@ export default {
     allowedDocuments() {
       const hasAllowedDocuments = this.allowedDocuments.length >= 1;
 
-      this.updateValidationField({ message: !hasAllowedDocuments ? 'Informe um tipo de documento. Consulte a documentação do componente!' : '' });
+      if (!hasAllowedDocuments)
+        this.updateValidationField({ message: 'Informe um tipo de documento. Consulte a documentação do componente!' });
 
       this.state.disabled = !hasAllowedDocuments;
     },
@@ -151,7 +152,11 @@ export default {
         .replace(/\s+/g, '')
         .trim();
 
-      if (!this.required && !documentToValidate.length) return;
+      if (!this.required && !documentToValidate.length) {
+        return this.updateValidationField({
+          message: '',
+        });
+      }
 
       const validations = {
         cpf: isCpf(documentToValidate),
