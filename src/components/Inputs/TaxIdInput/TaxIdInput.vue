@@ -179,6 +179,10 @@ export default {
           message: 'O documento informado não é válido!',
         });
       }
+
+      return this.updateValidationField({
+        message: '',
+      });
     },
 
     updateValidationField({ message }) {
