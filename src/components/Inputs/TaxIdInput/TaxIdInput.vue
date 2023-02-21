@@ -86,9 +86,7 @@ export default {
 
     taxIdInput: {
       get() {
-        return this.state.inputValue.length <= 11
-          ? this.stringToCpfFormat(this.state.inputValue)
-          : this.stringToCnpjFormat(this.state.inputValue);
+        return this.formatValue(this.state.inputValue);
       },
 
       set(document) {
@@ -120,21 +118,24 @@ export default {
   },
 
   methods: {
-    stringToCnpjFormat(cnpj) {
-      cnpj = cnpj.replace(/\D/g, '');
-      cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
-      cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-      cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
-      cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
-      return cnpj;
-    },
+    formatValue(value) {
+      let documentTypesBylength = {};
 
-    stringToCpfFormat(cpf) {
-      cpf = cpf.replace(/\D/g, '');
-      cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
-      cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
-      cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-      return cpf;
+      this.allowedDocuments.forEach(documentType => {
+        const { length } = documentTypesData[documentType];
+
+        if (length < value.length) return;
+
+        documentTypesBylength = {
+          ...documentTypesBylength,
+          [length]: [documentType],
+        };
+      });
+
+      const minimumnLength = Math.min(...Object.keys(documentTypesBylength));
+      const documentType = documentTypesBylength[minimumnLength];
+
+      return documentTypesData[documentType].format(value);
     },
 
     validateLength(documentToValidate) {
