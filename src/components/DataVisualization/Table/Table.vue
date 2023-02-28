@@ -99,6 +99,7 @@ export default {
     pageLimit: { type: Number, default: 5 },
     hasPagination: { type: Boolean, default: false },
     currentPage: { type: Number, default: 0 },
+    useInternalFilter: { type: Boolean, default: true }
   },
 
   emits: ['change-page'],
@@ -285,8 +286,10 @@ export default {
     },
 
     handleSort(activeSorting) {
-      this.state.activeSorting = activeSorting;
       this.$emit('sort', activeSorting);
+      if (!this.useInternalFilter) return;
+
+      this.state.activeSorting = activeSorting;
     },
   },
 };
