@@ -286,7 +286,6 @@ export default {
     },
 
     handleSort(activeSorting) {
-      console.log(this.useInternalSort);
       if (!this.useInternalSort) {
         this.$emit('sort', activeSorting);
         return;
