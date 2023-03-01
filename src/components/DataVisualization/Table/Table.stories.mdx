@@ -167,6 +167,7 @@ import PbButton from '../../Buttons/Button/Button.vue';
     pageLimit: { type: Number, defaultValue: 5 },
     hasPagination: { type: 'boolean', defaultValue: true },
     currentPage: { type: Number, defaultValue: 0 },
+    useInternalSort: { type: 'boolean', defaultValue: true },
   }}
 />
 
@@ -191,6 +192,7 @@ export const Template = (args, { argTypes }) => ({
         :pageLimit="pageLimit"
         :has-pagination="hasPagination"
         :current-page="page"
+        :use-internal-sort="useInternalSort"
         @change-page="pg => { pageRows = rows.slice(pg * pageLimit, (pg * pageLimit) + pageLimit); page = pg }"
       >
         <template #actions="{ row, metadata }">
@@ -239,6 +241,7 @@ export const TemplateWithoutActions = (args, { argTypes }) => ({
         :has-actions-bar="hasActionsBar"
         :max-height="maxHeight"
         :actions-size="actionsSize"
+        :use-internal-sort="useInternalSort"
       />
     </div>
   `,
@@ -261,6 +264,7 @@ export const TemplateWithExtraActions = (args, { argTypes }) => ({
         :has-actions-bar="hasActionsBar"
         :max-height="maxHeight"
         :actions-size="actionsSize"
+        :use-internal-sort="useInternalSort"
       >
         <template #extra-actions>
           <PbButton
@@ -315,6 +319,7 @@ List of arrays to each row, containing one object to each column of table;
 | hasActionsBar               | Boolean     | true    | Shows the actions bar, with a search input and a extra-actions slot.                                     |
 | maxHeight                   | String      |         | Sets a maximumn height to table. Should have the unit of measure.                                        |
 | actionsSize                 | Number      | 1       | Sets the size of actions column.                                                                         |                                                                  |
+| useInternalSort             | Boolean     | true    | It sets if the Table component will do the intern filter or just emit the sort event.                    |                                                                  |
 
 ### Events
 
@@ -322,6 +327,7 @@ List of arrays to each row, containing one object to each column of table;
 |:----------------------------|:------------|:-----------------------------------|:------------------------------------------------------------------------------|
 | search                      | String      | Input data in searchinput          | Emits the search term                                                         |
 | clear-input                 |             | Clean the search input             | Emits that search input has been cleared                                      |
+| sort                        | {columnIndex: number, type: 'asc' \| 'desc'} | Emits the sort | Emits when user click on some table header|
 
 ### Slots
 
