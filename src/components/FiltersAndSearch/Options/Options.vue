@@ -1,7 +1,7 @@
 <template>
   <section class="pb-options-container">
     <button
-      v-for="(option, index) in options"
+      v-for="option in options"
       :key="`${option}`"
       :class="`option ${border}`"
       :style="optionButtonStyle(option)"
