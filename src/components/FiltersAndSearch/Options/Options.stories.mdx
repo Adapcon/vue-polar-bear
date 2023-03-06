@@ -11,7 +11,7 @@ import { colors, buttonStyles } from '@pb/utils/constants.js';
       type: 'array',
       defaultValue: ['OPTION','OPTION2', 'OPTION3'],
     },
-    optionsStyle: {
+    border: {
       control: {
         type: 'select',
         options: [ 'flat', 'curved' ]
@@ -39,7 +39,7 @@ export const Template = (args, { argTypes }) => ({
     <PbOptions
       v-model="state.selected"
       :options="options"
-      :options-style="optionsStyle"
+      :border="border"
       :color="color"
     />
   `,
@@ -59,7 +59,7 @@ export const TemplatePreSelected = (args, { argTypes }) => ({
     <PbOptions
       v-model="state.selected"
       :options="options"
-      :options-style="optionsStyle"
+      :border="border"
       :color="color"
     />
   `,

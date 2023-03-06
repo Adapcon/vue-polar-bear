@@ -3,7 +3,7 @@
     <button
       v-for="(option, index) in options"
       :key="`${option}`"
-      :class="`option ${optionsStyle}`"
+      :class="`option ${border}`"
       :style="optionButtonStyle(option)"
       @click="updateValue(option)"
     >
@@ -25,7 +25,7 @@ export default {
   props: {
     value: { type: String, required: true },
     options: { type: Array, required: true },
-    optionsStyle: {
+    border: {
       type: String,
       default: 'curved',
     },
