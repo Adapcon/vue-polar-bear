@@ -94,6 +94,7 @@ export default {
     justify-content: space-around;
     border: 1px solid var(--color-gray-10);
     border-right: 0px;
+    cursor: pointer;
 
     .option-text {
       overflow: hidden;
