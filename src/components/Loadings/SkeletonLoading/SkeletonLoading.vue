@@ -19,12 +19,12 @@ export default {
   name: 'SkeletonLoading',
   props: {
     mainContainerDimensions: {
-      type: Array,
-      default: () => [0, 0],
+      type: Object,
+      default: () => ({ width: '0', height: '0' }),
     },
     secondaryContainerDimensions: {
-      type: Array,
-      default: () => [0, 0],
+      type: Object,
+      default: () => ({ width: '0', height: '0' }),
     },
     secondaryDirection: {
       type: String,
@@ -34,7 +34,7 @@ export default {
       type: String,
       default: 'center',
     },
-    mainContainerRadius: {
+    mainContainerBorderRadius: {
       type: Number,
       default: 0,
     },
@@ -46,15 +46,15 @@ export default {
 
   computed: {
     mainContainerSize() {
-      const [width, height] = this.mainContainerDimensions;
+      const { width, height } = this.mainContainerDimensions;
       return {
-        width: `${width}px`,
-        height: `${height}px`,
-        borderRadius: `${this.mainContainerRadius}px`,
+        width,
+        height,
+        borderRadius: `${this.mainContainerBorderRadius}px`,
       };
     },
     secondaryContainerSize() {
-      const [width, height] = this.secondaryContainerDimensions;
+      const { width, height } = this.secondaryContainerDimensions;
 
       const responsiveMargins = {
         row: `0 0 0 ${this.marginBetweenItems}px`,
@@ -64,8 +64,8 @@ export default {
       };
 
       return {
-        width: `${width}px`,
-        height: `${height}px`,
+        width,
+        height,
         margin: responsiveMargins[this.secondaryDirection],
       };
     },
@@ -82,6 +82,8 @@ export default {
 <style lang="scss" scoped>
 .items-container {
   display: flex;
+  width: 100%;
+  height: 100%;
   align-items: center;
   overflow: hidden;
 

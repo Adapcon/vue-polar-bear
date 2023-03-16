@@ -6,12 +6,12 @@ import PbSkeletonLoading from './SkeletonLoading.vue';
   component={PbSkeletonLoading}
   argTypes={{
     mainContainerDimensions: {
-      type: 'Array',
-      defaultValue: [120, 120],
+      type: 'Object',
+      defaultValue: { width: '120px', height: '120px' },
     },
     secondaryContainerDimensions: {
-      type: 'Array',
-      defaultValue: [80, 30],
+      type: 'Object',
+      defaultValue: { width: '80px', height: '30px' },
     },
     secondaryDirection: {
       control: {
@@ -27,7 +27,7 @@ import PbSkeletonLoading from './SkeletonLoading.vue';
       },
       defaultValue: 'flex-start',
     },
-    mainContainerRadius: {
+    mainContainerBorderRadius : {
       type: 'Number',
       defaultValue: 0,
     },
@@ -54,7 +54,7 @@ export const Template = (args, { argTypes }) => ({
         :secondary-container-dimensions="secondaryContainerDimensions"
         :secondary-direction="secondaryDirection"
         :containers-align="containersAlign"
-        :main-container-radius="mainContainerRadius"
+        :main-container-border-radius="mainContainerBorderRadius"
         :marginBetweenItems="marginBetweenItems"
       />
     </div>
@@ -71,11 +71,11 @@ The PbSkeletonLoading component is a component that shows a skeleton loading.
 
 | Property                      | Type                 | Default       | Description
 |:------------------------------|:---------------------|:--------------|:-------------------------------
-| mainContainerDimensions       | Array                | []            | Dimensions of the main container, [width, height]
-| secondaryContainerDimensions  | Array                | []            | Dimensions of the secondary container, [width, height]
+| mainContainerDimensions       | Object               | {}            | Dimensions of the main container, example: { width: '320px', height: '180px' }
+| secondaryContainerDimensions  | Object               | {}            | Dimensions of the secondary container, example: { width: '80px', height: '30px' }
 | secondaryDirection            | String               | 'row'         | Direction of the secondary container, 'row', 'column', 'row-reverse', 'column-reverse'
 | containersAlign               | String               | 'flex-start'  | Alignment of the containers, 'flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'
-| mainContainerRadius           | Number               | 0             | Radius of the main container
+| mainContainerBorderRadius     | Number               | 0             | Radius of the main container
 | marginBetweenItems            | Number               | 0             | Margin between the main and secondary container
 
 ## Examples
