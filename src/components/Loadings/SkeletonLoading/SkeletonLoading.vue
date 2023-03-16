@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'SkeletonLoading',
+  name: 'PbSkeletonLoading',
   props: {
     mainContainerDimensions: {
       type: Object,
