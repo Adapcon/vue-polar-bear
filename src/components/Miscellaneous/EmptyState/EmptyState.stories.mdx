@@ -1,0 +1,37 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import PbEmptyState from './EmptyState.vue';
+
+<Meta
+  title="Components/Miscellaneous/PbEmptyState"
+  component={PbEmptyState}
+  argTypes={{
+    textInfo: {
+      type: 'string',
+      defaultValue: 'No results found',
+    }
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbEmptyState },
+  template: `
+    <PbEmptyState
+      :text-info="textInfo"
+    />
+  `
+});
+
+# **PbEmptyState**
+
+### This component was created to warn the user that there is no data to be displayed.
+
+## Examples
+
+### Default (Icon Down)
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
