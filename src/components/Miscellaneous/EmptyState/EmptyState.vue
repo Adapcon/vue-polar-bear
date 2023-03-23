@@ -36,7 +36,7 @@ export default {
   align-items: center;
 
   .text-info {
-      margin-top: 30px !important;
+      margin-top: 16px !important;
       color: var(--color-gray-40)
   }
 }
