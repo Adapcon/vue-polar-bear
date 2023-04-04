@@ -1,0 +1,54 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbDateRangePicker from './DateRangePicker.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Inputs/PbDateRangePicker"
+  component={ PbDateRangePicker }
+  argTypes={{
+    value: {
+      type: 'Object',
+      defaultValue: { startDate: '', endDate: '' },
+    },
+    placeholder: {
+      type: 'String',
+      defaultValue: 'Select a date range',
+    },
+    color: {
+      control: { type: 'select', options: [ ...colors ] },
+      defaultValue: 'gray-20',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbDateRangePicker },
+  template: `
+    <PbDateRangePicker
+      style="width: 265px;"
+      :value="value"
+      :color="color"
+    />
+  `,
+});
+
+# **PbDateRangePicker component**
+### The `PbDateRangePicker` was created to capture a date range through user input.
+
+### Purpose and Use case
+
+The `PbDateRangePicker` component is used to capture a date range input from the user.
+
+The component has an `on-validate` property similar to the vue properties validator.
+It is used to perform the validations of the date.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>
