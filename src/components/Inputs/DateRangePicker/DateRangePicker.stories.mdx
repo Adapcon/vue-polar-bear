@@ -10,13 +10,13 @@ import { colors } from '@pb/utils/constants.js';
       type: 'Object',
       defaultValue: { startDate: '', endDate: '' },
     },
-    placeholder: {
+    calendariesPosition: {
       type: 'String',
-      defaultValue: 'Select a date range',
-    },
-    color: {
-      control: { type: 'select', options: [ ...colors ] },
-      defaultValue: 'gray-20',
+      defaultValue: 'right',
+      control: {
+        type: 'select',
+        options: ['right', 'left'],
+      },
     },
   }}
 />
@@ -25,11 +25,13 @@ export const Template = (args, { argTypes}) => ({
   props: Object.keys(argTypes),
   components: { PbDateRangePicker },
   template: `
+  <div style="width: 100%; display: flex; justify-content: center">
     <PbDateRangePicker
       style="width: 265px;"
       :value="value"
-      :color="color"
+      :calendaries-position="calendariesPosition"
     />
+  </div>
   `,
 });
 
