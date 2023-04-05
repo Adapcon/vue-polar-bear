@@ -18,6 +18,14 @@ import { colors } from '@pb/utils/constants.js';
         options: ['right', 'left'],
       },
     },
+    inputStyle: {
+      type: 'String',
+      defaultValue: 'backgroundp-light',
+      control: {
+        type: 'select',
+        options: ['background-light', 'outline'],
+      },
+    }
   }}
 />
 
@@ -30,6 +38,7 @@ export const Template = (args, { argTypes}) => ({
       style="width: 265px;"
       :value="value"
       :calendaries-position="calendariesPosition"
+      :input-style="inputStyle"
     />
   </div>
   `,

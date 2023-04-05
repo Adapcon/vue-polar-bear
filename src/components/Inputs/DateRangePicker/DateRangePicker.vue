@@ -4,13 +4,14 @@
       <input
         v-model="inputValue"
         class="pb"
-        :style="inputStyle"
+        :style="getInputStyle"
         :placeholder="inputValue"
         type="text"
         @click="showPicker"
       >
       <PbIcon
         class="calendar-icon"
+        :style="iconStyle"
         icon="fas fa-calendar-alt"
         @click.native="showPicker"
       />
@@ -25,6 +26,7 @@
             v-for="period in state.periods"
             :key="period"
             class="pb-md"
+            :style="filterStyle(period)"
             @click="changePeriod(period)"
           >
             {{ period }}
@@ -36,9 +38,12 @@
               <div class="calendar-header">
                 <div class="month-selector">
                   <div class="calendar-header-button">
-                    <PbIcon
-                      class="icon"
-                      :class="['fa-rotate-270']"
+                    <PbButton
+                      class="icon-left"
+                      button-style="regular"
+                      color="primary"
+                      button-size="large"
+                      icon-position="left"
                       icon="fas fa-chevron-up"
                       @click.native="changeMonth('startDate', 'prev')"
                     />
@@ -72,9 +77,12 @@
                     </ul>
                   </div>
                   <div class="calendar-header-button">
-                    <PbIcon
-                      class="icon"
-                      :class="['fa-rotate-90']"
+                    <PbButton
+                      class="icon-right"
+                      button-style="regular"
+                      color="primary"
+                      button-size="large"
+                      icon-position="left"
                       icon="fas fa-chevron-up"
                       @click.native="changeMonth('startDate', 'next')"
                     />
@@ -93,6 +101,7 @@
                     <PbIcon
                       style="color: var(--color-primary)"
                       icon="fas fa-chevron-up"
+                      class="fa"
                       :class="['fa-rotate-180']"
                     />
                   </div>
@@ -137,9 +146,12 @@
               <div class="calendar-header">
                 <div class="month-selector">
                   <div class="calendar-header-button">
-                    <PbIcon
-                      class="icon"
-                      :class="['fa-rotate-270']"
+                    <PbButton
+                      class="icon-left"
+                      button-style="regular"
+                      color="primary"
+                      button-size="large"
+                      icon-position="left"
                       icon="fas fa-chevron-up"
                       @click.native="changeMonth('endDate', 'prev')"
                     />
@@ -173,9 +185,12 @@
                     </ul>
                   </div>
                   <div class="calendar-header-button">
-                    <PbIcon
-                      class="icon"
-                      :class="['fa-rotate-90']"
+                    <PbButton
+                      class="icon-right"
+                      button-style="regular"
+                      color="primary"
+                      button-size="large"
+                      icon-position="left"
                       icon="fas fa-chevron-up"
                       @click.native="changeMonth('endDate', 'next')"
                     />
@@ -199,7 +214,7 @@
                   </div>
                   <ul
                     v-if="state.isYearSelectorOpen.endDate"
-                    class="selector-list input-end"
+                    class="selector-list end-input"
                   >
                     <li
                       v-for="year in state.yearOptions"
@@ -242,9 +257,9 @@
             <div class="buttons">
               <PbButton
                 style="width: 100px; margin-right: 8px"
-                color="gray-20"
+                color="gray-40"
                 label="Redefinir"
-                button-style="background"
+                button-style="background-light"
                 @click.native="resetDates()"
               />
               <PbButton
@@ -263,7 +278,6 @@
 </template>
 
 <script>
-import { validateColor } from '@pb/utils/validator';
 import { PbButton, PbIcon } from '@pb';
 
 export default {
@@ -277,6 +291,7 @@ export default {
   props: {
     value: { type: Object, default: () => {} },
     calendariesPosition: { type: String, default: 'right' },
+    inputStyle: { type: String, default: 'background-light' },
   },
 
   data() {
@@ -288,18 +303,18 @@ export default {
           endDate: new Date(),
         },
         monthOptions: [
-          'Janeiro',
-          'Fevereiro',
-          'Março',
-          'Abril',
-          'Maio',
-          'Junho',
-          'Julho',
-          'Agosto',
-          'Setembro',
-          'Outubro',
-          'Novembro',
-          'Dezembro',
+          'Jan',
+          'Fev',
+          'Mar',
+          'Abr',
+          'Mai',
+          'Jun',
+          'Jul',
+          'Ago',
+          'Set',
+          'Out',
+          'Nov',
+          'Dez',
         ],
         isMonthSelectorOpen: {
           startDate: false,
@@ -318,17 +333,41 @@ export default {
           'Últimos 6 meses',
           'Últimos 12 meses',
         ],
+        selectedFilterPeriod: '',
       },
     };
   },
 
   computed: {
-    inputStyle() {
+    getInputStyle() {
+      if (this.inputStyle === 'background-light') {
+        return {
+          'background-color': 'var(--color-gray)',
+          color:
+            this.state.isPickerVisible || this.state.inputValue.startDate
+              ? 'var(--color-gray-90)'
+              : 'var(--color-gray-40)',
+          border: this.state.isPickerVisible
+            ? '1px solid var(--color-gray-90)'
+            : '1px solid var(--color-gray-5) !important',
+          borderRadius: this.state.isPickerVisible ? '20px 20px 0 0' : '20px',
+        };
+      }
       return {
-        color: 'var(--color-gray-20)',
-        border: '1px solid var(--color-gray-20)',
+        color:
+          this.state.isPickerVisible || this.state.inputValue.startDate
+            ? 'var(--color-gray-90)'
+            : 'var(--color-gray-40)',
+        border: this.state.isPickerVisible
+          ? '1px solid var(--color-gray-90)'
+          : '1px solid var(--color-gray-5) !important',
         borderRadius: this.state.isPickerVisible ? '20px 20px 0 0' : '20px',
       };
+    },
+    iconStyle() {
+      return this.state.isPickerVisible || this.state.inputValue.startDate
+        ? 'color: var(--color-gray-90)'
+        : 'color: var(--color-gray-40)';
     },
     inputValue: {
       get() {
@@ -349,6 +388,11 @@ export default {
   },
 
   methods: {
+    filterStyle(period) {
+      return this.state.selectedFilterPeriod === period
+        ? 'background: rgba(var(--color-primary-rgb), 0.12); color: var(--color-primary)'
+        : '';
+    },
     showPicker() {
       this.state.isPickerVisible = !this.state.isPickerVisible;
     },
@@ -364,7 +408,9 @@ export default {
         },
       );
 
-      const capitalizedMonth = month.slice(0, 1).toUpperCase() + month.slice(1);
+      const abreviatedMonth = month.slice(0, 3);
+
+      const capitalizedMonth = abreviatedMonth.slice(0, 1).toUpperCase() + abreviatedMonth.slice(1);
       return capitalizedMonth;
     },
 
@@ -515,6 +561,8 @@ export default {
 
       this.state.inputValue = periodsInTimestamp[period];
 
+      this.state.selectedFilterPeriod = period;
+
       this.state.calendaryDates = {
         startDate: new Date(this.state.inputValue.startDate),
         endDate: new Date(),
@@ -573,6 +621,7 @@ export default {
     top: 50%;
     right: -6px;
     transform: translateY(-50%);
+    cursor: pointer;
   }
 
   input {
@@ -581,8 +630,15 @@ export default {
     border-radius: 20px;
     transition: all 0.3s ease;
     background: none;
-    color: var(--color-gray-90) !important;
     caret-color: transparent;
+    cursor: pointer;
+  }
+
+  &:hover {
+    input {
+      background: var(--color-hover) !important;
+      border: 1px solid var(--color-gray-90) !important;
+    }
   }
 }
 .dropdown {
@@ -668,7 +724,8 @@ export default {
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 8px;
             align-self: stretch;
 
             .month-selector {
@@ -681,15 +738,17 @@ export default {
             .selector {
               display: flex;
               align-items: center;
-              justify-content: space-around;
+              justify-content: space-between;
 
               .input {
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-                padding: 10px 16px;
+                width: 80px;
+                justify-content: center;
+                padding: 10px 0px;
                 gap: 12px;
                 border-radius: 20px;
+                border: 1px solid transparent;
 
                 &:hover {
                   background: var(--color-hover);
@@ -702,24 +761,24 @@ export default {
               }
 
               .start-input {
-                right: 332px !important;
+                right: 348px !important;
               }
 
               .start-month-input {
-                right: 488px !important;
+                right: 478px !important;
               }
 
               .end-input {
-                right: 16px !important;
+                right: 32px !important;
               }
 
               .end-month-input {
-                right: 186px !important;
+                right: 162px !important;
               }
 
               .selector-list {
                 position: absolute;
-                width: 92px;
+                width: 80px;
                 height: 270px;
                 overflow-y: scroll;
                 background: var(--color-white);
@@ -767,9 +826,24 @@ export default {
               flex-direction: row;
               gap: 8px;
 
-              .icon {
-                padding: 13px 10px;
-                color: var(--color-primary);
+              .icon-left {
+                transform: rotate(270deg);
+
+                &:hover {
+                  background-color: rgba(var(--color-primary-rgb), 0.12);
+                  border-radius: 50px;
+                  transform: scale(1.03) rotate(270deg);
+                }
+              }
+
+              .icon-right {
+                transform: rotate(90deg);
+
+                &:hover {
+                  background-color: rgba(var(--color-primary-rgb), 0.12);
+                  border-radius: 50px;
+                  transform: scale(1.03) rotate(90deg);
+                }
               }
             }
           }
