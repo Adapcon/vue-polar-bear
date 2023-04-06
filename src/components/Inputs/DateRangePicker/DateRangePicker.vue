@@ -475,7 +475,7 @@ export default {
 
       const firstDay = new Date(year, month, 1).getDay();
       const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const days = [...Array(daysInMonth).keys()].map(i => i + 1);
+      const days = [...Array(daysInMonth).keys()].map(day => day + 1);
 
       const dates = days.map((day, index) => {
         const id = index + 1;
