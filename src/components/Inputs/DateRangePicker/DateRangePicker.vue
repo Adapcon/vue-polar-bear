@@ -50,11 +50,7 @@
                   </div>
                   <div class="selector">
                     <div
-                      :class="
-                        state.isMonthSelectorOpen.startDate
-                          ? 'input input-opened'
-                          : 'input'
-                      "
+                      :class="getSelectorClass('month')"
                       @click="openMonthsSelector('startDate')"
                     >
                       <p class="pb-md">{{ monthTitle("startDate") }}</p>
@@ -90,11 +86,7 @@
                 </div>
                 <div class="selector">
                   <div
-                    :class="
-                      state.isYearSelectorOpen.startDate
-                        ? 'input input-opened'
-                        : 'input'
-                    "
+                    :class="getSelectorClass('year')"
                     @click="openYearsSelector('startDate')"
                   >
                     <p class="pb-md">{{ yearTitle("startDate") }}</p>
@@ -158,11 +150,7 @@
                   </div>
                   <div class="selector">
                     <div
-                      :class="
-                        state.isMonthSelectorOpen.endDate
-                          ? 'input input-opened'
-                          : 'input'
-                      "
+                      :class="getSelectorClass('month')"
                       @click="openMonthsSelector('endDate')"
                     >
                       <p class="pb-md">{{ monthTitle("endDate") }}</p>
@@ -198,11 +186,7 @@
                 </div>
                 <div class="selector">
                   <div
-                    :class="
-                      state.isYearSelectorOpen.endDate
-                        ? 'input input-opened'
-                        : 'input'
-                    "
+                    :class="getSelectorClass('year')"
                     @click="openYearsSelector('endDate')"
                   >
                     <p class="pb-md">{{ yearTitle("endDate") }}</p>
@@ -414,6 +398,12 @@ export default {
       return capitalizedMonth;
     },
 
+    getSelectorClass(selectorType) {
+      if (selectorType === 'year')
+        return this.state.isYearSelectorOpen.startDate ? 'input input-opened' : 'input';
+      return this.state.isMonthSelectorOpen.startDate ? 'input input-opened' : 'input';
+    },
+
     openMonthsSelector(dateType) {
       this.state.isMonthSelectorOpen[dateType] = !this.state.isMonthSelectorOpen[dateType];
     },
@@ -528,8 +518,7 @@ export default {
     },
 
     daysOnRange(day) {
-      const { startDate } = this.state.inputValue;
-      const { endDate } = this.state.inputValue;
+      const { startDate, endDate } = this.state.inputValue;
 
       const yesterday = startDate
         ? new Date(startDate.getTime() - 86400000)
