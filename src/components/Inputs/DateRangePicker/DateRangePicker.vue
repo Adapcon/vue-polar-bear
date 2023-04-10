@@ -263,6 +263,7 @@
 
 <script>
 import { PbButton, PbIcon } from '@pb';
+import { decreaseDate } from 'adapcon-utils-js';
 
 export default {
   name: 'PbDateRangePicker',
@@ -535,15 +536,15 @@ export default {
           endDate: new Date(),
         },
         'Últimos 30 dias': {
-          startDate: new Date(new Date().getTime() - 2592000000),
+          startDate: decreaseDate(new Date(), { day: 30 }),
           endDate: new Date(),
         },
         'Últimos 6 meses': {
-          startDate: new Date(new Date().getTime() - 15552000000),
+          startDate: decreaseDate(new Date(), { month: 6 }),
           endDate: new Date(),
         },
         'Últimos 12 meses': {
-          startDate: new Date(new Date().getTime() - 31104000000),
+          startDate: decreaseDate(new Date(), { month: 12 }),
           endDate: new Date(),
         },
       };
