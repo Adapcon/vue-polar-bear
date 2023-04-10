@@ -609,7 +609,7 @@ export default {
     position: absolute;
     color: var(--color-gray-90);
     top: 50%;
-    right: -6px;
+    right: 12px;
     transform: translateY(-50%);
     cursor: pointer;
   }
@@ -635,7 +635,7 @@ export default {
   position: relative;
 
   .calendaries-on-left {
-    right: -28px;
+    right: 0;
     left: auto;
   }
 
@@ -649,12 +649,14 @@ export default {
     flex-direction: row;
     align-items: flex-start;
     padding: 0px;
+    background: var(--color-white);
     border: 1px solid var(--color-gray);
     width: 780px;
     height: 380px;
     box-shadow: 0px 1px 10px rgba(34, 34, 34, 0.1);
     border-radius: 8px 0px 8px 8px;
     margin-top: 16px;
+    z-index: 999;
 
     .filters-container {
       display: flex;
@@ -666,7 +668,7 @@ export default {
 
       p {
         padding: 12px 16px;
-        width: calc(100% - 32px);
+        width: 100%;
         cursor: pointer;
 
         &:hover {

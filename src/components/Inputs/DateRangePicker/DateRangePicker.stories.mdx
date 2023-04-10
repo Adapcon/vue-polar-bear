@@ -33,7 +33,7 @@ export const Template = (args, { argTypes}) => ({
   props: Object.keys(argTypes),
   components: { PbDateRangePicker },
   template: `
-  <div style="width: 100%; display: flex; justify-content: center">
+  <div style="width: 100%; height: 480px; display: flex; justify-content: center">
     <PbDateRangePicker
       style="width: 265px;"
       :value="value"
@@ -51,10 +51,29 @@ export const Template = (args, { argTypes}) => ({
 
 The `PbDateRangePicker` component is used to capture a date range input from the user.
 
-The component has an `on-validate` property similar to the vue properties validator.
-It is used to perform the validations of the date.
+This component have some validations that don´t allow the user to select a date range that is not valid.
+For example, if the user select a start date that is after the end date, the component will not allow the user to select the end date, and vice versa.
 
-## Examples
+### Usage
+
+```html
+<PbDateRangePicker
+  :value="{ startDate: '', endDate: '' }"
+  :calendaries-position="right | left"
+  :input-style="background-light | outline"
+/>
+```
+
+## Props
+
+This component have the following props:
+
+| Prop | Type | Default      | Description |
+| ---  | ---  | ------------ | --- |
+| value | Object | { startDate: '', endDate: '' } | Object used to set the value of the input, always have to pass the startDate and endDate as the usage example |
+| calendaries-position | String | right | Used to set the side that the calendary opens |
+| input-style | String | background-light | Used to set the style of the input |
+
 
 ### Default
 
