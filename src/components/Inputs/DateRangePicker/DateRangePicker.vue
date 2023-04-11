@@ -395,8 +395,7 @@ export default {
 
       const abreviatedMonth = month.slice(0, 3);
 
-      const capitalizedMonth = abreviatedMonth.slice(0, 1).toUpperCase() + abreviatedMonth.slice(1);
-      return capitalizedMonth;
+      return abreviatedMonth.slice(0, 1).toUpperCase() + abreviatedMonth.slice(1);
     },
 
     getSelectorClass(selectorType) {
