@@ -10,7 +10,7 @@ import { colors } from '@pb/utils/constants.js';
       type: 'Object',
       defaultValue: { startDate: '', endDate: '' },
     },
-    calendariesPosition: {
+    calendarsPosition: {
       type: 'String',
       defaultValue: 'right',
       control: {
@@ -37,7 +37,7 @@ export const Template = (args, { argTypes}) => ({
     <PbDateRangePicker
       style="width: 265px;"
       :value="value"
-      :calendaries-position="calendariesPosition"
+      :calendars-position="calendarsPosition"
       :input-style="inputStyle"
     />
   </div>
@@ -59,7 +59,7 @@ For example, if the user selects a start date that is later than the end date, t
 ```html
 <PbDateRangePicker
   :value="{ startDate: '', endDate: '' }"
-  :calendaries-position="right | left"
+  :calendars-position="right | left"
   :input-style="background-light | outline"
 />
 ```
@@ -71,7 +71,7 @@ This component have the following props:
 | Prop | Type | Default      | Description |
 | ---  | ---  | ------------ | --- |
 | value | Object | { startDate: '', endDate: '' } | Object used to set the value of the input, always have to pass the startDate and endDate as the usage example |
-| calendaries-position | String | right | Used to set the side that the calendary opens |
+| calendars-position | String | right | Used to set the side that the calendary opens |
 | input-style | String | background-light | Used to set the style of the input |
 
 

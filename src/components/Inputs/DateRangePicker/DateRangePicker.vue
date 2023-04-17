@@ -19,7 +19,7 @@
     <div class="dropdown">
       <div
         v-if="state.isPickerVisible"
-        :class="`calendars-main-container calendars-on-${calendariesPosition}`"
+        :class="`calendars-main-container calendars-on-${calendarsPosition}`"
       >
         <div class="filters-container">
           <p
@@ -275,7 +275,7 @@ export default {
 
   props: {
     value: { type: Object, default: () => {} },
-    calendariesPosition: { type: String, default: 'right' },
+    calendarsPosition: { type: String, default: 'right' },
     inputStyle: { type: String, default: 'background-light' },
   },
 
