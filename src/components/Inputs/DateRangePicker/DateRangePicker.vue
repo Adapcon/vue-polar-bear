@@ -7,19 +7,19 @@
         :style="getInputStyle"
         :placeholder="inputValue"
         type="text"
-        @click="showPicker"
+        @click="toggleDatePicker"
       >
       <PbIcon
         class="calendar-icon"
         :style="iconStyle"
         icon="fas fa-calendar-alt"
-        @click.native="showPicker"
+        @click.native="toggleDatePicker"
       />
     </div>
     <div class="dropdown">
       <div
         v-if="state.isPickerVisible"
-        :class="`calendaries-main-container calendaries-on-${calendariesPosition}`"
+        :class="`calendars-main-container calendars-on-${calendariesPosition}`"
       >
         <div class="filters-container">
           <p
@@ -32,8 +32,8 @@
             {{ period }}
           </p>
         </div>
-        <div class="calendaries-container">
-          <div class="calendaries">
+        <div class="calendars-container">
+          <div class="calendars">
             <div class="calendar">
               <div class="calendar-header">
                 <div class="month-selector">
@@ -51,7 +51,7 @@
                   <div class="selector">
                     <div
                       :class="getSelectorClass('month')"
-                      @click="openMonthsSelector('startDate')"
+                      @click="toggleMonthsSelector('startDate')"
                     >
                       <p class="pb-md">{{ monthTitle("startDate") }}</p>
                     </div>
@@ -87,7 +87,7 @@
                 <div class="selector">
                   <div
                     :class="getSelectorClass('year')"
-                    @click="openYearsSelector('startDate')"
+                    @click="toggleYearsSelector('startDate')"
                   >
                     <p class="pb-md">{{ yearTitle("startDate") }}</p>
                     <PbIcon
@@ -151,7 +151,7 @@
                   <div class="selector">
                     <div
                       :class="getSelectorClass('month')"
-                      @click="openMonthsSelector('endDate')"
+                      @click="toggleMonthsSelector('endDate')"
                     >
                       <p class="pb-md">{{ monthTitle("endDate") }}</p>
                     </div>
@@ -187,7 +187,7 @@
                 <div class="selector">
                   <div
                     :class="getSelectorClass('year')"
-                    @click="openYearsSelector('endDate')"
+                    @click="toggleYearsSelector('endDate')"
                   >
                     <p class="pb-md">{{ yearTitle("endDate") }}</p>
                     <PbIcon
@@ -236,7 +236,7 @@
           </div>
           <div class="buttons-container">
             <div class="period-visualizer">
-              <p class="pb-md">{{ showSelectedPeriod() }}</p>
+              <p class="pb-md">{{ selectedPeriod() }}</p>
             </div>
             <div class="buttons">
               <PbButton
@@ -251,7 +251,7 @@
                 color="primary"
                 label="Aplicar"
                 button-style="background"
-                @click.native="applyFilter()"
+                @click.native="saveDates()"
               />
             </div>
           </div>
@@ -302,13 +302,15 @@ export default {
           'Dez',
         ],
         isMonthSelectorOpen: {
-          startDate: false,
-          endDate: false,
+          open: false,
+          startDate: '',
+          endDate: '',
         },
         yearOptions: [],
         isYearSelectorOpen: {
-          startDate: false,
-          endDate: false,
+          open: false,
+          startDate: '',
+          endDate: '',
         },
         weekdays: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
         isPickerVisible: false,
@@ -378,10 +380,10 @@ export default {
         ? 'background: rgba(var(--color-primary-rgb), 0.12); color: var(--color-primary)'
         : '';
     },
-    showPicker() {
+    toggleDatePicker() {
       this.state.isPickerVisible = !this.state.isPickerVisible;
     },
-    showSelectedPeriod() {
+    selectedPeriod() {
       return this.state.inputValue.startDate ? this.inputValue : 'Início - Fim';
     },
 
@@ -399,12 +401,11 @@ export default {
     },
 
     getSelectorClass(selectorType) {
-      if (selectorType === 'year')
-        return this.state.isYearSelectorOpen.startDate ? 'input input-opened' : 'input';
-      return this.state.isMonthSelectorOpen.startDate ? 'input input-opened' : 'input';
+      const bySelector = { month: this.state.isMonthSelectorOpen, year: this.state.isYearSelectorOpen }
+      return bySelector[selectorType].startDate ? 'input input-opened' : 'input';
     },
 
-    openMonthsSelector(dateType) {
+    toggleMonthsSelector(dateType) {
       this.state.isMonthSelectorOpen[dateType] = !this.state.isMonthSelectorOpen[dateType];
     },
 
@@ -431,7 +432,7 @@ export default {
       this.state.isMonthSelectorOpen[dateType] = false;
     },
 
-    openYearsSelector(dateType) {
+    toggleYearsSelector(dateType) {
       this.state.isYearSelectorOpen[dateType] = !this.state.isYearSelectorOpen[dateType];
       const year = this.state.calendaryDates.endDate.getFullYear();
       const yearOptions = [...Array(10).keys()].map(i => i + year - 5);
@@ -585,7 +586,7 @@ export default {
       this.changePeriod('Hoje');
     },
 
-    applyFilter() {
+    saveDates() {
       this.$emit('input', this.state.inputValue);
       this.state.isPickerVisible = false;
     },
@@ -633,16 +634,16 @@ export default {
 .dropdown {
   position: relative;
 
-  .calendaries-on-left {
+  .calendars-on-left {
     right: 0;
     left: auto;
   }
 
-  .calendaries-on-right {
+  .calendars-on-right {
     border-radius: 0px 8px 8px 8px !important;
   }
 
-  .calendaries-main-container {
+  .calendars-main-container {
     position: absolute;
     display: flex;
     flex-direction: row;
@@ -686,7 +687,7 @@ export default {
       }
     }
 
-    .calendaries-container {
+    .calendars-container {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -694,7 +695,7 @@ export default {
       height: calc(100% - 8px);
       padding-top: 8px;
 
-      .calendaries {
+      .calendars {
         width: 100%;
         display: flex;
         flex-direction: row;
