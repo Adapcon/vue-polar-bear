@@ -8,7 +8,7 @@
         :placeholder="inputValue"
         type="text"
         @click="toggleDatePicker"
-      >
+      />
       <PbIcon
         class="calendar-icon"
         :style="iconStyle"
@@ -16,6 +16,7 @@
         @click.native="toggleDatePicker"
       />
     </div>
+
     <div class="dropdown">
       <div
         v-if="state.isPickerVisible"
@@ -23,11 +24,11 @@
       >
         <div class="filters-container">
           <p
-            v-for="period in state.periods"
+            v-for="period in Object.keys(state.periods)"
             :key="period"
             class="pb-md"
             :style="filterStyle(period)"
-            @click="changePeriod(period)"
+            @click="selectPeriod(period)"
           >
             {{ period }}
           </p>
@@ -59,14 +60,8 @@
                       v-if="state.isMonthSelectorOpen.startDate"
                       class="selector-list start-month-input"
                     >
-                      <li
-                        v-for="month in state.monthOptions"
-                        :key="month"
-                      >
-                        <p
-                          class="pb"
-                          @click="selectMonth('startDate', month)"
-                        >
+                      <li v-for="month in state.monthOptions" :key="month">
+                        <p class="pb" @click="selectMonth('startDate', month)">
                           {{ month }}
                         </p>
                       </li>
@@ -101,14 +96,8 @@
                     v-if="state.isYearSelectorOpen.startDate"
                     class="selector-list start-input"
                   >
-                    <li
-                      v-for="year in state.yearOptions"
-                      :key="year"
-                    >
-                      <p
-                        class="pb"
-                        @click="selectYear('startDate', year)"
-                      >
+                    <li v-for="year in state.yearOptions" :key="year">
+                      <p class="pb" @click="selectYear('startDate', year)">
                         {{ year }}
                       </p>
                     </li>
@@ -159,14 +148,8 @@
                       v-if="state.isMonthSelectorOpen.endDate"
                       class="selector-list end-month-input"
                     >
-                      <li
-                        v-for="month in state.monthOptions"
-                        :key="month"
-                      >
-                        <p
-                          class="pb"
-                          @click="selectMonth('endDate', month)"
-                        >
+                      <li v-for="month in state.monthOptions" :key="month">
+                        <p class="pb" @click="selectMonth('endDate', month)">
                           {{ month }}
                         </p>
                       </li>
@@ -200,14 +183,8 @@
                     v-if="state.isYearSelectorOpen.endDate"
                     class="selector-list end-input"
                   >
-                    <li
-                      v-for="year in state.yearOptions"
-                      :key="year"
-                    >
-                      <p
-                        class="pb"
-                        @click="selectYear('endDate', year)"
-                      >
+                    <li v-for="year in state.yearOptions" :key="year">
+                      <p class="pb" @click="selectYear('endDate', year)">
                         {{ year }}
                       </p>
                     </li>
@@ -236,7 +213,7 @@
           </div>
           <div class="buttons-container">
             <div class="period-visualizer">
-              <p class="pb-md">{{ selectedPeriod() }}</p>
+              <p class="pb-md">{{ selectedPeriod }}</p>
             </div>
             <div class="buttons">
               <PbButton
@@ -263,7 +240,7 @@
 
 <script>
 import { PbButton, PbIcon } from '@pb';
-import { decreaseDate } from 'adapcon-utils-js';
+import { capitalizeFirstLetter, decreaseDate } from 'adapcon-utils-js';
 
 export default {
   name: 'PbDateRangePicker',
@@ -282,10 +259,9 @@ export default {
   data() {
     return {
       state: {
-        inputValue: {},
-        calendaryDates: {
-          startDate: new Date(),
-          endDate: new Date(),
+        inputValue: {
+          startDate: '',
+          endDate: '',
         },
         monthOptions: [
           'Jan',
@@ -314,12 +290,24 @@ export default {
         },
         weekdays: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
         isPickerVisible: false,
-        periods: [
-          'Hoje',
-          'Últimos 30 dias',
-          'Últimos 6 meses',
-          'Últimos 12 meses',
-        ],
+        periods: {
+          Hoje: {
+            startDate: new Date(),
+            endDate: new Date(),
+          },
+          'Últimos 30 dias': {
+            startDate: decreaseDate(new Date(), { day: 30 }),
+            endDate: new Date(),
+          },
+          'Últimos 6 meses': {
+            startDate: decreaseDate(new Date(), { month: 6 }),
+            endDate: new Date(),
+          },
+          'Últimos 12 meses': {
+            startDate: decreaseDate(new Date(), { month: 12 }),
+            endDate: new Date(),
+          },
+        },
         selectedFilterPeriod: '',
       },
     };
@@ -327,8 +315,8 @@ export default {
 
   computed: {
     getInputStyle() {
-      if (this.inputStyle === 'background-light') {
-        return {
+      const inputStyles = {
+        'background-light': {
           'background-color': 'var(--color-gray)',
           color:
             this.state.isPickerVisible || this.state.inputValue.startDate
@@ -338,35 +326,39 @@ export default {
             ? '1px solid var(--color-gray-90)'
             : '1px solid var(--color-gray-5) !important',
           borderRadius: this.state.isPickerVisible ? '20px 20px 0 0' : '20px',
-        };
-      }
-      return {
-        color:
+        },
+
+        outline: {
+          color:
           this.state.isPickerVisible || this.state.inputValue.startDate
             ? 'var(--color-gray-90)'
             : 'var(--color-gray-40)',
-        border: this.state.isPickerVisible
-          ? '1px solid var(--color-gray-90)'
-          : '1px solid var(--color-gray-5) !important',
-        borderRadius: this.state.isPickerVisible ? '20px 20px 0 0' : '20px',
+          border: this.state.isPickerVisible
+            ? '1px solid var(--color-gray-90)'
+            : '1px solid var(--color-gray-5) !important',
+          borderRadius: this.state.isPickerVisible ? '20px 20px 0 0' : '20px',
+        },
       };
+
+      return inputStyles[this.inputStyle];
     },
+
     iconStyle() {
       return this.state.isPickerVisible || this.state.inputValue.startDate
         ? 'color: var(--color-gray-90)'
         : 'color: var(--color-gray-40)';
     },
-    inputValue: {
-      get() {
-        return this.state.inputValue.startDate === ''
-          ? 'Selecione um período'
-          : `${this.formatDate(
-            this.state.inputValue.startDate,
-          )} - ${this.formatDate(this.state.inputValue.endDate)}`;
-      },
-      set(value) {
-        this.state.inputValue = value;
-      },
+
+    inputValue() {
+      return this.state.inputValue.startDate === ''
+        ? 'Selecione um período'
+        : `${this.formatDate(
+          this.state.inputValue.startDate,
+        )} - ${this.formatDate(this.state.inputValue.endDate)}`;
+    },
+
+    selectedPeriod() {
+      return this.state.inputValue.startDate ? this.inputValue : 'Início - Fim';
     },
   },
 
@@ -375,6 +367,9 @@ export default {
   },
 
   methods: {
+    getCurrentDate(dateType) {
+      return this.state.inputValue[dateType] || new Date();
+    },
     filterStyle(period) {
       return this.state.selectedFilterPeriod === period
         ? 'background: rgba(var(--color-primary-rgb), 0.12); color: var(--color-primary)'
@@ -383,26 +378,26 @@ export default {
     toggleDatePicker() {
       this.state.isPickerVisible = !this.state.isPickerVisible;
     },
-    selectedPeriod() {
-      return this.state.inputValue.startDate ? this.inputValue : 'Início - Fim';
-    },
 
     monthTitle(dateType) {
-      const month = this.state.calendaryDates[dateType].toLocaleString(
+      const month = this.getCurrentDate(dateType).toLocaleString(
         'default',
         {
           month: 'long',
         },
       );
 
-      const abreviatedMonth = month.slice(0, 3);
-
-      return abreviatedMonth.slice(0, 1).toUpperCase() + abreviatedMonth.slice(1);
+      return capitalizeFirstLetter(month.slice(0, 3));
     },
 
     getSelectorClass(selectorType) {
-      const bySelector = { month: this.state.isMonthSelectorOpen, year: this.state.isYearSelectorOpen }
-      return bySelector[selectorType].startDate ? 'input input-opened' : 'input';
+      const bySelector = {
+        month: this.state.isMonthSelectorOpen,
+        year: this.state.isYearSelectorOpen,
+      };
+      return bySelector[selectorType].startDate
+        ? 'input input-opened'
+        : 'input';
     },
 
     toggleMonthsSelector(dateType) {
@@ -410,23 +405,23 @@ export default {
     },
 
     yearTitle(dateType) {
-      return this.state.calendaryDates[dateType].getFullYear();
+      return this.getCurrentDate(dateType).getFullYear();
     },
 
     selectMonth(dateType, month) {
-      const date = new Date(this.state.calendaryDates[dateType]);
+      const date = this.getCurrentDate(dateType);
       const monthIndex = this.state.monthOptions.indexOf(month);
       date.setMonth(monthIndex);
 
       if (
         (dateType === 'startDate'
-          && date > this.state.calendaryDates.endDate)
-        || (dateType === 'endDate' && date < this.state.calendaryDates.startDate)
+          && date > this.state.inputValue.endDate)
+        || (dateType === 'endDate' && date < this.state.inputValue.startDate)
       ) {
-        this.state.calendaryDates.endDate = date;
-        this.state.calendaryDates.startDate = date;
+        this.state.inputValue.endDate = date;
+        this.state.inputValue.startDate = date;
       } else {
-        this.state.calendaryDates[dateType] = date;
+        this.state.inputValue[dateType] = date;
       }
 
       this.state.isMonthSelectorOpen[dateType] = false;
@@ -434,31 +429,31 @@ export default {
 
     toggleYearsSelector(dateType) {
       this.state.isYearSelectorOpen[dateType] = !this.state.isYearSelectorOpen[dateType];
-      const year = this.state.calendaryDates.endDate.getFullYear();
+      const year = this.getCurrentDate(dateType).getFullYear();
       const yearOptions = [...Array(10).keys()].map(i => i + year - 5);
       this.state.yearOptions = yearOptions;
     },
 
     selectYear(dateType, year) {
-      const date = new Date(this.state.calendaryDates[dateType]);
+      const date = this.getCurrentDate(dateType);
       date.setFullYear(year);
 
       if (
         (dateType === 'startDate'
-          && date > this.state.calendaryDates.endDate)
-        || (dateType === 'endDate' && date < this.state.calendaryDates.startDate)
+          && date > this.state.inputValue.endDate)
+        || (dateType === 'endDate' && date < this.state.inputValue.startDate)
       ) {
-        this.state.calendaryDates.endDate = date;
-        this.state.calendaryDates.startDate = date;
+        this.state.inputValue.endDate = date;
+        this.state.inputValue.startDate = date;
       } else {
-        this.state.calendaryDates[dateType] = date;
+        this.state.inputValue[dateType] = date;
       }
 
       this.state.isYearSelectorOpen[dateType] = false;
     },
 
     days(dateType, monthOffset = 0) {
-      const date = new Date(this.state.calendaryDates[dateType]);
+      const date = this.getCurrentDate(dateType);
       date.setMonth(date.getMonth() + monthOffset);
 
       const month = date.getMonth();
@@ -479,13 +474,19 @@ export default {
     },
 
     selectDay(dateType, day) {
-      const { startDate, endDate } = this.state.inputValue;
+      const startDate = this.getCurrentDate('startDate');
+      const endDate = this.getCurrentDate('endDate');
+
+      const dates = { startDate, endDate };
+      const newDates = { ...dates };
 
       if (day === null) return;
 
       if (dateType === 'startDate') {
-        const newStartDate = new Date(this.state.calendaryDates.startDate);
+        const newStartDate = newDates.startDate;
         newStartDate.setDate(day);
+
+        console.log('newStartDate', newStartDate, '=====', 'startDate', startDate, 'endDate', endDate);
 
         if (newStartDate > endDate) {
           this.state.inputValue = {
@@ -501,7 +502,7 @@ export default {
       }
 
       if (dateType === 'endDate') {
-        const newEndDate = new Date(this.state.calendaryDates.endDate);
+        const newEndDate = newDates.endDate;
         newEndDate.setDate(day);
 
         if (newEndDate < startDate) {
@@ -519,7 +520,8 @@ export default {
     },
 
     daysOnRange(day) {
-      const { startDate, endDate } = this.state.inputValue;
+      const startDate = this.getCurrentDate('startDate');
+      const endDate = this.getCurrentDate('endDate');
 
       const yesterday = startDate
         ? new Date(startDate.getTime() - 86400000)
@@ -529,31 +531,12 @@ export default {
       if (day < startDate || day > endDate) return 'disabled';
     },
 
-    changePeriod(period) {
-      const periodsInTimestamp = {
-        Hoje: {
-          startDate: new Date(),
-          endDate: new Date(),
-        },
-        'Últimos 30 dias': {
-          startDate: decreaseDate(new Date(), { day: 30 }),
-          endDate: new Date(),
-        },
-        'Últimos 6 meses': {
-          startDate: decreaseDate(new Date(), { month: 6 }),
-          endDate: new Date(),
-        },
-        'Últimos 12 meses': {
-          startDate: decreaseDate(new Date(), { month: 12 }),
-          endDate: new Date(),
-        },
-      };
-
-      this.state.inputValue = periodsInTimestamp[period];
+    selectPeriod(period) {
+      this.state.inputValue = this.state.periods[period];
 
       this.state.selectedFilterPeriod = period;
 
-      this.state.calendaryDates = {
+      this.state.inputValue = {
         startDate: new Date(this.state.inputValue.startDate),
         endDate: new Date(),
       };
@@ -561,8 +544,8 @@ export default {
 
     changeMonth(dateType, direction) {
       const date = dateType === 'startDate'
-        ? this.state.calendaryDates.startDate
-        : this.state.calendaryDates.endDate;
+        ? this.getCurrentDate('startDate')
+        : this.getCurrentDate('endDate');
 
       const newDate = direction === 'next'
         ? new Date(date.setMonth(date.getMonth() + 1))
@@ -570,20 +553,20 @@ export default {
 
       if (
         dateType === 'startDate'
-        && newDate < this.state.calendaryDates.endDate
+        && newDate < this.getCurrentDate('endDate')
       )
-        this.state.calendaryDates.startDate = newDate;
+        this.state.inputValue.startDate = newDate;
       else if (
         dateType === 'endDate'
-        && newDate < this.state.calendaryDates.startDate
+        && newDate < this.getCurrentDate('startDate')
         && direction === 'prev'
       )
-        this.state.calendaryDates.startDate = newDate;
-      else this.state.calendaryDates.endDate = newDate;
+        this.state.inputValue.startDate = newDate;
+      else this.state.inputValue.endDate = newDate;
     },
 
     resetDates() {
-      this.changePeriod('Hoje');
+      this.selectPeriod('Hoje');
     },
 
     saveDates() {

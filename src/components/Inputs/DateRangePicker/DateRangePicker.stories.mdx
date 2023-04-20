@@ -36,7 +36,7 @@ export const Template = (args, { argTypes}) => ({
   <div style="width: 100%; height: 480px; display: flex; justify-content: center">
     <PbDateRangePicker
       style="width: 265px;"
-      :value="value"
+      v-model="value"
       :calendars-position="calendarsPosition"
       :input-style="inputStyle"
     />
@@ -82,3 +82,12 @@ This component have the following props:
     {Template.bind({})}
   </Story>
 </Canvas>
+
+### Preset value
+
+<Canvas>
+  <Story name="PresetValue" height="auto" args={{ value: { startDate: new Date('2023-04-19 12:00:00'), endDate: new Date()} }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
