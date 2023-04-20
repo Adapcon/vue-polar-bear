@@ -2,13 +2,13 @@
   <section>
     <div class="input-container">
       <input
-        v-model="inputValue"
+        :value="inputValue"
         class="pb"
         :style="getInputStyle"
         :placeholder="inputValue"
         type="text"
         @click="toggleDatePicker"
-      />
+      >
       <PbIcon
         class="calendar-icon"
         :style="iconStyle"
@@ -370,13 +370,36 @@ export default {
     getCurrentDate(dateType) {
       return this.state.inputValue[dateType] || new Date();
     },
+
     filterStyle(period) {
       return this.state.selectedFilterPeriod === period
         ? 'background: rgba(var(--color-primary-rgb), 0.12); color: var(--color-primary)'
         : '';
     },
+
     toggleDatePicker() {
       this.state.isPickerVisible = !this.state.isPickerVisible;
+    },
+
+    getSelectorClass(selectorType) {
+      const bySelector = {
+        month: this.state.isMonthSelectorOpen,
+        year: this.state.isYearSelectorOpen,
+      };
+      return bySelector[selectorType].startDate
+        ? 'input input-opened'
+        : 'input';
+    },
+
+    selectPeriod(period) {
+      this.state.inputValue = this.state.periods[period];
+
+      this.state.selectedFilterPeriod = period;
+
+      this.state.inputValue = {
+        startDate: new Date(this.state.inputValue.startDate),
+        endDate: new Date(),
+      };
     },
 
     monthTitle(dateType) {
@@ -390,22 +413,31 @@ export default {
       return capitalizeFirstLetter(month.slice(0, 3));
     },
 
-    getSelectorClass(selectorType) {
-      const bySelector = {
-        month: this.state.isMonthSelectorOpen,
-        year: this.state.isYearSelectorOpen,
-      };
-      return bySelector[selectorType].startDate
-        ? 'input input-opened'
-        : 'input';
-    },
-
     toggleMonthsSelector(dateType) {
       this.state.isMonthSelectorOpen[dateType] = !this.state.isMonthSelectorOpen[dateType];
     },
 
-    yearTitle(dateType) {
-      return this.getCurrentDate(dateType).getFullYear();
+    changeMonth(dateType, direction) {
+      const date = dateType === 'startDate'
+        ? this.getCurrentDate('startDate')
+        : this.getCurrentDate('endDate');
+
+      const newDate = direction === 'next'
+        ? new Date(date.setMonth(date.getMonth() + 1))
+        : new Date(date.setMonth(date.getMonth() - 1));
+
+      if (
+        dateType === 'startDate'
+        && newDate < this.getCurrentDate('endDate')
+      )
+        this.state.inputValue.startDate = newDate;
+      else if (
+        dateType === 'endDate'
+        && newDate < this.getCurrentDate('startDate')
+        && direction === 'prev'
+      )
+        this.state.inputValue.startDate = newDate;
+      else this.state.inputValue.endDate = newDate;
     },
 
     selectMonth(dateType, month) {
@@ -425,6 +457,10 @@ export default {
       }
 
       this.state.isMonthSelectorOpen[dateType] = false;
+    },
+
+    yearTitle(dateType) {
+      return this.getCurrentDate(dateType).getFullYear();
     },
 
     toggleYearsSelector(dateType) {
@@ -526,40 +562,6 @@ export default {
 
       if (day >= yesterday && day <= endDate) return 'on-range';
       if (day < startDate || day > endDate) return 'disabled';
-    },
-
-    selectPeriod(period) {
-      this.state.inputValue = this.state.periods[period];
-
-      this.state.selectedFilterPeriod = period;
-
-      this.state.inputValue = {
-        startDate: new Date(this.state.inputValue.startDate),
-        endDate: new Date(),
-      };
-    },
-
-    changeMonth(dateType, direction) {
-      const date = dateType === 'startDate'
-        ? this.getCurrentDate('startDate')
-        : this.getCurrentDate('endDate');
-
-      const newDate = direction === 'next'
-        ? new Date(date.setMonth(date.getMonth() + 1))
-        : new Date(date.setMonth(date.getMonth() - 1));
-
-      if (
-        dateType === 'startDate'
-        && newDate < this.getCurrentDate('endDate')
-      )
-        this.state.inputValue.startDate = newDate;
-      else if (
-        dateType === 'endDate'
-        && newDate < this.getCurrentDate('startDate')
-        && direction === 'prev'
-      )
-        this.state.inputValue.startDate = newDate;
-      else this.state.inputValue.endDate = newDate;
     },
 
     resetDates() {
