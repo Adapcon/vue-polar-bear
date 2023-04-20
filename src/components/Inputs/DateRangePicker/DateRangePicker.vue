@@ -429,8 +429,10 @@ export default {
 
     toggleYearsSelector(dateType) {
       this.state.isYearSelectorOpen[dateType] = !this.state.isYearSelectorOpen[dateType];
+      
       const year = this.getCurrentDate(dateType).getFullYear();
       const yearOptions = [...Array(10).keys()].map(i => i + year - 5);
+
       this.state.yearOptions = yearOptions;
     },
 
@@ -474,19 +476,14 @@ export default {
     },
 
     selectDay(dateType, day) {
-      const startDate = this.getCurrentDate('startDate');
-      const endDate = this.getCurrentDate('endDate');
-
-      const dates = { startDate, endDate };
-      const newDates = { ...dates };
+      const startDate = new Date(this.getCurrentDate('startDate'));
+      const endDate = new Date(this.getCurrentDate('endDate'));
 
       if (day === null) return;
 
       if (dateType === 'startDate') {
-        const newStartDate = newDates.startDate;
+        const newStartDate = startDate;
         newStartDate.setDate(day);
-
-        console.log('newStartDate', newStartDate, '=====', 'startDate', startDate, 'endDate', endDate);
 
         if (newStartDate > endDate) {
           this.state.inputValue = {
@@ -502,7 +499,7 @@ export default {
       }
 
       if (dateType === 'endDate') {
-        const newEndDate = newDates.endDate;
+        const newEndDate = endDate;
         newEndDate.setDate(day);
 
         if (newEndDate < startDate) {
