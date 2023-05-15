@@ -51,7 +51,7 @@
                   </div>
                   <div class="selector">
                     <div
-                      :class="getSelectorClass('month')"
+                      :class="getSelectorClass('startMonth')"
                       @click="toggleMonthsSelector('startDate')"
                     >
                       <p class="pb-md">{{ monthTitle("startDate") }}</p>
@@ -60,8 +60,14 @@
                       v-if="state.isMonthSelectorOpen.startDate"
                       class="selector-list start-month-input"
                     >
-                      <li v-for="month in state.monthOptions" :key="month">
-                        <p class="pb" @click="selectMonth('startDate', month)">
+                      <li
+                        v-for="month in state.monthOptions"
+                        :key="month"
+                      >
+                        <p
+                          class="pb"
+                          @click="selectMonth('startDate', month)"
+                        >
                           {{ month }}
                         </p>
                       </li>
@@ -81,7 +87,7 @@
                 </div>
                 <div class="selector">
                   <div
-                    :class="getSelectorClass('year')"
+                    :class="getSelectorClass('startYear')"
                     @click="toggleYearsSelector('startDate')"
                   >
                     <p class="pb-md">{{ yearTitle("startDate") }}</p>
@@ -96,8 +102,14 @@
                     v-if="state.isYearSelectorOpen.startDate"
                     class="selector-list start-input"
                   >
-                    <li v-for="year in state.yearOptions" :key="year">
-                      <p class="pb" @click="selectYear('startDate', year)">
+                    <li
+                      v-for="year in state.yearOptions"
+                      :key="year"
+                    >
+                      <p
+                        class="pb"
+                        @click="selectYear('startDate', year)"
+                      >
                         {{ year }}
                       </p>
                     </li>
@@ -139,7 +151,7 @@
                   </div>
                   <div class="selector">
                     <div
-                      :class="getSelectorClass('month')"
+                      :class="getSelectorClass('endMonth')"
                       @click="toggleMonthsSelector('endDate')"
                     >
                       <p class="pb-md">{{ monthTitle("endDate") }}</p>
@@ -148,8 +160,14 @@
                       v-if="state.isMonthSelectorOpen.endDate"
                       class="selector-list end-month-input"
                     >
-                      <li v-for="month in state.monthOptions" :key="month">
-                        <p class="pb" @click="selectMonth('endDate', month)">
+                      <li
+                        v-for="month in state.monthOptions"
+                        :key="month"
+                      >
+                        <p
+                          class="pb"
+                          @click="selectMonth('endDate', month)"
+                        >
                           {{ month }}
                         </p>
                       </li>
@@ -169,7 +187,7 @@
                 </div>
                 <div class="selector">
                   <div
-                    :class="getSelectorClass('year')"
+                    :class="getSelectorClass('endYear')"
                     @click="toggleYearsSelector('endDate')"
                   >
                     <p class="pb-md">{{ yearTitle("endDate") }}</p>
@@ -183,8 +201,14 @@
                     v-if="state.isYearSelectorOpen.endDate"
                     class="selector-list end-input"
                   >
-                    <li v-for="year in state.yearOptions" :key="year">
-                      <p class="pb" @click="selectYear('endDate', year)">
+                    <li
+                      v-for="year in state.yearOptions"
+                      :key="year"
+                    >
+                      <p
+                        class="pb"
+                        @click="selectYear('endDate', year)"
+                      >
                         {{ year }}
                       </p>
                     </li>
@@ -263,6 +287,10 @@ export default {
           startDate: '',
           endDate: '',
         },
+        calendarsVisualization: {
+          startDate: '',
+          endDate: '',
+        },
         monthOptions: [
           'Jan',
           'Fev',
@@ -319,7 +347,7 @@ export default {
         'background-light': {
           'background-color': 'var(--color-gray)',
           color:
-            this.state.isPickerVisible || this.state.inputValue.startDate
+            this.state.isPickerVisible || this.state.calendarsVisualization.startDate
               ? 'var(--color-gray-90)'
               : 'var(--color-gray-40)',
           border: this.state.isPickerVisible
@@ -330,7 +358,7 @@ export default {
 
         outline: {
           color:
-          this.state.isPickerVisible || this.state.inputValue.startDate
+          this.state.isPickerVisible || this.state.calendarsVisualization.startDate
             ? 'var(--color-gray-90)'
             : 'var(--color-gray-40)',
           border: this.state.isPickerVisible
@@ -344,7 +372,7 @@ export default {
     },
 
     iconStyle() {
-      return this.state.isPickerVisible || this.state.inputValue.startDate
+      return this.state.isPickerVisible || this.state.calendarsVisualization.startDate
         ? 'color: var(--color-gray-90)'
         : 'color: var(--color-gray-40)';
     },
@@ -368,7 +396,7 @@ export default {
 
   methods: {
     getCurrentDate(dateType) {
-      return this.state.inputValue[dateType] || new Date();
+      return this.state.calendarsVisualization[dateType] || new Date();
     },
 
     filterStyle(period) {
@@ -383,22 +411,30 @@ export default {
 
     getSelectorClass(selectorType) {
       const bySelector = {
-        month: this.state.isMonthSelectorOpen,
-        year: this.state.isYearSelectorOpen,
+        startMonth: this.state.isMonthSelectorOpen.startDate,
+        endMonth: this.state.isMonthSelectorOpen.endDate,
+        startYear: this.state.isYearSelectorOpen.startDate,
+        endYear: this.state.isYearSelectorOpen.endDate,
       };
-      return bySelector[selectorType].startDate
+      return bySelector[selectorType]
         ? 'input input-opened'
         : 'input';
     },
 
     selectPeriod(period) {
       this.state.inputValue = this.state.periods[period];
+      this.state.calendarsVisualization = this.state.periods[period];
 
       this.state.selectedFilterPeriod = period;
 
       this.state.inputValue = {
         startDate: new Date(this.state.inputValue.startDate),
         endDate: new Date(),
+      };
+
+      this.state.calendarsVisualization = {
+        startDate: new Date(this.state.inputValue.startDate),
+        endDate: new Date(this.state.inputValue.endDate),
       };
     },
 
@@ -418,9 +454,7 @@ export default {
     },
 
     changeMonth(dateType, direction) {
-      const date = dateType === 'startDate'
-        ? this.getCurrentDate('startDate')
-        : this.getCurrentDate('endDate');
+      const date = this.getCurrentDate(dateType);
 
       const newDate = direction === 'next'
         ? new Date(date.setMonth(date.getMonth() + 1))
@@ -430,14 +464,14 @@ export default {
         dateType === 'startDate'
         && newDate < this.getCurrentDate('endDate')
       )
-        this.state.inputValue.startDate = newDate;
+        this.state.calendarsVisualization.startDate = newDate;
       else if (
         dateType === 'endDate'
         && newDate < this.getCurrentDate('startDate')
         && direction === 'prev'
       )
-        this.state.inputValue.startDate = newDate;
-      else this.state.inputValue.endDate = newDate;
+        this.state.calendarsVisualization.startDate = newDate;
+      else this.state.calendarsVisualization.endDate = newDate;
     },
 
     selectMonth(dateType, month) {
@@ -445,15 +479,19 @@ export default {
       const monthIndex = this.state.monthOptions.indexOf(month);
       date.setMonth(monthIndex);
 
+      console.log(month, 'MONTH');
+      console.log(this.state.calendarsVisualization.endDate.getMonth(), 'END DATE MONTH');
+      console.log(date > this.state.calendarsVisualization.endDate, 'date > this.state.calendarsVisualization.endDate');
+
       if (
         (dateType === 'startDate'
-          && date > this.state.inputValue.endDate)
-        || (dateType === 'endDate' && date < this.state.inputValue.startDate)
+          && date > this.state.calendarsVisualization.endDate)
+        || (dateType === 'endDate' && date < this.state.calendarsVisualization.startDate)
       ) {
-        this.state.inputValue.endDate = date;
-        this.state.inputValue.startDate = date;
+        this.state.calendarsVisualization.endDate = date;
+        this.state.calendarsVisualization.startDate = date;
       } else {
-        this.state.inputValue[dateType] = date;
+        this.state.calendarsVisualization[dateType] = date;
       }
 
       this.state.isMonthSelectorOpen[dateType] = false;
@@ -465,7 +503,7 @@ export default {
 
     toggleYearsSelector(dateType) {
       this.state.isYearSelectorOpen[dateType] = !this.state.isYearSelectorOpen[dateType];
-      
+
       const year = this.getCurrentDate(dateType).getFullYear();
       const yearOptions = [...Array(10).keys()].map(i => i + year - 5);
 
@@ -478,13 +516,13 @@ export default {
 
       if (
         (dateType === 'startDate'
-          && date > this.state.inputValue.endDate)
-        || (dateType === 'endDate' && date < this.state.inputValue.startDate)
+          && date > this.state.calendarsVisualization.endDate)
+        || (dateType === 'endDate' && date < this.state.calendarsVisualization.startDate)
       ) {
-        this.state.inputValue.endDate = date;
-        this.state.inputValue.startDate = date;
+        this.state.calendarsVisualization.endDate = date;
+        this.state.calendarsVisualization.startDate = date;
       } else {
-        this.state.inputValue[dateType] = date;
+        this.state.calendarsVisualization[dateType] = date;
       }
 
       this.state.isYearSelectorOpen[dateType] = false;
@@ -526,12 +564,7 @@ export default {
             startDate: newStartDate,
             endDate: newStartDate,
           };
-        } else {
-          this.state.inputValue = {
-            startDate: newStartDate,
-            endDate,
-          };
-        }
+        } else { this.state.inputValue.startDate = newStartDate; }
       }
 
       if (dateType === 'endDate') {
@@ -543,18 +576,12 @@ export default {
             startDate: newEndDate,
             endDate: newEndDate,
           };
-        } else {
-          this.state.inputValue = {
-            startDate,
-            endDate: newEndDate,
-          };
-        }
+        } else { this.state.inputValue.endDate = newEndDate };
       }
     },
 
     daysOnRange(day) {
-      const startDate = this.getCurrentDate('startDate');
-      const endDate = this.getCurrentDate('endDate');
+      const { startDate, endDate } = this.state.inputValue;
 
       const yesterday = startDate
         ? new Date(startDate.getTime() - 86400000)
@@ -736,7 +763,7 @@ export default {
               }
 
               .start-month-input {
-                right: 478px !important;
+                right: 476px !important;
               }
 
               .end-input {
@@ -754,8 +781,8 @@ export default {
                 overflow-y: scroll;
                 background: var(--color-white);
                 padding: 0;
-                top: 56px;
-                right: 16px;
+                top: 72px;
+                right: -20px;
                 border-radius: 8px 0px 8px 8px;
                 box-shadow: 0px 2px 8px rgba(82, 89, 91, 0.14);
                 z-index: 999;
