@@ -479,9 +479,6 @@ export default {
       const monthIndex = this.state.monthOptions.indexOf(month);
       date.setMonth(monthIndex);
 
-      console.log(month, 'MONTH');
-      console.log(this.state.calendarsVisualization.endDate.getMonth(), 'END DATE MONTH');
-      console.log(date > this.state.calendarsVisualization.endDate, 'date > this.state.calendarsVisualization.endDate');
 
       if (
         (dateType === 'startDate'
