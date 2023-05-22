@@ -115,6 +115,7 @@ import {
   faTh as FasTh,
   faGripVertical as fasGripVertical,
   faFire as fasFire,
+  faPause as fasPause,
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -280,6 +281,7 @@ library.add(
   fasVenus,
   fasVenusMars,
   fasVideo,
+  fasPause,
   fabVimeo,
   fabWhatsapp,
   fasWrench,
