@@ -343,32 +343,17 @@ export default {
 
   computed: {
     getInputStyle() {
-      const inputStyles = {
-        'background-light': {
-          'background-color': 'var(--color-gray)',
-          color:
-            this.state.isPickerVisible || this.state.calendarsVisualization.startDate
-              ? 'var(--color-gray-90)'
-              : 'var(--color-gray-40)',
-          border: this.state.isPickerVisible
-            ? '1px solid var(--color-gray-90)'
-            : '1px solid var(--color-gray-5) !important',
-          borderRadius: this.state.isPickerVisible ? '20px 20px 0 0' : '20px',
-        },
-
-        outline: {
-          color:
+      return {
+        'background-color': this.inputStyle === 'background-light' ? 'var(--color-gray)' : 'transparent',
+        color:
           this.state.isPickerVisible || this.state.calendarsVisualization.startDate
             ? 'var(--color-gray-90)'
             : 'var(--color-gray-40)',
-          border: this.state.isPickerVisible
-            ? '1px solid var(--color-gray-90)'
-            : '1px solid var(--color-gray-5) !important',
-          borderRadius: this.state.isPickerVisible ? '20px 20px 0 0' : '20px',
-        },
+        border: this.state.isPickerVisible
+          ? '1px solid var(--color-gray-90)'
+          : '1px solid var(--color-gray-5) !important',
+        borderRadius: this.state.isPickerVisible ? '20px 20px 0 0' : '20px',
       };
-
-      return inputStyles[this.inputStyle];
     },
 
     iconStyle() {
@@ -479,7 +464,6 @@ export default {
       const monthIndex = this.state.monthOptions.indexOf(month);
       date.setMonth(monthIndex);
 
-
       if (
         (dateType === 'startDate'
           && date > this.state.calendarsVisualization.endDate)
@@ -573,7 +557,7 @@ export default {
             startDate: newEndDate,
             endDate: newEndDate,
           };
-        } else { this.state.inputValue.endDate = newEndDate };
+        } else { this.state.inputValue.endDate = newEndDate; }
       }
     },
 
