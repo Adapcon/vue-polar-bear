@@ -12,6 +12,7 @@
   --color-warning: #DD8218;
   --color-info: #18a0fb;
   --color-notification: #FF7614;
+  --color-hover: #EBF0F4;
 
   /** grayscale colors */
   --color-white: #fff;
@@ -521,6 +522,7 @@ ul.pb {
 
   li {
     line-height: 35px !important;
+    padding: 16px;
   }
 
   li::marker {

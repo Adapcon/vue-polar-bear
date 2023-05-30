@@ -308,7 +308,6 @@ export default {
 
   .button-label {
     position: relative;
-    max-width: 90%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -320,7 +319,7 @@ export default {
     left: 0;
     top: 50px;
     border-radius: 0 20px 20px;
-    padding: 20px 10px;
+    padding: 20px 0;
     box-shadow: 0px 2px 30px -19px black;
 
     ul {
