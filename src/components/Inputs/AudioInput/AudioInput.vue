@@ -85,6 +85,8 @@ export default {
     },
   },
 
+  emits: ['change-state', 'audio'],
+
   data() {
     return {
       mediaRecorder: null,
