@@ -233,7 +233,7 @@ export default {
     },
 
     async formatAudio() {
-      const blob = new Blob(this.audio.chunks, { type: 'audio/ogg; codecs=opus' });
+      const blob = new Blob(this.audio.chunks, { type: 'audio/mpeg' });
 
       await new Promise((resolve, reject) => {
         const reader = new FileReader();
