@@ -112,10 +112,6 @@ export default {
       return this.audio.isPlaying ? 'fas fa-pause' : 'fas fa-play';
     },
 
-    audioSource() {
-      return this.audio.src ?? '';
-    },
-
     duration() {
       return this.audio.element?.duration !== Infinity && !!this.audio.element?.duration
         ? this.audio.element?.duration
@@ -134,7 +130,6 @@ export default {
     layerX() {
       return this.audio.timeline;
     },
-
   },
 
   mounted() {
@@ -275,8 +270,6 @@ export default {
 
       const porcentDuration = (layerX * 100) / this.audio.width;
       const duration = (porcentDuration / 100) * this.audio.duration;
-
-      console.log(layerX, porcentDuration, duration);
 
       this.audio.layerX = layerX;
       this.audio.element.currentTime = duration;
