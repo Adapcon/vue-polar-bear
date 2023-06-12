@@ -138,7 +138,7 @@ export default {
   },
 
   mounted() {
-    if (this.startRecording) this.startRecord();
+    if (this.startRecording) this.toggleRecorder();
   },
 
   breforeDestroy() {
