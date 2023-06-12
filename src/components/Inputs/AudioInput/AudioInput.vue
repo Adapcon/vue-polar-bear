@@ -200,7 +200,7 @@ export default {
       }
 
       this.audio.state = this.audio.state === 'paused' ? 'recording' : 'paused';
-      this.$emit('changeState', this.audio.state);
+      this.$emit('change-state', this.audio.state);
     },
 
     startRecord() {
