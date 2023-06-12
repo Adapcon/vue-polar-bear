@@ -1,0 +1,44 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbAudioInput from './AudioInput.vue';
+import { colors } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Inputs/PbAudioInput"
+  component={ PbAudioInput }
+  argTypes={{
+    recordOnMounted: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+  }}
+/>
+
+# **PbAudioInput component**
+### The `PbAudioInput` was created to capture audio through user input.
+
+### Purpose and Use case
+
+The `PbAudioInput` component is used to capture audio input from the user.
+It emits the audio in base64 format every time the user finish or pause the audio recordding.
+
+## Examples
+
+### Default
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbAudioInput },
+  template: `
+    <PbAudioInput
+      :record-on-mounted="recordOnMounted"
+    />
+  `,
+})
+
+### Default
+<Canvas>
+  <Story name="Default" height="auto">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
