@@ -83,6 +83,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    mimeType: {
+      type: String,
+      default: 'audio/mpeg',
+      validator: value => ['audio/mpeg', 'audio/ogg', 'audio/ogg; codecs=opus', 'audio/wav', 'audio/amr', 'audio/acc'].includes(value),
+    },
   },
 
   emits: ['change-state', 'audio'],
@@ -233,7 +238,7 @@ export default {
     },
 
     async formatAudio() {
-      const blob = new Blob(this.audio.chunks, { type: 'audio/mpeg' });
+      const blob = new Blob(this.audio.chunks, { type: this.mimeType });
 
       await new Promise((resolve, reject) => {
         const reader = new FileReader();
