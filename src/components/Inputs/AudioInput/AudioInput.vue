@@ -137,9 +137,6 @@ export default {
 
   },
 
-  watch: {
-  },
-
   mounted() {
     if (this.startRecording) this.startRecord();
   },
@@ -185,14 +182,18 @@ export default {
     },
 
     clearAudio() {
-      this.audio.element = null;
-      this.audio.src = null;
-      this.audio.duration = 0;
-      this.audio.timeline = 0;
-      this.audio.layerX = 0;
-      this.audio.chunks = [];
-      this.audio.recorded = null;
-      this.audio.state = 'paused';
+      this.audio = {
+        chunks: [],
+        recorded: null,
+        state: 'paused',
+        width: 200,
+        element: null,
+        duration: 0,
+        timeline: 0,
+        layerX: 0,
+        isPlaying: false,
+        interval: null,
+      };
     },
 
     toggleRecorder() {
