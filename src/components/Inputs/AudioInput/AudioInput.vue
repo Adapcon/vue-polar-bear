@@ -79,7 +79,7 @@ export default {
   },
 
   props: {
-    startRecording: {
+    recordOnMounted: {
       type: Boolean,
       default: false,
     },
@@ -135,7 +135,7 @@ export default {
   },
 
   mounted() {
-    if (this.startRecording) this.toggleRecorder();
+    if (this.recordOnMounted) this.toggleRecorder();
   },
 
   breforeDestroy() {

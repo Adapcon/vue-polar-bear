@@ -6,7 +6,7 @@ import { colors } from '@pb/utils/constants.js';
   title="Components/Inputs/PbAudioInput"
   component={ PbAudioInput }
   argTypes={{
-    startRecording: {
+    recordOnMounted: {
       type: 'boolean',
       defaultValue: false,
     },
@@ -30,7 +30,7 @@ export const Template = (args, { argTypes }) => ({
   components: { PbAudioInput },
   template: `
     <PbAudioInput
-      :start-recording="startRecording"
+      :record-on-mounted="recordOnMounted"
     />
   `,
 })
