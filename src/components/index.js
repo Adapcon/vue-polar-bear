@@ -62,6 +62,7 @@ export { default as PbToggleSwitch } from './Inputs/ToggleSwitch/ToggleSwitch.vu
 export { default as PbRadio } from './Inputs/Radio/Radio.vue';
 export { default as PbThreeStateCheckbox } from './Inputs/ThreeStateCheckbox/ThreeStateCheckbox.vue';
 export { default as PbCheckboxTree } from './Inputs/CheckboxTree/CheckboxTreeController.vue';
+export { default as PbAudioInput } from './Inputs/AudioInput/AudioInput.vue';
 
 // ? Menus and Toolbars
 export { default as PbDropdown } from './MenusAndToolbars/Dropdown/Dropdown.vue';
