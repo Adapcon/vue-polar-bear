@@ -138,7 +138,7 @@ export default {
     if (this.recordOnMounted) this.toggleRecorder();
   },
 
-  breforeDestroy() {
+  beforeDestroy() {
     this.mediaRecorder.stop();
 
     this.clearAudio();
