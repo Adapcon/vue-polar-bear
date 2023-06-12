@@ -159,9 +159,9 @@ export default {
       this.audio.element = audio;
 
       audio.addEventListener('timeupdate', () => {
-        const porcentDuration = (audio.currentTime * 100) / this.duration;
+        const percentDuration = (audio.currentTime * 100) / this.duration;
 
-        this.audio.timeline = (porcentDuration / 100) * this.audio.width;
+        this.audio.timeline = (percentDuration / 100) * this.audio.width;
       });
 
       audio.addEventListener('ended', () => {
@@ -271,8 +271,8 @@ export default {
       if (layerX > this.audio.width)
         layerX = this.layerX + layerX > this.audio.width ? this.audio.width : this.layerX + layerX;
 
-      const porcentDuration = (layerX * 100) / this.audio.width;
-      const duration = (porcentDuration / 100) * this.audio.duration;
+      const percentDuration = (layerX * 100) / this.audio.width;
+      const duration = (percentDuration / 100) * this.audio.duration;
 
       this.audio.layerX = layerX;
       this.audio.element.currentTime = duration;
