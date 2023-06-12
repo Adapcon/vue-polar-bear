@@ -238,6 +238,7 @@ export default {
         reader.readAsDataURL(blob);
         reader.onload = () => {
           this.setupAudio(reader.result);
+          this.$emit('audio', reader.result);
           resolve();
         };
         reader.onerror = reject;
