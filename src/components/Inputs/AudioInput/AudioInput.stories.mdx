@@ -10,6 +10,11 @@ import { colors } from '@pb/utils/constants.js';
       type: 'boolean',
       defaultValue: false,
     },
+    mimeType: {
+      type: 'select',
+      defaultValue: 'audio/mpeg',
+      options: ['audio/mpeg', 'audio/ogg', 'audio/ogg; codecs=opus', 'audio/wav', 'audio/amr', 'audio/acc'],
+    },
   }}
 />
 
@@ -21,6 +26,22 @@ import { colors } from '@pb/utils/constants.js';
 The `PbAudioInput` component is used to capture audio input from the user.
 It emits the audio in base64 format every time the user finish or pause the audio recordding.
 
+
+### Properties
+
+| Property                | Type                 | Default | Description
+|:------------------------|:---------------------|:--------|:-------------------------------
+| recordOnMounted         | Boolean              | false   | if true the audio start to be recorded when mounted
+| mimeType                | String               | audio/mpeg| defines the type that the audio will be recorded
+
+### Events
+
+| Event                       | Description
+|:----------------------------|:---------------------------------------------------------------------
+| changeState                 | emit whenever the audio changes from recording to paused and paused to recording
+| audio                       | emit whenever the audio buffer is created (when recording is paused)
+
+
 ## Examples
 
 ### Default
@@ -31,6 +52,7 @@ export const Template = (args, { argTypes }) => ({
   template: `
     <PbAudioInput
       :record-on-mounted="recordOnMounted"
+      :mime-type="mimeType"
     />
   `,
 })
