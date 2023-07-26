@@ -231,10 +231,6 @@ export default {
     this.state.checkedValues = this.initialCheckedValues;
   },
 
-  mounted() {
-    console.log('mounted');
-  },
-
   methods: {
     updateChips(value) {
       this.state.checkedValues = value.map(chip => chip.title);
