@@ -119,6 +119,7 @@ export default {
   props: {
     title: { type: String, default: '' },
     options: { type: Array, default: () => [] },
+    initialCheckedValues: { type: Array, default: () => [] },
     displaySize: { type: Number, default: 5 },
     collapsed: { type: Boolean, default: false },
     multiSelector: { type: Boolean, default: false },
@@ -227,6 +228,11 @@ export default {
 
   created() {
     this.collapseOptions(this.collapsed);
+    this.state.checkedValues = this.initialCheckedValues;
+  },
+
+  mounted() {
+    console.log('mounted');
   },
 
   methods: {
