@@ -243,7 +243,7 @@ export default {
       await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(blob);
-        reader.onload = () => {
+        reader.onloadend = () => {
           this.setupAudio(reader.result);
           this.$emit('audio', reader.result);
           resolve();
