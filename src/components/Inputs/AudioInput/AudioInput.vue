@@ -241,7 +241,7 @@ export default {
       const blob = new Blob(this.audio.chunks, { type: this.mimeType });
 
       await new Promise((resolve, reject) => {
-        const reader = new FileReader();
+        const reader = new FileReader(new File([blob], 'audio'));
         reader.readAsDataURL(blob);
         reader.onloadend = () => {
           this.setupAudio(reader.result);
