@@ -86,7 +86,7 @@ export default {
     mimeType: {
       type: String,
       default: 'audio/mpeg',
-      validator: value => ['audio/mpeg', 'audio/ogg', 'audio/ogg; codecs=opus', 'audio/wav', 'audio/amr', 'audio/acc'].includes(value),
+      validator: value => ['audio/mpeg', 'audio/ogg', 'audio/ogg; codecs=opus', 'audio/wav', 'audio/amr', 'audio/aac'].includes(value),
     },
   },
 
@@ -245,7 +245,7 @@ export default {
         reader.readAsDataURL(blob);
         reader.onload = () => {
           this.setupAudio(reader.result);
-          this.$emit('audio', new File([reader.result], 'audio', { type: this.mimeType }));
+          this.$emit('audio', reader.result);
           resolve();
         };
         reader.onerror = reject;
