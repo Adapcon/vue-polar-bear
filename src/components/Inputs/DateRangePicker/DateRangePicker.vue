@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="date-range-picker-container">
     <div class="input-container">
       <input
         :value="inputValue"
