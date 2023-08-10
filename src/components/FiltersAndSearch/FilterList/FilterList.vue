@@ -292,14 +292,13 @@ export default {
   width: 100%;
   border-radius: 8px;
 
-  &[collapsed='true'] {
-    .header:hover {
-      background-color: var(--color-gray-5);
-    }
-  }
-
   .header {
     border-radius: 8px;
+
+    :hover {
+      background-color: var(--color-gray-5);
+      border-radius: 8px;
+    }
 
     .header-container {
       display: flex;
@@ -354,6 +353,16 @@ export default {
 
   .search {
     margin: -5px; // NOTE (gabrielforster): Remove security margin from PbSearchInput
+
+    &::v-deep .pb-search-container {
+      width: 100%;
+
+      .pb-search-input-container {
+        input {
+          width: unset;
+        }
+      }
+    }
   }
 
   .options {
@@ -363,7 +372,6 @@ export default {
 
     .option-title {
       height: auto;
-      padding-block: 8px;
       display: flex;
       align-items: center;
 
@@ -406,6 +414,10 @@ export default {
 
     .options {
       padding-inline: 8px;
+
+      .option-title {
+        padding-block: 8px;
+      }
     }
   }
 
@@ -424,6 +436,10 @@ export default {
 
     .options {
       padding-inline: 12px;
+
+      .option-title {
+        padding-block: 8px;
+      }
     }
   }
 
@@ -442,6 +458,10 @@ export default {
 
     .options {
       padding-inline: 16px;
+
+      .option-title {
+        padding-block: 16px;
+      }
     }
   }
 }
