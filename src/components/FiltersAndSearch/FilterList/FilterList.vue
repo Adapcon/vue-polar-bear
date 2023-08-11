@@ -1,43 +1,31 @@
 <template>
   <div
-    class="pb pb-filter-list-container pb-row"
-    style="padding-bottom: 16px;"
+    class="pb pb-filter-list-container"
+    :class="{
+      'pb-filter-list-disabled': disabled,
+    }"
+    :size="size"
+    :variant="variant"
+    :collapsed="state.collapsed"
   >
-    <div
-      class="header pb-col-12"
+    <header
+      class="header"
       :style="`color: ${getHeaderColor}`"
       @click="toggleCollapse"
     >
-      <div class="pb-row header-container">
-        <div class="pb-col-8">
-          <p class="pb title ellipsis">
+      <div class="header-container">
+        <div>
+          <p class="pb-strong title ellipsis">
             <b>{{ title }}</b>
           </p>
         </div>
-        <div
-          id="icons"
-          class="pb-col-4 pb-col-sm-3"
-        >
-          <div
-            class="counter"
-            :style="
-              state.checkedValues.length !== 0
-                ? ' background: rgba(var(--color-primary-rgb), 0.08)'
-                : ''
-            "
-          >
-            <small
-              class="pb"
-              :style="
-                state.checkedValues.length !== 0
-                  ? 'color: var(--color-primary);'
-                  : ''
-              "
-            >
+        <div class="icons">
+          <div class="counter">
+            <small class="pb">
               {{ state.checkedValues.length }}
             </small>
           </div>
-          <div class="icon-container">
+          <div class="collapse-container">
             <PbCollapseIcon
               :is-icon-up="!state.collapsed"
               :color="getHeaderColor"
@@ -46,12 +34,13 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="pb-col-12">
+    </header>
+
+    <div class="search">
       <PbSearchInput
         v-if="allowSearch && !state.collapsed && showSearch"
         v-model="state.search.searchValue"
-        style="color: var(--color-gray-20); margin-top: 20px;"
+        style="color: var(--color-gray-20)"
         @search="searchOption()"
       />
       <PbLoadingBar
@@ -68,23 +57,17 @@
       <li
         v-for="(option, index) in optionsList"
         :key="`${index}||${option.title}`"
-        class="pb"
+        class="option"
         :style="
           state.checkedValues.includes(option.title)
             ? `color: ${getHeaderColor}`
             : 'color: var(--color-gray-80)'
         "
-        @click="
-          multiSelector
-            ? multipleSelector(option.title)
-            : selector(option.title)
-        "
+        @click="handleOptionClick(option.title)"
       >
-        <div class="option-title">
-          <p class="pb-md">
-            {{ option.title }}
-          </p>
-        </div>
+        <p class="pb">
+          {{ option.title }}
+        </p>
       </li>
     </ul>
     <div>
@@ -121,6 +104,7 @@ export default {
     options: { type: Array, default: () => [] },
     initialCheckedValues: { type: Array, default: () => [] },
     displaySize: { type: Number, default: 5 },
+    disabled: { type: Boolean, default: false },
     collapsed: { type: Boolean, default: false },
     multiSelector: { type: Boolean, default: false },
     allowSearch: { type: Boolean, default: true },
@@ -129,6 +113,16 @@ export default {
       type: String,
       default: 'primary',
       validator: color => validateColor(color),
+    },
+    variant: {
+      type: String,
+      default: 'outline',
+      validator: variant => ['outline', 'background-light', 'no-background'].includes(variant),
+    },
+    size: {
+      type: String,
+      default: 'md',
+      validator: size => ['sm', 'md', 'lg'].includes(size),
     },
   },
 
@@ -142,6 +136,11 @@ export default {
           searchValue: '',
         },
         checkedValues: [],
+        heightMult: {
+          sm: 35,
+          md: 45,
+          lg: 55,
+        },
       },
     };
   },
@@ -173,7 +172,7 @@ export default {
     optionsSize() {
       return {
         height: `${
-          35
+          this.state.heightMult[this.size]
           * (this.options.length < this.displaySize
             ? this.options.length
             : this.displaySize)
@@ -236,6 +235,13 @@ export default {
       this.state.checkedValues = value.map(chip => chip.title);
     },
 
+    handleOptionClick(title) {
+      if (this.multiSelector)
+        return this.multipleSelector(title);
+
+      this.selector(title);
+    },
+
     multipleSelector(value) {
       if (this.checkedValues.includes(value)) {
         const index = this.checkedValues.indexOf(value);
@@ -250,6 +256,8 @@ export default {
     },
 
     toggleCollapse() {
+      if (this.disabled) return;
+
       this.collapseOptions(!this.state.collapsed);
       this.$emit('collapsed', this.state.collapsed);
     },
@@ -283,19 +291,21 @@ export default {
 
 <style lang="scss" scoped>
 .pb-filter-list-container {
-  padding: 0 16px;
   width: 100%;
   border-radius: 8px;
-  background-color: var(--color-gray);
-  color: var(--color-primary) !important;
 
   .header {
-    border-radius: 50px;
-    height: 20px;
-    padding: 16px 0;
+    border-radius: 8px;
+
+    :hover {
+      background-color: var(--color-gray-5);
+      border-radius: 8px;
+    }
 
     .header-container {
+      display: flex;
       justify-content: space-between;
+      align-items: center;
       cursor: pointer;
 
       .ellipsis {
@@ -306,11 +316,12 @@ export default {
 
       .title {
         text-transform: uppercase;
+        color: var(--color-gray-90);
       }
 
-      #icons {
+      .icons {
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
 
         .counter {
           width: 26px;
@@ -320,16 +331,18 @@ export default {
           display: flex;
           justify-content: center;
           align-items: center;
-          background: rgba(var(--color-gray-40-rgb), 0.08);
+          background: var(--color-gray-40);
 
           small {
-            color: var(--color-gray-40);
+            color: var(--color-white);
           }
         }
+
         .icon-container {
           display: flex;
           justify-content: center;
           align-items: center;
+
           .icon {
             width: 16px;
             height: 10px;
@@ -340,28 +353,119 @@ export default {
     }
   }
 
+  .search {
+    margin: -5px; // NOTE (gabrielforster): Remove security margin from PbSearchInput
+
+    &::v-deep .pb-search-container {
+      width: 100%;
+
+      .pb-search-input-container {
+        input {
+          width: unset;
+        }
+      }
+    }
+  }
+
   .options {
     display: flex;
-    list-style: none;
     flex-direction: column;
     position: relative;
-    margin-right: 8px;
-    margin: 12px 8px 16px 0;
+    list-style: none;
+    cursor: pointer;
+    margin-left: -40px;
 
-    .option-title {
+    .option {
       height: auto;
-      padding: 8px;
       display: flex;
       align-items: center;
+
+      &:hover {
+        background-color: var(--color-gray-5);
+      }
 
       p {
         margin: 0;
       }
     }
+  }
 
-    li {
-      cursor: pointer;
+  &[variant="outline"] {
+    border: 1px solid var(--color-gray-20);
+  }
+
+  &[variant="no-background"] {
+    background-color: transparent;
+  }
+
+  &[variant="background-light"] {
+    border: 1px solid var(--color-gray-20);
+    background-color: var(--color-gray);
+  }
+
+  &[size="sm"] {
+    min-height: 38px;
+
+    .header {
+      .header-container {
+        padding: 8px;
+      }
+    }
+
+    .search {
+      padding-inline: 8px;
+    }
+
+    .options {
+      .option {
+        padding: 8px;
+      }
     }
   }
+
+  &[size="md"] {
+    min-height: 46px;
+
+    .header {
+      .header-container {
+        padding: 12px;
+      }
+    }
+
+    .search {
+      padding-inline: 12px;
+    }
+
+    .options {
+      .option {
+        padding: 12px;
+      }
+    }
+  }
+
+  &[size="lg"] {
+    min-height: 54px;
+
+    .header {
+      .header-container {
+        padding: 16px;
+      }
+    }
+
+    .search {
+      padding-inline: 16px;
+    }
+
+    .options {
+      .option {
+        padding: 16px;
+      }
+    }
+  }
+}
+
+.pb-filter-list-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 </style>
