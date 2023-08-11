@@ -57,6 +57,7 @@
       <li
         v-for="(option, index) in optionsList"
         :key="`${index}||${option.title}`"
+        class="option"
         :style="
           state.checkedValues.includes(option.title)
             ? `color: ${getHeaderColor}`
@@ -64,13 +65,9 @@
         "
         @click="handleOptionClick(option.title)"
       >
-        <div
-          class="option-title"
-        >
-          <p class="pb">
-            {{ option.title }}
-          </p>
-        </div>
+        <p class="pb">
+          {{ option.title }}
+        </p>
       </li>
     </ul>
     <div>
@@ -369,20 +366,22 @@ export default {
     display: flex;
     flex-direction: column;
     position: relative;
+    list-style: none;
+    cursor: pointer;
+    margin-left: -40px;
 
-    .option-title {
+    .option {
       height: auto;
       display: flex;
       align-items: center;
 
+      &:hover {
+        background-color: var(--color-gray-5);
+      }
+
       p {
         margin: 0;
       }
-    }
-
-    li {
-      list-style: none;
-      cursor: pointer;
     }
   }
 
@@ -413,10 +412,8 @@ export default {
     }
 
     .options {
-      padding-inline: 8px;
-
-      .option-title {
-        padding-block: 8px;
+      .option {
+        padding: 8px;
       }
     }
   }
@@ -435,10 +432,8 @@ export default {
     }
 
     .options {
-      padding-inline: 12px;
-
-      .option-title {
-        padding-block: 8px;
+      .option {
+        padding: 12px;
       }
     }
   }
@@ -457,10 +452,8 @@ export default {
     }
 
     .options {
-      padding-inline: 16px;
-
-      .option-title {
-        padding-block: 16px;
+      .option {
+        padding: 16px;
       }
     }
   }
