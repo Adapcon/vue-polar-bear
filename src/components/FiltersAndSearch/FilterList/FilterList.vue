@@ -316,7 +316,7 @@ export default {
 
       .icons {
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
 
         .counter {
           width: 26px;
