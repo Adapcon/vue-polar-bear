@@ -136,6 +136,11 @@ export default {
           searchValue: '',
         },
         checkedValues: [],
+        heightMult: {
+          sm: 35,
+          md: 45,
+          lg: 55,
+        },
       },
     };
   },
@@ -167,7 +172,7 @@ export default {
     optionsSize() {
       return {
         height: `${
-          35
+          this.state.heightMult[this.size]
           * (this.options.length < this.displaySize
             ? this.options.length
             : this.displaySize)
