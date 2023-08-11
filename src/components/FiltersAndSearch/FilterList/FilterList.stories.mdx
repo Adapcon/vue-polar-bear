@@ -65,6 +65,14 @@ import { colors } from '@pb/utils/constants.js';
         },
       ],
     },
+    variant: {
+      type: 'select',
+      options: ['outline', 'background-light', 'no-background']
+    },
+    size: {
+      type: 'select',
+      options: ['sm', 'md', 'lg']
+    },
   }}
 />
 
@@ -80,6 +88,8 @@ export const Template = (args, { argTypes }) => ({
       :display-size="displaySize"
       :collapsed="collapsed"
       :allow-search="allowSearch"
+      :variant="variant"
+      :size="size"
       style="width: 300px;"
     />
   `,
@@ -103,6 +113,8 @@ export const TemplateExternalControl = (args, { argTypes }) => ({
       :multi-selector="multiSelector"
       :collapsed="state.collapsed"
       :allow-search="allowSearch"
+      :variant="variant"
+      :size="size"
       @click="$set(state, 'collapsed', true)"
       @collapsed="(value) => $set(state, 'collapsed', value)"
       style="width: 300px;"
@@ -128,6 +140,8 @@ export const TemplateMultiSelector = (args, { argTypes }) => ({
       :multi-selector="state.multiSelector"
       :collapsed="state.collapsed"
       :allow-search="allowSearch"
+      :variant="variant"
+      :size="size"
       @click="$set(state, 'collapsed', true)"
       @collapsed="(value) => $set(state, 'collapsed', value)"
       style="width: 300px;"

@@ -1,5 +1,8 @@
 <template>
-  <div style="position: relative; margin: 5px; width: 100%;">
+  <div
+    class="pb-search-container"
+    style="position: relative; margin: 5px; width: 100%;"
+  >
     <div class="pb-search-input-container">
       <input
         v-model="valueInput"
