@@ -531,41 +531,25 @@ export default {
     },
 
     selectDay(dateType, day) {
-      const startDate = new Date(this.getCurrentDate('startDate'));
-      const endDate = new Date(this.getCurrentDate('endDate'));
+      if (!day) return;
 
-      if (day === null) return;
+      const newDate = new Date(this.getCurrentDate(dateType));
+      newDate.setDate(day);
 
-      if (dateType === 'startDate') {
-        const newStartDate = startDate;
-        newStartDate.setDate(day);
+      this.state.inputValue[dateType] = newDate;
 
-        if (newStartDate > endDate) {
-          this.state.inputValue = {
-            startDate: newStartDate,
-            endDate: newStartDate,
-          };
-        } else { this.state.inputValue.startDate = newStartDate; }
-      }
+      if (dateType === 'startDate' && newDate > this.state.inputValue.endDate)
+        this.state.inputValue.endDate = newDate;
 
-      if (dateType === 'endDate') {
-        const newEndDate = endDate;
-        newEndDate.setDate(day);
-
-        if (newEndDate < startDate) {
-          this.state.inputValue = {
-            startDate: newEndDate,
-            endDate: newEndDate,
-          };
-        } else { this.state.inputValue.endDate = newEndDate; }
-      }
+      if (dateType === 'endDate' && newDate < this.state.inputValue.startDate)
+        this.state.inputValue.startDate = newDate;
     },
 
     daysOnRange(day) {
       const { startDate, endDate } = this.state.inputValue;
 
       const yesterday = startDate
-        ? new Date(startDate.getTime() - 86400000)
+        ? new Date(startDate.getTime() - (1000 * 60 * 60 * 24))
         : new Date();
 
       if (day >= yesterday && day <= endDate) return 'on-range';
