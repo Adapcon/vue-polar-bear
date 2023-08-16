@@ -276,6 +276,10 @@ export default {
 
   props: {
     value: { type: Object, default: () => {} },
+    initialValue: {
+      type: Object,
+      default: () => ({ startDate: '', endDate: '' }),
+    },
     calendarsPosition: { type: String, default: 'right' },
     inputStyle: { type: String, default: 'background-light' },
   },
@@ -557,7 +561,7 @@ export default {
     },
 
     resetDates() {
-      this.selectPeriod('Hoje');
+      Object.assign(this.state.inputValue, this.initialValue);
     },
 
     saveDates() {

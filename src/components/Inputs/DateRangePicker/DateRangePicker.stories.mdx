@@ -10,6 +10,10 @@ import { colors } from '@pb/utils/constants.js';
       type: 'Object',
       defaultValue: { startDate: '', endDate: '' },
     },
+    initialValue: {
+      type: 'Object',
+      defaultValue: { startDate: '', endDate: '' },
+    },
     calendarsPosition: {
       type: 'String',
       defaultValue: 'right',
@@ -37,6 +41,7 @@ export const Template = (args, { argTypes}) => ({
     <PbDateRangePicker
       style="width: 265px;"
       v-model="value"
+      :initial-value="initialValue"
       :calendars-position="calendarsPosition"
       :input-style="inputStyle"
     />
