@@ -240,16 +240,9 @@ export default {
     async formatAudio() {
       const blob = new Blob(this.audio.chunks, { type: this.mimeType });
 
-      await new Promise((resolve, reject) => {
-        const reader = new FileReader(new File([blob], 'audio'));
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-          this.setupAudio(reader.result);
-          this.$emit('audio', reader.result);
-          resolve();
-        };
-        reader.onerror = reject;
-      });
+      this.setupAudio(URL.createObjectURL(blob));
+
+      this.$emit('audio', blob);
     },
 
     togglePlay() {
