@@ -237,7 +237,7 @@ export default {
       clearInterval(this.audio.interval);
     },
 
-    async formatAudio() {
+    formatAudio() {
       const blob = new Blob(this.audio.chunks, { type: this.mimeType });
 
       this.setupAudio(URL.createObjectURL(blob));
