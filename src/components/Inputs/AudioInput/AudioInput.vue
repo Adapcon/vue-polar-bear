@@ -121,9 +121,7 @@ export default {
     },
 
     duration() {
-      return this.audio.element?.duration !== Infinity && !!this.audio.element?.duration
-        ? this.audio.element?.duration
-        : this.audio.duration;
+      return this.audio.duration;
     },
 
     formattedDuration() {
@@ -366,9 +364,10 @@ export default {
        .ball {
         position: absolute;
         cursor: pointer;
-        top: -2px;
+        top: -4px;
         height: 7px;
         width: 7px;
+        padding: 2px;
         border-radius: 50%;
         background-color: var(--color-primary);
       }
