@@ -14,6 +14,7 @@
             :icon="playerIcon"
             size="fa-xs"
             class="pb-audio-player-icon"
+            :disabled="audio.duration === 0"
             @click.native="togglePlay"
           />
         </div>
@@ -128,8 +129,8 @@ export default {
     formattedDuration() {
       const minutes = this.duration > 60 ? Math.floor(this.duration / 60) : 0;
       const seconds = this.duration > 60
-        ? String(Math.floor(this.duration - minutes * 60)).padStart(2, '0')
-        : String(Math.floor(this.duration)).padStart(2, '0');
+        ? String(Math.ceil(this.duration - minutes * 60)).padStart(2, '0')
+        : String(Math.ceil(this.duration)).padStart(2, '0');
 
       return `${minutes}:${seconds}`;
     },
@@ -184,6 +185,8 @@ export default {
     },
 
     clearAudio() {
+      clearInterval(this.audio.interval);
+
       this.audio = {
         chunks: [],
         recorded: null,
@@ -196,6 +199,9 @@ export default {
         isPlaying: false,
         interval: null,
       };
+
+      if (this.mediaRecorder)
+        this.mediaRecorder.stop();
     },
 
     toggleRecorder() {
@@ -242,7 +248,7 @@ export default {
 
       this.setupAudio(URL.createObjectURL(blob));
 
-      this.$emit('audio', blob);
+      this.$emit('audio', { data: blob, duration: this.audio.duration });
     },
 
     togglePlay() {
