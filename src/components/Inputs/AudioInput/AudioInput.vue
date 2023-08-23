@@ -86,7 +86,7 @@ export default {
     },
     mimeType: {
       type: String,
-      default: 'audio/mpeg',
+      default: 'audio/ogg; codecs=opus',
       validator: value => ['audio/mpeg', 'audio/ogg', 'audio/ogg; codecs=opus', 'audio/wav', 'audio/amr', 'audio/aac'].includes(value),
     },
   },
@@ -151,15 +151,6 @@ export default {
   },
 
   methods: {
-    setupMediaRecorderEventListeners() {
-      this.mediaRecorder.addEventListener('dataavailable', event => {
-        this.audio.chunks.push(event.data);
-      });
-
-      this.mediaRecorder.addEventListener('stop', this.formatAudio);
-      this.mediaRecorder.addEventListener('pause', this.formatAudio);
-    },
-
     setupAudio(src) {
       const audio = new Audio(src);
       this.audio.element = audio;
@@ -185,7 +176,10 @@ export default {
     },
 
     clearAudio() {
-      clearInterval(this.audio.interval);
+      this.clearDurationInterval();
+      this.audio.element?.pause();
+
+      this.stopRecord();
 
       this.audio = {
         chunks: [],
@@ -199,9 +193,6 @@ export default {
         isPlaying: false,
         interval: null,
       };
-
-      if (this.mediaRecorder)
-        this.mediaRecorder.stop();
     },
 
     toggleRecorder() {
@@ -216,35 +207,57 @@ export default {
       this.$emit('change-state', this.audio.state);
     },
 
-    startRecord() {
-      this.audio.duration += 1;
+    createDurationInterval() {
       this.audio.interval = setInterval(() => {
         this.audio.duration += 1;
       }, 1000);
+    },
+
+    clearDurationInterval() {
+      clearInterval(this.audio.interval);
+    },
+
+    startRecord() {
+      this.audio.duration += 1;
+
+      this.createDurationInterval();
 
       navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
           this.mediaRecorder = new MediaRecorder(stream);
-          this.setupMediaRecorderEventListeners();
+
+          this.mediaRecorder.ondataavailable = e => {
+            this.audio.chunks.push(e.data);
+          };
+
           this.mediaRecorder.start(1);
         });
     },
 
     resumeRecord() {
-      this.audio.interval = setInterval(() => {
-        this.audio.duration += 1;
-      }, 1000);
-
+      this.createDurationInterval();
       this.mediaRecorder.resume();
     },
 
     pauseRecord() {
       this.mediaRecorder.pause();
-      clearInterval(this.audio.interval);
+      this.clearDurationInterval();
+      this.formatAudio();
+    },
+
+    stopRecord() {
+      this.mediaRecorder?.stop();
+      this.mediaRecorder = null;
     },
 
     formatAudio() {
-      const blob = new Blob(this.audio.chunks, { type: this.mimeType });
+      const startIndex = this.audio.chunks.findIndex(blob => blob.size === 1);
+
+      const chunks = startIndex !== 0
+        ? this.audio.chunks.slice(startIndex)
+        : this.audio.chunks;
+
+      const blob = new Blob(chunks, { type: this.mimeType });
 
       this.setupAudio(URL.createObjectURL(blob));
 
