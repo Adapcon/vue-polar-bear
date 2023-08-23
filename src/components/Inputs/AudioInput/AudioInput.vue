@@ -14,6 +14,7 @@
             :icon="playerIcon"
             size="fa-xs"
             class="pb-audio-player-icon"
+            :disabled="audio.duration === 0"
             @click.native="togglePlay"
           />
         </div>
@@ -85,7 +86,7 @@ export default {
     },
     mimeType: {
       type: String,
-      default: 'audio/mpeg',
+      default: 'audio/ogg; codecs=opus',
       validator: value => ['audio/mpeg', 'audio/ogg', 'audio/ogg; codecs=opus', 'audio/wav', 'audio/amr', 'audio/aac'].includes(value),
     },
   },
@@ -120,16 +121,14 @@ export default {
     },
 
     duration() {
-      return this.audio.element?.duration !== Infinity && !!this.audio.element?.duration
-        ? this.audio.element?.duration
-        : this.audio.duration;
+      return this.audio.duration;
     },
 
     formattedDuration() {
       const minutes = this.duration > 60 ? Math.floor(this.duration / 60) : 0;
       const seconds = this.duration > 60
-        ? String(Math.floor(this.duration - minutes * 60)).padStart(2, '0')
-        : String(Math.floor(this.duration)).padStart(2, '0');
+        ? String(Math.ceil(this.duration - minutes * 60)).padStart(2, '0')
+        : String(Math.ceil(this.duration)).padStart(2, '0');
 
       return `${minutes}:${seconds}`;
     },
@@ -150,15 +149,6 @@ export default {
   },
 
   methods: {
-    setupMediaRecorderEventListeners() {
-      this.mediaRecorder.addEventListener('dataavailable', event => {
-        this.audio.chunks.push(event.data);
-      });
-
-      this.mediaRecorder.addEventListener('stop', this.formatAudio);
-      this.mediaRecorder.addEventListener('pause', this.formatAudio);
-    },
-
     setupAudio(src) {
       const audio = new Audio(src);
       this.audio.element = audio;
@@ -184,6 +174,11 @@ export default {
     },
 
     clearAudio() {
+      this.clearDurationInterval();
+      this.audio.element?.pause();
+
+      this.stopRecord();
+
       this.audio = {
         chunks: [],
         recorded: null,
@@ -210,39 +205,61 @@ export default {
       this.$emit('change-state', this.audio.state);
     },
 
-    startRecord() {
-      this.audio.duration += 1;
+    createDurationInterval() {
       this.audio.interval = setInterval(() => {
         this.audio.duration += 1;
       }, 1000);
+    },
+
+    clearDurationInterval() {
+      clearInterval(this.audio.interval);
+    },
+
+    startRecord() {
+      this.audio.duration += 1;
+
+      this.createDurationInterval();
 
       navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
           this.mediaRecorder = new MediaRecorder(stream);
-          this.setupMediaRecorderEventListeners();
+
+          this.mediaRecorder.ondataavailable = e => {
+            this.audio.chunks.push(e.data);
+          };
+
           this.mediaRecorder.start(1);
         });
     },
 
     resumeRecord() {
-      this.audio.interval = setInterval(() => {
-        this.audio.duration += 1;
-      }, 1000);
-
+      this.createDurationInterval();
       this.mediaRecorder.resume();
     },
 
     pauseRecord() {
       this.mediaRecorder.pause();
-      clearInterval(this.audio.interval);
+      this.clearDurationInterval();
+      this.formatAudio();
+    },
+
+    stopRecord() {
+      this.mediaRecorder?.stop();
+      this.mediaRecorder = null;
     },
 
     formatAudio() {
-      const blob = new Blob(this.audio.chunks, { type: this.mimeType });
+      const startIndex = this.audio.chunks.findIndex(blob => blob.size === 1);
+
+      const chunks = startIndex !== 0
+        ? this.audio.chunks.slice(startIndex)
+        : this.audio.chunks;
+
+      const blob = new Blob(chunks, { type: this.mimeType });
 
       this.setupAudio(URL.createObjectURL(blob));
 
-      this.$emit('audio', blob);
+      this.$emit('audio', { data: blob, duration: this.audio.duration });
     },
 
     togglePlay() {
@@ -347,9 +364,10 @@ export default {
        .ball {
         position: absolute;
         cursor: pointer;
-        top: -2px;
+        top: -4px;
         height: 7px;
         width: 7px;
+        padding: 2px;
         border-radius: 50%;
         background-color: var(--color-primary);
       }
