@@ -39,6 +39,7 @@ It emits the audio in base64 format every time the user finish or pause the audi
 | Event                       | Description
 |:----------------------------|:---------------------------------------------------------------------
 | change-state                | emit whenever the audio changes from recording to paused and paused to recording
+| clear                       | emit whenever the user clicks on the trash icon and the audio data is removed
 | audio                       | emit an object containing the audio blob whenever the audio buffer is created (when recording is paused) and the audio duration in seconds ({ data: audioBlob, duration: audioDuration })
 
 
