@@ -91,7 +91,7 @@ export default {
     },
   },
 
-  emits: ['change-state', 'audio'],
+  emits: ['change-state', 'audio', 'clear'],
 
   data() {
     return {
