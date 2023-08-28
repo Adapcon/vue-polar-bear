@@ -91,7 +91,7 @@ export default {
     },
   },
 
-  emits: ['change-state', 'audio'],
+  emits: ['change-state', 'audio', 'clear'],
 
   data() {
     return {
@@ -142,12 +142,6 @@ export default {
     if (this.recordOnMounted) this.toggleRecorder();
   },
 
-  beforeDestroy() {
-    this.mediaRecorder.stop();
-
-    this.clearAudio();
-  },
-
   methods: {
     setupAudio(src) {
       const audio = new Audio(src);
@@ -191,6 +185,8 @@ export default {
         isPlaying: false,
         interval: null,
       };
+
+      this.$emit('clear');
     },
 
     toggleRecorder() {
