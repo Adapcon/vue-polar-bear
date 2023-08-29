@@ -224,6 +224,10 @@ export default {
             this.audio.chunks.push(e.data);
           };
 
+          this.mediaRecorder.onstop = () => {
+            stream.getTracks().forEach(track => track.stop());
+          };
+
           this.mediaRecorder.start(1);
         });
     },
