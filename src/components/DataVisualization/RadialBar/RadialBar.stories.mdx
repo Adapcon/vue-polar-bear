@@ -1,0 +1,80 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbRadialBar from './RadialBar.vue';
+import { colors } from '@pb/utils/constants';
+
+<Meta
+  title="Components/Data Visualization/PbRadialBar"
+  component={PbRadialBar}
+  argTypes={{
+      color: {
+        control: {
+          type: 'select',
+          options: [ ...colors ],
+        },
+        defaultValue: 'primary',
+      },
+      label: {
+        control: {
+          type: 'string',
+        },
+        defaultValue: 'Description',
+      },
+      percent: {
+        control: {
+          type: 'number',
+        },
+        defaultValue: 10,
+      },
+      goal: {
+        control: {
+          type: 'string',
+        },
+        defaultValue: 'R$ 00.00',
+      },
+      value: {
+        control: {
+          type: 'string',
+        },
+        defaultValue: 'R$ 00.00',
+      },
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbRadialBar },
+  template: `
+    <div>
+      <PbRadialBar
+        :color="color"
+        :label="label"
+        :percent="percent"
+        :goal="goal"
+        :value="value"
+      />
+    </div>
+  `,
+});
+
+# **PbRadialBar**
+
+### Description
+
+The `PbRadialBar` component enables the representation of a radial progress bar.
+
+### Purpose and Use Case
+
+The `PbRadialBar` component showcases a visually appealing colored progress bar in a radial format.
+The bar can be equipped with labels to facilitate user comprehension of their current step within a process.
+This component is intended to provide users with a visual indication of their progress during specific actions.
+
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>

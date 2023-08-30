@@ -117,3 +117,8 @@ Componente de **botão** e suas variações.
 
 - Identação de `import`s e tag `<Meta>` devem sempre possuir uma linha em branco, caso contrário quebrará o build e dará um erro com `h is not defined`;
 - Conteúdos dentro do `template` em `<Story>` não podem possuir linhas em branco, devem ser identados sem quebra de linhas, caso contrário quebrará o build e dará um erro com `Unexpected token, expected ","`
+
+#### Import do componente
+
+ - Necessario adicionar o arquivo ao [Index.js](src/components/index.js)
+ - EX: export { default as PbComponent } from './Component/Component/Component.vue';
