@@ -67,14 +67,12 @@ export default {
   data() {
     return {
       isLoaded: false,
+      radius: 40,
     };
   },
   computed: {
     circumference() {
       return 2 * Math.PI * this.radius;
-    },
-    radius() {
-      return 40;
     },
     offset() {
       if (!this.isLoaded) return this.calcOffset(0);
