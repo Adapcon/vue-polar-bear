@@ -1,0 +1,73 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbLinearBar from './LinearBar.vue';
+import { colors } from '@pb/utils/constants';
+
+<Meta
+  title="Components/Data Visualization/PbLinearBar"
+  component={PbLinearBar}
+  argTypes={{
+      color: {
+        control: {
+          type: 'select',
+          options: [ ...colors ],
+        },
+        defaultValue: 'primary',
+      },
+      label: {
+        control: {
+          type: 'string',
+        },
+        defaultValue: 'Description',
+      },
+      percent: {
+        control: {
+          type: 'number',
+        },
+        defaultValue: 50,
+      },
+      value: {
+        control: {
+          type: 'string',
+        },
+        defaultValue: 'R$ 00.00',
+      },
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbLinearBar },
+  template: `
+    <div>
+      <PbLinearBar
+        :color="color"
+        :label="label"
+        :percent="percent"
+        :value="value"
+      />
+    </div>
+  `,
+});
+
+# **PbLinearBar**
+
+### Description
+
+The `PbLinearBar` component enables the representation of a radial progress bar.
+
+### Purpose and Use Case
+
+The `PbLinearBar` component showcases a visually appealing colored progress bar in a radial format.
+The bar can be equipped with labels to facilitate user comprehension of their current step within a process.
+This component is intended to provide users with a visual indication of their progress during specific actions.
+
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
