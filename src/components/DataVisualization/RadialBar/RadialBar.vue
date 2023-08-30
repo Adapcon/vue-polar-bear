@@ -4,7 +4,6 @@
       width="100"
       height="100"
     >
-      <!-- Círculo de fundo -->
       <circle
         cx="50"
         cy="50"
@@ -13,7 +12,6 @@
         stroke-width="10"
         fill="none"
       />
-      <!-- Círculo de progresso -->
       <circle
         cx="50"
         cy="50"
@@ -65,20 +63,37 @@ export default {
     goal: { type: String, default: '' },
     value: { type: String, default: '' },
   },
+
+  data() {
+    return {
+      isLoaded: false,
+    };
+  },
   computed: {
-    // Circunferência do círculo
     circumference() {
       return 2 * Math.PI * this.radius;
     },
     radius() {
       return 40;
     },
-    // Deslocamento da linha do círculo
     offset() {
-      return this.circumference - (this.percent / 100) * this.circumference;
+      if (!this.isLoaded) return this.calcOffset(0);
+      return this.calcOffset(this.percent);
     },
     computedValue() {
       return `${this.percent}%`;
+    },
+  },
+
+  mounted() {
+    setTimeout(() => {
+      this.isLoaded = true;
+    }, 100);
+  },
+
+  methods: {
+    calcOffset(percent) {
+      return this.circumference - (percent / 100) * this.circumference;
     },
   },
 };
@@ -96,9 +111,9 @@ export default {
     font-weight: bold;
     font-family: nunito;
   }
-    
+
   circle[stroke-dashoffset] {
-    transition: stroke-dashoffset 0.5s ease;
+    transition: stroke-dashoffset 0.8s ease;
   }
 }
 </style>
