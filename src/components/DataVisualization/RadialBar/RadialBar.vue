@@ -82,7 +82,6 @@ export default {
       return `${this.percent}%`;
     },
   },
-
   mounted() {
     setTimeout(() => {
       this.isLoaded = true;
@@ -112,6 +111,7 @@ export default {
 
   circle[stroke-dashoffset] {
     transition: stroke-dashoffset 0.8s ease;
+
   }
 }
 </style>
