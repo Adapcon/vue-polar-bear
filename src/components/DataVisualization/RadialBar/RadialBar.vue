@@ -68,6 +68,7 @@ export default {
     return {
       isLoaded: false,
       radius: 40,
+
     };
   },
   computed: {
@@ -111,7 +112,6 @@ export default {
 
   circle[stroke-dashoffset] {
     transition: stroke-dashoffset 0.8s ease;
-
   }
 }
 </style>
