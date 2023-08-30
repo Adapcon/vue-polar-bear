@@ -142,6 +142,10 @@ export default {
     if (this.recordOnMounted) this.toggleRecorder();
   },
 
+  beforeDestroy() {
+    this.clearAudio();
+  },
+
   methods: {
     setupAudio(src) {
       const audio = new Audio(src);
