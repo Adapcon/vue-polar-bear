@@ -89,6 +89,10 @@ export default {
       default: 'audio/ogg; codecs=opus',
       validator: value => ['audio/mpeg', 'audio/ogg', 'audio/ogg; codecs=opus', 'audio/wav', 'audio/amr', 'audio/aac'].includes(value),
     },
+    stream: {
+      type: MediaStream,
+      required: true,
+    },
   },
 
   emits: ['change-state', 'audio', 'clear'],
@@ -220,20 +224,17 @@ export default {
 
       this.createDurationInterval();
 
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-          this.mediaRecorder = new MediaRecorder(stream);
+      this.mediaRecorder = new MediaRecorder(this.stream);
 
-          this.mediaRecorder.ondataavailable = e => {
-            this.audio.chunks.push(e.data);
-          };
+      this.mediaRecorder.ondataavailable = e => {
+        this.audio.chunks.push(e.data);
+      };
 
-          this.mediaRecorder.onstop = () => {
-            stream.getTracks().forEach(track => track.stop());
-          };
+      this.mediaRecorder.addEventListener('stop', () => {
+        this.mediaRecorder.stream.getTracks().forEach(track => { track.stop(); });
+      });
 
-          this.mediaRecorder.start(1);
-        });
+      this.mediaRecorder.start(1);
     },
 
     resumeRecord() {
@@ -249,7 +250,6 @@ export default {
 
     stopRecord() {
       this.mediaRecorder?.stop();
-      this.mediaRecorder = null;
     },
 
     formatAudio() {

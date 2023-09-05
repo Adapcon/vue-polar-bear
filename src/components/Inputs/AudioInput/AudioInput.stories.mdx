@@ -26,6 +26,9 @@ import { colors } from '@pb/utils/constants.js';
 The `PbAudioInput` component is used to capture audio input from the user.
 It emits the audio in base64 format every time the user finish or pause the audio recordding.
 
+### Important to know
+This component is not "usable" on storybook. The parent component needs to handle the MediaStream creation and browser permission.
+
 
 ### Properties
 
@@ -33,6 +36,7 @@ It emits the audio in base64 format every time the user finish or pause the audi
 |:------------------------|:---------------------|:--------|:-------------------------------
 | recordOnMounted         | Boolean              | false   | if true the audio start to be recorded when mounted
 | mimeType                | String               | audio/mpeg| defines the type that the audio will be recorded
+| stream                  | MediaStream          |         | a MediaStream object that is used to instantiate a MediaRecorder object
 
 ### Events
 
