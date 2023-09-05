@@ -68,6 +68,7 @@ export default {
     return {
       isLoaded: false,
       radius: 40,
+
     };
   },
   computed: {
@@ -82,7 +83,6 @@ export default {
       return `${this.percent}%`;
     },
   },
-
   mounted() {
     setTimeout(() => {
       this.isLoaded = true;
