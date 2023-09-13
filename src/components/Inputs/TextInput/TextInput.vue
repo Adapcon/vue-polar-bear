@@ -18,11 +18,11 @@
     >
 
     <p
-      v-if="max"
+      v-if="maxLength"
       class="pb-strong counter"
     >
       <span>
-        {{ inputValue.length }} / {{ max }}
+        {{ inputValue.length }} / {{ maxLength }}
       </span>
     </p>
   </div>
@@ -43,7 +43,7 @@ export default {
     borderColor: { type: String, default: 'gray-20', validator: validateColor },
     color: { type: String, default: 'gray-20', validator: validateColor },
     focus: { type: Boolean, default: false },
-    max: { type: Number, default: null },
+    maxLength: { type: Number, default: null },
   },
 
   data() {
@@ -98,7 +98,7 @@ export default {
         return false;
       }
 
-      if (this.max && val.length > this.max) {
+      if (this.maxLength && val.length > this.maxLength) {
         this.state.hasError = true;
         return false;
       }

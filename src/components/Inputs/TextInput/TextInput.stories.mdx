@@ -38,7 +38,7 @@ import { colors } from '@pb/utils/constants.js';
       type: 'boolean',
       defaultValue: false,
     },
-    max: {
+    maxLength: {
       type: 'number',
       defaultValue: null,
     },
@@ -76,7 +76,7 @@ export const Template = (args, { argTypes}) => ({
       :background="background"
       :color="color"
       :focus="focus"
-      :max="max"
+      :max-length="maxLength"
     />
   `,
 })
