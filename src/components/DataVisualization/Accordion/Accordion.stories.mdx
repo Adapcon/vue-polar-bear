@@ -1,41 +1,42 @@
-import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
-import PbAccordion from './Accordion.vue';
+import { Meta, Story, Canvas } from "@storybook/addon-docs/blocks";
+import PbAccordion from "./Accordion.vue";
 
 <Meta
   title="Components/Data Visualization/PbAccordion"
   component={PbAccordion}
   argTypes={{
     title: {
-      type: 'text',
-      defaultValue: 'CollapseList',
+      type: "text",
+      defaultValue: "CollapseList",
     },
     quantity: {
-      type: 'number',
+      type: "number",
       defaultValue: 0,
     },
     showQuantity: {
-      type: 'boolean',
+      type: "boolean",
       defaultValue: false,
     },
     noBackground: {
-      type: 'boolean',
+      type: "boolean",
       defaultValue: false,
     },
     labels: {
-      type: 'array',
+      type: "array",
       defaultValue: [
-        { title: 'Quantidade', value: '200' },
-        { title: 'Valor', value: 'R$ 30.000,00' },
-      ]
+        { title: "Quantidade", value: "200" },
+        { title: "Valor", value: "R$ 30.000,00" },
+      ],
     },
     openOnIconOnly: {
-      type: 'boolean',
-      defaultValue: false
-    }
+      type: "boolean",
+      defaultValue: false,
+    },
   }}
 />
 
 # **PbAccordion component**
+
 ### The `PbAccordion` component was created to render an collapse for the user.
 
 ### Purpose and Use case
@@ -128,5 +129,65 @@ export const TemplateHeaderLabels = (args, { argTypes }) => ({
 <Canvas>
   <Story name="With Header Labels" height="auto">
     {TemplateHeaderLabels.bind({})}
+  </Story>
+</Canvas>
+
+### With slot pretend
+
+export const TemplateSlotPretend = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbAccordion },
+  template: `
+  <div>
+    <PbAccordion
+      :title="title"
+      :quantity="quantity"
+      :showQuantity="showQuantity"
+      :noBackground="noBackground"
+    >
+    <template #prepend>
+      <div style="border: 1px solid gray; border-radius: 70px; background-color: gray">
+        <p class="pb" style="padding: 10px;">GP</p>
+      </div>
+    </template>
+      <h4 class="pb" style="color: var(--color-gray-40); padding: 8px 14px;">Here you could code what you want!</h4>
+    </PbAccordion>
+  </div>
+  `,
+});
+
+<Canvas>
+  <Story name="With slot pretend" height="auto">
+    {TemplateSlotPretend.bind({})}
+  </Story>
+</Canvas>
+
+### With slot footer
+
+export const TemplateSlotFooter = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbAccordion },
+  template: `
+  <div>
+    <PbAccordion
+      :title="title"
+      :quantity="quantity"
+      :showQuantity="showQuantity"
+      :noBackground="noBackground"
+    >
+      <h4 class="pb" style="color: var(--color-gray-40); padding: 8px 14px;">Here you could code what you want!</h4>
+    <template #footer>
+    <div style="background-color">
+     <p class="pb">Footer</p>
+     </div>
+    </template>
+    </PbAccordion>
+  </div>
+  `,
+});
+
+<Canvas>
+  <Story name="With slot footer" height="auto">
+    {TemplateSlotFooter.bind({})}
   </Story>
 </Canvas>

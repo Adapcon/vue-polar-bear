@@ -1,0 +1,45 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+{
+  "name": "Vue Polar Bear (Node.js & TypeScript)",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "version": "14"
+    }
+  },
+  "waitFor": "onCreateCommand",
+  "postCreateCommand": "npm i",
+  "updateContentCommand": "npm i",
+  "postAttachCommand": {
+    "server": "npm run storybook"
+  },
+  "forwardPorts": [
+    6006
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "aaron-bond.better-comments",
+        "usernamehw.errorlens",
+        "streetsidesoftware.code-spell-checker-portuguese-brazilian",
+        "vivaxy.vscode-conventional-commits",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "Vue.volar",
+        "editorconfig.editorconfig",
+        "dbaeumer.vscode-eslint",
+        "unifiedjs.vscode-mdx"
+      ],
+      "openFiles": [
+        "README.md"
+      ]
+    },
+    "portsAttributes": {
+      "6006": {
+        "label": "Application",
+        "onAutoForward": "openPreview"
+      }
+    }
+  }
+}

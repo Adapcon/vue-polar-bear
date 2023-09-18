@@ -2,17 +2,25 @@
   <section class="accordion-container">
     <div
       class="accordion"
-      :class="{ 'accordion-background': !noBackground, 'accordion-collapsed': state.collapsed }"
+      :class="{
+        'accordion-background': !noBackground,
+        'accordion-collapsed': state.collapsed,
+      }"
       @click="openOnIconOnly ? null : toggleCollapse()"
     >
       <div class="accordion-infos">
-        <h6
-          v-if="title"
-          class="pb ellipsis"
-          :style="hasHeaderLabels ? 'flex: 1' : ''"
-        >
-          {{ title }}
-        </h6>
+        <div class="prepend">
+          <div style="padding-right: 16px">
+            <slot name="prepend" />
+          </div>
+          <h6
+            v-if="title"
+            class="pb ellipsis"
+            :style="hasHeaderLabels ? 'flex: 1' : ''"
+          >
+            {{ title }}
+          </h6>
+        </div>
         <HeaderLabels
           v-if="hasHeaderLabels"
           :labels="labels"
@@ -38,6 +46,7 @@
       />
     </div>
     <slot v-if="state.collapsed" />
+    <slot name="footer" />
   </section>
 </template>
 
@@ -97,16 +106,24 @@ export default {
       return this.labels.length > 0;
     },
     isOpened() {
-      return this.state.collapsed ? 'var(--color-primary)' : 'var(--color-gray-20)';
+      return this.state.collapsed
+        ? 'var(--color-primary)'
+        : 'var(--color-gray-20)';
     },
   },
 
   methods: {
     changeStyleWhenEmpty(prop) {
-      if (prop === 'background')
-        return this.quantity > 0 ? 'background: rgba(var(--color-primary-rgb), 0.08)' : 'background: rgba(var(--color-gray-40-rgb), 0.08)';
-      if (prop === 'color')
-        return this.quantity > 0 ? 'color: var(--color-primary)' : 'color: var(--color-gray-40)';
+      if (prop === 'background') {
+        return this.quantity > 0
+          ? 'background: rgba(var(--color-primary-rgb), 0.08)'
+          : 'background: rgba(var(--color-gray-40-rgb), 0.08)';
+      }
+      if (prop === 'color') {
+        return this.quantity > 0
+          ? 'color: var(--color-primary)'
+          : 'color: var(--color-gray-40)';
+      }
       return '';
     },
 
@@ -135,7 +152,7 @@ export default {
     }
 
     &-background:hover {
-      background-color: #F5F6F7;
+      background-color: #f5f6f7;
     }
 
     &-collapsed {
@@ -148,9 +165,16 @@ export default {
       justify-content: space-between;
       align-items: center;
 
+      .prepend {
+        display: flex;
+        align-items: center;
+        height: 100%;
+      }
+
       h6 {
         padding-right: 40px;
       }
+
       .ellipsis {
         overflow: hidden;
         text-overflow: ellipsis;
