@@ -1,19 +1,30 @@
 <template>
-  <div class="pb-text-input-container">
+  <div
+    class="pb-text-input-container"
+    :class="{
+      'pb-input-error': state.hasError,
+      'pb-input-disabled': disabled,
+      [`pb-input-${color}`]: true,
+    }"
+  >
     <input
       ref="input"
       v-model="inputValue"
       class="pb"
       :style="textInputStyle"
-      :class="{
-        'pb-input-error': state.hasError,
-        'pb-input-disabled': disabled,
-        [`pb-input-${color}`]: true,
-      }"
       :disabled="disabled"
       :placeholder="placeholder"
       @blur="loseFocus"
     >
+
+    <p
+      v-if="maxLength"
+      class="pb-strong counter"
+    >
+      <span>
+        {{ inputValue.length }} / {{ maxLength }}
+      </span>
+    </p>
   </div>
 </template>
 
@@ -32,6 +43,7 @@ export default {
     borderColor: { type: String, default: 'gray-20', validator: validateColor },
     color: { type: String, default: 'gray-20', validator: validateColor },
     focus: { type: Boolean, default: false },
+    maxLength: { type: Number, default: null },
   },
 
   data() {
@@ -86,6 +98,11 @@ export default {
         return false;
       }
 
+      if (this.maxLength && val.length > this.maxLength) {
+        this.state.hasError = true;
+        return false;
+      }
+
       this.state.hasError = false;
       return true;
     },
@@ -95,28 +112,43 @@ export default {
 
 <style lang="scss" scoped>
 .pb-text-input-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--color-gray-20);
+  border-radius: 40px;
+
   input {
     border-radius: 20px;
     width: 100%;
     background: transparent;
+    outline: none;
+    border: none !important;
   }
 
-  .pb-input-error {
-    border: 1px solid var(--color-danger) !important;
+  .counter {
+    white-space: nowrap;
+    padding-right: 10px;
+    color: var(--color-gray-20);
   }
 
-  .pb-input-disabled {
-    opacity: 0.3 !important;
-  }
+}
+.pb-input-error {
+  border: 1px solid var(--color-danger) !important;
+}
 
-  @import "@pb/variables.scss";
-  @each $color in $colors {
-    .pb-input-#{$color} {
+.pb-input-disabled {
+  opacity: 0.3 !important;
+}
+
+@import "@pb/variables.scss";
+@each $color in $colors {
+  .pb-input-#{$color} {
+    color: var(--color-#{$color});
+
+    &::placeholder {
       color: var(--color-#{$color});
-
-      &::placeholder {
-        color: var(--color-#{$color});
-      }
     }
   }
 }
