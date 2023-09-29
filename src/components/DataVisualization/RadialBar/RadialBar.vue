@@ -91,7 +91,8 @@ export default {
 
   methods: {
     calcOffset(percent) {
-      return this.circumference - (percent / 100) * this.circumference;
+      const offset = this.circumference - (percent / 100) * this.circumference;
+      return offset > 0 ? offset : 0;
     },
   },
 };
