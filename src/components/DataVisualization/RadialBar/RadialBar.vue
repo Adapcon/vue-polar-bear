@@ -38,8 +38,8 @@
       {{ label }}
     </p>
     <div style="display: flex; flex-wrap: wrap">
-      <p class="pb-strong">{{ goal }}/</p>
-      <p class="pb-strong">{{ value }}</p>
+      <p class="pb-strong">{{ value }}/</p>
+      <p class="pb-strong">{{ goal }}</p>
     </div>
   </section>
 </template>
@@ -103,7 +103,7 @@ export default {
   flex-direction: column;
   align-items: center;
   max-width: 100px;
-    
+
   .text {
     font-size: 16px;
     font-weight: bold;
