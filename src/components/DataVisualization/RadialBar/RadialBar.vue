@@ -38,8 +38,8 @@
       {{ label }}
     </p>
     <div style="display: flex; flex-wrap: wrap">
-      <p class="pb-strong">{{ goal }}/</p>
-      <p class="pb-strong">{{ value }}</p>
+      <p class="pb-strong">{{ value }}/</p>
+      <p class="pb-strong">{{ goal }}</p>
     </div>
   </section>
 </template>
@@ -91,7 +91,8 @@ export default {
 
   methods: {
     calcOffset(percent) {
-      return this.circumference - (percent / 100) * this.circumference;
+      const offset = this.circumference - (percent / 100) * this.circumference;
+      return offset > 0 ? offset : 0;
     },
   },
 };
@@ -103,7 +104,7 @@ export default {
   flex-direction: column;
   align-items: center;
   max-width: 100px;
-    
+
   .text {
     font-size: 16px;
     font-weight: bold;
