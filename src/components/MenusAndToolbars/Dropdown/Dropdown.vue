@@ -1,7 +1,13 @@
 <template>
   <div class="pb-dropdown-container layer-overlay">
-    <div class="content-header" @click="toggleDropdown">
-      <p v-if="text" class="pb disable-select">
+    <div
+      class="content-header"
+      @click.stop="toggleDropdown"
+    >
+      <p
+        v-if="text"
+        class="pb disable-select"
+      >
         <b class="pb">{{ text }}</b>
       </p>
 
@@ -86,7 +92,6 @@ export default {
     closeDropDownOnClick() {
       if (this.closeOnOptionSelect) return this.closeDropDown();
     },
-
     toggleDropdown() {
       return this.state.isDropdownVisible
         ? this.closeDropDown()
