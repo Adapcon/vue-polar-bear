@@ -1,6 +1,6 @@
 export const colors = [
   'primary',
-  'primary',
+  'secondary',
   'active',
   'success',
   'success-light',
