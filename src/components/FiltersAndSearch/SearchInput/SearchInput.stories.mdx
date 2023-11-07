@@ -1,5 +1,6 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 import { action } from '@storybook/addon-actions';
+import { colors } from '@pb/utils/constants';
 
 import PbSearchInput from './SearchInput.vue';
 
@@ -27,6 +28,20 @@ import PbSearchInput from './SearchInput.vue';
       type: 'boolean',
       defaultValue: false,
     },
+    background: {
+      control: {
+        type: 'select',
+        options: [ ...colors ],
+      },
+      defaultValue: 'transparent',
+    },
+    borderColor: {
+      control: {
+        type: 'select',
+        options: [ ...colors ],
+      },
+      defaultValue: 'gray-20',
+    }
   }}
 />
 
@@ -52,6 +67,8 @@ export const Template = (arg, { argTypes }) => ({
       :suggestions="suggestions"
       :darkBackground="darkBackground"
       :hasError="hasError"
+      :background="background"
+      :borderColor="borderColor"
       style="width: 30%"
       @search="search1"
       @selectedSuggestion="selectedSuggestion1"

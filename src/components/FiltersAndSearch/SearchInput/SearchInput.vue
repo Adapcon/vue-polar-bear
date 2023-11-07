@@ -13,7 +13,7 @@
           'pb-search-error' : hasError,
           'pb-search-white': darkBackground,
         }"
-        :style="darkBackground ? 'color: var(--color-white)' : ''"
+        :style="searchInputStyle"
         @focus="$emit('focus')"
         @blur="$emit('blur')"
         @keyup.enter="() => $emit('search')"
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import { validateColor } from '@pb/utils/validator';
 import PbIcon from '@pb/Miscellaneous/Icon/Icon';
 
 export default {
@@ -74,6 +75,8 @@ export default {
     darkBackground: { type: Boolean, default: false },
     showIcon: { type: Boolean, default: true },
     hasError: { type: Boolean, default: false },
+    background: { type: String, default: 'transparent' },
+    borderColor: { type: String, default: 'gray-20', validator: validateColor },
   },
   computed: {
     valueInput: {
@@ -83,6 +86,14 @@ export default {
       set(newInputValue) {
         this.$emit('input', newInputValue);
       },
+    },
+
+    searchInputStyle() {
+      return {
+        background: `var(--color-${this.background})`,
+        color: this.darkBackground ? 'color: var(--color-white)' : '',
+        border: `1px solid var(--color-${this.borderColor})`
+      };
     },
   },
   methods: {
