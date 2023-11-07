@@ -53,7 +53,7 @@
                         ? arrayIndex < column.value.length
                         : arrayIndex < 2
                     "
-                    class="pb"
+                    class="pb-md"
                   >
                     {{ item }}
                   </p>
@@ -66,13 +66,13 @@
                 button-style="default"
                 @click.native="seeMoreInfo(index)"
               >
-                <span class="pb">{{
+                <span class="pb-md">{{
                   "Ver" + (state.seeMoreInfo[index] ? " menos" : " mais")
                 }}</span>
               </PbButton>
               <p
                 v-if="column.value.length <= 0"
-                class="pb"
+                class="pb-md"
               >
                 Sem registros
               </p>
@@ -172,7 +172,7 @@
                           ? arrayIndex < column.value.length
                           : arrayIndex < 2
                       "
-                      class="pb"
+                      class="pb-md"
                     >
                       {{ item }}
                     </p>
@@ -185,13 +185,13 @@
                   button-style="default"
                   @click.native="seeMoreInfo(index)"
                 >
-                  <span class="pb">{{
+                  <span class="pb-md">{{
                     "Ver" + (state.seeMoreInfo[index] ? " menos" : " mais")
                   }}</span>
                 </PbButton>
                 <p
                   v-if="column.value.length <= 0"
-                  class="pb"
+                  class="pb-md"
                 >
                   Sem registros
                 </p>
