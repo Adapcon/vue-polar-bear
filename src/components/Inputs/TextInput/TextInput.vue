@@ -6,12 +6,12 @@
       'pb-input-disabled': disabled,
       [`pb-input-${color}`]: true,
     }"
+    :style="textInputStyle"
   >
     <input
       ref="input"
       v-model="inputValue"
       class="pb"
-      :style="textInputStyle"
       :disabled="disabled"
       :placeholder="placeholder"
       @blur="loseFocus"
@@ -116,7 +116,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid var(--color-gray-20);
   border-radius: 40px;
 
   input {
@@ -124,7 +123,6 @@ export default {
     width: 100%;
     background: transparent;
     outline: none;
-    border: none !important;
   }
 
   .counter {
@@ -145,10 +143,12 @@ export default {
 @import "@pb/variables.scss";
 @each $color in $colors {
   .pb-input-#{$color} {
-    color: var(--color-#{$color});
-
-    &::placeholder {
+    input {
       color: var(--color-#{$color});
+  
+      &::placeholder {
+        color: var(--color-#{$color});
+      }
     }
   }
 }
