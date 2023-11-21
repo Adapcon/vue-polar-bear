@@ -42,7 +42,7 @@
             >
 
             <div v-else-if="isArray(column.value)">
-              <div class="items-list">
+              <div v-if="column.value.length > 0" class="items-list">
                 <div
                   v-for="(item, arrayIndex) in column.value"
                   :key="arrayIndex"
@@ -59,6 +59,12 @@
                   </p>
                 </div>
               </div>
+              <p
+                v-else
+                class="pb-md"
+              >
+                Sem registros
+              </p>
               <PbButton
                 v-if="column.value.length > 2"
                 class="see-more-info-button"
@@ -70,12 +76,6 @@
                   "Ver" + (state.seeMoreInfo[index] ? " menos" : " mais")
                 }}</span>
               </PbButton>
-              <p
-                v-if="column.value.length <= 0"
-                class="pb-md"
-              >
-                Sem registros
-              </p>
             </div>
 
             <div v-else>
@@ -90,7 +90,7 @@
                 </p>
               </PbHint>
 
-              <p class="pb-sm secondary-value">{{ column.secondaryValue }}</p>
+              <p v-if="column.secondaryValue" class="pb-sm secondary-value">{{ column.secondaryValue }}</p>
             </div>
 
             <div
@@ -104,7 +104,7 @@
                 :wrap-content="true"
                 :background-color="badge.backgroundColor"
                 :color="badge.fontColor"
-                style="margin-right: 2px;"
+                style="margin-right: 2px; margin-top: 8px;"
                 :size="badge.size"
               />
             </div>
@@ -161,7 +161,7 @@
               >
 
               <div v-else-if="isArray(column.value)">
-                <div class="items-list">
+                <div v-if="column.value.length > 0" class="items-list">
                   <div
                     v-for="(item, arrayIndex) in column.value"
                     :key="arrayIndex"
@@ -178,6 +178,12 @@
                     </p>
                   </div>
                 </div>
+                <p
+                  v-else
+                  class="pb-md"
+                >
+                  Sem registros
+                </p>
                 <PbButton
                   v-if="column.value.length > 2"
                   class="see-more-info-button"
@@ -189,12 +195,6 @@
                     "Ver" + (state.seeMoreInfo[index] ? " menos" : " mais")
                   }}</span>
                 </PbButton>
-                <p
-                  v-if="column.value.length <= 0"
-                  class="pb-md"
-                >
-                  Sem registros
-                </p>
               </div>
 
               <div v-else>
@@ -209,7 +209,7 @@
                   </p>
                 </PbHint>
 
-                <p class="pb-sm secondary-value">{{ column.secondaryValue }}</p>
+                <p v-if="column.secondaryValue" class="pb-sm secondary-value">{{ column.secondaryValue }}</p>
               </div>
 
               <div>
@@ -220,7 +220,7 @@
                   :wrap-content="true"
                   :background-color="badge.backgroundColor"
                   :color="badge.fontColor"
-                  style="margin-right: 2px;"
+                  style="margin-right: 2px; margin-top: 8px;"
                   :size="badge.size"
                 />
               </div>
@@ -384,6 +384,10 @@ export default {
 
     .table-column {
       padding: 8px;
+      min-height: calc(60px - 16px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
       .items-list {
         padding: 8px 0;
@@ -432,7 +436,6 @@ export default {
 
     .align-left {
       display: flex;
-      justify-content: flex-end;
       align-items: center;
     }
   }
