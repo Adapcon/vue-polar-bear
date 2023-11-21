@@ -104,7 +104,7 @@
                 :wrap-content="true"
                 :background-color="badge.backgroundColor"
                 :color="badge.fontColor"
-                style="margin-right: 2px; margin-top: 8px;"
+                style="margin-right: 2px;"
                 :size="badge.size"
               />
             </div>
@@ -220,7 +220,7 @@
                   :wrap-content="true"
                   :background-color="badge.backgroundColor"
                   :color="badge.fontColor"
-                  style="margin-right: 2px; margin-top: 8px;"
+                  style="margin-right: 2px;"
                   :size="badge.size"
                 />
               </div>
