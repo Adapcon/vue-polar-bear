@@ -436,7 +436,7 @@ export default {
 
     .align-left {
       display: flex;
-      align-items: center;
+      align-items: end;
     }
   }
 }
