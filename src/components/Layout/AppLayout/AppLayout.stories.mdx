@@ -1,0 +1,102 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbAppLayout from './AppLayout.vue';
+
+<Meta
+  title="Components/Layout/PbAppLayout"
+  component={PbAppLayout}
+  argTypes={{
+    title: {
+        type: 'string',
+        defaultValue: 'Title',
+    },
+    subtitle: {
+        type: 'string',
+        defaultValue: 'Subtitle',
+    },
+    headline: {
+        type: 'string',
+        defaultValue: 'Headline',
+    },
+    disableToolBar: {
+        type: 'boolean',
+        defaultValue: false,
+    },
+    backFunction: {
+      action: 'backFunction',
+    },
+    collapsible: {
+        type: 'boolean',
+        defaultValue: true,
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbAppLayout },
+  template: `
+    <div style="width: 320px; height: 568px;background-color: white;">
+        <PbAppLayout
+            :title="title"
+            :subtitle="subtitle"
+            :headline="headline"
+            :disableToolBar="disableToolBar"
+            :backFunction="backFunction"
+            :collapsible="collapsible"
+            ref="PbAppLayout"
+        >
+            <template #extra-infos>
+                <div style="background-color: rgba(173, 172, 202, 0.2); height: 100%;">
+                   <p class="pb"> Extra Info</p>
+                </div>
+            </template>
+            <template #main>
+                <div style="background-color: rgba(173, 172, 250, 0.2); height: 500px;">
+                    main
+                </div>
+            </template>
+            <template #sidebar>
+                <div style="background-color: rgba(250, 78, 202, 0.2); height: 380px; ">
+                    Sidebar
+                </div>
+            </template>
+            <template #tool-bar>
+                <div style="background-color: rgba(155, 239, 88, 0.2); height: 50px;">
+                    Tool Bar
+                </div>
+            </template>
+        </PbAppLayout>
+    </div>
+  `,
+});
+
+
+
+# **PbAppLayout component**
+### The `PbAppLayout` component used to format the screen with a grid with 3 slots.
+
+### Purpose and Use case
+
+The component's purpose is to organize the screen layout.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto" parameters={{ layout: 'centered' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+
+<!-- TODO: Descobrir como deixar o canvas em mobile -->
+
+<!-- ### Mobile
+
+<Canvas>
+  <Story name="Mobile"  parameters={{ layout: 'centered' }} args={{ MobileAuxiliaryButtonMobile: true }}>
+    {Template.bind({})}
+  </Story>
+</Canvas> -->
+
