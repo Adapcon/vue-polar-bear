@@ -243,12 +243,9 @@ export default {
     },
 
     multipleSelector(value) {
-      if (this.checkedValues.includes(value)) {
-        const index = this.checkedValues.indexOf(value);
-
-        return this.checkedValues.splice(index, 1);
-      }
-      this.checkedValues = [...this.checkedValues, value];
+      if (this.checkedValues.includes(value))
+        this.checkedValues = this.checkedValues.filter(item => item !== value);
+      else this.checkedValues = [...this.checkedValues, value];
     },
 
     selector(value) {
