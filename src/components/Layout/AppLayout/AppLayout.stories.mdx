@@ -26,7 +26,7 @@ import PbAppLayout from './AppLayout.vue';
     },
     collapsible: {
         type: 'boolean',
-        defaultValue: true,
+        defaultValue: false,
     },
   }}
 />
@@ -35,7 +35,7 @@ export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: { PbAppLayout },
   template: `
-    <div style="width: 320px; height: 568px;background-color: white;">
+    <div style="width: 1366px;background-color: white;">
         <PbAppLayout
             :title="title"
             :subtitle="subtitle"

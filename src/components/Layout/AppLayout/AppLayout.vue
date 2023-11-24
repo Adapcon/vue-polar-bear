@@ -49,6 +49,12 @@
           </div>
         </div>
         <div
+          v-if="collapseSidebar"
+          style="padding-top: 12px;"
+        >
+          <slot name="extra-infos" />
+        </div>
+        <div
           v-if="collapsible"
           class="collapse-button"
         >
@@ -56,7 +62,7 @@
             color="primary"
             button-style="background"
             button-size="medium"
-            :icon="'fas fa-chevron-up fa-rotate-270'"
+            :icon="!collapseSidebar ? 'fas fa-chevron-up fa-rotate-270' : 'fas fa-chevron-up fa-rotate-90'"
             @click.native="collapseSidebar = !collapseSidebar"
           />
         </div>
@@ -71,26 +77,34 @@
     <div
       v-if="isMobile && showSidebar"
       class="sidebar"
-      style="width: 320px; height: 568px;"
     >
       <div class="sidebar-area">
-        <div style="display: flex;">
+        <div class="header">
+          <PbButton
+            color="primary"
+            style="margin: 3px 5px; "
+            button-style="background"
+            button-size="medium"
+            class="back-button"
+            icon="fas fa-bars"
+            @click.native="showSidebar = !showSidebar"
+          />
           <div style="display: flex; flex-direction: column;">
             <h2
-              v-if="title && !collapseSidebar"
+              v-if="title"
               class="pb"
             >
               {{ title }}
             </h2>
             <h3
-              v-if="subtitle && !collapseSidebar"
+              v-if="subtitle"
               class="pb-light"
               style="padding-top: 12px;"
             >
               {{ subtitle }}
             </h3>
             <h4
-              v-if="headline && !collapseSidebar"
+              v-if="headline"
               class="pb-light"
               style="padding-top: 12px;"
             >
@@ -103,14 +117,6 @@
               <slot name="extra-infos" />
             </div>
           </div>
-          <PbButton
-            color="primary"
-            button-style="background"
-            button-size="medium"
-            class="back-button"
-            icon="fas fa-bars"
-            @click.native="showSidebar = !showSidebar"
-          />
         </div>
         <div
           v-if="!collapseSidebar"
@@ -121,7 +127,7 @@
       </div>
     </div>
     <div
-      v-if="isMobile"
+      v-if="isMobile && !showSidebar"
       class="title-mobile"
     >
       <PbButton
@@ -138,7 +144,10 @@
         {{ title }}
       </h2>
     </div>
-    <div class="main-container">
+    <div
+      v-if="!showSidebar"
+      class="main-container"
+    >
       <div style="justify-content: center;">
         <div
           v-if="!disableToolBar"
@@ -169,7 +178,7 @@ export default {
     headline: { type: [String, Number], default: '' },
     disableToolBar: { type: Boolean, default: false },
     backFunction: { type: Function, default: () => () => { } },
-    collapsible: { type: Boolean, default: true },
+    collapsible: { type: Boolean, default: false },
   },
 
   data() {
@@ -205,7 +214,8 @@ export default {
 
   .sidebar {
     border-right: solid #eeeeee 1px;
-    width: 441px;
+    max-width: 441px;
+    min-width: 441px;
     padding: 48px 40px;
     transition: width 0.3s ease, padding 0.3s ease;
 
@@ -219,8 +229,8 @@ export default {
         position: absolute;
         justify-content: flex-end;
         display: flex;
-        width: 355px;
-        height: 330px;
+        transform: translateX(900%);
+        top: 50vh;
         align-items: center;
       }
     }
@@ -233,7 +243,8 @@ export default {
 
   .collapsed-sidebar {
     border-right: solid #eeeeee 1px;
-    width: 60px;
+    max-width: 60px;
+    min-width: 60px;
     padding: 48px 40px;
     transition: width 0.3s ease, padding 0.3s ease;
 
@@ -252,8 +263,8 @@ export default {
         position: absolute;
         justify-content: flex-end;
         display: flex;
-        width: 175px;
-        height: 600px;
+        transform: translateX(100%);
+        top: 50vh;
         align-items: center;
       }
     }
@@ -291,21 +302,21 @@ export default {
     }
 
     .sidebar {
-      position: absolute;
       z-index: 5;
-      border: solid 2px green;
       padding: 48px 40px;
-      height: auto;
-      width: auto;
+      height: 100%;
+      width: 100%;
+      border-right: none;
       background-color: var(--color-white);
 
       .sidebar-area {
         width: auto;
 
-        .back-button {
-          margin-top: 0px;
-          margin-right: 16px;
+        .header {
+          display: flex;
+          align-items: start;
         }
+
       }
 
       .sidebar-content {
