@@ -19,29 +19,31 @@
             @click.native="backFunction"
           />
 
-          <div style="display: flex; flex-direction: column;">
+          <div
+            v-if="!collapseSidebar"
+            style="display: flex; flex-direction: column;"
+          >
             <h2
-              v-if="title && !collapseSidebar"
+              v-if="title"
               class="pb"
             >
               {{ title }}
             </h2>
             <h3
-              v-if="subtitle && !collapseSidebar"
+              v-if="subtitle"
               class="pb-light"
               style="padding-top: 12px;"
             >
               {{ subtitle }}
             </h3>
             <h4
-              v-if="headline && !collapseSidebar"
+              v-if="headline"
               class="pb-light"
               style="padding-top: 12px;"
             >
               {{ headline }}
             </h4>
             <div
-              v-if="!collapseSidebar"
               style="padding-top: 12px;"
             >
               <slot name="extra-infos" />
