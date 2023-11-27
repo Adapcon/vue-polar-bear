@@ -68,7 +68,11 @@
         </div>
         <div
           v-if="!collapseSidebar"
-          class="sidebar-content"
+          class="pb-scroll-primary"
+          :class="{
+            'sidebar-content': subtitle,
+            'sidebar-content-infos': !subtitle
+          }"
         >
           <slot name="sidebar" />
         </div>
@@ -155,7 +159,7 @@
         >
           <slot name="tool-bar" />
         </div>
-        <div class="main ">
+        <div class="main pb-scroll-primary">
           <slot name="main" />
         </div>
       </div>
@@ -211,6 +215,8 @@ export default {
 <style lang="scss" scoped>
 .layout-grid-container {
   display: flex;
+  overflow: hidden;
+  height: calc(100vh - 105px);
 
   .sidebar {
     border-right: solid #eeeeee 1px;
@@ -223,6 +229,7 @@ export default {
       .back-button {
         margin-top: 0px;
         margin-right: 16px;
+        padding: 17px;
       }
 
       .collapse-button {
@@ -237,7 +244,18 @@ export default {
 
     .sidebar-content {
       margin-top: 40px;
+      overflow: auto;
+      height: 500px;
       margin-left: 56px;
+      padding-right: 10px;
+    }
+
+    .sidebar-content-infos{
+      margin-top: 40px;
+      overflow: auto;
+      height: 800px;
+      margin-left: 56px;
+      padding-right: 10px;
     }
   }
 
@@ -257,6 +275,7 @@ export default {
       .back-button {
         margin-top: 0px;
         margin-right: 16px;
+        padding: 17px;
       }
 
       .collapse-button {
@@ -285,6 +304,8 @@ export default {
 
     .main {
       margin-top: 40px;
+      overflow: auto;
+      height: 700px;
     }
   }
 
@@ -294,6 +315,8 @@ export default {
   .layout-grid-container {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    overflow: auto;
 
     .title-mobile {
       display: flex;
@@ -322,6 +345,8 @@ export default {
       .sidebar-content {
         margin-top: 40px;
         margin-left: auto;
+        height: 100%;
+        overflow: auto;
       }
     }
 
@@ -331,6 +356,8 @@ export default {
 
       .main {
         margin-top: 40px;
+        overflow: hidden;
+        height: 100%;
       }
     }
   }
