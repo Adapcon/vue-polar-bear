@@ -134,7 +134,7 @@
         color="primary"
         button-style="background"
         button-size="medium"
-        :icon="'fas fa-bars'"
+        icon="fas fa-bars"
         @click.native="showSidebar = !showSidebar"
       />
       <h2
