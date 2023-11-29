@@ -330,7 +330,7 @@ export default {
     .main {
       margin-top: 40px;
       overflow: auto;
-      height: 60vh;
+      height: calc(100vh - 250px);
     }
   }
 
