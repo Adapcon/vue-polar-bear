@@ -35,7 +35,7 @@ export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: { PbAppLayout },
   template: `
-    <div style="width: 1366px; background-color: white;">
+    <div style="width: 1366px; height: 760px; background-color: white;">
         <PbAppLayout
             :title="title"
             :subtitle="subtitle"
@@ -56,7 +56,7 @@ export const Template = (args, { argTypes }) => ({
                 </div>
             </template>
             <template #sidebar>
-                <div style="background-color: rgba(250, 78, 202, 0.2); height: 380px; ">
+                <div style="background-color: rgba(250, 78, 202, 0.2); height: 380px; margin-top: 60px;">
                     Sidebar
                 </div>
             </template>

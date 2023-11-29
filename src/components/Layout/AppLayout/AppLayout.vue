@@ -2,14 +2,23 @@
   <section class="layout-grid-container">
     <div
       v-if="!isMobile"
-      class="sidebar"
+      class="pb-scroll-secondary"
+      :style="showOverflow ? 'overflow: auto;' : 'overflow: hidden;'"
       :class="{
         'collapsed-sidebar': collapseSidebar,
-        'sidebar': !collapseSidebar
+        'sidebar': !collapseSidebar,
       }"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave"
     >
-      <div class="sidebar-area">
-        <div style="display: flex;">
+      <div
+        class="sidebar-area"
+        :style="{ marginTop: `calc(${headerSize}px - 8px)` }"
+      >
+        <div
+          ref="header"
+          class="header-infos"
+        >
           <PbButton
             color="primary"
             button-style="background"
@@ -44,7 +53,7 @@
               {{ headline }}
             </h4>
             <div
-              style="padding-top: 12px;"
+              style="padding-top: 12px; background-color: white; width: 300px;"
             >
               <slot name="extra-infos" />
             </div>
@@ -70,11 +79,7 @@
         </div>
         <div
           v-if="!collapseSidebar"
-          class="pb-scroll-primary"
-          :class="{
-            'sidebar-content': subtitle,
-            'sidebar-content-infos': !subtitle
-          }"
+          class="sidebar-content"
         >
           <slot name="sidebar" />
         </div>
@@ -190,6 +195,8 @@ export default {
   data() {
     return {
       screenWidth: window.innerWidth,
+      showOverflow: false,
+      headerSize: 0,
       collapseSidebar: false,
       showSidebar: false,
     };
@@ -200,8 +207,14 @@ export default {
       return this.screenWidth < 768;
     },
   },
+
   mounted() {
     window.addEventListener('resize', this.handleResize);
+    this.$nextTick(() => {
+      const { header } = this.$refs;
+
+      this.headerSize = header ? header.offsetHeight : 0;
+    });
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.handleResize);
@@ -209,6 +222,13 @@ export default {
   methods: {
     handleResize() {
       this.screenWidth = window.innerWidth;
+    },
+    handleMouseEnter() {
+      this.showOverflow = true;
+    },
+
+    handleMouseLeave() {
+      this.showOverflow = false;
     },
   },
 };
@@ -228,6 +248,16 @@ export default {
     transition: width 0.3s ease, padding 0.3s ease;
 
     .sidebar-area {
+
+      .header-infos {
+        display: flex;
+        position: fixed;
+        width: 360px;
+        background-color: white;
+        z-index: 6;
+        top: calc(0px + 100px);
+        padding-top: 48px;
+      }
       .back-button {
         margin-top: 0px;
         margin-right: 16px;
@@ -247,15 +277,6 @@ export default {
     .sidebar-content {
       margin-top: 40px;
       overflow: auto;
-      height: 500px;
-      margin-left: 56px;
-      padding-right: 10px;
-    }
-
-    .sidebar-content-infos{
-      margin-top: 40px;
-      overflow: auto;
-      height: 800px;
       margin-left: 56px;
       padding-right: 10px;
     }
@@ -265,6 +286,7 @@ export default {
     border-right: solid #eeeeee 1px;
     max-width: 60px;
     min-width: 60px;
+    overflow: hidden !important;
     padding: 48px 40px;
     transition: width 0.3s ease, padding 0.3s ease;
 
@@ -273,7 +295,8 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
-
+      padding-top: 0 !important;
+      margin-top: 0 !important;
       .back-button {
         margin-top: 0px;
         margin-right: 16px;
@@ -307,7 +330,7 @@ export default {
     .main {
       margin-top: 40px;
       overflow: auto;
-      height: 700px;
+      height: calc(100vh - 250px);
     }
   }
 
@@ -331,6 +354,7 @@ export default {
       padding: 48px 40px;
       height: 100%;
       width: 100%;
+      overflow: hidden !important;
       border-right: none;
       background-color: var(--color-white);
 
