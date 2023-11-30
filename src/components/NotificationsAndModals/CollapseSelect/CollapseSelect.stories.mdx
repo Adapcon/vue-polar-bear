@@ -1,10 +1,10 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
-import PbMultiSelect from './MultiSelect.vue';
+import PbCollapseSelect from './CollapseSelect.vue';
 import { colors } from '@pb/utils/constants.js';
 
 <Meta
-  title="Components/Notifications and Modals/PbMultiSelect"
-  component={ PbMultiSelect }
+  title="Components/Notifications and Modals/PbCollapseSelect"
+  component={ PbCollapseSelect }
   argTypes={{
     label: {
       type: 'string',
@@ -35,9 +35,9 @@ import { colors } from '@pb/utils/constants.js';
 
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
-  components: { PbMultiSelect },
+  components: { PbCollapseSelect },
   template: `
-    <PbMultiSelect
+    <PbCollapseSelect
       :label="label"
       :allow-search="allowSearch"
       :display-size="displaySize"
@@ -48,8 +48,8 @@ export const Template = (args, { argTypes }) => ({
   `
 });
 
-# **PbMultiSelect component**
-### The `PbMultiSelect` is a list of options that can be selected
+# **PbCollapseSelect component**
+### The `PbCollapseSelect` is a list of options that can be selected
 
 ### Purpose and Use case
 
