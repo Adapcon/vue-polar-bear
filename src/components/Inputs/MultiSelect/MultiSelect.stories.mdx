@@ -1,0 +1,94 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbMultiSelect from './MultiSelect.vue';
+import { colors, generalInputStyles } from '@pb/utils/constants.js';
+
+<Meta
+  title="Components/Inputs/PbMultiSelect"
+  component={ PbMultiSelect }
+  argTypes={{
+    label: {
+      type: 'string',
+      defaultValue: 'Selecionar Refrigerante',
+    },
+    color: {
+      control: { type: 'select', options: [...colors] },
+      defaultValue: 'primary',
+    },
+    inputStyle: {
+      control: { type: 'select', options: [...generalInputStyles] },
+      defaultValue: 'background-light',
+    },
+    allowSearch: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    options: {
+      type: 'Array',
+      defaultValue: ['Coca-Cola', 'Coca-Cola Zero', 'Pepsi', 'Guaraná Antarctica', 'Guaraná Kuat', 'Fanta', 'Fanta Uva', 'Sprite', 'Schweppes Citrus', 'Água da Serra Laranjinha'],
+    },
+    selectedOptions: {
+      type: 'Array',
+      defaultValue: [],
+    }
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbMultiSelect },
+  template: `
+    <PbMultiSelect
+      :allow-search="allowSearch"
+      :label="label"
+      :input-style="inputStyle"
+      :color="color"
+      :disabled="disabled"
+      :options="options"
+      :selected-options="selectedOptions"
+    />
+  `
+});
+
+# **PbMultiSelect component**
+### The `PbMultiSelect` is a list of options that can be selected
+
+### Purpose and Use case
+
+This component can be used to select options of a list. The user can select more than one option, there is no restriction.
+You also can specify:
+- The number of items that will be displayed in the component per time
+- The visibility of the search button
+
+## Configuration
+
+### Properties
+
+| Property                    | Type        | Default     | Description                                                                                   |
+|:----------------------------|:------------|:------------|:----------------------------------------------------------------------------------------------|
+| label                       | String      | Selecionar  | Button label that manage the options collapse                                                 |
+| allowSearch                 | Boolean     | True        | Shows the search button                                                                       |
+| disabled                    | Boolean     | False       | Displays component as disabled
+| options                     | Array       |             | Options list                                                                                  |
+| selectedOptions             | Array       |             | Selected options list. Must be used with sync modifier, to receive the update event data      |
+| color                       | String      | primary     | Button label color and CheckBox button color                                                  |
+| inputStyle                  | String      | background-light     | Input style
+
+### Events
+
+| Event                       | Type        | Emitter           | Description                                                                                   |
+|:----------------------------|:------------|:------------------|:----------------------------------------------------------------------------------------------|
+| update:selected-options     | Array       | Select option     | Emits the updated selected options list                                                       |
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    { Template.bind({}) }
+  </Story>
+</Canvas>
