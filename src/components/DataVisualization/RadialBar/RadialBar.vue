@@ -30,6 +30,7 @@
         text-anchor="middle"
         dominant-baseline="middle"
         class="text"
+        :style="fontSize"
       >
         {{ computedValue }}
       </text>
@@ -60,8 +61,8 @@ export default {
       validator: color => validateColor(color),
     },
     percent: { type: Number, default: 0 },
-    goal: { type: String, default: '' },
-    value: { type: String, default: '' },
+    goal: { type: [Number, String], default: '' },
+    value: { type: [Number, String], default: '' },
   },
 
   data() {
@@ -81,6 +82,23 @@ export default {
     },
     computedValue() {
       return `${this.percent}%`;
+    },
+    fontSize() {
+      const sizeValue = this.computedValue.length;
+
+      const sizesMap = {
+        2: () => 'font-size: 20px',
+        3: () => 'font-size: 20px',
+        4: () => 'font-size: 20px',
+        5: () => 'font-size: 18px',
+        6: () => 'font-size: 15px',
+        7: () => 'font-size: 14px',
+        8: () => 'font-size: 13px',
+      };
+
+      const style = sizesMap[sizeValue]?.() ?? 'font-size: 12px';
+
+      return style;
     },
   },
   mounted() {
