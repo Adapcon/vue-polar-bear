@@ -2,7 +2,7 @@
   <div class="pb-dropdown-container layer-overlay">
     <div
       class="content-header"
-      @click.stop="toggleDropdown"
+      @click="toggleDropdown"
     >
       <p
         v-if="text"

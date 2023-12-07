@@ -263,7 +263,7 @@ $sidebar-width-collapsed: 60px;
         position: fixed;
         width: calc($sidebar-width - 24px);
         background-color: white;
-        top: 100px;
+        top: 102px;
         padding-top: 48px;
         z-index: 34;
       }
