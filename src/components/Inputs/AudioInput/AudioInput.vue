@@ -93,15 +93,20 @@ export default {
       type: MediaStream,
       required: true,
     },
+    batchIntervalDuration: {
+      type: Number,
+      default: 2000,
+    },
   },
 
-  emits: ['change-state', 'audio', 'clear'],
+  emits: ['change-state', 'audio', 'clear', 'batch'],
 
   data() {
     return {
       mediaRecorder: null,
       audio: {
         chunks: [],
+        lastBatchIndex: null,
         recorded: null,
         state: 'paused',
         width: 200,
@@ -111,6 +116,7 @@ export default {
         layerX: 0,
         isPlaying: false,
         interval: null,
+        batchInterval: null,
       },
     };
   },
@@ -151,6 +157,20 @@ export default {
   },
 
   methods: {
+    emitBatch() {
+      const startIndex = this.audio.lastBatchIndex ?? this.audio.chunks.findIndex(blob => blob.size === 1);
+
+      const chunks = startIndex !== 0
+        ? this.audio.chunks.slice(startIndex)
+        : this.audio.chunks;
+
+      const blob = new Blob(chunks, { type: this.mimeType });
+
+      this.audio.lastBatchIndex = this.audio.chunks.length;
+
+      this.$emit('batch', { data: blob, duration: this.audio.duration });
+    },
+
     setupAudio(src) {
       const audio = new Audio(src);
       this.audio.element = audio;
@@ -192,6 +212,7 @@ export default {
         layerX: 0,
         isPlaying: false,
         interval: null,
+        batchInterval: null,
       };
 
       this.$emit('clear');
@@ -213,10 +234,15 @@ export default {
       this.audio.interval = setInterval(() => {
         this.audio.duration += 1;
       }, 1000);
+
+      this.audio.batchInterval = setInterval(() => {
+        this.emitBatch();
+      }, this.batchIntervalDuration);
     },
 
     clearDurationInterval() {
       clearInterval(this.audio.interval);
+      clearInterval(this.audio.batchInterval);
     },
 
     startRecord() {
@@ -226,8 +252,8 @@ export default {
 
       this.mediaRecorder = new MediaRecorder(this.stream);
 
-      this.mediaRecorder.ondataavailable = e => {
-        this.audio.chunks.push(e.data);
+      this.mediaRecorder.ondataavailable = ({ data }) => {
+        this.audio.chunks.push(data);
       };
 
       this.mediaRecorder.addEventListener('stop', () => {
@@ -245,6 +271,7 @@ export default {
     pauseRecord() {
       this.mediaRecorder.pause();
       this.clearDurationInterval();
+      this.emitBatch();
       this.formatAudio();
     },
 
