@@ -35,7 +35,7 @@
       </p>
 
       <PbCollapseIcon
-        style="position: absolute; top: 8px; right: 20px;"
+        style="position: absolute; right: 20px;"
         :is-icon-up="state.showOptions && options.length > 0"
         @click.stop.native="toggleShowOptions"
       />
@@ -90,7 +90,6 @@
 <script>
 import PbButton from '@pb/Buttons/Button/Button.vue';
 import PbCheckbox from '@pb/Inputs/Checkbox/Checkbox.vue';
-import PbCollapse from '@pb/NotificationsAndModals/Collapse/Collapse.vue';
 import PbIcon from '@pb/Miscellaneous/Icon/Icon';
 import PbCollapseIcon from '@pb/Miscellaneous/CollapseIcon/CollapseIcon';
 
@@ -368,7 +367,6 @@ export default {
       li {
         display: flex;
         align-items: center;
-        padding: 5px 10px;
         cursor: pointer;
 
         &:hover {
@@ -377,6 +375,12 @@ export default {
 
         &[is-selected] {
           background: rgba(var(--color-primary-rgb), 0.1);
+        }
+
+        &::v-deep .pb-checkbox-container {
+          padding: 5px 10px !important;
+          display: block !important;
+          flex-grow: 1 !important;
         }
       }
     }
