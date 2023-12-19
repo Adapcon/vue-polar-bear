@@ -7,7 +7,7 @@
       ref="button"
       :disabled="disabled || !options.length"
       :style="{
-        color: `var(--color-${color})`,
+        // color: `var(--color-${color})`,
       }"
       class="pb-multi-select-button"
       :class="componentButtonClass"
@@ -35,7 +35,7 @@
       </p>
 
       <PbCollapseIcon
-        style="position: absolute; right: 20px;"
+        style="position: absolute; right: 16px;"
         :is-icon-up="state.showOptions && options.length > 0"
         @click.stop.native="toggleShowOptions"
       />
@@ -259,7 +259,7 @@ export default {
 
   .pb-multi-select-button {
     text-transform: none !important;
-    border-radius: 10px;
+    border-radius: 40px;
     padding: 0 16px;
     width: 100%;
     position: relative;
@@ -273,11 +273,11 @@ export default {
     cursor: pointer;
 
     &[is-options-open] {
-      border-radius: 10px 10px 0 0;
+      border-radius: 20px 20px 0 0;
     }
 
     &:hover {
-      background: var(--color-gray-5);
+      background: var(--color-hover);
     }
 
     .button-label {
@@ -312,14 +312,14 @@ export default {
 
   .outline {
     background: none;
-    border: 1px solid var(--color-gray-90);
+    border: 1px solid var(--color-gray-5);
   }
 
   .no-background {
     background: none;
     border: none;
     border-radius: 0;
-    border-bottom: 1px solid var(--color-gray-90);
+    border-bottom: 1px solid var(--color-gray-5);
   }
 
   .options-container {
@@ -327,10 +327,10 @@ export default {
     position: absolute;
     left: 0;
     top: 50px;
-    border-radius: 0 0 20px 20px;
-    padding: 5px 0;
+    border-radius: 0 0 8px 8px;
+    // padding: 5px 0;
     padding-top: 0;
-    box-shadow: 0px 2px 30px -19px black;
+    box-shadow: 0px 2px 8px 0px rgb(82, 89, 91, 14%);
     overflow: hidden;
 
     &[has-all-selected] {
@@ -339,18 +339,19 @@ export default {
 
     .options-list {
       .select-all-option {
-        background: var(--color-gray-5);
+        background: var(--color-gray);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid var(--color-gray-20);
+        border-bottom: 1px solid var(--color-gray-5);
+        padding: 12px;
       }
     }
 
     ul {
       width: 100%;
       height: 100%;
-      max-height: 180px;
+      max-height: 230px;
       overflow-y: scroll;
       list-style: none;
       margin: 0;
@@ -367,10 +368,11 @@ export default {
       li {
         display: flex;
         align-items: center;
+        padding: 12px;
         cursor: pointer;
 
         &:hover {
-          background: rgba(0, 0, 0, 0.02);
+          background: var(--color-hover);
         }
 
         &[is-selected] {
@@ -378,7 +380,7 @@ export default {
         }
 
         &::v-deep .pb-checkbox-container {
-          padding: 5px 10px !important;
+          // padding: 5px 10px !important;
           display: block !important;
           flex-grow: 1 !important;
         }
