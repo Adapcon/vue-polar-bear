@@ -13,7 +13,7 @@
       @click="toggleShowOptions"
       @keyup.space.prevent
     >
-      <p class="pb button-label">
+      <p class="pb button-label" :class="error && 'error-label'">
         <template v-if="error">
           <PbIcon
             icon="fas fa-exclamation-triangle fa-sm"
@@ -281,11 +281,20 @@ export default {
       border-radius: 20px 20px 0 0;
     }
 
+    .error-label {
+      display: flex !important;
+      align-items: center;
+    }
+
     .button-label {
-      white-space: nowrap;
       overflow: hidden;
-      text-overflow: ellipsis;
       padding-right: 16px;
+
+      div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
       input {
         width: 100%;
