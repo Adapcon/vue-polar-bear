@@ -18,11 +18,11 @@ import { colors, generalInputStyles } from '@pb/utils/constants.js';
       control: { type: 'select', options: [...generalInputStyles] },
       defaultValue: 'background-light',
     },
-    allowSearch: {
+    disabled: {
       type: 'boolean',
       defaultValue: false,
     },
-    disabled: {
+    error: {
       type: 'boolean',
       defaultValue: false,
     },
@@ -47,6 +47,7 @@ export const Template = (args, { argTypes }) => ({
       :input-style="inputStyle"
       :color="color"
       :disabled="disabled"
+      :error="error"
       :options="options"
       :selected-options="selectedOptions"
     />
@@ -71,7 +72,8 @@ You also can specify:
 |:----------------------------|:------------|:------------|:----------------------------------------------------------------------------------------------|
 | label                       | String      | Selecionar  | Button label that manage the options collapse                                                 |
 | allowSearch                 | Boolean     | True        | Shows the search button                                                                       |
-| disabled                    | Boolean     | False       | Displays component as disabled
+| disabled                    | Boolean     | False       | Displays component as disabled                                                                |
+| error                       | Boolean     | False       | Displays component with an error                                                              |
 | options                     | Array       |             | Options list                                                                                  |
 | selectedOptions             | Array       |             | Selected options list. Must be used with sync modifier, to receive the update event data      |
 | color                       | String      | primary     | Button label color and CheckBox button color                                                  |

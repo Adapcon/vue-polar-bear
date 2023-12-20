@@ -6,43 +6,45 @@
     <button
       ref="button"
       :disabled="disabled || !options.length"
-      :style="{
-        // color: `var(--color-${color})`,
-      }"
+      :style="getSelectStyle"
       class="pb-multi-select-button"
       :class="componentButtonClass"
-      :is-options-open="state.showOptions"
+      :is-options-open="state.showOptions && !disabled"
       @click="toggleShowOptions"
       @keyup.space.prevent
     >
       <p class="pb button-label">
-        <template v-if="allowSearch">
+        <template v-if="error">
           <PbIcon
-            icon="fas fa-search fa-sm"
-            class="search-icon"
+            icon="fas fa-exclamation-triangle fa-sm"
+            class="error-icon"
           />
 
           <input
             ref="input"
-            v-model="searchTermHandler"
-            :placeholder="label"
+            class="pb"
+            :placeholder="getLabel"
+            :title="getLabel"
           >
         </template>
 
         <template v-else>
-          {{ label }}
+          <div :title="getLabel" >
+            {{ getLabel }}
+          </div>
         </template>
       </p>
 
       <PbCollapseIcon
         style="position: absolute; right: 16px;"
         :is-icon-up="state.showOptions && options.length > 0"
+        :color="`var(--color-${color})`"
         @click.stop.native="toggleShowOptions"
       />
     </button>
 
     <div
-      v-if="options.length && state.showOptions"
+      v-if="options.length && state.showOptions && !disabled"
       class="options-container layer-overlay"
       :has-all-selected="state.allSelected"
     >
@@ -59,19 +61,12 @@
             class="option"
             @input="selectOptionAll(option)"
           />
-
-          <PbButton
-            icon="fas fa-times"
-            button-size="small"
-            button-style="no-background"
-            :color="color"
-            @click.native="cleanSelection"
-          />
         </li>
         <li
-          v-for="(option, index) of filteredOptions"
+          v-for="(option, index) of options"
           :key="`${option}||${index}`"
           :is-selected="selected.indexOf(option) >= 0"
+          :title="option"
         >
           <PbCheckbox
             :value="selected.indexOf(option) >= 0"
@@ -106,11 +101,11 @@ export default {
   },
 
   props: {
-    allowSearch: { type: Boolean, default: true },
     label: { type: String, default: 'Selecionar' },
     options: { type: Array, default: () => [] },
     selectedOptions: { type: Array, default: () => [] },
     disabled: { type: Boolean, default: false },
+    error: { type: Boolean, default: false },
     color: {
       type: String,
       default: 'primary',
@@ -155,29 +150,8 @@ export default {
         : `${this.selected.length} itens selecionados`;
     },
 
-    filteredOptions() {
-      if (!this.options.length) return [];
-      if (!this.searchTermHandler) return this.options;
-
-      return this.options.filter(option => option.toLowerCase().includes(this.searchTermHandler.toLowerCase()));
-    },
-
     componentButtonClass() {
-      return this.state.componentClasses[this.inputStyle]?.button;
-    },
-
-    searchTermHandler: {
-      get() {
-        return this.state.searchValue;
-      },
-
-      set(value) {
-        this.state.searchValue = value;
-      },
-    },
-
-    selectedItemsLabel() {
-      return this.state.allSelected ? this.selected.length - 1 : this.selected.length;
+      return `${this.state.componentClasses[this.inputStyle]?.button} ${this.disabled || this.error ? '' : 'input-hover'}`;
     },
 
     selected: {
@@ -190,6 +164,36 @@ export default {
         this.updateSelection();
       },
     },
+
+    getLabel() {
+      const selectedOptions = this.selected;
+
+      if (selectedOptions.length === 0) return this.label;
+
+      if (selectedOptions.length === 1) return this.selected[0];
+
+      return `${selectedOptions.length} itens selecionados`;
+    },
+
+    getSelectStyle() {
+      if (this.error) return {
+        color: `var(--color-${this.color})`,
+        backgroundColor: `var(--color-transparent)`,
+        borderColor: `var(--color-danger)`,
+      }
+
+      if (this.state.showOptions) return {
+        color: `var(--color-${this.color})`,
+        backgroundColor: `var(--color-transparent)`,
+        borderColor: `#292D32`,
+      }
+
+      return {
+        color: `var(--color-${this.color})`,
+        backgroundColor: `var(--color-gray)`,
+        borderColor: `#D6DBE0`,
+      }
+    }
   },
 
   watch: {
@@ -208,24 +212,15 @@ export default {
 
       this.state.showOptions = !this.state.showOptions;
 
-      if (this.state.showOptions && this.allowSearch) {
+      if (this.state.showOptions && this.$refs.input) {
         this.$nextTick(() => {
           this.$refs.input.focus();
         });
       }
     },
 
-    cleanSelection() {
-      this.selected = [];
-    },
-
     updateSelectedOptions() {
       this.state.selectedOptions = [...this.selectedOptions];
-    },
-
-    closeSelection() {
-      this.updateSelectedOptions();
-      this.$set(this.state, 'showOptions', false);
     },
 
     updateSelection() {
@@ -233,7 +228,7 @@ export default {
     },
 
     selectOptionAll() {
-      this.selected = this.state.allSelected ? [] : [...this.filteredOptions];
+      this.selected = this.state.allSelected ? [] : [...this.options];
       this.state.allSelected = !this.state.allSelected;
     },
 
@@ -257,6 +252,16 @@ export default {
     opacity: 0.5;
   }
 
+  .error-icon {
+    color: var(--color-danger);
+    margin-right: 8px;
+  }
+
+  .input-hover:hover {
+    background-color: var(--color-hover) !important;
+    border: 1px solid var(--color-gray-10) !important;
+  }
+
   .pb-multi-select-button {
     text-transform: none !important;
     border-radius: 40px;
@@ -276,11 +281,12 @@ export default {
       border-radius: 20px 20px 0 0;
     }
 
-    &:hover {
-      background: var(--color-hover);
-    }
-
     .button-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 16px;
+
       input {
         width: 100%;
         height: 100%;
@@ -328,7 +334,6 @@ export default {
     left: 0;
     top: 50px;
     border-radius: 0 0 8px 8px;
-    // padding: 5px 0;
     padding-top: 0;
     box-shadow: 0px 2px 8px 0px rgb(82, 89, 91, 14%);
     overflow: hidden;
@@ -345,6 +350,14 @@ export default {
         justify-content: space-between;
         border-bottom: 1px solid var(--color-gray-5);
         padding: 12px;
+        position: absolute;
+        width: 100%;
+      }
+
+      li {
+        &:nth-child(2) {
+          margin-top: 47px;
+        }
       }
     }
 
@@ -371,6 +384,21 @@ export default {
         padding: 12px;
         cursor: pointer;
 
+        &::v-deep .option {
+          overflow: hidden;
+
+          .check-box {
+            min-width: 14px !important;
+            min-height: 14px !important;
+          }
+
+          P {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+
         &:hover {
           background: var(--color-hover);
         }
@@ -380,7 +408,6 @@ export default {
         }
 
         &::v-deep .pb-checkbox-container {
-          // padding: 5px 10px !important;
           display: block !important;
           flex-grow: 1 !important;
         }
