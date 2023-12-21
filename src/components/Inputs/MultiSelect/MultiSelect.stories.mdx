@@ -42,7 +42,6 @@ export const Template = (args, { argTypes }) => ({
   components: { PbMultiSelect },
   template: `
     <PbMultiSelect
-      :allow-search="allowSearch"
       :label="label"
       :input-style="inputStyle"
       :color="color"
@@ -71,7 +70,6 @@ You also can specify:
 | Property                    | Type        | Default     | Description                                                                                   |
 |:----------------------------|:------------|:------------|:----------------------------------------------------------------------------------------------|
 | label                       | String      | Selecionar  | Button label that manage the options collapse                                                 |
-| allowSearch                 | Boolean     | True        | Shows the search button                                                                       |
 | disabled                    | Boolean     | False       | Displays component as disabled                                                                |
 | error                       | Boolean     | False       | Displays component with an error                                                              |
 | options                     | Array       |             | Options list                                                                                  |
