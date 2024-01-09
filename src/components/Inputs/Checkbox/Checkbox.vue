@@ -114,7 +114,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 4px;
+        border-radius: 2px;
 
         .icon {
           max-width: 8px;

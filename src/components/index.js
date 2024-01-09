@@ -3,7 +3,7 @@ export { default as PbAlert } from './NotificationsAndModals/Alert/Alert.vue';
 export { default as PbConfirm } from './NotificationsAndModals/Confirm/Confirm.vue';
 export { default as PbToastNotification } from './NotificationsAndModals/ToastNotification/ToastNotification.vue';
 export { default as PbCollapse } from './NotificationsAndModals/Collapse/Collapse.vue';
-export { default as PbMultiSelect } from './NotificationsAndModals/MultiSelect/MultiSelect.vue';
+export { default as PbCollapseSelect } from './NotificationsAndModals/CollapseSelect/CollapseSelect.vue';
 export { default as PbModal } from './NotificationsAndModals/Modal/Modal.vue';
 
 // ? Miscellaneous
@@ -65,6 +65,7 @@ export { default as PbRadio } from './Inputs/Radio/Radio.vue';
 export { default as PbThreeStateCheckbox } from './Inputs/ThreeStateCheckbox/ThreeStateCheckbox.vue';
 export { default as PbCheckboxTree } from './Inputs/CheckboxTree/CheckboxTreeController.vue';
 export { default as PbAudioInput } from './Inputs/AudioInput/AudioInput.vue';
+export { default as PbMultiSelect } from './Inputs/MultiSelect/MultiSelect.vue';
 
 // ? Menus and Toolbars
 export { default as PbDropdown } from './MenusAndToolbars/Dropdown/Dropdown.vue';

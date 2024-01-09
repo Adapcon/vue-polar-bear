@@ -30,3 +30,9 @@ export const buttonStyles = [
   'background',
   'background-light',
 ];
+
+export const generalInputStyles = [
+  'outline',
+  'no-background',
+  'background-light',
+];
