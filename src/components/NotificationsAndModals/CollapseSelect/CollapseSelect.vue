@@ -14,7 +14,10 @@
       />
 
       <div :style="optionsStyle">
-        <div v-for="option in getOptionsList()" :key="option">
+        <div
+          v-for="option in getOptionsList()"
+          :key="option"
+        >
           <PbCheckbox
             :value="state.selectedOptions.indexOf(option) >= 0"
             :label="option"
@@ -48,7 +51,7 @@ import PbSearchInput from '@pb/FiltersAndSearch/SearchInput/SearchInput.vue';
 import { validateColor } from '@pb/utils/validator';
 
 export default {
-  name: 'PbMultiSelect',
+  name: 'PbCollapseSelect',
 
   components: {
     PbButton,
@@ -116,7 +119,7 @@ export default {
       const optionsSize = optionHeight * size;
 
       if (onlyOptionsSize) return optionsSize;
-      
+
       return optionsSize + marginsHeight + (this.allowSearch ? searchButtonHeight : 0);
     },
 
