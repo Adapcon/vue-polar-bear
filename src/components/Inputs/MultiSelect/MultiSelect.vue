@@ -346,6 +346,7 @@ export default {
     padding-top: 0;
     box-shadow: 0px 2px 8px 0px rgb(82, 89, 91, 14%);
     overflow: hidden;
+    background-color: var(--color-white);
 
     &[has-all-selected] {
       border-radius: 0 0 20px 20px;
