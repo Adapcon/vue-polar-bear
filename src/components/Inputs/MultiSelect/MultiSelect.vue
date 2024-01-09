@@ -237,6 +237,8 @@ export default {
       if (index >= 0)
         this.selected.splice(index, 1);
       else this.selected.push(option);
+
+      this.updateSelection();
     },
   },
 };
