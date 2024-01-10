@@ -1,28 +1,28 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 import PbMultiSelect from './MultiSelect.vue';
-import { colors } from '@pb/utils/constants.js';
+import { colors, generalInputStyles } from '@pb/utils/constants.js';
 
 <Meta
-  title="Components/Notifications and Modals/PbMultiSelect"
+  title="Components/Inputs/PbMultiSelect"
   component={ PbMultiSelect }
   argTypes={{
     label: {
       type: 'string',
       defaultValue: 'Selecionar Refrigerante',
     },
-    allowSearch: {
-      type: 'boolean',
-      defaultValue: true,
-    },
-    displaySize: {
-      type: 'number',
-      defaultValue: 5,
-    },
     color: {
       control: { type: 'select', options: [...colors] },
       defaultValue: 'primary',
     },
-    isMobile: {
+    inputStyle: {
+      control: { type: 'select', options: [...generalInputStyles] },
+      defaultValue: 'background-light',
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+    error: {
       type: 'boolean',
       defaultValue: false,
     },
@@ -30,6 +30,10 @@ import { colors } from '@pb/utils/constants.js';
       type: 'Array',
       defaultValue: ['Coca-Cola', 'Coca-Cola Zero', 'Pepsi', 'Guaraná Antarctica', 'Guaraná Kuat', 'Fanta', 'Fanta Uva', 'Sprite', 'Schweppes Citrus', 'Água da Serra Laranjinha'],
     },
+    selectedOptions: {
+      type: 'Array',
+      defaultValue: [],
+    }
   }}
 />
 
@@ -39,11 +43,12 @@ export const Template = (args, { argTypes }) => ({
   template: `
     <PbMultiSelect
       :label="label"
-      :allow-search="allowSearch"
-      :display-size="displaySize"
+      :input-style="inputStyle"
       :color="color"
-      :isMobile="isMobile"
+      :disabled="disabled"
+      :error="error"
       :options="options"
+      :selected-options="selectedOptions"
     />
   `
 });
@@ -65,12 +70,12 @@ You also can specify:
 | Property                    | Type        | Default     | Description                                                                                   |
 |:----------------------------|:------------|:------------|:----------------------------------------------------------------------------------------------|
 | label                       | String      | Selecionar  | Button label that manage the options collapse                                                 |
-| allowSearch                 | Boolean     | True        | Shows the search button                                                                       |
-| displaySize                 | Number      | 5           | Number of options that must be displayed at one time in the component                         |
+| disabled                    | Boolean     | False       | Displays component as disabled                                                                |
+| error                       | Boolean     | False       | Displays component with an error                                                              |
 | options                     | Array       |             | Options list                                                                                  |
 | selectedOptions             | Array       |             | Selected options list. Must be used with sync modifier, to receive the update event data      |
 | color                       | String      | primary     | Button label color and CheckBox button color                                                  |
-| isMobile                    | Boolean     | false       | Sets the Collapse modal style for the mobile device                                           |
+| inputStyle                  | String      | background-light     | Input style
 
 ### Events
 
@@ -88,10 +93,12 @@ You also can specify:
   </Story>
 </Canvas>
 
-### Don't allow Search
+### Error
 
 <Canvas>
-  <Story name="DontAllowSearch" args={{ allowSearch: false }}>
+  <Story name="Error" args={{
+    error: true,
+  }}>
     { Template.bind({}) }
   </Story>
 </Canvas>

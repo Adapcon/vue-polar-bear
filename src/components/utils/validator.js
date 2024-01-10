@@ -1,6 +1,7 @@
-import { colors } from './constants';
+import { colors, generalInputStyles } from './constants';
 
 export const validateColor = color => colors.includes(color);
+export const validateInputStyle = style => generalInputStyles.includes(style);
 
 export const isHexColor = color => /^#([0-9A-F]{3}){1,2}$/i.test(color);
 
