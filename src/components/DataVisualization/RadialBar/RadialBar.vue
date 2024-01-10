@@ -35,7 +35,7 @@
         {{ computedValue }}
       </text>
     </svg>
-    <p class="pb-light">
+    <p class="pb-light label">
       {{ label }}
     </p>
     <div style="display: flex; flex-wrap: wrap">
@@ -122,6 +122,10 @@ export default {
   flex-direction: column;
   align-items: center;
   max-width: 100px;
+
+  .label {
+    text-align: center;
+  }
 
   .text {
     font-size: 16px;
