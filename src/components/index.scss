@@ -5,6 +5,7 @@
 
 :root {
   /** default colors */
+
   --color-primary: #3a79cc;
   --color-secondary: #103972;
   --color-success: #417617;
@@ -15,9 +16,11 @@
   --color-hover: #EBF0F4;
 
   /** grayscale colors */
+
   --color-white: #fff;
   --color-gray: #F9FAFB;
-  --color-gray-5: #ECEEF0;
+  // --color-gray-5: #ECEEF0;
+  --color-gray-5: #D6DBE0;
   --color-gray-10: #C7CBD1;
   --color-gray-20: #A1A8B3;
   --color-gray-40: #818A98;
@@ -25,10 +28,8 @@
   --color-gray-80: #373D43;
   --color-gray-90: #292D32;
 
-  /** transparent */
-  --color-transparent: transparent;
+   /** default colors rgb */
 
-  /** default colors */
   --color-primary-rgb: 58,121,204;
   --color-success-rgb: 65,118,23;
   --color-danger-rgb: 172,69,69;
@@ -37,6 +38,7 @@
   --color-notification-rgb: 255,118,20;
 
   /** grayscale colors rgb */
+
   --color-white-rgb: 255,255,255;
   --color-gray-rgb: 249,250,251;
   --color-gray-5-rgb: 236,238,240;
@@ -47,16 +49,24 @@
   --color-gray-80-rgb: 55,61,67;
   --color-gray-90-rgb: 41,45,50;
 
-  /** Other colors */
+  /** other colors */
+
   --color-active: #0011ff;
   --color-overlay: rgba(0, 0, 0, .5);
   --color-hover: #EBF0F4;
+  --color-transparent: transparent;
 
-  /** Light colors */
+  /** light colors */
 
   --color-warning-light: #f8e6d1;
   --color-success-light: #d9e4d1;
   --color-info-light: #EDF7FF;
+
+  /** box shadows */
+
+  --shadow-menus: 0 2px 8px 0 rgba(82,89,91,14%);
+  --shadow-navbar: 0 1px 15px -1px rgba(204,204,204,32%);
+  --shadow-images: 0 1px 8px 0 rgba(149,160,172,20%);
 }
 
 /* roboto-300 - latin */
