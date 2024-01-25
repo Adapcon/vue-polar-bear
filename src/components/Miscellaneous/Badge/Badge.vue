@@ -1,7 +1,17 @@
 <template>
   <div
+    class="badge-container-circle"
+    :style="circleStyle"
+    v-if="radius === 'circle'"
+  >
+    <small :class="size">
+      {{ title }}
+    </small>
+  </div>
+  <div
     class="badge-container"
     :style="style"
+    v-else
   >
     <PbIcon
       v-if="icon"
@@ -39,6 +49,14 @@ export default {
       ].indexOf(size) !== -1,
     },
     title: { type: String, default: '' },
+    radius: {
+      type: String,
+      default: 'rounded',
+      validator: radius => [
+        'rounded',
+        'circle',
+      ].indexOf(radius) !== -1,
+    },
     backgroundColor: {
       type: String,
       default: 'primary',
@@ -63,6 +81,20 @@ export default {
         background: ${backgroundColorIsHexColor ? this.backgroundColor : `var(--color-${this.backgroundColor})`} !important;
         color: var(--color-${this.color}) !important;
         display: ${this.wrapContent ? 'inline-flex' : ''};
+      `;
+    },
+    circleStyle() {
+      const sizes = {
+        'pb-sm': '20px',
+        'pb-md': '24px',
+        'pb-lg': '28px',
+      };
+
+      return `
+        background: ${isHexColor(this.backgroundColor) ? this.backgroundColor : `var(--color-${this.backgroundColor})`} !important;
+        color: var(--color-${this.color}) !important;
+        width: ${sizes[this.size]} !important;
+        height: ${sizes[this.size]} !important;
       `;
     },
     iconClass() {
@@ -93,6 +125,19 @@ export default {
   .pb-icon{
     margin-right: 10px;
     padding-block: 2px;
+  }
+}
+
+.badge-container-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+
+  small {
+    overflow: hidden;
+    text-overflow: unset;
+    white-space: nowrap;
   }
 }
 </style>

@@ -19,6 +19,10 @@ import { list } from '@pb/Miscellaneous/Icon/list.js';
     type: 'string',
     defaultValue: 'Title',
   },
+  radius: {
+    control: { type: 'select', options: ['rounded', 'circle'] },
+    defaultValue: 'rounded',
+  },
   backgroundColor: {
     control: { type: 'select', options: [ ...colors ] },
     defaultValue: 'primary',
@@ -42,6 +46,7 @@ export const Template = (args, { argTypes }) => ({
       :icon="icon"
       :size="size"
       :title="title"
+      :radius="radius"
       :background-color="backgroundColor"
       :color="color"
       :wrap-content="wrapContent"
