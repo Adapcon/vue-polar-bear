@@ -11,7 +11,6 @@
       style="margin: 0;"
       @click.native="handleSidebarCollapse"
     />
-    <!----->
     <div
       class="sidebar pb-scroll-primary"
       :class="{ 'is-collapsed': sidebarIsCollapsed }"
