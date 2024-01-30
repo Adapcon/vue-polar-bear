@@ -1,125 +1,116 @@
 <template>
-  <section class="layout-grid-container pb-row">
-    <div class="pb-row pb-col-12 pb-col-md-3">
-      <div class="sidebar pb-col-12">
-        <div class="pb-row">
-          <div class="pb-col-12 pb-col-md-10">
-            <div class="sidebar-area">
-              <PbButton
-                v-if="!state.isMobileCell && !state.isMobileTablet"
-                color="primary"
-                button-style="regular"
-                class="back-button"
-                icon="fas fa-arrow-up fa-rotate-270"
-                @click.native="backFunction"
-              />
+  <section class="layout-grid-container">
+    <Sidebar
+      :title="title"
+      :subtitle="subtitle"
+      :headline="headline"
+      :back-function="backFunction"
+      :collapsible-sidebar="collapsibleSidebar"
+      :collapsible-content="collapsibleContent"
+      @content-is-collapsed="contentIsCollapsed"
+      @is-collapsed="sidebarIsCollapsed"
+    >
+      <template #sidebar-action>
+        <slot name="sidebar-action" />
+      </template>
+      <template #sidebar-tabs>
+        <slot name="sidebar-tabs" />
+      </template>
+      <template #sidebar-content>
+        <slot name="sidebar-content" />
+      </template>
+    </Sidebar>
 
-              <div>
-                <h2 class="pb">
-                  {{ title }}
-                </h2>
-
-                <div
-                  v-show="(!state.isMobileTablet && !state.isMobileCell) || showSideMenu"
-                  class="sidebar-content"
-                >
-                  <slot name="sidebar" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-show="!showSideMenu" class="pb-col-12 pb-col-md-9">
-      <div class="pb-row" style="justify-content: center;">
-        <div class="tool-bar pb-col-11" v-if="!disableToolBar">
-          <slot name="tool-bar" />
-        </div>
-        <div class="main pb-col-11">
-          <slot name="main" />
-        </div>
-      </div>
-    </div>
+    <main
+      class="layout-grid-content pb-scroll-primary"
+      :class="{'content-is-collapsed': contentCollapsed}"
+    >
+      <slot name="main" />
+    </main>
   </section>
 </template>
 
 <script>
-import PbButton from '@pb/Buttons/Button/Button';
+import Sidebar from '../Sidebar/Sidebar.vue';
 
 export default {
   name: 'PbLayoutGrid',
+
   components: {
-    PbButton,
+    Sidebar,
   },
 
   props: {
     title: { type: [String, Number], default: '' },
-    disableToolBar: { type: Boolean, default: false },
-    backFunction: { type: Function, default: () => () => {} },
-    showSideMenu: { type: Boolean, default: false },
+    subtitle: { type: [String, Number], default: '' },
+    headline: { type: [String, Number], default: '' },
+    backFunction: { type: Function, default: () => () => { } },
+    collapsibleSidebar: { type: Boolean, default: false },
+    collapsibleContent: { type: Boolean, default: false },
   },
 
   data() {
     return {
-      state: {
-        isMobileTablet: window.innerWidth <= 768,
-        isMobileCell: window.innerWidth <= 375,
-      },
+      screenWidth: window.innerWidth,
+      isCollapsed: false,
+      contentCollapsed: false,
     };
   },
 
+  computed: {
+    isMobile() {
+      return this.screenWidth <= 1024;
+    },
+  },
+
   mounted() {
-    window.addEventListener('resize', this.getWidthSizeCell);
+    window.addEventListener('resize', this.handleScreenResize);
   },
 
   beforeDestroy() {
-    window.removeEventListener('resize', this.getWidthSizeCell);
+    window.removeEventListener('resize', this.handleScreenResize);
   },
 
   methods: {
-    getWidthSizeCell(e) {
-      const { target } = e;
-
-      this.state.isMobileCell = target.innerWidth <= 375;
-      this.state.isMobileTablet = target.innerWidth <= 768;
+    handleScreenResize() {
+      this.screenWidth = window.innerWidth;
     },
 
-    toggleSidebar() {
-      this.$emit('update:show-side-menu', !this.showSideMenu);
+    sidebarIsCollapsed() {
+      this.isCollapsed = !this.isCollapsed;
+    },
+
+    contentIsCollapsed() {
+      this.contentCollapsed = !this.contentCollapsed;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.layout-grid-container {
-  padding-top: 28px;
-  
-  .sidebar {
-    border-right: solid #eeeeee 1px;
-    margin: 0px 0px 40px;
+$page-navbar-size: 120px;
 
-    .sidebar-area {
-      display: flex;
-      align-items: flex-start;
+@media screen and (min-width: 1024px) {
+  .layout-grid-container {
+    display: flex;
 
-      .back-button {
-        margin-top: 0px;
-      }
-    }
-
-    .sidebar-content {
-      margin-top: 40px;
+    .layout-grid-content {
+      width: 100%;
+      height: calc(100vh - $page-navbar-size);
+      overflow: scroll;
+      padding: 40px;
     }
   }
+}
 
-  .tool-bar {
-    height: 40px;
-  }
+@media screen and (max-width: 1024px) {
+  .layout-grid-content {
+    width: 100%;
+    padding: 0 0 40px;
 
-  .main {
-    margin-top: 40px;
+    &.content-is-collapsed {
+      display: none;
+    }
   }
 }
 </style>
