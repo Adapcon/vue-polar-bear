@@ -89,3 +89,4 @@ export { default as PbSearchInput } from './FiltersAndSearch/SearchInput/SearchI
 export { default as PbLayoutGrid } from './Layout/LayoutGrid/LayoutGrid.vue';
 export { default as PbAppLayout } from './Layout/AppLayout/AppLayout.vue';
 export { default as PbDragAndDrop } from './Layout/DragAndDrop/DragAndDrop.vue';
+export { default as PbSidebar } from './Layout/Sidebar/Sidebar.vue';

@@ -1,0 +1,110 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbSidebar from './Sidebar.vue';
+
+<Meta
+  title="Components/Layout/PbSidebar"
+  component={PbSidebar}
+  argTypes={{
+    title: {
+        type: 'string',
+        defaultValue: 'Title',
+    },
+    subtitle: {
+        type: 'string',
+        defaultValue: 'Subtitle',
+    },
+    headline: {
+        type: 'string',
+        defaultValue: 'Heading',
+    },
+    backFunction: {
+      action: 'backFunction',
+    },
+    collapsibleSidebar: {
+      type: 'boolean',
+      defaultValue: true,
+    },
+    collapsibleContent: {
+      type: 'boolean',
+      defaultValue: true,
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbSidebar },
+  template: `
+    <div style="width: 1000px; height: 760px; background-color: white;">
+        <PbSidebar
+          :title="title"
+          :subtitle="subtitle"
+          :headline="headline"
+          :back-function="backFunction"
+          :collapsible-sidebar="collapsibleSidebar"
+          :collapsible-content="collapsibleContent"
+          @content-is-collapsed="contentIsCollapsed"
+          @is-collapsed="sidebarIsCollapsed"
+          ref="PbSidebar"
+        >
+          <template #sidebar-tabs>
+            <div style="background-color: rgba(250, 175, 78, 0.2);">
+              Sidebar tabs slot
+            </div>
+          </template>
+          <template #sidebar-content>
+            <div style="background-color: rgba(250, 78, 202, 0.2);">
+              Sidebar content slot
+            </div>
+          </template>
+          <template #sidebar-action>
+            <div style="background-color: lightblue;">
+              Header extra action slot
+            </div>
+          </template>
+        </PbSidebar>
+    </div>
+  `,
+});
+
+
+
+# **PbSidebar component**
+### The `PbSidebar` component display the website's navigation.
+
+### Purpose and Use case
+
+The component's main purpose is to show the website's navigation.
+
+It's fixed on the left side of the page and can be used to store filters and other essencial information as well.
+
+The Sidebar have 3 main slots:
+- Header extra action slot: can be used to show an extra action, like a button or dropdown
+- Tabs slot: tabs are used to navigate between pages and this part will be fixed when the screen is mobile
+- Content slot: here you can store everything the sidebar needs, such as filters and banners to display information between pages.
+
+The Sidebar also provides a collapse system. If you enable it, the component can be closed so the main content of the page can be wider (this is extremely useful when dealing with tables with a lot of columns).
+
+When mobile, the content of the Sidebar is hidden from the page until the user toggles it through the button besides the page title.
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" height="auto" parameters={{ layout: 'centered' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+
+<!-- TODO: Descobrir como deixar o canvas em mobile -->
+
+<!-- ### Mobile
+
+<Canvas>
+  <Story name="Mobile"  parameters={{ layout: 'centered' }} args={{ MobileAuxiliaryButtonMobile: true }}>
+    {Template.bind({})}
+  </Story>
+</Canvas> -->
+
