@@ -1,0 +1,102 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import PbDialog from './Dialog.vue';
+import PbButton from '@pb/Buttons/Button/Button.vue';
+
+<Meta
+  title="Components/Notifications and Modals/PbDialog"
+  component={PbDialog}
+  argTypes={{
+    title: {
+      type: 'string',
+      defaultValue: 'Title',
+    },
+    subtitle: {
+      type: 'string',
+      defaultValue: 'Subtitle',
+    },
+    buttonText: {
+      type: 'string',
+      defaultValue: 'Confirmar',
+    },
+    buttonColor: {
+      control: { type: 'select', options: ['primary', 'secondary', 'success', 'danger', 'warning', 'info'] },
+      defaultValue: 'warning',
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbDialog, PbButton },
+  data() {
+      return {
+        state: {
+          show: false,
+        }
+      }
+    },
+    methods: {
+      openAlert() {
+        this.state.show = true;
+      }
+    },
+  template: `
+    <div>
+      <PbButton @click.native="openAlert">Open Dialog</PbButton>
+      <PbDialog
+        :title="title"
+        :subtitle="subtitle"
+        :show="state.show"
+        :button-text="buttonText"
+        button-size="small"
+        :button-color="buttonColor"
+        @close="() => state.show = false"
+      >
+      <template slot="icon-header">
+        <PbButton
+            color="primary"
+            button-style="background"
+            icon="fas fa-arrow-up fa-rotate-270"
+        >
+        </PbButton>
+      </template>
+      <template slot="main">
+        <p class="pb">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed.</p>
+      </PbButton>
+      </template>
+      <template slot="footer">
+        <PbButton
+            color="primary"
+            button-style="regular"
+        >
+          Voltar
+        </PbButton>
+      </PbButton>
+      </template>
+      </PbDialog>
+    </div>
+  `,
+});
+
+# **PbDialog**
+### The `PbDialog` it's a simple component that can be used to display content.
+
+### Purpose and Use Case
+
+This component can be used when you need to view simply and quickly Information.
+Currently, it has many styles, and accepts a another components to complement the content.
+
+Have 3 slots to use:
+- `icon-header` to add a icon in the header
+- `main` to add the main content
+- `footer` to add a footer content in left side
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default">
+    {Template.bind({})}
+  </Story>
+</Canvas>
