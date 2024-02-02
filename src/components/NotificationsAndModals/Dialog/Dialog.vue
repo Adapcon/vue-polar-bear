@@ -98,9 +98,8 @@ export default {
       validator: color => validateColor(color),
     },
   },
-  computed: {
+  emits: ['close'],
 
-  },
   methods: {
     close() {
       this.$emit('close', this.type);
