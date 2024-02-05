@@ -19,15 +19,14 @@
           <div class="header">
             <slot name="icon-header" />
             <h2
-              class="pb"
-              style="color: var(--color-gray-90);"
+              class="pb title-color"
             >
               {{ title }}
             </h2>
           </div>
           <h5
             style="color: var(--color-gray-90);"
-            class="pb-light"
+            class="pb-light subtitle-color"
           >
             {{ subtitle }}
           </h5>
@@ -49,8 +48,8 @@
             </PbButton>
             <PbButton
               :color="buttonColor"
-              button-style="background"
-              @click.native="close"
+              :button-style="buttonStyle"
+              @click.native="action"
             >
               {{ buttonText }}
             </PbButton>
@@ -97,12 +96,19 @@ export default {
       default: 'secondary',
       validator: color => validateColor(color),
     },
+    buttonStyle: {
+      type: String,
+      default: 'background',
+    },
   },
-  emits: ['close'],
+  emits: ['close', 'action'],
 
   methods: {
     close() {
       this.$emit('close', this.type);
+    },
+    action() {
+      this.$emit('action', this.type);
     },
   },
 };
@@ -147,10 +153,18 @@ export default {
     transition: all .3s ease;
     margin: 0 auto;
 
+    .subtitle-color {
+      color: var(--color-gray-90);
+    }
+
     .header {
       display: flex;
       align-items: center;
       margin-top: calc(24px - 66px);
+
+      .title-color {
+        color: var(--color-gray-90);
+      }
     }
 
     @media(max-width: 1400px) { width: 630px; /* 45% */ }

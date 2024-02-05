@@ -18,6 +18,10 @@ import PbButton from '@pb/Buttons/Button/Button.vue';
       type: 'string',
       defaultValue: 'Confirmar',
     },
+    buttonStyle: {
+      type: 'string',
+      defaultValue: 'background',
+    },
     buttonColor: {
       control: { type: 'select', options: ['primary', 'secondary', 'success', 'danger', 'warning', 'info'] },
       defaultValue: 'warning',
@@ -50,7 +54,9 @@ export const Template = (args, { argTypes}) => ({
         :button-text="buttonText"
         button-size="small"
         :button-color="buttonColor"
+        :button-style="buttonStyle"
         @close="() => state.show = false"
+        @action="() => state.show = false"
       >
       <template slot="icon-header">
         <PbButton
