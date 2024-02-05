@@ -65,7 +65,7 @@ import PbButton from '@pb/Buttons/Button/Button.vue';
 import { validateColor } from '@pb/utils/validator';
 
 export default {
-  name: 'PbAlert',
+  name: 'PbDialog',
   components: {
     PbButton,
   },
