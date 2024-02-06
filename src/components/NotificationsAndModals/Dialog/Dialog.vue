@@ -18,11 +18,11 @@
           </div>
           <div class="header">
             <slot name="icon-header" />
-            <h2
+            <h4
               class="pb title-color"
             >
               {{ title }}
-            </h2>
+            </h4>
           </div>
           <h5
             style="color: var(--color-gray-90);"
@@ -42,6 +42,7 @@
             <PbButton
               color="gray-40"
               button-style="regular"
+              style="margin-right: 24px;"
               @click.native="close"
             >
               Fechar
@@ -147,7 +148,6 @@ export default {
     background: var(--color-white);
     width: 40%;
     max-width: 95%;
-    max-height: 350px;
     border-radius: 16px;
     padding: 16px;
     transition: all .3s ease;
@@ -160,7 +160,7 @@ export default {
     .header {
       display: flex;
       align-items: center;
-      margin-top: calc(24px - 66px);
+      margin-top: calc(24px - 76px);
 
       .title-color {
         color: var(--color-gray-90);
