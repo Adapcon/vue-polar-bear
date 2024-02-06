@@ -22,6 +22,14 @@ import PbButton from '@pb/Buttons/Button/Button.vue';
       type: 'string',
       defaultValue: 'background',
     },
+    buttonLoading: {
+      type: 'boolean',
+      defaultValue: 'false',
+    },
+    buttonDisabled: {
+      type: 'boolean',
+      defaultValue: 'false',
+    },
     buttonColor: {
       control: { type: 'select', options: ['primary', 'secondary', 'success', 'danger', 'warning', 'info'] },
       defaultValue: 'warning',
@@ -55,6 +63,8 @@ export const Template = (args, { argTypes}) => ({
         button-size="small"
         :button-color="buttonColor"
         :button-style="buttonStyle"
+        :button-disabled="buttonDisabled"
+        :button-loading="buttonLoading"
         @close="() => state.show = false"
         @action="() => state.show = false"
       >

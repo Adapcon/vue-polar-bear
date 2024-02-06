@@ -50,6 +50,8 @@
             <PbButton
               :color="buttonColor"
               :button-style="buttonStyle"
+              :loading="buttonLoading"
+              :disabled="buttonDisabled"
               @click.native="action"
             >
               {{ buttonText }}
@@ -84,6 +86,16 @@ export default {
     show: {
       type: Boolean,
       required: true,
+      default: false,
+    },
+
+    buttonDisabled: {
+      type: Boolean,
+      default: false,
+    },
+
+    buttonLoading: {
+      type: Boolean,
       default: false,
     },
 
