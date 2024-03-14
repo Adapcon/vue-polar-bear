@@ -29,6 +29,10 @@ import { colors } from '@pb/utils/constants.js';
         type: 'select',
         options: ['background-light', 'outline'],
       },
+    },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
     }
   }}
 />
@@ -44,6 +48,7 @@ export const Template = (args, { argTypes}) => ({
       :initial-value="initialValue"
       :calendars-position="calendarsPosition"
       :input-style="inputStyle"
+      :disabled="disabled"
     />
   </div>
   `,
