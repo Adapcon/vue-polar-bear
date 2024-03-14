@@ -112,7 +112,7 @@ export default {
 
   created() {
     if (Object.keys(this.initialSort).length)
-      this.setSortState(this.initialSort.type, this.initialSort.columnIndex);
+      this.setSortState(this.initialSort.type, this.initialSort.columnIndex, true);
   },
 
   methods: {
@@ -150,14 +150,14 @@ export default {
         : '';
     },
 
-    setSortState(type, columnIndex) {
+    setSortState(type, columnIndex, isInitialSort = false) {
       if (!this.state.sorts[columnIndex])
         this.$set(this.state.sorts, [columnIndex], {});
 
       this.$set(this.state.sorts[columnIndex], 'type', type);
       this.clearSortState(columnIndex);
 
-      this.$emit('sort', { columnIndex, type });
+      if (!isInitialSort) this.$emit('sort', { columnIndex, type });
     },
 
     clearSortState(selectedSort) {
