@@ -7,11 +7,13 @@
       <input
         v-model="valueInput"
         :placeholder="placeholder"
+        :disabled="disabled"
         class="pb"
         :class="{
           'pb-search-input-suggestions' : suggestions.length,
           'pb-search-error' : hasError,
           'pb-search-white': darkBackground,
+          'pb-search-input-disabled': disabled,
         }"
         :style="searchInputStyle"
         @focus="$emit('focus')"
@@ -23,8 +25,9 @@
         class="pb-search-input-icon-search"
         :class="{
           'pb-search-input-icon-search-white': darkBackground,
+          'pb-search-input-disabled': disabled
         }"
-        @click="$emit('search')"
+        @click="!disabled ? $emit('search') : ''"
       >
         <PbIcon icon="fas fa-search" />
       </div>
@@ -33,8 +36,9 @@
         class="pb-search-input-icon-clear"
         :class="{
           'pb-search-input-icon-clear-white': darkBackground,
+          'pb-search-input-disabled': disabled
         }"
-        @click="clearInput"
+        @click="!disabled ? clearInput : ''"
       >
         <PbIcon icon="fas fa-times" />
       </div>
@@ -47,7 +51,10 @@
         v-for="(suggestion, index) in suggestions"
         :key="`${suggestion.value}||${index}`"
         class="pb-search-suggestions-item"
-        @click="selectSuggestion(suggestion)"
+        :class="{
+          'pb-search-input-disabled': disabled
+        }"
+        @click="!disabled ? selectSuggestion(suggestion) : ''"
       >
         <PbIcon
           class="pb-search-suggestions-item-icon"
@@ -72,6 +79,7 @@ export default {
     value: { type: String, default: '' },
     placeholder: { type: String, default: '' },
     suggestions: { type: Array, default: () => [] },
+    disabled: { type: Boolean, default: false },
     darkBackground: { type: Boolean, default: false },
     showIcon: { type: Boolean, default: true },
     hasError: { type: Boolean, default: false },
@@ -163,6 +171,11 @@ export default {
     color: var(--color-white) !important;
   }
 
+}
+
+.pb-search-input-disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
 }
 
 .pb-search-input-icon-clear-white {

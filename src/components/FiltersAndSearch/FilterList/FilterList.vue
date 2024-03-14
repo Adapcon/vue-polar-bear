@@ -29,7 +29,7 @@
             <PbCollapseIcon
               :is-icon-up="!state.collapsed"
               :color="getHeaderColor"
-              class="icon"
+              :class="`icon ${disabledClass}`"
             />
           </div>
         </div>
@@ -40,6 +40,7 @@
       <PbSearchInput
         v-if="allowSearch && !state.collapsed && showSearch"
         v-model="state.search.searchValue"
+        :disabled="disabled"
         style="color: var(--color-gray-20)"
         @search="searchOption()"
       />
@@ -51,7 +52,7 @@
 
     <ul
       v-show="!state.collapsed"
-      :class="`options pb-scroll-${color}`"
+      :class="`options pb-scroll-${color} ${disabledClass}`"
       :style="optionsSize"
     >
       <li
@@ -74,6 +75,7 @@
       <PbChips
         v-if="!state.collapsed"
         v-show="multiSelector"
+        :disabled="disabled"
         :chips.sync="chips"
         color="primary"
         @update:chips="updateChips"
@@ -217,6 +219,10 @@ export default {
     isColorWhite() {
       return this.color === 'white';
     },
+
+    disabledClass() {
+      return this.disabled ? 'pb-filter-list-disabled' : '';
+    },
   },
 
   watch: {
@@ -232,12 +238,14 @@ export default {
 
   methods: {
     updateChips(value) {
+      if (this.disabled) return;
+
       this.state.checkedValues = value.map(chip => chip.title);
     },
 
     handleOptionClick(title) {
-      if (this.multiSelector)
-        return this.multipleSelector(title);
+      if (this.disabled) return;
+      if (this.multiSelector) return this.multipleSelector(title);
 
       this.selector(title);
     },
@@ -463,6 +471,6 @@ export default {
 
 .pb-filter-list-disabled {
   opacity: 0.5;
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 }
 </style>

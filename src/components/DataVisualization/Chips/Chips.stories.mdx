@@ -30,6 +30,10 @@ import PbChips from './Chips.vue';
     },
     defaultValue: 'secondary',
   },
+  disabled: {
+    type: 'boolean',
+    defaultValue: false,
+  },
   chips: {
     type: 'array',
     defaultValue: [
@@ -63,6 +67,7 @@ export const Template = (args, { argTypes }) => ({
       :showClearButton="showClearButton"
       :clearButtonStyle="clearButtonStyle"
       :color="color"
+      :disabled="disabled"
     />
   `
 });
