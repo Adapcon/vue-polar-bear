@@ -277,6 +277,30 @@ export const TemplateWithExtraActions = (args, { argTypes }) => ({
   `,
 });
 
+export const TemplateWithInitialSort = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { PbTable },
+  template: `
+    <div style="background-color: white;">
+      <PbTable
+        :header="header"
+        :rows="rows"
+        :metadata="metadata"
+        :loading="loading"
+        :ellipsis-on-overflow="ellipsisOnOverflow"
+        :highlight-on-hover="highlightOnHover"
+        :has-action-column="hasActionColumn"
+        :has-sort="hasSort"
+        :has-actions-bar="hasActionsBar"
+        :max-height="maxHeight"
+        :actions-size="actionsSize"
+        :use-internal-sort="useInternalSort"
+        :initial-sort="initialSort"
+      />
+    </div>
+  `,
+});
+
 # **PbTable Component**
 ### The `PbTable` component is a table used to display data.
 
@@ -318,8 +342,9 @@ List of arrays to each row, containing one object to each column of table;
 | hasSort                     | Boolean     | true    | Allows sorting in columns.                                                                               |
 | hasActionsBar               | Boolean     | true    | Shows the actions bar, with a search input and a extra-actions slot.                                     |
 | maxHeight                   | String      |         | Sets a maximumn height to table. Should have the unit of measure.                                        |
-| actionsSize                 | Number      | 1       | Sets the size of actions column.                                                                         |                                                                  |
-| useInternalSort             | Boolean     | true    | It sets if the Table component will do the intern filter or just emit the sort event.                    |                                                                  |
+| actionsSize                 | Number      | 1       | Sets the size of actions column.                                                                         |
+| useInternalSort             | Boolean     | true    | It sets if the Table component will do the intern filter or just emit the sort event.                    |
+| initialSort                 | Object      | {columnIndex: number, type: 'asc' \| 'desc'}     | It define if the Table component will start with a sorted column.                    |
 
 ### Events
 
@@ -361,6 +386,14 @@ List of arrays to each row, containing one object to each column of table;
 <Canvas>
   <Story name="With Extra Actions" height="auto">
     { TemplateWithExtraActions.bind({}) }
+  </Story>
+</Canvas>
+
+### With Initial Sort
+
+<Canvas>
+  <Story name="With Initial Sort" height="auto" args={{ initialSort: { columnIndex: 0, type: 'asc' } }}>
+    { TemplateWithInitialSort.bind({}) }
   </Story>
 </Canvas>
 

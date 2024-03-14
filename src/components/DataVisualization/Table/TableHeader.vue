@@ -81,6 +81,7 @@ export default {
     columnClasses: { type: Function, required: true },
     expandAll: { type: Boolean, default: false },
     expandRowsColumnSize: { type: Number, default: 1 },
+    initialSort: { type: Object, default: () => ({}) },
   },
 
   data() {
@@ -107,6 +108,11 @@ export default {
     showExpandIcon() {
       return this.hiddenColumnsIndex.length;
     },
+  },
+
+  created() {
+    if (Object.keys(this.initialSort).length)
+      this.setSortState(this.initialSort.type, this.initialSort.columnIndex);
   },
 
   methods: {
