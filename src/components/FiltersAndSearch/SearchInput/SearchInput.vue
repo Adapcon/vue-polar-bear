@@ -38,7 +38,7 @@
           'pb-search-input-icon-clear-white': darkBackground,
           'pb-search-input-disabled': disabled
         }"
-        @click="!disabled ? clearInput : ''"
+        @click="!disabled ? clearInput() : ''"
       >
         <PbIcon icon="fas fa-times" />
       </div>
