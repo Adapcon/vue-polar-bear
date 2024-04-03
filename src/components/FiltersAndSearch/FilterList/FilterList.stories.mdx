@@ -14,6 +14,10 @@ import { colors } from '@pb/utils/constants.js';
       type: 'number',
       defaultValue: 5,
     },
+    disabled: {
+      type: 'boolean',
+      defaultValue: false,
+    },
     collapsed: {
       type: 'boolean',
       defaultValue: false,
@@ -86,6 +90,7 @@ export const Template = (args, { argTypes }) => ({
       :color="color"
       :multi-selector="multiSelector"
       :display-size="displaySize"
+      :disabled="disabled"
       :collapsed="collapsed"
       :allow-search="allowSearch"
       :variant="variant"

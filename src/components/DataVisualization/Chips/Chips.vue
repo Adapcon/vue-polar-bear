@@ -1,9 +1,15 @@
 <template>
-  <ul v-if="chips.length" class="chips-wrapper">
+  <ul 
+    v-if="chips.length"
+    class="chips-wrapper"
+  >
     <li
       v-for="(chip, index) of chips"
       :key="`${chip.title}||${index}`"
       :style="chipsStyleHandler"
+      :class="{
+        'chips-disabled': disabled
+      }"
       @click="removeChip(index)"
     >
       <small class="pb">
@@ -13,7 +19,14 @@
       <PbIcon icon="fas fa-times fa-xs" style="margin-left: 10px" />
     </li>
 
-    <li v-if="showClearButton" :style="clearButtonStyleHandler" @click="clearChips()">
+    <li
+      v-if="showClearButton"
+      :style="clearButtonStyleHandler"
+      :class="{
+        'chips-disabled': disabled
+      }"
+      @click="clearChips()"
+    >
       <small class="pb">
         <b>Limpar Todos</b>
       </small>
@@ -61,6 +74,11 @@ export default {
       default: 'secondary',
       validator: color => ['primary', 'secondary', 'white'].includes(color),
     },
+
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
@@ -75,6 +93,8 @@ export default {
 
   methods: {
     removeChip(index) {
+      if (this.disabled) return;
+
       const newChips = this.copyChips();
       const removedChips = newChips.splice(index, 1);
 
@@ -83,6 +103,8 @@ export default {
     },
 
     clearChips() {
+      if (this.disabled) return;
+
       const newChips = this.copyChips();
       const removedChips = newChips.splice(0);
 
@@ -131,34 +153,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .chips-wrapper {
-    list-style: none;
-    user-select: none;
-    margin: 0;
-    padding: 0;
+.chips-wrapper {
+  list-style: none;
+  user-select: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  position: relative;
+
+  li {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    width: 100%;
-    position: relative;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin: 4px;
+    padding: 2px 14px;
+    border-radius: 40px;
+    cursor: pointer;
+    max-width: 100%;
 
-    li {
-      display: flex;
-      flex-wrap: nowrap;
-      align-items: center;
-      margin: 4px;
-      padding: 2px 14px;
-      border-radius: 40px;
-      cursor: pointer;
-      max-width: 100%;
-
-      small {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-
+    small {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
+
   }
+}
+
+.chips-disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
 </style>

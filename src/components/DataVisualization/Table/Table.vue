@@ -26,6 +26,7 @@
       :column-classes="columnClasses"
       :expand-rows-column-size="state.expandRowsColumnSize"
       :expand-all.sync="state.expandAll"
+      :initial-sort="initialSort"
       @sort="handleSort"
     />
 
@@ -100,6 +101,7 @@ export default {
     hasPagination: { type: Boolean, default: false },
     currentPage: { type: Number, default: 0 },
     useInternalSort: { type: Boolean, default: true },
+    initialSort: { type: Object, default: () => ({}) },
   },
 
   emits: ['change-page'],

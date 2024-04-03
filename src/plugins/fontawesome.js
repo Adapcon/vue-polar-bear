@@ -120,6 +120,9 @@ import {
   faGripVertical as fasGripVertical,
   faFire as fasFire,
   faPause as fasPause,
+  faVolumeMute as fasVolumeMute,
+  faVolumeUp as fasVolumeUp,
+  faVolumeOff as fasVolumeOff,
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -289,6 +292,9 @@ library.add(
   fasVenus,
   fasVenusMars,
   fasVideo,
+  fasVolumeMute,
+  fasVolumeOff,
+  fasVolumeUp,
   fasPause,
   fabVimeo,
   fabWhatsapp,

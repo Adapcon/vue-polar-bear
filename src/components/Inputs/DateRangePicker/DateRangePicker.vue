@@ -1,9 +1,15 @@
 <template>
   <section class="date-range-picker-container">
-    <div class="input-container">
+    <div
+      class="input-container"
+    >
       <input
         :value="inputValue"
+        :disabled="disabled"
         class="pb"
+        :class="{
+          'date-range-picker-disabled': disabled,
+        }"
         :style="getInputStyle"
         :placeholder="inputValue"
         type="text"
@@ -11,6 +17,9 @@
       >
       <PbIcon
         class="calendar-icon"
+        :class="{
+          'date-range-picker-disabled': disabled,
+        }"
         :style="iconStyle"
         icon="fas fa-calendar-alt"
         @click.native="toggleDatePicker"
@@ -19,7 +28,7 @@
 
     <div class="dropdown">
       <div
-        v-if="state.isPickerVisible"
+        v-if="state.isPickerVisible && !disabled"
         :class="`calendars-main-container calendars-on-${calendarsPosition}`"
       >
         <div class="filters-container">
@@ -282,6 +291,7 @@ export default {
     },
     calendarsPosition: { type: String, default: 'right' },
     inputStyle: { type: String, default: 'background-light' },
+    disabled: { type: Boolean, default: false },
   },
 
   data() {
@@ -395,6 +405,8 @@ export default {
     },
 
     toggleDatePicker() {
+      if (this.disabled) return;
+
       this.state.isPickerVisible = !this.state.isPickerVisible;
     },
 
@@ -606,6 +618,12 @@ export default {
     }
   }
 }
+
+.date-range-picker-disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
 .dropdown {
   position: relative;
 
