@@ -48,6 +48,7 @@
               Fechar
             </PbButton>
             <PbButton
+              v-if="buttonText"
               :color="buttonColor"
               :button-style="buttonStyle"
               :loading="buttonLoading"
