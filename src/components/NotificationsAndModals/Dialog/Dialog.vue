@@ -102,7 +102,7 @@ export default {
 
     buttonText: {
       type: String,
-      default: 'OK',
+      default: '',
     },
 
     buttonColor: {
