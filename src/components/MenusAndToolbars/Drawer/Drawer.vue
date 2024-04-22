@@ -10,6 +10,7 @@
         <div
           class="overlay"
           style="position: absolute;"
+           @click="close"
         />
         <div
           :class="drawerClass"
