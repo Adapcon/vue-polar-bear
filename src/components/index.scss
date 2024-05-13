@@ -278,12 +278,24 @@
   @include pb-scroll-base;
   &::-webkit-scrollbar-thumb {
     background: var(--color-primary);
+    width: 3px; /* Definindo a largura inicial */
+    transition: width 0.3s ease; /* Adiciona uma transição suave */
+  }
+
+  &:hover::-webkit-scrollbar {
+    width: 8px; /* Aumenta a largura durante o hover */
   }
 
   &-large {
     @include pb-scroll-large;
     &::-webkit-scrollbar-thumb {
       background: var(--color-primary);
+      width: 8px; /* Definindo a largura inicial */
+      transition: width 0.3s ease; /* Adiciona uma transição suave */
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+      width: 16px; /* Aumenta a largura durante o hover */
     }
   }
 }
@@ -292,12 +304,24 @@
   @include pb-scroll-base;
   &::-webkit-scrollbar-thumb {
     background: var(--color-secondary);
+    width: 3px; /* Definindo a largura inicial */
+    transition: width 0.3s ease; /* Adiciona uma transição suave */
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    width: 12px; /* Aumenta a largura durante o hover */
   }
 
   &-large {
     @include pb-scroll-large;
     &::-webkit-scrollbar-thumb {
       background: var(--color-secondary);
+      width: 8px; /* Definindo a largura inicial */
+      transition: width 0.3s ease; /* Adiciona uma transição suave */
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+      width: 16px; /* Aumenta a largura durante o hover */
     }
   }
 }
@@ -306,15 +330,28 @@
   @include pb-scroll-base;
   &::-webkit-scrollbar-thumb {
     background: var(--color-white);
+    width: 3px; /* Definindo a largura inicial */
+    transition: width 0.3s ease; /* Adiciona uma transição suave */
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    width: 12px; /* Aumenta a largura durante o hover */
   }
 
   &-large {
     @include pb-scroll-large;
     &::-webkit-scrollbar-thumb {
       background: var(--color-white);
+      width: 8px; /* Definindo a largura inicial */
+      transition: width 0.3s ease; /* Adiciona uma transição suave */
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+      width: 16px; /* Aumenta a largura durante o hover */
     }
   }
 }
+
 
 // PB Typography
 @mixin pb-font-light { font-weight: 300 !important; }
