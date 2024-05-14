@@ -10,6 +10,10 @@ import PbButton from '@pb/Buttons/Button/Button.vue';
       type: 'boolean',
       defaultValue: 'false',
     },
+    showHeader: {
+      type: 'boolean',
+      defaultValue: 'true',
+    },
     title: {
       type: 'string',
       defaultValue: 'Title',
@@ -27,8 +31,12 @@ import PbButton from '@pb/Buttons/Button/Button.vue';
       defaultValue: 'Close',
     },
     buttonStyle: {
-      type: 'string',
+      control: { type: 'select', options: ['background', 'regular'] },
       defaultValue: 'background',
+    },
+    buttonColor: {
+      control: { type: 'select', options: ['primary', 'secondary', 'success', 'danger', 'warning', 'info'] },
+      defaultValue: 'primary',
     },
     buttonLoading: {
       type: 'boolean',
@@ -37,14 +45,6 @@ import PbButton from '@pb/Buttons/Button/Button.vue';
     buttonDisabled: {
       type: 'boolean',
       defaultValue: 'false',
-    },
-    buttonColor: {
-      control: { type: 'select', options: ['primary', 'secondary', 'success', 'danger', 'warning', 'info'] },
-      defaultValue: 'primary',
-    },
-    showHeader: {
-      type: 'boolean',
-      defaultValue: 'true',
     },
     fixedWidth: {
       type: 'string',
@@ -75,17 +75,17 @@ export const Template = (args, { argTypes}) => ({
     <div>
       <PbButton @click.native="openDialog">Open Dialog</PbButton>
       <PbDialog
+        :show="state.show"
+        :show-header="showHeader"
+        :fixed-width="fixedWidth"
         :title="title"
         :subtitle="subtitle"
-        :show="state.show"
         :button-text="buttonText"
         :button-text-close="buttonTextClose"
         :button-color="buttonColor"
         :button-style="buttonStyle"
         :button-disabled="buttonDisabled"
         :button-loading="buttonLoading"
-        :show-header="showHeader"
-        :fixed-width="fixedWidth"
         @close-outside="closeDialog"
         @close="closeDialog"
         @action="closeDialog"
@@ -142,8 +142,8 @@ export const TemplateSimple = (args, { argTypes}) => ({
     <div>
       <PbButton @click.native="openDialog">Open Simple Dialog</PbButton>
       <PbDialog
-        :title="title"
         :show="state.show"
+        :title="title"
         :button-text-close="buttonTextClose"
         @close="closeDialog"
       >
@@ -177,17 +177,17 @@ export const TemplateSlots = (args, { argTypes}) => ({
     <div>
       <PbButton @click.native="openDialog">Open Dialog with Slots</PbButton>
       <PbDialog
+        :show="state.show"
+        :show-header="showHeader"
+        :fixed-width="fixedWidth"
         :title="title"
         :subtitle="subtitle"
-        :show="state.show"
         :button-text="buttonText"
         :button-text-close="buttonTextClose"
         :button-color="buttonColor"
         :button-style="buttonStyle"
         :button-disabled="buttonDisabled"
         :button-loading="buttonLoading"
-        :show-header="showHeader"
-        :fixed-width="fixedWidth"
         @close-outside="closeDialog"
         @close="closeDialog"
         @action="closeDialog"
@@ -227,17 +227,17 @@ It has several properties that can be adjusted to fit the needs of the user, inc
 
 | Property                    | Type        | Default     | Description                                                                                     |
 |:----------------------------|:------------|:------------|:------------------------------------------------------------------------------------------------|
-| show*                       | boolean     | false       | determines whether the dialog box is visible or Notifications                                   |
-| title                       | string      | ' '         | the title of the dialog CheckBox                                                                |
-| subtitle                    | string      | ' '         | the subtitle of the dialog box                                                                  |
-| buttonText                  | string      | ' '         | the text displayed on the action button                                                         |
-| buttonTextClose             | string      | ' '         | the text displayed on the close button                                                          |
-| buttonStyle                 | string      | background  | the style of the action button                                                                  |
-| buttonColor                 | string      | primary     | the color of the action button                                                                  |
-| buttonLoading               | boolean     | false       | determines whether a loading spinner is displayed on the action button                          | 
-| buttonDisabled              | boolean     | false       | determines whether the action button is disabled                                                |
+| show*                       | boolean     | false       | determines whether the dialog box is visible or not                                             |
 | showHeader                  | boolean     | true        | determines whether the header is displayed                                                      |      
-| fixedWidth                  | string      | ' '         | the fixed width of the dialog box (if it is not set, the dialog box will adjust to the content) |
+| fixedWidth                  | string      | ' '         | fixed width of the dialog box (if it is not set, the dialog box will adjust to the content)     |
+| title                       | string      | ' '         | title of the dialog box                                                                         |
+| subtitle                    | string      | ' '         | subtitle of the dialog box                                                                      |
+| buttonText                  | string      | ' '         | text displayed on the action button                                                             |
+| buttonTextClose             | string      | ' '         | text displayed on the close button                                                              |
+| buttonStyle                 | string      | background  | style of the action button                                                                      |
+| buttonColor                 | string      | primary     | color of the action button                                                                      |
+| buttonLoading               | boolean     | false       | determines whether the action button is loading                                                 | 
+| buttonDisabled              | boolean     | false       | determines whether the action button is disabled                                                |
 
 **Required*
 
@@ -248,7 +248,7 @@ The component also provides four slots for customization:
 | Slot name                   | Description                           |
 |:----------------------------|:--------------------------------------|
 | header-icon                 | add a space beside the header title   |
-| header                      | add information in the showHeader     |
+| header                      | add the header content                |
 | main                        | add the main content                  |
 | footer                      | add a footer content                  |
 
@@ -265,7 +265,7 @@ The PbDialog component emits the following events:
 
 ### Good to know
 
-- The PbDialog component has the minimum width of `200px`. If you need to adjust the max-width, you can use the `fixedWidth` property. <br />
+- The PbDialog component has the minimum width of `200px`. If you need to adjust the width, you can use the `fixedWidth` property. <br />
 
 <br />
 
