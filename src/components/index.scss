@@ -2,8 +2,20 @@
 @import './icons.scss';
 @import './animations.scss';
 @import './widths.scss';
+@import './scss/colors';
 
 :root {
+  /* Semantic */
+  --color-title: #{$color-gray-90};
+  --color-text: #{$color-gray-40};
+  --border: 1px solid #{$color-gray-10};
+
+  /** Light colors */
+  --color-warning-light: #f8e6d1;
+  --color-success-light: #d9e4d1;
+  --color-info-light: #EDF7FF;
+  --color-gray-40-light: #F0F1F3;
+
   /** default colors */
   --color-primary: #3a79cc;
   --color-secondary: #103972;
@@ -52,11 +64,6 @@
   --color-overlay: rgba(0, 0, 0, .5);
   --color-hover: #EBF0F4;
 
-  /** Light colors */
-
-  --color-warning-light: #f8e6d1;
-  --color-success-light: #d9e4d1;
-  --color-info-light: #EDF7FF;
 }
 
 /* roboto-300 - latin */
