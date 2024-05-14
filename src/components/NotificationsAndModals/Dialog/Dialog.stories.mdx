@@ -4,8 +4,12 @@ import PbButton from '@pb/Buttons/Button/Button.vue';
 
 <Meta
   title="Components/Notifications and Modals/PbDialog"
-  component={PbDialog}
+  component={ PbDialog }
   argTypes={{
+    show: {
+      type: 'boolean',
+      defaultValue: 'false',
+    },
     title: {
       type: 'string',
       defaultValue: 'Title',
@@ -16,7 +20,11 @@ import PbButton from '@pb/Buttons/Button/Button.vue';
     },
     buttonText: {
       type: 'string',
-      defaultValue: 'Confirmar',
+      defaultValue: 'Confirm',
+    },
+    buttonTextClose: {
+      type: 'string',
+      defaultValue: 'Close',
     },
     buttonStyle: {
       type: 'string',
@@ -32,7 +40,15 @@ import PbButton from '@pb/Buttons/Button/Button.vue';
     },
     buttonColor: {
       control: { type: 'select', options: ['primary', 'secondary', 'success', 'danger', 'warning', 'info'] },
-      defaultValue: 'warning',
+      defaultValue: 'primary',
+    },
+    showHeader: {
+      type: 'boolean',
+      defaultValue: 'true',
+    },
+    fixedWidth: {
+      type: 'string',
+      defaultValue: '800px',
     },
   }}
 />
@@ -41,54 +57,161 @@ export const Template = (args, { argTypes}) => ({
   props: Object.keys(argTypes),
   components: { PbDialog, PbButton },
   data() {
-      return {
-        state: {
-          show: false,
-        }
+    return {
+      state: {
+        show: false,
       }
+    }
+  },
+  methods: {
+    openDialog() {
+      this.state.show = true;
     },
-    methods: {
-      openAlert() {
-        this.state.show = true;
-      }
-    },
+    closeDialog() {
+      this.state.show = false;
+    }
+  },
   template: `
     <div>
-      <PbButton @click.native="openAlert">Open Dialog</PbButton>
+      <PbButton @click.native="openDialog">Open Dialog</PbButton>
       <PbDialog
         :title="title"
         :subtitle="subtitle"
         :show="state.show"
         :button-text="buttonText"
-        button-size="small"
+        :button-text-close="buttonTextClose"
         :button-color="buttonColor"
         :button-style="buttonStyle"
         :button-disabled="buttonDisabled"
         :button-loading="buttonLoading"
-        @close="() => state.show = false"
-        @action="() => state.show = false"
+        :show-header="showHeader"
+        :fixed-width="fixedWidth"
+        @close-outside="closeDialog"
+        @close="closeDialog"
+        @action="closeDialog"
       >
-      <template slot="icon-header">
-        <PbButton
+        <template slot="header-icon">
+          <PbButton
             color="primary"
             button-style="background"
             icon="fas fa-arrow-up fa-rotate-270"
-        >
-        </PbButton>
-      </template>
-      <template slot="main">
-        <p class="pb">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed.</p>
-      </PbButton>
-      </template>
-      <template slot="footer">
-        <PbButton
-            color="primary"
-            button-style="regular"
-        >
-          Voltar
-        </PbButton>
-      </PbButton>
-      </template>
+          />
+        </template>
+        <template slot="header">
+          <section style="padding: 12px; background-color: var(--color-gray); border-radius: 4px; margin-top: 8px;">
+            <p class="pb">Lorem ipsum dolor sit amet</p>
+          </section>
+        </template>
+        <template slot="main">
+          <p class="pb">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed.</p>
+        </template>
+        <template slot="footer">
+          <section style="display: flex; flex: 1;">
+            <PbButton
+              color="primary"
+              button-style="regular"
+            >
+              Go back
+            </PbButton>
+          </section>
+        </template>
+      </PbDialog>
+    </div>
+  `,
+});
+
+export const TemplateSimple = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbDialog, PbButton },
+  data() {
+    return {
+      state: {
+        show: false,
+      }
+    }
+  },
+  methods: {
+    openDialog() {
+      this.state.show = true;
+    },
+    closeDialog() {
+      this.state.show = false;
+    }
+  },
+  template: `
+    <div>
+      <PbButton @click.native="openDialog">Open Simple Dialog</PbButton>
+      <PbDialog
+        :title="title"
+        :show="state.show"
+        :button-text-close="buttonTextClose"
+        @close="closeDialog"
+      >
+        <template slot="main">
+          <p class="pb" style="width: 500px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed.</p>
+        </template>
+      </PbDialog>
+    </div>
+  `,
+});
+
+export const TemplateSlots = (args, { argTypes}) => ({
+  props: Object.keys(argTypes),
+  components: { PbDialog, PbButton },
+  data() {
+    return {
+      state: {
+        show: false,
+      }
+    }
+  },
+  methods: {
+    openDialog() {
+      this.state.show = true;
+    },
+    closeDialog() {
+      this.state.show = false;
+    }
+  },
+  template: `
+    <div>
+      <PbButton @click.native="openDialog">Open Dialog with Slots</PbButton>
+      <PbDialog
+        :title="title"
+        :subtitle="subtitle"
+        :show="state.show"
+        :button-text="buttonText"
+        :button-text-close="buttonTextClose"
+        :button-color="buttonColor"
+        :button-style="buttonStyle"
+        :button-disabled="buttonDisabled"
+        :button-loading="buttonLoading"
+        :show-header="showHeader"
+        :fixed-width="fixedWidth"
+        @close-outside="closeDialog"
+        @close="closeDialog"
+        @action="closeDialog"
+      >
+        <template slot="header-icon">
+          <section style="padding: 12px; background-color: #F1F7FF; border: 1.5px dashed #2C7DF6; border-radius: 4px; color: #2C7DF6;">
+            <p class="pb">#header-icon slot</p>
+          </section>
+        </template>
+        <template slot="header">
+          <section style="padding: 12px; background-color: #F1F7FF; border: 1.5px dashed #2C7DF6; border-radius: 4px; margin-top: 8px; color: #2C7DF6;">
+            <p class="pb">#header slot</p>
+          </section>
+        </template>
+        <template slot="main">
+          <section style="padding: 12px; background-color: #F1F7FF; border: 1.5px dashed #2C7DF6; border-radius: 4px; color: #2C7DF6;">
+            <p class="pb">#main slot</p>
+          </section>
+        </template>
+        <template slot="footer">
+          <section style="padding: 12px; background-color: #F1F7FF; border: 1.5px dashed #2C7DF6; border-radius: 4px; color: #2C7DF6; display: flex; flex: 1;">
+            <p class="pb">#footer slot</p>
+          </section>
+        </template>
       </PbDialog>
     </div>
   `,
@@ -99,20 +222,70 @@ export const Template = (args, { argTypes}) => ({
 
 ### Purpose and Use Case
 
-This component can be used when you need to view simply and quickly Information.
-Currently, it has many styles, and accepts a another components to complement the content.
+The PbDialog component is a simple, customizable dialog box that can be used to display content. <br />
+It has several properties that can be adjusted to fit the needs of the user, including:
 
-Have 3 slots to use:
-- `icon-header` to add a icon in the header
-- `main` to add the main content
-- `footer` to add a footer content in left side
+| Property                    | Type        | Default     | Description                                                                                     |
+|:----------------------------|:------------|:------------|:------------------------------------------------------------------------------------------------|
+| show*                       | boolean     | false       | determines whether the dialog box is visible or Notifications                                   |
+| title                       | string      | Title       | the title of the dialog CheckBox                                                                |
+| subtitle                    | string      | Subtitle    | the subtitle of the dialog box                                                                  |
+| buttonText                  | string      | Confirmar   | the text displayed on the action button                                                         |
+| buttonTextClose             | string      | Fechar      | the text displayed on the close button                                                          |
+| buttonStyle                 | string      | background  | the style of the action button                                                                  |
+| buttonColor                 | string      | primary     | the color of the action button                                                                  |
+| buttonLoading               | boolean     | false       | determines whether a loading spinner is displayed on the action button                          | 
+| buttonDisabled              | boolean     | false       | determines whether the action button is disabled                                                |
+| showHeader                  | boolean     | true        | determines whether the header is displayed                                                      |
+| showFooter                  | boolean     | true        | determines whether the footer is displayed                                                      |         
+| fixedWidth                  | string      | ' '         | the fixed width of the dialog box (if it is not set, the dialog box will adjust to the content) |
+
+**Required*
+
+### Slots
+
+The component also provides four slots for customization:
+
+| Slot name                   | Description                           |
+|:----------------------------|:--------------------------------------|
+| header-icon                 | add a icon beside the header title    |
+| header                      | add information in the showHeader     |
+| main                        | add the main content                  |
+| footer                      | add a footer content                  |
+
+
+### Events
+
+The PbDialog component emits the following events:
+
+| Event name                  | Description                                                             |
+|:----------------------------|:------------------------------------------------------------------------|
+| close                       | emitted when the close button is clicked (either on header or footer)   |
+| close-outside               | emitted when the user clicks outside the dialog box                     |
+| action                      | emitted when the action button is clicked                               |
+
+### Good to know
+
+- The PbDialog component has the minimum width of `200px`. If you need to adjust the max-width, you can use the `fixedWidth` property. <br />.
+
+<br />
 
 ## Examples
-
-### Default
 
 <Canvas>
   <Story name="Default">
     {Template.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Simple">
+    {TemplateSimple.bind({})}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Slots">
+    {TemplateSlots.bind({})}
   </Story>
 </Canvas>
