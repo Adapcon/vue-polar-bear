@@ -228,16 +228,15 @@ It has several properties that can be adjusted to fit the needs of the user, inc
 | Property                    | Type        | Default     | Description                                                                                     |
 |:----------------------------|:------------|:------------|:------------------------------------------------------------------------------------------------|
 | show*                       | boolean     | false       | determines whether the dialog box is visible or Notifications                                   |
-| title                       | string      | Title       | the title of the dialog CheckBox                                                                |
-| subtitle                    | string      | Subtitle    | the subtitle of the dialog box                                                                  |
-| buttonText                  | string      | Confirmar   | the text displayed on the action button                                                         |
-| buttonTextClose             | string      | Fechar      | the text displayed on the close button                                                          |
+| title                       | string      | ' '         | the title of the dialog CheckBox                                                                |
+| subtitle                    | string      | ' '         | the subtitle of the dialog box                                                                  |
+| buttonText                  | string      | ' '         | the text displayed on the action button                                                         |
+| buttonTextClose             | string      | ' '         | the text displayed on the close button                                                          |
 | buttonStyle                 | string      | background  | the style of the action button                                                                  |
 | buttonColor                 | string      | primary     | the color of the action button                                                                  |
 | buttonLoading               | boolean     | false       | determines whether a loading spinner is displayed on the action button                          | 
 | buttonDisabled              | boolean     | false       | determines whether the action button is disabled                                                |
-| showHeader                  | boolean     | true        | determines whether the header is displayed                                                      |
-| showFooter                  | boolean     | true        | determines whether the footer is displayed                                                      |         
+| showHeader                  | boolean     | true        | determines whether the header is displayed                                                      |      
 | fixedWidth                  | string      | ' '         | the fixed width of the dialog box (if it is not set, the dialog box will adjust to the content) |
 
 **Required*
@@ -248,7 +247,7 @@ The component also provides four slots for customization:
 
 | Slot name                   | Description                           |
 |:----------------------------|:--------------------------------------|
-| header-icon                 | add a icon beside the header title    |
+| header-icon                 | add a space beside the header title   |
 | header                      | add information in the showHeader     |
 | main                        | add the main content                  |
 | footer                      | add a footer content                  |
@@ -266,7 +265,7 @@ The PbDialog component emits the following events:
 
 ### Good to know
 
-- The PbDialog component has the minimum width of `200px`. If you need to adjust the max-width, you can use the `fixedWidth` property. <br />.
+- The PbDialog component has the minimum width of `200px`. If you need to adjust the max-width, you can use the `fixedWidth` property. <br />
 
 <br />
 
