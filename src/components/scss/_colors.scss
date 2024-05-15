@@ -1,0 +1,27 @@
+
+// Base Grayscale Colors
+
+$color-white: #FFFFFF;
+$color-gray: #F9FAFB;
+$color-gray-10: #ECEEF0; // gray-5
+$color-gray-20: #C7CBD1; // gray-10
+$color-gray-30: #A1A8B3; // gray-20
+$color-gray-40: #818A98;
+$color-gray-60: #4D545E;
+$color-gray-80: #373D43;
+$color-gray-90: #292D32;
+$color-black: #1a1d20;
+
+// Classes
+
+.color-title {
+  color: var(--color-title);
+}
+
+.color-text {
+  color: var(--color-text);
+}
+
+.color-active {
+  color: var(--color-active);
+}
