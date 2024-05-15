@@ -285,12 +285,24 @@
   @include pb-scroll-base;
   &::-webkit-scrollbar-thumb {
     background: var(--color-primary);
+    width: 3px;
+    transition: width 0.3s ease;
+  }
+
+  &:hover::-webkit-scrollbar {
+    width: 8px;
   }
 
   &-large {
     @include pb-scroll-large;
     &::-webkit-scrollbar-thumb {
       background: var(--color-primary);
+      width: 8px;
+      transition: width 0.3s ease;
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+      width: 16px;
     }
   }
 }
@@ -299,12 +311,24 @@
   @include pb-scroll-base;
   &::-webkit-scrollbar-thumb {
     background: var(--color-secondary);
+    width: 3px;
+    transition: width 0.3s ease;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    width: 12px;
   }
 
   &-large {
     @include pb-scroll-large;
     &::-webkit-scrollbar-thumb {
       background: var(--color-secondary);
+      width: 8px;
+      transition: width 0.3s ease;
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+      width: 16px;
     }
   }
 }
@@ -313,15 +337,28 @@
   @include pb-scroll-base;
   &::-webkit-scrollbar-thumb {
     background: var(--color-white);
+    width: 3px;
+    transition: width 0.3s ease;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    width: 12px;
   }
 
   &-large {
     @include pb-scroll-large;
     &::-webkit-scrollbar-thumb {
       background: var(--color-white);
+      width: 8px;
+      transition: width 0.3s ease;
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+      width: 16px;
     }
   }
 }
+
 
 // PB Typography
 @mixin pb-font-light { font-weight: 300 !important; }

@@ -333,6 +333,10 @@ export default {
 
       &::-webkit-scrollbar {
         width: 2px;
+        transition: width 0.3s ease;
+      }
+      &:hover::-webkit-scrollbar {
+       width: 8px; 
       }
       &::-webkit-scrollbar-track {
         background: none;
