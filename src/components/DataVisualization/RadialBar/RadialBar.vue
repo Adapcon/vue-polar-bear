@@ -35,7 +35,7 @@
         {{ computedValue }}
       </text>
     </svg>
-    <p class="pb-light label">
+    <p class="pb">
       {{ label }}
     </p>
     <div style="display: flex; flex-wrap: wrap">
