@@ -264,11 +264,19 @@
 
 @mixin pb-scroll-base {
   &::-webkit-scrollbar {
-    width: 3px;
+    width: 8px;
+    height: 2px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &:hover::-webkit-scrollbar {
+    width: 8px;
     height: 2px;
     border-radius: 10px;
   }
-  &::-webkit-scrollbar-track {
+  &:hover::-webkit-scrollbar-track {
     background: var(--color-gray);
     border-radius: 10px;
   }
@@ -284,13 +292,11 @@
 .pb-scroll-primary {
   @include pb-scroll-base;
   &::-webkit-scrollbar-thumb {
-    background: var(--color-primary);
     width: 3px;
-    transition: width 0.3s ease;
   }
-
-  &:hover::-webkit-scrollbar {
-    width: 8px;
+  
+  &:hover::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
   }
 
   &-large {
@@ -310,13 +316,11 @@
 .pb-scroll-secondary {
   @include pb-scroll-base;
   &::-webkit-scrollbar-thumb {
-    background: var(--color-secondary);
     width: 3px;
-    transition: width 0.3s ease;
   }
-
+  
   &:hover::-webkit-scrollbar-thumb {
-    width: 12px;
+    background: var(--color-secondary);
   }
 
   &-large {
@@ -336,13 +340,11 @@
 .pb-scroll-white {
   @include pb-scroll-base;
   &::-webkit-scrollbar-thumb {
-    background: var(--color-white);
     width: 3px;
-    transition: width 0.3s ease;
   }
-
+  
   &:hover::-webkit-scrollbar-thumb {
-    width: 12px;
+    background: var(--color-white);
   }
 
   &-large {
