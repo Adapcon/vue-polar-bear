@@ -123,11 +123,6 @@ export default {
   align-items: center;
   max-width: 100px;
 
-  .label {
-    text-align: center;
-    color: var(--color-gray-90);
-  }
-
   .text {
     font-size: 16px;
     font-weight: bold;
