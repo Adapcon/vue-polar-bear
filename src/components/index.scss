@@ -266,9 +266,17 @@
   &::-webkit-scrollbar {
     width: 5px;
     height: 2px;
-    border-radius: 10px;
   }
   &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &:hover::-webkit-scrollbar {
+    width: 8px;
+    height: 2px;
+    border-radius: 10px;
+  }
+  &:hover::-webkit-scrollbar-track {
     background: var(--color-gray);
     border-radius: 10px;
   }
