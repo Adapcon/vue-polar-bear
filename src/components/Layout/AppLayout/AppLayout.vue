@@ -2,7 +2,7 @@
   <section class="layout-grid-container">
     <div
       v-if="!isMobile"
-      class="sidebar pb-scroll-secondary"
+      class="sidebar"
       :class="{ 'collapsed': collapseSidebar }"
     >
       <div
@@ -218,6 +218,18 @@ export default {
 $sidebar-width: 440px;
 $sidebar-width-collapsed: 60px;
 
+@mixin pb-scroll-base {
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 2px;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--color-gray);
+    border-radius: 10px;
+  }
+}
+
 .layout-grid-container {
   display: flex;
   overflow: hidden;
@@ -242,6 +254,10 @@ $sidebar-width-collapsed: 60px;
     padding: 16px 12px;
     transition: max-width .3s ease, min-width .3s ease;
     overflow-y: scroll;
+    @include pb-scroll-base;
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+  }
 
     &:has(.pb-hint) {
       overflow: visible;
