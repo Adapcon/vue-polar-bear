@@ -264,23 +264,16 @@
 
 @mixin pb-scroll-base {
   &::-webkit-scrollbar {
-    width: 5px;
-    height: 2px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &:hover::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
     height: 2px;
     border-radius: 10px;
   }
-  &:hover::-webkit-scrollbar-track {
+  &::-webkit-scrollbar-track {
     background: var(--color-gray);
     border-radius: 10px;
   }
 }
+
 @mixin pb-scroll-large {
   @include pb-scroll-base;
   &::-webkit-scrollbar {
