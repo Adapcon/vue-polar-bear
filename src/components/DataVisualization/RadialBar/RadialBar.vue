@@ -35,7 +35,7 @@
         {{ computedValue }}
       </text>
     </svg>
-    <p class="pb-light label">
+    <p class="pb">
       {{ label }}
     </p>
     <div style="display: flex; flex-wrap: wrap">
@@ -125,6 +125,7 @@ export default {
 
   .label {
     text-align: center;
+    color: var(--color-gray-90);
   }
 
   .text {
