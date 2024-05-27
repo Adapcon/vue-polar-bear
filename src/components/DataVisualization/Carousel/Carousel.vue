@@ -1,5 +1,8 @@
 <template>
-  <div class="pb-carousel-container" :style="`cursor: ${cursorClass}`">
+  <div
+    class="pb-carousel-container"
+    :style="`cursor: ${cursorClass}`"
+  >
     <div class="carousel-container">
       <VueperSlides
         :always-refresh-clones="alwaysRefreshClones"
@@ -60,18 +63,28 @@
           :video="item.video"
           :duration="item.duration"
           @click.native="toggleZoom(item.image, count)"
-        >
-        </VueperSlide>
+        />
       </VueperSlides>
     </div>
 
     <div
       v-if="allowZoom"
       class="zoom-container"
-      @click="toggleZoomOut">
-      <div class="zoom" @mousemove="handleMouseMove">
-        <div ref="zoomed" class="zoomed-image" :style="zoom.imageZoomed">
-          <img ref="image" :src="zoom.imageZoomed.src" />
+      @click="toggleZoomOut"
+    >
+      <div
+        class="zoom"
+        @mousemove="handleMouseMove"
+      >
+        <div
+          ref="zoomed"
+          class="zoomed-image"
+          :style="zoom.imageZoomed"
+        >
+          <img
+            ref="image"
+            :src="zoom.imageZoomed.src"
+          >
         </div>
       </div>
     </div>
@@ -146,6 +159,20 @@ export default {
     'before-slide', 'slide', 'image-loaded', 'image-failed',
   ],
 
+  data() {
+    return {
+      zoom: {
+        isZoomed: false,
+        imageZoomed: {
+          src: '',
+          transform: 'scale(1)',
+          transformOrigin: '0 0',
+        },
+      },
+      currentIndex: 0,
+    };
+  },
+
   computed: {
     carouselClass() {
       return this.carouselStyle !== 'large' ? `carousel-${this.carouselStyle}` : '';
@@ -164,20 +191,6 @@ export default {
     },
   },
 
-  data() {
-    return {
-      zoom: {
-        isZoomed: false,
-        imageZoomed: {
-          src: '',
-          transform: 'scale(1)',
-          transformOrigin: '0 0',
-        },
-      },
-      currentIndex: 0,
-    }
-  },
-
   methods: {
     toggleZoom(image, index) {
       this.currentIndex = index;
@@ -191,7 +204,7 @@ export default {
 
     handleMouseMove(event) {
       if (this.zoom.isZoomed) {
-        const image = this.$refs.image;
+        const { image } = this.$refs.image;
         const rect = image.getBoundingClientRect();
 
         const x = event.clientX - rect.left;
@@ -204,7 +217,7 @@ export default {
         this.zoom.imageZoomed.transformOrigin = `${zoomX}% ${zoomY}%`;
       }
     },
-  }
+  },
 };
 </script>
 
@@ -227,7 +240,7 @@ export default {
     top: 0;
     cursor: zoom-in;
     cursor: -webkit-zoom-in;
-    cursor: -moz-zoom-in;    
+    cursor: -moz-zoom-in;
 
     .zoom {
       background: white;
