@@ -6,14 +6,6 @@ import PbButton from '@pb/Buttons/Button/Button.vue';
   title="Components/Notifications and Modals/PbDialog"
   component={ PbDialog }
   argTypes={{
-    show: {
-      type: 'boolean',
-      defaultValue: 'false',
-    },
-    showHeader: {
-      type: 'boolean',
-      defaultValue: 'true',
-    },
     title: {
       type: 'string',
       defaultValue: 'Title',
@@ -21,6 +13,26 @@ import PbButton from '@pb/Buttons/Button/Button.vue';
     subtitle: {
       type: 'string',
       defaultValue: 'Subtitle',
+    },
+    text: {
+      type: 'string',
+      defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed.',
+    },
+    icon: {
+      type: 'string',
+      defaultValue: 'plus',
+    },
+    iconColor: {
+      type: 'string',
+      defaultValue: 'primary',
+    },
+    show: {
+      type: 'boolean',
+      defaultValue: 'false',
+    },
+    showHeader: {
+      type: 'boolean',
+      defaultValue: 'true',
     },
     buttonText: {
       type: 'string',
@@ -80,6 +92,9 @@ export const Template = (args, { argTypes}) => ({
         :fixed-width="fixedWidth"
         :title="title"
         :subtitle="subtitle"
+        :text="text"
+        :icon="icon"
+        :icon-color="iconColor"
         :button-text="buttonText"
         :button-text-close="buttonTextClose"
         :button-color="buttonColor"
@@ -103,7 +118,7 @@ export const Template = (args, { argTypes}) => ({
           </section>
         </template>
         <template slot="main">
-          <p class="pb">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed.</p>
+          <p class="pb">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </template>
         <template slot="footer">
           <section style="display: flex; flex: 1;">
@@ -144,13 +159,10 @@ export const TemplateSimple = (args, { argTypes}) => ({
       <PbDialog
         :show="state.show"
         :title="title"
+        :text="text"
         :button-text-close="buttonTextClose"
         @close="closeDialog"
-      >
-        <template slot="main">
-          <p class="pb" style="width: 500px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient nulla suspendisse blandit amet, rutrum proin sed.</p>
-        </template>
-      </PbDialog>
+      />
     </div>
   `,
 });
