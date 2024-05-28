@@ -9,48 +9,35 @@ import PbCarousel from './Carousel.vue';
       type: 'array',
       defaultValue: [
         {
-          image: 'https://d3vnyi5j6ba1mc.cloudfront.net/Custom/Content/Products/12/84/1284548_jaqueta-com-capuz-330100920_s3_637656768437822531',
+          image: 'https://img.freepik.com/free-photo/vertical-shot-palm-trees-beach-cloudy-sunny-day_181624-55618.jpg?t=st=1716821634~exp=1716825234~hmac=08c42d2de6c681cc674044e78ff65ae74c36cf0e0237dee24418fd54ae2a7c6a&w=740',
         },
         {
-          image: 'https://d3vnyi5j6ba1mc.cloudfront.net/Custom/Content/Products/12/84/1284464_jaqueta-moletom-com-capuz-320101764_s1_637655025121094129'
+          image: 'https://img.freepik.com/free-photo/green-leaf-with-starfish-beach_23-2148164596.jpg?t=st=1716821667~exp=1716825267~hmac=842a6ce9341f863fe7c281426fd86d89f58ff96ff878e86cdbfbab8c1f09a252&w=740',
         },
         {
-          image: 'https://d3vnyi5j6ba1mc.cloudfront.net/Custom/Content/Products/12/66/1266250_jaqueta-colcci-320101793_s1_637656722083809472',
+          image: 'https://img.freepik.com/free-photo/coconut-with-drinking-straw-palm-tree-beach_268835-1921.jpg?t=st=1716821688~exp=1716825288~hmac=cb9d963170f3199e6e9fcb2a054911bcb2976f298b518f082851afa79c763921&w=740'
+        },
+        {
+          image: 'https://img.freepik.com/free-photo/sea-beach_1203-3516.jpg?t=st=1716821703~exp=1716825303~hmac=a2a4cde4db9c8806edc68539b9e031c511141bf171b2c893a50612e840e328f8&w=740',
+        },
+        {
+          image: 'https://img.freepik.com/free-photo/beautiful-tropical-empty-beach-sea-ocean-with-white-cloud-blue-sky-background_74190-13668.jpg?t=st=1716821554~exp=1716825154~hmac=ec0b6a4a0d3b1cf0e72ae2c207cfedbe6231a86dabebed5d7a9633864ce0cc5c&w=740',
+        },
+        {
+          image: 'https://img.freepik.com/free-photo/relaxation-ocean-recreation-tourism-day_1232-4208.jpg?t=st=1716821598~exp=1716825198~hmac=88c7cb1d373e175ab59831886bec9d13ea6f2af463e1d432e979b63e9b0bdd3f&w=740',
+        },
+                {
+          image: 'https://img.freepik.com/free-photo/vertical-shot-palm-trees-sandy-beach_181624-49124.jpg?t=st=1716821618~exp=1716825218~hmac=1fb719a23b9ff90e54c889bab3f1000892d7274ed45ee71e502379dfbb0f4c12&w=740',
         },
       ]
     },
-    is3d: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    fixedHeight: {
-      type: 'String',
-      defaultValue: '900px',
-    },
-    draggingDistance: {
-      type: 'number',
-      defaultValue: 50,
-    },
-    preventYScroll: {
-      type: 'boolean',
-      defaultValue: true,
-    },
-    autoplay: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    progress: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    fractions: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    bullets: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    alwaysRefreshClones: { type: 'boolean', defaultValue: false },
+    arrows: { type: 'boolean', defaultValue: true },
+    arrowsOutside: { type: 'boolean', defaultValue: null },
+    autoplay: { type: 'boolean', defaultValue: false },
+    breakpoints: { type: 'object', defaultValue: () => ({}) },
+    bullets: { type: 'boolean', defaultValue: true },
+    bulletsOutside: { type: 'boolean', defaultValue: false },
     carouselStyle: {
       control: {
         type: 'select',
@@ -58,6 +45,37 @@ import PbCarousel from './Carousel.vue';
       },
       defaultValue: 'large',
     },
+    clickToZoom: { type: 'boolean', defaultValue: true },
+    disable: { type: 'boolean', defaultValue: false },
+    disableArrowsOnEdges: { type: 'boolean', defaultValue: false },
+    draggingDistance: { type: 'number', defaultValue: 50 },
+    duration: { type: ['number', 'string'], defaultValue: 4000 },
+    infinite: { type: 'boolean', defaultValue: true },
+    fade: { type: 'boolean', defaultValue: false },
+    fixedHeight: { type: 'string', defaultValue: '800px' },
+    fractions: { type: 'boolean', defaultValue: false },
+    gap: { type: 'number', defaultValue: 0 },
+    initSlide: { type: 'number', defaultValue: 1 },
+    is3d: { type: 'boolean', defaultValue: false },
+    lazy: { type: 'boolean', defaultValue: false },
+    lazyLoadOnDrag: { type: 'boolean', defaultValue: false },
+    pauseOnHover: { type: 'boolean', defaultValue: true },
+    pauseOnTouch: { type: 'boolean', defaultValue: true },
+    parallax: { type: ['boolean', 'number'], defaultValue: false },
+    pageScrollingElement: { type: 'string', defaultValue: '' },
+    parallaxFixedContent: { type: 'boolean', defaultValue: false },
+    preventYScroll: { type: 'boolean', defaultValue: true },
+    progress: { type: 'boolean', defaultValue: false },
+    rtl: { type: 'boolean', defaultValue: false },
+    slideContentOutside: { type: ['boolean', 'string'], defaultValue: false },
+    slideContentOutsideClass: { type: 'string', defaultValue: '' },
+    slideImageInside: { type: 'boolean', defaultValue: false },
+    slideMultiple: { type: ['boolean', 'number'], defaultValue: false },
+    slideRatio: { type: 'number', defaultValue: 1 / 3 },
+    touchable: { type: 'boolean', defaultValue: true },
+    transitionSpeed: { type: ['number', 'string'], defaultValue: 600 },
+    visibleSlides: { type: 'number', defaultValue: 1 },
+    zoomScale: { type: 'number', defaultValue: 2 },
   }}
 />
 
@@ -65,18 +83,48 @@ export const Template = (args, { argTypes}) => ({
   props: Object.keys(argTypes),
   components: { PbCarousel },
   template: `
-    <div style="width: 500px;">
+    <div style="width: 600px;">
       <PbCarousel
-      :data="data"
-      :prevent-y-scroll="preventYScroll"
-      :dragging-distance="draggingDistance"
-      :fixed-height="fixedHeight"
-      :is3d="is3d"
+      :always-refresh-clones="alwaysRefreshClones"
+      :arrows="arrows"
+      :arrows-outside="arrowsOutside"
       :autoplay="autoplay"
-      :progress="progress"
-      :fractions="fractions"
+      :breakpoints="breakpoints"
       :bullets="bullets"
+      :bullets-outside="bulletsOutside"
       :carousel-style="carouselStyle"
+      :click-to-zoom="clickToZoom"
+      :data="data"
+      :disable="disable"
+      :disable-arrows-on-edges="disableArrowsOnEdges"
+      :dragging-distance="draggingDistance"
+      :duration="duration"
+      :infinite="infinite"
+      :fade="fade"
+      :fixed-height="fixedHeight"
+      :fractions="fractions"
+      :gap="gap"
+      :init-slide="initSlide"
+      :is3d="is3d"
+      :lazy="lazy"
+      :lazy-load-on-drag="lazyLoadOnDrag"
+      :pause-on-hover="pauseOnHover"
+      :pause-on-touch="pauseOnTouch"
+      :parallax="parallax"
+      :page-scrolling-element="pageScrollingElement"
+      :parallax-fixed-content="parallaxFixedContent"
+      :prevent-y-scroll="preventYScroll"
+      :progress="progress"
+      :rtl="rtl"
+      :slide-content-outside="slideContentOutside"
+      :slide-content-outside-class="slideContentOutsideClass"
+      :slide-image-inside="slideImageInside"
+      :slide-multiple="slideMultiple"
+      :slide-ratio="slideRatio"
+      :touchable="touchable"
+      :transition-speed="transitionSpeed"
+      :visible-slides="visibleSlides"
+      :zoom-scale="zoomFactor"
       />
     </div>
   `,
@@ -87,67 +135,69 @@ export const Template = (args, { argTypes}) => ({
 
 ### Purpose and Use Case
 
-The `PbCarousel` is a A touch ready and responsive slideshow / carousel.
-You can check the vueper-slides documentation [here](https://antoniandre.github.io/vueper-slides/)
+The `PbCarousel` is a touch ready and responsive slideshow / carousel. <br />
+You can check the vueper-slides documentation [here.](https://antoniandre.github.io/vueper-slides/)
 
 ## Configuration
 
 ### Properties
 
-| Property                | Type                 | Default | Description
-|:------------------------|:---------------------|:--------|:----------------------------------------------------------------------------------------------------------------------------------------------------|
-| alwaysRefreshClones     | Boolean              | false   | make sure to always keep the clones up to date                                                                                                      |
-| arrows                  | Boolean              | true    | disable or enable the navigation arrows                                                                                                             |
-| arrowsOutside           | Boolean              | false   | place the navigation arrows outside of the slideshow                                                                                                |
-| autoplay                | Boolean              | false   | plays a slideshow automatically                                                                                                                     |
-| breakpoints             | Object               | {}      | with this option you can provide different configurations to apply to the slideshow at a particular screen width                                    |
-| bullets                 | Boolean              | true    | disable or enable the slides pagination (bullet points)                                                                                             |
-| bulletsOutside          | Boolean              | false   | if bullets is set to true, place the slides index inside or outside the slideshow track                                                             |
-| disable                 | Boolean              | false   | disable or enable the whole slideshow                                                                                                               |
-| disableArrowsOnEdges    | Boolean              | false   | disable the left or right arrow when respectively, no previous or no next slides are available                                                      |
-| draggingDistance        | Number               | null    | with this option you can provide a specific dragging distance for touch-enabled slideshows                                                          |
-| duration                | Number, String       | 4000    | when autoplay in on, defines an amount of time in milliseconds before the autoplaying slideshow changes slide automatically                         |
-| fade                    | Boolean              | false   | sets the transition type to fade when changing slide                                                                                                |
-| fixedHeight             | Boolean, String      | false   | a string made of the height amount and the CSS unit will set the height directly. A boolean true value will let you set the height from your CSS    |
-| fractions               | Boolean              | false   | disable or enable the fractional representation of `current slide / total slides`                                                                   |
-| gap                     | Number               | 0       | set a gap between all the slides. The gap is set in percentage of the slideshow width                                                               |
-| infinite                | Boolean              | true    | When set to true, the slideshow acts like a carousel                                                                                                |
-| initSlide               | Number               | 1       | Init the slideshow with a specific slide as the active slide                                                                                        |
-| lazy                    | Boolean              | false   | lazy loads each slide image when the slide becomes visible                                                                                          |
-| lazyLoadOnDrag          | Boolean              | false   | lazy loads the next slide images while user is dragging towards that slide                                                                          |
-| pageScrollingElement    | String               | ""      | use this option to specify another DOM element selector if it's not the HTML document itself that is scrollable                                     |
-| parallax                | Boolean, Number      | false   | when set to true, 1 or -1, adds a parallax effect on the slideshow                                                                                  |
-| parallaxFixedContent    | Boolean              | false   | allows the slide title and/or content to be fixed on top of the moving background                                                                   |
-| pauseOnHover            | Boolean              | true    | stops the autoplay while hovering then resets to the defined duration when you stop hovering                                                        |
-| pauseOnTouch            | Boolean              | true    | pauseOnTouch stops the autoplay as soon as you touch any element contained in the slideshow                                                         |
-| preventYScroll          | Boolean              | false   | for touch-enabled slideshows, enable or disable the Y-axis scroll while dragging slides                                                             |
-| progress                | Boolean              | false   | disable or enable the top linear progress bar.                                                                                                      |
-| rtl                     | Boolean              | false   | sets the slideshow to an RTL direction (right to left)                                                                                              |
-| slideContentOutside     | Boolean, String      | false   | Display the current slide title & content outside the slide. [false, 'top', 'bottom']                                                               |
-| slideContentOutsideClass| String               | ""      | with this option you can have a specific CSS class to style your slide contents when it's outside the active slide                                  |
-| slideImageInside        | Boolean              | false   | a `<div class="vueperslide__image">` will be created inside each slide                                                                              |
-| slideMultiple           | Boolean              | false   | allows you to slide multiple items at once when clicking arrows, or on drag                                                                         |
-| slideRatio              | Number               | 1/3     | sets the slideshow ratio so it will naturally stay ratio-ed on different browser width                                                              |
-| touchable               | Boolean              | true    | Whether the slideshow should allow slide dragging to change slide or not                                                                            |
-| transitionSpeed         | Number, String       | 600     | defines how long the transition from a slide to another will last - in milliseconds                                                                 |
-| visibleSlides           | Number               | 1       | allows you to show multiple items per slide.                                                                                                        |
-| 3d                      | Boolean              | false   | allows you to slide one slide at a time with a 3D effect transition                                                                                 |
-| data                    | Object               | {}      | The data you can put in the carousel. You can pass: `title`. `content`, `link`, `openInNew`, `image`, `video`, `duration`                           |
-| carouselStyle           | String               | large   | The size of the component arrows and bullets. ['small', 'medium', 'large']                                                                          |
+| Property                | Type                | Default | Description
+|:------------------------|:--------------------|:--------|:-------------------------------------------------------------------------------------------------------------------------------------------------|
+| alwaysRefreshClones     | boolean             | false   | make sure to always keep the clones up to date
+| arrows                  | boolean             | true    | disable or enable the navigation arrows
+| arrowsOutside           | boolean             | false   | place the navigation arrows outside of the slideshow
+| autoplay                | boolean             | false   | plays a slideshow automatically
+| breakpoints             | Object              | { }     | with this option you can provide different configurations to apply to the slideshow at a particular screen width
+| bullets                 | boolean             | true    | disable or enable the slides pagination (bullet points) |
+| bulletsOutside          | boolean             | false   | if bullets is set to true, place the slides index inside or outside the slideshow track
+| disable                 | boolean             | false   | disable or enable the whole slideshow
+| disableArrowsOnEdges    | boolean             | false   | disable the left or right arrow when respectively, no previous or no next slides are available
+| draggingDistance        | number              | null    | with this option you can provide a specific dragging distance for touch-enabled slideshows
+| duration                | number, String      | 4000    | when autoplay in on, defines an amount of time in milliseconds before the autoplaying slideshow changes slide automatically
+| fade                    | boolean             | false   | sets the transition type to fade when changing slide
+| fixedHeight             | boolean, String     | false   | a string made of the height amount and the CSS unit will set the height directly. A boolean true value will let you set the height from your CSS
+| fractions               | boolean             | false   | disable or enable the fractional representation of `current slide / total slides`
+| gap                     | number              | 0       | set a gap between all the slides. The gap is set in percentage of the slideshow width
+| infinite                | boolean             | true    | when set to true, the slideshow acts like a carousel
+| initSlide               | number              | 1       | init the slideshow with a specific slide as the active slide
+| lazy                    | boolean             | false   | lazy loads each slide image when the slide becomes visible
+| lazyLoadOnDrag          | boolean             | false   | lazy loads the next slide images while user is dragging towards that slide
+| pageScrollingElement    | String              | " "     | use this option to specify another DOM element selector if it's not the HTML document itself that is scrollable
+| parallax                | boolean, number     | false   | when set to true, 1 or -1, adds a parallax effect on the slideshow
+| parallaxFixedContent    | boolean             | false   | allows the slide title and/or content to be fixed on top of the moving background
+| pauseOnHover            | boolean             | true    | stops the autoplay while hovering then resets to the defined duration when you stop hovering
+| pauseOnTouch            | boolean             | true    | pauseOnTouch stops the autoplay as soon as you touch any element contained in the slideshow
+| preventYScroll          | boolean             | false   | for touch-enabled slideshows, enable or disable the Y-axis scroll while dragging slides
+| progress                | boolean             | false   | disable or enable the top linear progress bar.
+| rtl                     | boolean             | false   | sets the slideshow to an RTL direction (right to left)
+| slideContentOutside     | boolean, String     | false   | display the current slide title & content outside the slide. [false, 'top', 'bottom']
+| slideContentOutsideClass| String              | " "     | with this option you can have a specific CSS class to style your slide contents when it's outside the active slide
+| slideImageInside        | boolean             | false   | a `<div class="vueperslide__image">` will be created inside each slide
+| slideMultiple           | boolean             | false   | allows you to slide multiple items at once when clicking arrows, or on drag
+| slideRatio              | number              | 1/3     | sets the slideshow ratio so it will naturally stay ratio-ed on different browser width
+| touchable               | boolean             | true    | whether the slideshow should allow slide dragging to change slide or not
+| transitionSpeed         | number, String      | 600     | defines how long the transition from a slide to another will last - in milliseconds
+| visibleSlides           | number              | 1       | allows you to show multiple items per slide.
+| 3d                      | boolean             | false   | allows you to slide one slide at a time with a 3D effect transition
+| data                    | Object              | { }     | the data you can put in the carousel. You can pass: `title`. `content`, `link`, `openInNew`, `image`, `video`, `duration`
+| carouselStyle           | String              | large   | the size of the component arrows and bullets. ['small', 'medium', 'large']
+| clickToZoom             | Boolean             | false   | allows the image to be zoomed when clicked
+| zoomScale               | Number              | 2       | when clickToZoom is set to true, defines the amount of zoom when clicking on the image
 
 ### Events
 
 | Event                       | Description
 |:----------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| ready                       | Fired right after the initialization of the slideshow is complete.                                                                                               |
-| previous                    | Fired when going to the previous slide either from user drag or from slideshow arrows or from keyboard arrows.                                                   |
-| next                        | Fired when going to the next slide either from user drag or from slideshow arrows or from keyboard arrows                                                        |
-| before-slide                | Fired on slide change, just before the effective change.                                                                                                         |
-| slide                       | Fired on slide change, just after the effective change                                                                                                           |
-| autoplay-pause              | Fired when autoplay is set to true, and a pause has been triggered either by a mouseover or by calling the function pauseAutoplay() via Vue refs                 |
-| autoplay-resume             | Fired when autoplay is set to true, and a pause has been triggered either by a mouseover and mouseout or by calling the function resumeAutoplay() via Vue refs   |
-| image-loaded                | Fired when lazy is set to true, and the image succeeded to load.                                                                                                 |
-| image-failed                | Fired when lazy is set to true, and the image failed to load                                                                                                     |
+| ready                       | fired right after the initialization of the slideshow is complete.                                                                                               
+| previous                    | fired when going to the previous slide either from user drag or from slideshow arrows or from keyboard arrows.                                                   
+| next                        | fired when going to the next slide either from user drag or from slideshow arrows or from keyboard arrows                                                        
+| before-slide                | fired on slide change, just before the effective change.                                                                                                         
+| slide                       | fired on slide change, just after the effective change                                                                                                           
+| autoplay-pause              | fired when autoplay is set to true, and a pause has been triggered either by a mouseover or by calling the function pauseAutoplay() via Vue refs                 
+| autoplay-resume             | fired when autoplay is set to true, and a pause has been triggered either by a mouseover and mouseout or by calling the function resumeAutoplay() via Vue refs   
+| image-loaded                | fired when lazy is set to true, and the image succeeded to load.                                                                                                 
+| image-failed                | fired when lazy is set to true, and the image failed to load                                                                                                     
 
 ## Examples
 

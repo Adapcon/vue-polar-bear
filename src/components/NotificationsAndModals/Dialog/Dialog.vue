@@ -9,10 +9,7 @@
         class="dialog-container"
         :style="fixedWidth ? `width: ${fixedWidth}` : ''"
       >
-        <div
-          v-if="showHeader"
-          class="dialog-header"
-        >
+        <div v-if="showHeader" class="dialog-header">
           <div class="dialog-header-button-close">
             <PbButton
               class="close-button"
@@ -23,6 +20,12 @@
           </div>
           <div class="dialog-header-title">
             <slot name="header-icon" />
+            <PbIcon
+              v-if="icon"
+              :icon="`fas fa-${icon}`"
+              :style="`color: var(--color-${iconColor})`"
+              size="lg"
+            />
             <h4 class="pb">{{ title }}</h4>
           </div>
           <h5
@@ -35,6 +38,7 @@
         </div>
 
         <div class="dialog-content">
+          <p v-if="text" class="pb">{{ text }}</p>
           <slot name="main" />
         </div>
 
@@ -84,6 +88,7 @@
 
 <script>
 import PbButton from '@pb/Buttons/Button/Button.vue';
+import PbIcon from '@pb/Miscellaneous/Icon/Icon.js';
 import { validateColor } from '@pb/utils/validator';
 
 export default {
@@ -91,6 +96,7 @@ export default {
 
   components: {
     PbButton,
+    PbIcon,
   },
 
   props: {
@@ -100,6 +106,21 @@ export default {
     },
 
     subtitle: {
+      type: String,
+      default: '',
+    },
+
+    text: {
+      type: String,
+      default: '',
+    },
+
+    icon: {
+      type: String,
+      default: '',
+    },
+
+    iconColor: {
       type: String,
       default: '',
     },
