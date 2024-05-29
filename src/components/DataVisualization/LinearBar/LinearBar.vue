@@ -1,6 +1,10 @@
 <template>
-  <div class="linear-progress-bar">
-    <div class="progress">
+  <div class="linear-progress-bar"
+  :class="{ 'position-right': positionRight }"
+  >
+    <div class="progress"
+    :style="{ positionRight ? `width:${barWidth}px ` : ''}"
+    >
       <div
         class="progress-inner"
         :style="{
@@ -22,6 +26,14 @@ import { validateColor } from '@pb/utils/validator';
 export default {
   name: 'PbLinearBar',
   props: {
+    barWidth: {
+      type: Number,
+      default: 100,
+    },
+    positionRight: {
+      type: Boolean,
+      default: false,
+    },
     label: {
       type: String,
       default: () => '',
@@ -65,6 +77,11 @@ export default {
 .linear-progress-bar {
   width: 100%;
   margin: 10px 0;
+}
+
+.position-right {
+  display: flex;
+    align-items: center;
 }
 
 .progress {
