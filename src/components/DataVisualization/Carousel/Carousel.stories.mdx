@@ -35,7 +35,6 @@ import PbCarousel from './Carousel.vue';
     arrows: { type: 'boolean', defaultValue: true },
     arrowsOutside: { type: 'boolean', defaultValue: null },
     autoplay: { type: 'boolean', defaultValue: false },
-    breakpoints: { type: 'object', defaultValue: () => ({}) },
     bullets: { type: 'boolean', defaultValue: true },
     bulletsOutside: { type: 'boolean', defaultValue: false },
     carouselStyle: {
@@ -89,7 +88,6 @@ export const Template = (args, { argTypes}) => ({
       :arrows="arrows"
       :arrows-outside="arrowsOutside"
       :autoplay="autoplay"
-      :breakpoints="breakpoints"
       :bullets="bullets"
       :bullets-outside="bulletsOutside"
       :carousel-style="carouselStyle"
@@ -124,7 +122,7 @@ export const Template = (args, { argTypes}) => ({
       :touchable="touchable"
       :transition-speed="transitionSpeed"
       :visible-slides="visibleSlides"
-      :zoom-scale="zoomFactor"
+      :zoom-scale="zoomScale"
       />
     </div>
   `,
