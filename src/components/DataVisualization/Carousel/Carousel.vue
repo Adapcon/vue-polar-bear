@@ -82,7 +82,7 @@
           :style="zoom.imageZoomed"
         >
           <img
-            ref="image"
+            ref="imageZoomed"
             :src="zoom.imageZoomed.src"
           >
         </div>
@@ -204,7 +204,7 @@ export default {
 
     handleMouseMove(event) {
       if (this.zoom.isZoomed) {
-        const { image } = this.$refs.image;
+        const image = this.$refs.imageZoomed;
         const rect = image.getBoundingClientRect();
 
         const x = event.clientX - rect.left;
