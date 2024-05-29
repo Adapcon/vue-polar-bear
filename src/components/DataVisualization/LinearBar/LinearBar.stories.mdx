@@ -31,6 +31,18 @@ import { colors } from '@pb/utils/constants';
         },
         defaultValue: 'R$ 00.00',
       },
+      positionRight: {
+        control: {
+          type: 'boolean',
+        },
+        defaultValue: 'false',
+      },
+      barWidth: {
+        control: {
+          type: 'string',
+        },
+        defaultValue: '500px',
+      },
   }}
 />
 
@@ -44,6 +56,8 @@ export const Template = (args, { argTypes}) => ({
         :label="label"
         :percent="percent"
         :value="value"
+        :position-right="positionRight"
+        :bar-width="barWidth"
       />
     </div>
   `,

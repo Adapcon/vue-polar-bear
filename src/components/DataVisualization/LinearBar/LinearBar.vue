@@ -1,9 +1,11 @@
 <template>
-  <div class="linear-progress-bar"
-  :class="{ 'position-right': positionRight }"
+  <div
+    class="linear-progress-bar"
+    :class="{ 'position-right': positionRight }"
   >
-    <div class="progress"
-    :style="{ positionRight ? `width:${barWidth}px ` : ''}"
+    <div
+      class="progress"
+      :style="positionRight ? `width: ${barWidth}; margin-bottom: 0;` : ''"
     >
       <div
         class="progress-inner"
@@ -27,8 +29,8 @@ export default {
   name: 'PbLinearBar',
   props: {
     barWidth: {
-      type: Number,
-      default: 100,
+      type: String,
+      default: '200px',
     },
     positionRight: {
       type: Boolean,
@@ -81,7 +83,8 @@ export default {
 
 .position-right {
   display: flex;
-    align-items: center;
+  align-items: center;
+  gap: 12px;
 }
 
 .progress {
@@ -89,6 +92,7 @@ export default {
   border-radius: 10px;
   background-color: lightgray;
   position: relative;
+  margin-bottom: 5px;
 }
 
 .progress-inner {
@@ -100,7 +104,6 @@ export default {
 .progress-info {
   display: flex;
   justify-content: space-between;
-  margin-top: 5px;
   font-size: 14px;
 }
 
@@ -110,5 +113,6 @@ export default {
 
 .value {
   color: var(--color-gray-40);
+  margin-left: 12px!important;
 }
 </style>
