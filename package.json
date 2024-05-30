@@ -1,6 +1,6 @@
 {
   "name": "vue-polar-bear",
-  "version": "4.3.11",
+  "version": "4.3.12",
   "author": "adapcon",
   "scripts": {
     "storybook": "start-storybook --quiet -p 6006 -s ./src/static",
@@ -20,7 +20,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "adapcon-utils-js": "^0.12.0",
-    "core-js": "^3.37.1",
+    "core-js": "^3.18.3",
     "jquery": "^3.6.0",
     "path": "^0.12.7",
     "vue": "^2.6.11",
