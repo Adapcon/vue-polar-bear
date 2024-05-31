@@ -1,11 +1,11 @@
 <template>
   <div
     class="linear-progress-bar"
-    :class="{ 'horizontal-value': verticalValue }"
+    :class="{ 'horizontal-value': horizontalValue }"
   >
     <div
       class="progress"
-      :style="verticalValue ? `width: ${barWidth}; margin-bottom: 0;` : ''"
+      :style="horizontalValue ? `width: ${barWidth}%; margin-bottom: 0;` : ''"
     >
       <div
         class="progress-inner"
@@ -29,10 +29,10 @@ export default {
   name: 'PbLinearBar',
   props: {
     barWidth: {
-      type: String,
-      default: '100%',
+      type: Number,
+      default: 100,
     },
-    verticalValue: {
+    horizontalValue: {
       type: Boolean,
       default: false,
     },
