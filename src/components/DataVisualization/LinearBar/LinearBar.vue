@@ -5,7 +5,7 @@
   >
     <div
       class="progress"
-      :style="horizontalValue ? `width: ${barWidth}%; margin-bottom: 0;` : ''"
+      :style="`width: ${barWidth}%; margin-bottom: 0;`"
     >
       <div
         class="progress-inner"
@@ -34,7 +34,7 @@ export default {
     },
     horizontalValue: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     label: {
       type: String,
