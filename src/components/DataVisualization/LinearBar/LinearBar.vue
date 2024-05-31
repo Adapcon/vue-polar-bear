@@ -30,7 +30,7 @@ export default {
   props: {
     barWidth: {
       type: String,
-      default: '200px',
+      default: '100%',
     },
     positionRight: {
       type: Boolean,
@@ -85,6 +85,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 12px;
+  width: 100%;
 }
 
 .progress {
@@ -105,6 +106,7 @@ export default {
   display: flex;
   justify-content: space-between;
   font-size: 14px;
+  align-items: center
 }
 
 .label {
