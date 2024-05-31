@@ -1,11 +1,11 @@
 <template>
   <div
     class="linear-progress-bar"
-    :class="{ 'position-right': positionRight }"
+    :class="{ 'horizontal-value': verticalValue }"
   >
     <div
       class="progress"
-      :style="positionRight ? `width: ${barWidth}; margin-bottom: 0;` : ''"
+      :style="verticalValue ? `width: ${barWidth}; margin-bottom: 0;` : ''"
     >
       <div
         class="progress-inner"
@@ -32,7 +32,7 @@ export default {
       type: String,
       default: '100%',
     },
-    positionRight: {
+    verticalValue: {
       type: Boolean,
       default: false,
     },
@@ -81,7 +81,7 @@ export default {
   margin: 10px 0;
 }
 
-.position-right {
+.horizontal-value {
   display: flex;
   align-items: center;
   gap: 12px;
