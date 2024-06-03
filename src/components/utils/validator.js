@@ -1,4 +1,4 @@
-import { colors, generalInputStyles } from './constants';
+import { colors, generalInputStyles, widthTypeOptions } from './constants';
 
 export const validateColor = color => colors.includes(color);
 export const validateInputStyle = style => generalInputStyles.includes(style);
@@ -14,3 +14,5 @@ export const validateCssUnit = value => {
 
   return validUnits.indexOf(unit) >= 0;
 };
+
+export const validateWidthType = value => Object.keys(widthTypeOptions).includes(value);
