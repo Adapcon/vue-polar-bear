@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 import PbLinearBar from './LinearBar.vue';
-import { colors } from '@pb/utils/constants';
+import { colors, widthTypeOptions } from '@pb/utils/constants';
 
 <Meta
   title="Components/Data Visualization/PbLinearBar"
@@ -43,6 +43,13 @@ import { colors } from '@pb/utils/constants';
         },
         defaultValue: 100,
       },
+      typeWidth: {
+       control: {
+          type: 'select',
+          options: [ ...widthTypeOptions ],
+        },
+        default: 'percent',
+      },
   }}
 />
 
@@ -56,8 +63,9 @@ export const Template = (args, { argTypes}) => ({
         :label="label"
         :percent="percent"
         :value="value"
-        :horizontal-value=" horizontalValue"
+        :horizontal-value="horizontalValue"
         :bar-width="barWidth"
+        :type-width="typeWidth"
       />
     </div>
   `,

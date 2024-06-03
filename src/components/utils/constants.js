@@ -36,3 +36,9 @@ export const generalInputStyles = [
   'no-background',
   'background-light',
 ];
+
+export const widthTypeOptions = [
+  'percent',
+  'pixels',
+  'viewport-width',
+];
