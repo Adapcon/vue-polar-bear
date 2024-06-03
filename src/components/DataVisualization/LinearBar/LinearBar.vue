@@ -15,7 +15,10 @@
         }"
       />
     </div>
-    <div class="progress-info">
+    <div
+      class="progress-info"
+      :style="`max-width: ${barWidth}%`"
+    >
       <p class="pb label">{{ label }}</p>
       <p class="pb value">{{ computedValue }}</p>
     </div>
@@ -85,7 +88,6 @@ export default {
   display: flex;
   align-items: center;
   gap: 12px;
-  width: 100%;
 }
 
 .progress {
