@@ -15,4 +15,4 @@ export const validateCssUnit = value => {
   return validUnits.indexOf(unit) >= 0;
 };
 
-export const validateTypeWidth = value => Object.keys(widthTypeOptions).includes(value);
+export const validateWidthType = value => Object.keys(widthTypeOptions).includes(value);

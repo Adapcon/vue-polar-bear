@@ -43,7 +43,7 @@ import { colors, widthTypeOptions } from '@pb/utils/constants';
         },
         defaultValue: 100,
       },
-      typeWidth: {
+      widthType: {
        control: {
           type: 'select',
           options: [ ...widthTypeOptions ],
@@ -65,7 +65,7 @@ export const Template = (args, { argTypes}) => ({
         :value="value"
         :horizontal-value="horizontalValue"
         :bar-width="barWidth"
-        :type-width="typeWidth"
+        :width-type="widthType"
       />
     </div>
   `,

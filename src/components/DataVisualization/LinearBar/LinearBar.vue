@@ -5,7 +5,7 @@
   >
     <div
       class="progress"
-      :style="`width: ${barWidth}${widthTypeOptions[typeWidth]}; margin-bottom: 0;`"
+      :style="`width: ${barWidth}${widthTypeOptions[widthType]}; margin-bottom: 0;`"
     >
       <div
         class="progress-inner"
@@ -17,7 +17,7 @@
     </div>
     <div
       class="progress-info"
-      :style="`max-width: ${barWidth}${widthTypeOptions[typeWidth]}`"
+      :style="`max-width: ${barWidth}${widthTypeOptions[widthType]}`"
     >
       <p class="pb label">{{ label }}</p>
       <p class="pb value">{{ computedValue }}</p>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { validateColor, validateTypeWidth } from '@pb/utils/validator';
+import { validateColor, validateWidthType } from '@pb/utils/validator';
 
 export default {
   name: 'PbLinearBar',
@@ -35,9 +35,9 @@ export default {
       type: Number,
       default: 100,
     },
-    typeWidth: {
+    widthType: {
       type: String,
-      validator: value => validateTypeWidth(value),
+      validator: value => validateWidthType(value),
       default: 'percent',
     },
     horizontalValue: {
