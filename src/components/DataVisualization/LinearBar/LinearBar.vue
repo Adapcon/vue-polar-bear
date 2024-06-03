@@ -1,6 +1,12 @@
 <template>
-  <div class="linear-progress-bar">
-    <div class="progress">
+  <div
+    class="linear-progress-bar"
+    :class="{ 'horizontal-value': horizontalValue }"
+  >
+    <div
+      class="progress"
+      :style="`width: ${barWidth}${widthTypeOptions[widthType]}; margin-bottom: 0;`"
+    >
       <div
         class="progress-inner"
         :style="{
@@ -9,7 +15,10 @@
         }"
       />
     </div>
-    <div class="progress-info">
+    <div
+      class="progress-info"
+      :style="`max-width: ${barWidth}${widthTypeOptions[widthType]}`"
+    >
       <p class="pb label">{{ label }}</p>
       <p class="pb value">{{ computedValue }}</p>
     </div>
@@ -17,11 +26,24 @@
 </template>
 
 <script>
-import { validateColor } from '@pb/utils/validator';
+import { validateColor, validateWidthType } from '@pb/utils/validator';
 
 export default {
   name: 'PbLinearBar',
   props: {
+    barWidth: {
+      type: Number,
+      default: 100,
+    },
+    widthType: {
+      type: String,
+      validator: value => validateWidthType(value),
+      default: 'percent',
+    },
+    horizontalValue: {
+      type: Boolean,
+      default: true,
+    },
     label: {
       type: String,
       default: () => '',
@@ -38,6 +60,11 @@ export default {
   data() {
     return {
       isLoaded: false,
+      widthTypeOptions: {
+        percent: '%',
+        pixels: 'px',
+        'viewport-width': 'vw',
+      },
     };
   },
   computed: {
@@ -67,11 +94,18 @@ export default {
   margin: 10px 0;
 }
 
+.horizontal-value {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .progress {
   height: 10px;
   border-radius: 10px;
   background-color: lightgray;
   position: relative;
+  margin-bottom: 5px;
 }
 
 .progress-inner {
@@ -83,8 +117,8 @@ export default {
 .progress-info {
   display: flex;
   justify-content: space-between;
-  margin-top: 5px;
   font-size: 14px;
+  align-items: center
 }
 
 .label {
@@ -93,5 +127,6 @@ export default {
 
 .value {
   color: var(--color-gray-40);
+  margin-left: 12px!important;
 }
 </style>
