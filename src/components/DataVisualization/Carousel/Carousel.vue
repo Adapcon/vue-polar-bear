@@ -9,6 +9,7 @@
         :arrows="arrows"
         :arrows-outside="arrowsOutside"
         :autoplay="autoplay"
+        :background-contain="backgroundContain"
         :breakpoints="breakpoints"
         :bullets="bullets"
         :bullets-outside="bulletsOutside"
@@ -63,7 +64,15 @@
           :video="item.video"
           :duration="item.duration"
           @click.native="toggleZoom(item.image, count)"
-        />
+        >
+          <template #content>
+            <div v-if="backgroundContain">
+              <div class="image-contain">
+                <img :src="item.image"/>
+              </div>
+            </div>
+          </template>
+        </VueperSlide>
       </VueperSlides>
     </div>
 
@@ -108,6 +117,7 @@ export default {
     arrows: { type: Boolean, default: true },
     arrowsOutside: { type: Boolean, default: null },
     autoplay: { type: Boolean, default: false },
+    backgroundContain: { type: Boolean, default: false },
     breakpoints: { type: Object, default: () => ({}) },
     bullets: { type: Boolean, default: true },
     bulletsOutside: { type: Boolean, default: null },
@@ -229,7 +239,31 @@ export default {
 
   .carousel-container {
     position: relative;
+
+    .image-contain {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-color: white;
+      z-index: 10;
+      display: flex;
+
+     img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    &.background-contain {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-color: white;
+      z-index: 10;
+      display: flex;
   }
+}
 
   .zoom-container {
     overflow: hidden;
