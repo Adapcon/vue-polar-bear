@@ -32,6 +32,7 @@
         :prevent-y-scroll="preventYScroll"
         :progress="progress"
         :rtl="rtl"
+        :responsive-image="responsiveImage"
         :slide-content-outside="slideContentOutside"
         :slide-content-outside-class="slideContentOutsideClass"
         :slide-image-inside="slideImageInside"
@@ -63,7 +64,16 @@
           :video="item.video"
           :duration="item.duration"
           @click.native="toggleZoom(item.image, count)"
-        />
+        >
+          <template
+            v-if="responsiveImage"
+            #content
+          >
+            <div class="image-contain">
+              <img :src="item.image">
+            </div>
+          </template>
+        </VueperSlide>
       </VueperSlides>
     </div>
 
@@ -143,6 +153,7 @@ export default {
     preventYScroll: { type: Boolean, default: false },
     progress: { type: Boolean, default: false },
     rtl: { type: Boolean, default: false },
+    responsiveImage: { type: Boolean, default: false },
     slideContentOutside: { type: [Boolean, String], default: false },
     slideContentOutsideClass: { type: String, default: '' },
     slideImageInside: { type: Boolean, default: false },
@@ -229,7 +240,31 @@ export default {
 
   .carousel-container {
     position: relative;
+
+    .image-contain {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-color: white;
+      z-index: 10;
+      display: flex;
+
+     img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    &.responsive-image {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-color: white;
+      z-index: 10;
+      display: flex;
   }
+}
 
   .zoom-container {
     overflow: hidden;
