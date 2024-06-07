@@ -9,7 +9,6 @@
         :arrows="arrows"
         :arrows-outside="arrowsOutside"
         :autoplay="autoplay"
-        :background-contain="backgroundContain"
         :breakpoints="breakpoints"
         :bullets="bullets"
         :bullets-outside="bulletsOutside"
@@ -33,6 +32,7 @@
         :prevent-y-scroll="preventYScroll"
         :progress="progress"
         :rtl="rtl"
+        :responsive-image="responsiveImage"
         :slide-content-outside="slideContentOutside"
         :slide-content-outside-class="slideContentOutsideClass"
         :slide-image-inside="slideImageInside"
@@ -66,7 +66,7 @@
           @click.native="toggleZoom(item.image, count)"
         >
           <template #content>
-            <div v-if="backgroundContain">
+            <div v-if="responsiveImage">
               <div class="image-contain">
                 <img :src="item.image"/>
               </div>
@@ -117,7 +117,6 @@ export default {
     arrows: { type: Boolean, default: true },
     arrowsOutside: { type: Boolean, default: null },
     autoplay: { type: Boolean, default: false },
-    backgroundContain: { type: Boolean, default: false },
     breakpoints: { type: Object, default: () => ({}) },
     bullets: { type: Boolean, default: true },
     bulletsOutside: { type: Boolean, default: null },
@@ -153,6 +152,7 @@ export default {
     preventYScroll: { type: Boolean, default: false },
     progress: { type: Boolean, default: false },
     rtl: { type: Boolean, default: false },
+    responsiveImage: { type: Boolean, default: false },
     slideContentOutside: { type: [Boolean, String], default: false },
     slideContentOutsideClass: { type: String, default: '' },
     slideImageInside: { type: Boolean, default: false },
@@ -255,7 +255,7 @@ export default {
       }
     }
 
-    &.background-contain {
+    &.responsive-image {
       width: 100%;
       height: 100%;
       position: absolute;

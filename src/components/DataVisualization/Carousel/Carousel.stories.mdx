@@ -35,7 +35,6 @@ import PbCarousel from './Carousel.vue';
     arrows: { type: 'boolean', defaultValue: true },
     arrowsOutside: { type: 'boolean', defaultValue: null },
     autoplay: { type: 'boolean', defaultValue: false },
-    backgroundContain: { type: 'boolean',  defaultValue: false },
     bullets: { type: 'boolean', defaultValue: true },
     bulletsOutside: { type: 'boolean', defaultValue: false },
     carouselStyle: {
@@ -67,6 +66,7 @@ import PbCarousel from './Carousel.vue';
     preventYScroll: { type: 'boolean', defaultValue: true },
     progress: { type: 'boolean', defaultValue: false },
     rtl: { type: 'boolean', defaultValue: false },
+    responsiveImage: { type: 'boolean',  defaultValue: false },
     slideContentOutside: { type: ['boolean', 'string'], defaultValue: false },
     slideContentOutsideClass: { type: 'string', defaultValue: '' },
     slideImageInside: { type: 'boolean', defaultValue: false },
@@ -89,7 +89,7 @@ export const Template = (args, { argTypes}) => ({
       :arrows="arrows"
       :arrows-outside="arrowsOutside"
       :autoplay="autoplay"
-      :background-contain="backgroundContain"
+      :responsive-image="responsiveImage"
       :bullets="bullets"
       :bullets-outside="bulletsOutside"
       :carousel-style="carouselStyle"
@@ -148,7 +148,6 @@ You can check the vueper-slides documentation [here.](https://antoniandre.github
 | arrows                  | boolean             | true    | disable or enable the navigation arrows
 | arrowsOutside           | boolean             | false   | place the navigation arrows outside of the slideshow
 | autoplay                | boolean             | false   | plays a slideshow automatically
-| backgroundContain       | boolean             | false   | changes values ​​for image, adding contain
 | breakpoints             | Object              | { }     | with this option you can provide different configurations to apply to the slideshow at a particular screen width
 | bullets                 | boolean             | true    | disable or enable the slides pagination (bullet points) |
 | bulletsOutside          | boolean             | false   | if bullets is set to true, place the slides index inside or outside the slideshow track
@@ -172,6 +171,7 @@ You can check the vueper-slides documentation [here.](https://antoniandre.github
 | preventYScroll          | boolean             | false   | for touch-enabled slideshows, enable or disable the Y-axis scroll while dragging slides
 | progress                | boolean             | false   | disable or enable the top linear progress bar.
 | rtl                     | boolean             | false   | sets the slideshow to an RTL direction (right to left)
+| responsiveImage         | boolean             | false   | changes values ​​for image, adding contain
 | slideContentOutside     | boolean, String     | false   | display the current slide title & content outside the slide. [false, 'top', 'bottom']
 | slideContentOutsideClass| String              | " "     | with this option you can have a specific CSS class to style your slide contents when it's outside the active slide
 | slideImageInside        | boolean             | false   | a `<div class="vueperslide__image">` will be created inside each slide
