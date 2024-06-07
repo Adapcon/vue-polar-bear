@@ -65,11 +65,12 @@
           :duration="item.duration"
           @click.native="toggleZoom(item.image, count)"
         >
-          <template #content>
-            <div v-if="responsiveImage">
-              <div class="image-contain">
-                <img :src="item.image"/>
-              </div>
+          <template
+            v-if="responsiveImage"
+            #content
+          >
+            <div class="image-contain">
+              <img :src="item.image">
             </div>
           </template>
         </VueperSlide>
