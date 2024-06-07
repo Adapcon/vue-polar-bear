@@ -66,6 +66,7 @@ import PbCarousel from './Carousel.vue';
     preventYScroll: { type: 'boolean', defaultValue: true },
     progress: { type: 'boolean', defaultValue: false },
     rtl: { type: 'boolean', defaultValue: false },
+    responsiveImage: { type: 'boolean',  defaultValue: false },
     slideContentOutside: { type: ['boolean', 'string'], defaultValue: false },
     slideContentOutsideClass: { type: 'string', defaultValue: '' },
     slideImageInside: { type: 'boolean', defaultValue: false },
@@ -88,6 +89,7 @@ export const Template = (args, { argTypes}) => ({
       :arrows="arrows"
       :arrows-outside="arrowsOutside"
       :autoplay="autoplay"
+      :responsive-image="responsiveImage"
       :bullets="bullets"
       :bullets-outside="bulletsOutside"
       :carousel-style="carouselStyle"
@@ -169,6 +171,7 @@ You can check the vueper-slides documentation [here.](https://antoniandre.github
 | preventYScroll          | boolean             | false   | for touch-enabled slideshows, enable or disable the Y-axis scroll while dragging slides
 | progress                | boolean             | false   | disable or enable the top linear progress bar.
 | rtl                     | boolean             | false   | sets the slideshow to an RTL direction (right to left)
+| responsiveImage         | boolean             | false   | changes values ​​for image, adding contain
 | slideContentOutside     | boolean, String     | false   | display the current slide title & content outside the slide. [false, 'top', 'bottom']
 | slideContentOutsideClass| String              | " "     | with this option you can have a specific CSS class to style your slide contents when it's outside the active slide
 | slideImageInside        | boolean             | false   | a `<div class="vueperslide__image">` will be created inside each slide
@@ -187,15 +190,15 @@ You can check the vueper-slides documentation [here.](https://antoniandre.github
 
 | Event                       | Description
 |:----------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| ready                       | fired right after the initialization of the slideshow is complete.                                                                                               
-| previous                    | fired when going to the previous slide either from user drag or from slideshow arrows or from keyboard arrows.                                                   
-| next                        | fired when going to the next slide either from user drag or from slideshow arrows or from keyboard arrows                                                        
-| before-slide                | fired on slide change, just before the effective change.                                                                                                         
-| slide                       | fired on slide change, just after the effective change                                                                                                           
-| autoplay-pause              | fired when autoplay is set to true, and a pause has been triggered either by a mouseover or by calling the function pauseAutoplay() via Vue refs                 
-| autoplay-resume             | fired when autoplay is set to true, and a pause has been triggered either by a mouseover and mouseout or by calling the function resumeAutoplay() via Vue refs   
-| image-loaded                | fired when lazy is set to true, and the image succeeded to load.                                                                                                 
-| image-failed                | fired when lazy is set to true, and the image failed to load                                                                                                     
+| ready                       | fired right after the initialization of the slideshow is complete.
+| previous                    | fired when going to the previous slide either from user drag or from slideshow arrows or from keyboard arrows.
+| next                        | fired when going to the next slide either from user drag or from slideshow arrows or from keyboard arrows
+| before-slide                | fired on slide change, just before the effective change.
+| slide                       | fired on slide change, just after the effective change
+| autoplay-pause              | fired when autoplay is set to true, and a pause has been triggered either by a mouseover or by calling the function pauseAutoplay() via Vue refs
+| autoplay-resume             | fired when autoplay is set to true, and a pause has been triggered either by a mouseover and mouseout or by calling the function resumeAutoplay() via Vue refs
+| image-loaded                | fired when lazy is set to true, and the image succeeded to load.
+| image-failed                | fired when lazy is set to true, and the image failed to load
 
 ## Examples
 
