@@ -262,6 +262,7 @@ export default {
     cursor: zoom-in;
     cursor: -webkit-zoom-in;
     cursor: -moz-zoom-in;
+    border-radius: 8px;
 
     .zoom {
       background: white;
