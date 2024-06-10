@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="pb-carousel-container"
-    :style="`cursor: ${cursorClass}`"
-  >
+  <div class="pb-carousel-container">
     <div class="carousel-container">
       <VueperSlides
         :always-refresh-clones="alwaysRefreshClones"
@@ -54,8 +51,8 @@
         @image-failed="(value) => $emit('image-failed', value)"
       >
         <VueperSlide
-          v-for="(item, count) in data"
-          :key="count"
+          v-for="(item, index) in data"
+          :key="index"
           :title="item.title"
           :content="item.content"
           :link="item.link"
@@ -63,13 +60,13 @@
           :image="item.image"
           :video="item.video"
           :duration="item.duration"
-          @click.native="toggleZoom(item.image, count)"
+          @mouseover.native="toggleZoom(item.image, index)"
         >
           <template
             v-if="responsiveImage"
             #content
           >
-            <div class="image-contain">
+            <div class="responsive-image">
               <img :src="item.image">
             </div>
           </template>
@@ -80,11 +77,12 @@
     <div
       v-if="allowZoom"
       class="zoom-container"
-      @click="toggleZoomOut"
     >
       <div
         class="zoom"
         @mousemove="handleMouseMove"
+        @mouseout="handleZoomOut"
+        @click="(index) => $emit('image-click', index)"
       >
         <div
           ref="zoomed"
@@ -130,7 +128,6 @@ export default {
         'large',
       ].includes(style),
     },
-    clickToZoom: { type: Boolean, default: false },
     data: { type: Array, default: () => ([]) },
     disable: { type: Boolean, default: false },
     disableArrowsOnEdges: { type: [Boolean, String], default: false },
@@ -162,12 +159,13 @@ export default {
     touchable: { type: Boolean, default: true },
     transitionSpeed: { type: [Number, String], default: 600 },
     visibleSlides: { type: Number, default: 1 },
+    zoomOnHover: { type: Boolean, default: false },
     zoomScale: { type: Number, default: 2 },
   },
 
   emits: [
     'ready', 'next', 'previous', 'autoplay-pause', 'autoplay-resume',
-    'before-slide', 'slide', 'image-loaded', 'image-failed',
+    'before-slide', 'slide', 'image-loaded', 'image-failed', 'image-click',
   ],
 
   data() {
@@ -190,15 +188,11 @@ export default {
     },
 
     allowZoom() {
-      return this.clickToZoom ? this.zoom.isZoomed : false;
-    },
-
-    cursorClass() {
-      return this.clickToZoom ? 'zoom-in' : '';
+      return this.zoomOnHover ? this.zoom.isZoomed : false;
     },
 
     isTouchable() {
-      return this.clickToZoom ? false : this.touchable;
+      return this.zoomOnHover ? false : this.touchable;
     },
   },
 
@@ -209,24 +203,22 @@ export default {
       this.zoom.imageZoomed.src = image;
     },
 
-    toggleZoomOut() {
+    handleZoomOut() {
       this.zoom.isZoomed = false;
     },
 
     handleMouseMove(event) {
-      if (this.zoom.isZoomed) {
-        const image = this.$refs.imageZoomed;
-        const rect = image.getBoundingClientRect();
+      const image = this.$refs.imageZoomed;
+      const rect = image.getBoundingClientRect();
 
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
 
-        const zoomX = (x / rect.width) * 100;
-        const zoomY = (y / rect.height) * 100;
+      const zoomX = (x / rect.width) * 100;
+      const zoomY = (y / rect.height) * 100;
 
-        this.zoom.imageZoomed.transform = `scale(${this.zoomScale})`;
-        this.zoom.imageZoomed.transformOrigin = `${zoomX}% ${zoomY}%`;
-      }
+      this.zoom.imageZoomed.transform = `scale(${this.zoomScale})`;
+      this.zoom.imageZoomed.transformOrigin = `${zoomX}% ${zoomY}%`;
     },
   },
 };
@@ -240,8 +232,9 @@ export default {
 
   .carousel-container {
     position: relative;
+    padding: 0 16px 16px;
 
-    .image-contain {
+    .responsive-image {
       width: 100%;
       height: 100%;
       position: absolute;
@@ -255,24 +248,17 @@ export default {
         object-fit: contain;
       }
     }
-
-    &.responsive-image {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      background-color: white;
-      z-index: 10;
-      display: flex;
   }
-}
 
   .zoom-container {
     overflow: hidden;
     position: absolute;
     z-index: 30;
-    width: 100%;
-    height: 100%;
+    width: calc(100% - 32px);
+    height: calc(100% - 16px);
     top: 0;
+    left: 16px;
+    bottom: 16px;
     cursor: zoom-in;
     cursor: -webkit-zoom-in;
     cursor: -moz-zoom-in;

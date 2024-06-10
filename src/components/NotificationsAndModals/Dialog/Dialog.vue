@@ -88,7 +88,7 @@
 
 <script>
 import PbButton from '@pb/Buttons/Button/Button.vue';
-import PbIcon from '@pb/Miscellaneous/Icon/Icon.js';
+import PbIcon from '@pb/Miscellaneous/Icon/Icon';
 import { validateColor } from '@pb/utils/validator';
 
 export default {
@@ -226,6 +226,8 @@ export default {
     max-height: 100%;
     min-width: 200px;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
 
     .dialog-header {
       padding: 16px 16px 0;
@@ -257,6 +259,9 @@ export default {
 
     .dialog-content {
       padding: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
     }
 
     .dialog-footer {
