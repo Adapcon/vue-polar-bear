@@ -154,12 +154,12 @@
 .vueperslides--rtl .vueperslides__arrows--outside .vueperslides__arrow--next,
 .vueperslides__arrows--outside .vueperslides__arrow--prev {
   right: auto;
-  left: -3.5em;
+  left: -1.5em;
 }
 .vueperslides--rtl .vueperslides__arrows--outside .vueperslides__arrow--prev,
 .vueperslides__arrows--outside .vueperslides__arrow--next {
   left: auto;
-  right: -3.5em;
+  right: -1.5em;
 }
 .vueperslides__paused {
   top: 0.7em;
@@ -268,9 +268,9 @@
 .vueperslides--fixed-height .vueperslides__parallax-wrapper {
   padding-bottom: 0 !important;
 }
-.vueperslides--fixed-height.vueperslides--bullets-outside {
-  margin-bottom: 4em;
-}
+// .vueperslides--fixed-height.vueperslides--bullets-outside {
+//   margin-bottom: 4em;
+// }
 .vueperslides__inner {
   position: relative;
   -webkit-user-select: none;
@@ -281,6 +281,7 @@
 .vueperslides__parallax-wrapper {
   position: relative;
   overflow: hidden;
+  border-radius: 8px;
 }
 .vueperslides--3d .vueperslides__parallax-wrapper {
   overflow: visible;
@@ -293,6 +294,7 @@
   right: 0;
   overflow: hidden;
   z-index: 1;
+  border-radius: 8px;
 }
 .vueperslides--parallax .vueperslides__track {
   height: 200%;
