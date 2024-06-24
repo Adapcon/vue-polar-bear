@@ -1,0 +1,253 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../amc-simplificamais"
+		},
+		{
+			"path": "../../../.."
+		}
+	],
+	"settings": {
+		"cSpell.logLevel": "Warning",
+		"serverlessConsole.services": [
+			{
+				"type": "dynamodb",
+				"title": "VisualMerchandising.Showcase",
+				"tableName": "VisualMerchandising.Showcase",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "App.Config",
+				"tableName": "App.Config",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Auth.User",
+				"tableName": "Auth.User",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "RemoteSql.Config",
+				"tableName": "RemoteSql.Config",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "DataIntegration.AppKey",
+				"tableName": "DataIntegration.AppKey",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.Live",
+				"tableName": "Store.Live",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.Cart",
+				"tableName": "Store.Cart",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Financial.Config",
+				"tableName": "Financial.Config",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.Cart",
+				"tableName": "Store.Cart",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.Product",
+				"tableName": "Store.Product",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.LiveProduct",
+				"tableName": "Store.LiveProduct",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "CustomData.Data",
+				"tableName": "CustomData.Data",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.LiveProductTag",
+				"tableName": "Store.LiveProductTag",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.LiveProductTagGrouper",
+				"tableName": "Store.LiveProductTagGrouper",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "DynamicForm.Answers",
+				"tableName": "DynamicForm.Answers",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "DynamicForm.PublicForm",
+				"tableName": "DynamicForm.PublicForm",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Bankbill.Token",
+				"tableName": "Bankbill.Token",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.LiveParticipant",
+				"tableName": "Store.LiveParticipant",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.LiveBystander",
+				"tableName": "Store.LiveBystander",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.LiveGuest",
+				"tableName": "Store.LiveGuest",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.LiveProductStock",
+				"tableName": "Store.LiveProductStock",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.CartProduct",
+				"tableName": "Store.CartProduct",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.PaymentCondition",
+				"tableName": "Store.PaymentCondition",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Store.LiveGoal",
+				"tableName": "Store.LiveGoal",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Auth.Session",
+				"tableName": "Auth.Session",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "PaymentReminder.Config",
+				"tableName": "PaymentReminder.Config",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Permission.Config",
+				"tableName": "Permission.Config",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Permission.Role",
+				"tableName": "Permission.Role",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Permission.RoleUser",
+				"tableName": "Permission.RoleUser",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Permission.Log",
+				"tableName": "Permission.Log",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			},
+			{
+				"type": "dynamodb",
+				"title": "Access.Entity",
+				"tableName": "Access.Entity",
+				"region": "local",
+				"endpoint": "http://localhost:8000"
+			}
+		],
+		"conventionalCommits.scopes": [
+			"dev-tool",
+			"ms-app",
+			"ms-file",
+			"ms-pro-admin",
+			"ms-auth",
+			"ms-bankbill",
+			"ms-store-campaign-products",
+			"ms-store-cart",
+			"ms-store-liveshop",
+			"ms-store-guest",
+			"ms-store-jobs",
+			"ms-store-order",
+			"ms-store-participant",
+			"ms-store-tags",
+			"ms-store-product",
+			"ms-store-resources",
+			"ms-store-shared",
+			"front-liveshop",
+			"devolution"
+		]
+	}
+}
