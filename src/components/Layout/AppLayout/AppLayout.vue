@@ -58,8 +58,9 @@
         >
           <PbButton
             color="primary"
-            button-style="background"
+            button-style="background-light"
             button-size="medium"
+            style="margin: 0;"
             :icon="!collapseSidebar ? 'fas fa-chevron-up fa-rotate-270' : 'fas fa-chevron-up fa-rotate-90'"
             @click.native="collapseSidebar = !collapseSidebar"
           />
@@ -178,6 +179,7 @@ export default {
     disableToolBar: { type: Boolean, default: false },
     backFunction: { type: Function, default: () => () => { } },
     collapsible: { type: Boolean, default: false },
+    sidebarState: { type: String, default: 'open' },
   },
 
   data() {
@@ -194,6 +196,14 @@ export default {
       return this.screenWidth < 768;
     },
   },
+  watch: {
+    sidebarState: {
+      handler(val) {
+        if (val === 'close')
+          this.$set(this, 'collapseSidebar', true);
+      },
+    },
+  },
 
   mounted() {
     window.addEventListener('resize', this.handleResize);
@@ -202,6 +212,7 @@ export default {
 
       this.headerSize = header ? header.offsetHeight : 0;
     });
+    if (this.sidebarState === 'close') return this.$set(this, 'collapseSidebar', true);
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.handleResize);
@@ -238,12 +249,17 @@ $sidebar-width-collapsed: 60px;
   .collapse-button {
     position: absolute;
     transition: transform .3s ease;
-    transform: translateX(418px);
+    transform: translateX(420px);
     top: 50vh;
     left: 0;
+    z-index: 36;
+
+    &::v-deep .pb-button {
+      border-radius: 40px 0 0 40px;
+    }
 
     &.collapsed {
-      transform: translateX(38px);
+      transform: translateX(40px);
     }
   }
 
@@ -251,7 +267,7 @@ $sidebar-width-collapsed: 60px;
     border-right: solid #eeeeee 1px;
     max-width: $sidebar-width;
     min-width: $sidebar-width;
-    padding: 16px 12px;
+    margin: 16px 12px;
     transition: max-width .3s ease, min-width .3s ease;
     overflow-y: scroll;
     @include pb-scroll-base;
@@ -309,6 +325,7 @@ $sidebar-width-collapsed: 60px;
       overflow: hidden !important;
       max-width: $sidebar-width-collapsed;
       min-width: $sidebar-width-collapsed;
+      padding-top: 33px;
 
       .sidebar-area {
         height: 600px;
@@ -348,7 +365,12 @@ $sidebar-width-collapsed: 60px;
 
   .layout-grid-container {
     .collapse-button {
-      transform: translateX(326px);
+      transform: translateX(330px);
+      z-index: 36;
+
+      &.collapsed {
+      transform: translateX(40px);
+    }
     }
 
     .sidebar {

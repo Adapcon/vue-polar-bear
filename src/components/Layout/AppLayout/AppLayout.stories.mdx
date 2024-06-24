@@ -28,6 +28,13 @@ import PbAppLayout from './AppLayout.vue';
         type: 'boolean',
         defaultValue: false,
     },
+    sidebarState: {
+      control: {
+        type: 'select',
+        options: ['open', 'close'],
+      },
+      defaultValue: 'open',
+    },
   }}
 />
 
@@ -43,6 +50,7 @@ export const Template = (args, { argTypes }) => ({
             :disableToolBar="disableToolBar"
             :backFunction="backFunction"
             :collapsible="collapsible"
+            :sidebarState="sidebarState"
             ref="PbAppLayout"
         >
             <template #extra-infos>
