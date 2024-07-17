@@ -8,6 +8,7 @@
         <PbSearchInput
           v-model="state.searchTerm"
           placeholder="O que você procura?"
+          :show-icon="hasSearchIcon"
           @search="$emit('search', state.searchTerm)"
           @clear-input="$emit('clear-input')"
         />
@@ -102,6 +103,7 @@ export default {
     currentPage: { type: Number, default: 0 },
     useInternalSort: { type: Boolean, default: true },
     initialSort: { type: Object, default: () => ({}) },
+    hasSearchIcon: { type: Boolean, default: true },
   },
 
   emits: ['change-page'],
