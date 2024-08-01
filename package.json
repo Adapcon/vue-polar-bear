@@ -80,6 +80,7 @@
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.44.1",
-    "webpack-merge": "^5.2.0"
+    "webpack-merge": "^5.2.0",
+    "@babel/plugin-proposal-private-property-in-object": "7.21.11"
   }
 }
