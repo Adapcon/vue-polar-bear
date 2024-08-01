@@ -123,6 +123,7 @@ import {
   faVolumeMute as fasVolumeMute,
   faVolumeUp as fasVolumeUp,
   faVolumeOff as fasVolumeOff,
+  faRobot as fasRobot,
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -309,6 +310,7 @@ library.add(
   fasPlus,
   fasGripVertical,
   fasFire,
+  fasRobot,
 );
 
 // Replace any existing <i> tags with <svg> and set up a MutationObserver to
