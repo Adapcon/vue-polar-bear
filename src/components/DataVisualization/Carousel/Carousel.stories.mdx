@@ -76,6 +76,7 @@ import PbCarousel from './Carousel.vue';
     visibleSlides: { type: 'number', defaultValue: 1 },
     zoomOnHover: { type: 'boolean', defaultValue: true },
     zoomScale: { type: 'number', defaultValue: 2 },
+    noShadow: { type: 'boolean', defaultValue: false },
   }}
 />
 
@@ -125,6 +126,7 @@ export const Template = (args, { argTypes}) => ({
       :visible-slides="visibleSlides"
       :zoom-on-hover="zoomOnHover"
       :zoom-scale="zoomScale"
+      :no-shadow="noShadow"
       />
     </div>
   `,
@@ -185,6 +187,7 @@ You can check the vueper-slides documentation [here.](https://antoniandre.github
 | carouselStyle           | String              | large   | the size of the component arrows and bullets. ['small', 'medium', 'large']
 | zoomOnHover             | Boolean             | false   | allows the image to be zoomed when hovered
 | zoomScale               | Number              | 2       | when zoomOnHover is set to true, defines the amount of zoom when clicking on the image
+| noShadow                | Boolean             | false   | removes the shadow from the carousel slides
 
 ### Events
 
