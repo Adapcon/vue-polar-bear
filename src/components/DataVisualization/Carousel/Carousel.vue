@@ -161,6 +161,7 @@ export default {
     visibleSlides: { type: Number, default: 1 },
     zoomOnHover: { type: Boolean, default: false },
     zoomScale: { type: Number, default: 2 },
+    noShadow: { type: Boolean, default: false },
   },
 
   emits: [
@@ -184,7 +185,7 @@ export default {
 
   computed: {
     carouselClass() {
-      return this.carouselStyle !== 'large' ? `carousel-${this.carouselStyle}` : '';
+      return `${this.noShadow ? 'no-shadow' : ''} ${this.carouselStyle !== 'large' ? `carousel-${this.carouselStyle}` : ''}`.trim();
     },
 
     allowZoom() {
