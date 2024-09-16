@@ -7,7 +7,7 @@
     >
       <div
         class="sidebar-area"
-        :style="{ marginTop: `calc(${headerSize}px - 8px)` }"
+        :style="{ marginTop: `calc(${headerSizeHeight}px - 8px)` }"
       >
         <div
           ref="header"
@@ -26,22 +26,65 @@
             v-if="!collapseSidebar"
             style="display: flex; flex-direction: column;"
           >
+            <PbHint
+              v-if="title && titleSizeWidth"
+              :hint-text="title"
+              position="bottom-right"
+            >
+              <h2
+                v-if="title"
+                ref="title"
+                class="pb header-title"
+              >
+                {{ title }}
+              </h2>
+            </PbHint>
             <h2
-              v-if="title"
-              class="pb"
+              v-else
+              ref="title"
+              class="pb header-title"
             >
               {{ title }}
             </h2>
+
+            <PbHint
+              v-if="subtitle && subtitleSizeWidth"
+              :hint-text="subtitle"
+              position="bottom-right"
+            >
+              <h3
+                v-if="subtitle"
+                class="pb-light header-subtitle"
+                style="padding-top: 12px;"
+              >
+                {{ subtitle }}
+              </h3>
+            </PbHint>
             <h3
-              v-if="subtitle"
-              class="pb-light"
+              v-else
+              ref="subtitle"
+              class="pb-light header-subtitle"
               style="padding-top: 12px;"
             >
               {{ subtitle }}
             </h3>
+            <PbHint
+              v-if="headline && headLineSizeWidth"
+              :hint-text="headline"
+              position="bottom-right"
+            >
+              <h4
+                ref="headline"
+                class="pb-light header-headline"
+                style="padding-top: 12px;"
+              >
+                {{ headline }}
+              </h4>
+            </PbHint>
             <h4
-              v-if="headline"
-              class="pb-light"
+              v-else
+              ref="headline"
+              class="pb-light header-headline"
               style="padding-top: 12px;"
             >
               {{ headline }}
@@ -165,11 +208,13 @@
 
 <script>
 import PbButton from '@pb/Buttons/Button/Button';
+import PbHint from '@pb/Miscellaneous/Hint/Hint';
 
 export default {
   name: 'PbAppLayout',
   components: {
     PbButton,
+    PbHint,
   },
 
   props: {
@@ -185,7 +230,10 @@ export default {
   data() {
     return {
       screenWidth: window.innerWidth,
-      headerSize: 0,
+      headerSizeHeight: 0,
+      headLineSizeWidth: 0,
+      titleSizeWidth: 0,
+      subtitleSizeWidth: 0,
       collapseSidebar: false,
       showSidebar: false,
     };
@@ -209,9 +257,18 @@ export default {
     window.addEventListener('resize', this.handleResize);
     this.$nextTick(() => {
       const { header } = this.$refs;
+      this.headerSizeHeight = header ? header.offsetHeight : 0;
+      this.$nextTick(() => {
+        setTimeout(() => {
+          const { title, subtitle, headline } = this.$refs;
 
-      this.headerSize = header ? header.offsetHeight : 0;
+          this.titleSizeWidth = title.offsetWidth < title.scrollWidth;
+          this.subtitleSizeWidth = subtitle.offsetWidth < subtitle.scrollWidth;
+          this.headLineSizeWidth = headline.offsetWidth < headline.scrollWidth;
+        }, 5000);
+      });
     });
+
     if (this.sidebarState === 'close') return this.$set(this, 'collapseSidebar', true);
   },
   beforeDestroy() {
@@ -275,10 +332,10 @@ $sidebar-width-collapsed: 60px;
     background: var(--color-secondary);
   }
 
-    &:has(.pb-hint) {
-      overflow: visible;
-      padding-right: 15px;
-    }
+    // &:has(.pb-hint) {
+    //   overflow: visible;
+    //   padding-right: 15px;
+    // }
 
     &:not(:hover) {
       &::-webkit-scrollbar,
@@ -293,11 +350,32 @@ $sidebar-width-collapsed: 60px;
       .header-infos {
         display: flex;
         position: fixed;
-        width: calc($sidebar-width - 24px);
-        background-color: white;
+        max-width: calc($sidebar-width - 5px);
         top: 102px;
         padding-top: 48px;
         z-index: 34;
+        background-color: var(--color-white);
+
+        .header-title {
+          width: calc($sidebar-width - 85px);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .header-subtitle {
+          width: calc($sidebar-width - 85px);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .header-headline {
+          width: calc($sidebar-width - 85px);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
     }
 
@@ -379,7 +457,29 @@ $sidebar-width-collapsed: 60px;
 
       &:not(.collapsed) {
         .header-infos {
-          width: calc($sidebar-width - 24px);
+          width: calc($sidebar-width - 5px);
+          background-color: var(--color-white);
+
+          .header-title {
+          width: calc($sidebar-width - 100px);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .header-subtitle {
+          width: calc($sidebar-width - 100px);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .header-headline {
+          width: calc($sidebar-width - 100px);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
 
           h2.pb {
             font-size: 2.8rem !important;
