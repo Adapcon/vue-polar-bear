@@ -332,11 +332,6 @@ $sidebar-width-collapsed: 60px;
     background: var(--color-secondary);
   }
 
-    // &:has(.pb-hint) {
-    //   overflow: visible;
-    //   padding-right: 15px;
-    // }
-
     &:not(:hover) {
       &::-webkit-scrollbar,
       &::-webkit-scrollbar-thumb,
