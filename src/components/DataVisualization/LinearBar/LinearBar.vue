@@ -5,13 +5,20 @@
   >
     <div
       class="progress"
-      :style="`width: ${barWidth}${widthTypeOptions[widthType]}; margin-bottom: 0;`"
+      :style="`width: ${barWidth}${widthTypeOptions[widthType]}; margin-bottom: 0; height: ${viewPercent ? '15px' : '10px'}`"
     >
+      <small
+        v-if="viewPercent"
+        class="pb progress-text"
+      >
+        {{ percent }}%
+      </small>
       <div
         class="progress-inner"
         :style="{
           width: `${calcOffset()}%`,
           backgroundColor: `var(--color-${color})`,
+          height: `${viewPercent ? '15px' : '10px'}`
         }"
       />
     </div>
@@ -30,6 +37,7 @@ import { validateColor, validateWidthType } from '@pb/utils/validator';
 
 export default {
   name: 'PbLinearBar',
+
   props: {
     barWidth: {
       type: Number,
@@ -55,6 +63,7 @@ export default {
     },
     percent: { type: Number, default: 0 },
     value: { type: String, default: '' },
+    viewPercent: { type: Boolean, default: false },
   },
 
   data() {
@@ -101,15 +110,24 @@ export default {
 }
 
 .progress {
-  height: 10px;
   border-radius: 10px;
-  background-color: lightgray;
+  background-color: var(--color-gray-40);
   position: relative;
   margin-bottom: 5px;
+
+  .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    pointer-events: none;
+  }
 }
 
 .progress-inner {
-  height: 10px;
   border-radius: 10px;
   transition: width 0.3s ease-in-out;
 }
@@ -118,7 +136,7 @@ export default {
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  align-items: center
+  align-items: center;
 }
 
 .label {
@@ -127,6 +145,7 @@ export default {
 
 .value {
   color: var(--color-gray-40);
-  margin-left: 12px!important;
+  margin-left: 12px !important;
 }
+
 </style>

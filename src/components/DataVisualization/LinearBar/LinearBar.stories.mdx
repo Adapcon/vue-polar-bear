@@ -37,6 +37,12 @@ import { colors, widthTypeOptions } from '@pb/utils/constants';
         },
         defaultValue: 'true',
       },
+      viewPercent: {
+        control: {
+          type: 'boolean',
+        },
+        defaultValue: 'false',
+      },
       barWidth: {
         control: {
           type: 'number',
@@ -64,6 +70,7 @@ export const Template = (args, { argTypes}) => ({
         :percent="percent"
         :value="value"
         :horizontal-value="horizontalValue"
+        :view-percent="viewPercent"
         :bar-width="barWidth"
         :width-type="widthType"
       />
