@@ -9,7 +9,10 @@
         class="dialog-container"
         :style="fixedWidth ? `width: ${fixedWidth}` : ''"
       >
-        <div v-if="showHeader" class="dialog-header">
+        <div
+          v-if="showHeader"
+          class="dialog-header"
+        >
           <div class="dialog-header-button-close">
             <PbButton
               class="close-button"
@@ -38,7 +41,12 @@
         </div>
 
         <div class="dialog-content">
-          <p v-if="text" class="pb">{{ text }}</p>
+          <p
+            v-if="text"
+            class="pb"
+          >
+            {{ text }}
+          </p>
           <slot name="main" />
         </div>
 
@@ -218,6 +226,7 @@ export default {
   transition: opacity .3s ease;
   color: var(--color-gray-40);
   padding: 16px;
+  z-index: 99;
 
   .dialog-container {
     background: var(--color-white);
@@ -278,7 +287,7 @@ export default {
         .close-button {
           padding: 0 16px!important;
           margin-left: 8px!important;
-          
+
           &:hover {
             background-color: var(--color-gray-40-light);
           }
