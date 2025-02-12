@@ -10,6 +10,7 @@
           placeholder="O que você procura?"
           :show-icon="hasSearchIcon"
           @search="$emit('search', state.searchTerm)"
+          @input="$emit('search-input', state.searchTerm)"
           @clear-input="$emit('clear-input')"
         />
       </div>
