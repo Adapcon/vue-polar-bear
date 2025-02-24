@@ -5,7 +5,7 @@
     </div>
     <div class="page-indexes-container">
       <PbButton
-        :disabled="disableReturnOnFirstPage"
+        :disabled="disableReturnOnFirstPage || loading"
         icon="fas fa-chevron-up"
         style="transform: rotate(-90deg)"
         @click.native="changePage('return')"
@@ -18,6 +18,7 @@
           >
             <p
               class="pb"
+              :class="loading && 'pb-disabled'"
               @click="goToFirstPage()"
             >
               1
@@ -32,6 +33,7 @@
           >
             <p
               class="pb"
+              :class="loading && 'pb-disabled'"
               @click="changePage('', index)"
             >
               {{ index + 1 }}
@@ -40,7 +42,7 @@
         </div>
       </div>
       <PbButton
-        :disabled="disableNextOnLastPage"
+        :disabled="disableNextOnLastPage || loading"
         icon="fas fa-chevron-up"
         style="transform: rotate(90deg)"
         @click.native="changePage('next')"
@@ -63,6 +65,7 @@ export default {
     count: { type: Number, default: 16 },
     pageLimit: { type: Number, default: 5 },
     currentPage: { type: Number, default: 0 },
+    loading: { type: Boolean, default: false },
   },
 
   computed: {
@@ -109,6 +112,8 @@ export default {
     },
 
     changePage(setPagination = '', index = null) {
+      if (this.loading) return;
+
       let page = index ?? this.currentPage;
       if (setPagination === 'next') page++;
       else if (setPagination === 'return') page--;
@@ -144,6 +149,11 @@ export default {
     display: flex;
     align-items: center;
     margin-right: 28px;
+
+    .pb-disabled {
+      cursor: not-allowed !important;
+      opacity: 0.5;
+    }
 
     .current-page {
       display: flex;
